@@ -1,6 +1,7 @@
 import uniqBy from 'lodash/uniqBy'
 import { action, computed, observable } from 'mobx'
 
+import { getContactByNumber } from '../api/CallApi'
 import pbx from '../api/pbx'
 import { arrToMap } from '../utils/toMap'
 import { intlDebug } from './intl'
@@ -115,6 +116,18 @@ class ContactStore {
   }
   getPBXUser = (id: string) => {
     return this._pbxUsersMap[id]
+  }
+
+  getPartyName = async (id: string, callback: Function) => {
+    await getContactByNumber({ search_text: id })
+      .then(res => {
+        if (res && res.length) {
+          callback(res[0].name)
+        } else {
+          callback('')
+        }
+      })
+      .catch(err => callback(''))
   }
 
   @observable ucUsers: UcUser[] = []
