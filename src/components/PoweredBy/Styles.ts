@@ -5,7 +5,6 @@ import CustomFonts from '../../utils/CustomFonts'
 
 const styles = StyleSheet.create({
   poweredBy: {
-    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 40,
@@ -17,7 +16,8 @@ const styles = StyleSheet.create({
   qooqieLogo: {
     width: 56.3,
     height: 14,
-    marginLeft: 10,
+    marginLeft: 5,
+    marginTop: 2,
   },
 })
 

@@ -58,19 +58,19 @@ class CallNotify extends React.Component {
             isUserCalling={isUserCalling}
             callerName={callerName}
             callerNumber={callerNumber}
-          ></CallerInfo>
+          />
           <View style={styles.notifyContainer}>
             <View style={styles.notifyBtnSideBySide}>
               <CallButtons
                 onPress={hangup}
                 image={CustomImages.CallDeclinedLogo}
                 lable={'Weiger'}
-              ></CallButtons>
+              />
               <CallButtons
                 onPress={answer}
                 image={CustomImages.CallAcceptedLogo}
                 lable={'Accepteer'}
-              ></CallButtons>
+              />
             </View>
             <PoweredBy />
           </View>

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Image, View } from 'react-native'
+import { Image, TouchableOpacityProps, View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
 
 import CustomColors from '../../utils/CustomColors'
@@ -11,8 +11,9 @@ const CallerInfo: FC<{
   isUserCalling: boolean
   callerName: string
   callerNumber: string
+  containerStyle?: TouchableOpacityProps['style']
 }> = p => (
-  <View style={styles.notifyInfo}>
+  <View style={[styles.notifyInfo, p.containerStyle]}>
     {!!p.callerName && (
       <>
         <UserAvatar
