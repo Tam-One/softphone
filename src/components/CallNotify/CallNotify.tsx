@@ -67,7 +67,7 @@ class CallNotify extends React.Component {
                 lable={'Weiger'}
               />
               <CallButtons
-                onPress={answer}
+                onPress={() => answer(undefined, callerName)}
                 image={CustomImages.CallAcceptedLogo}
                 lable={'Accepteer'}
               />
