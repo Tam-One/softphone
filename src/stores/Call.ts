@@ -17,8 +17,10 @@ export default class Call {
   @observable partyName = ''
   @observable pbxTalkerId = ''
   @observable pbxTenant = ''
-  @computed get title() {
-    return this.partyName || this.partyNumber || this.pbxTalkerId || this.id
+  @observable callerName = ''
+
+  @computed get getCallerName() {
+    return this.callerName
   }
 
   @observable incoming = false
@@ -32,17 +34,22 @@ export default class Call {
   callkeepAlreadyAnswered = false
   callkeepAlreadyRejected = false
 
-  answer = (options?: object) => {
+  answer = (options?: object, callerName?: string) => {
     this.answered = true
     this.store.currentCallId = this.id
     sip.answerSession(this.id, {
       videoEnabled: this.remoteVideoEnabled,
       ...options,
     })
+    this.setCallerName(callerName)
     Nav().goToPageCallManage()
     if (this.callkeepUuid && !this.callkeepAlreadyAnswered) {
       RNCallKeep.answerIncomingCall(this.callkeepUuid)
     }
+  }
+
+  setCallerName = (name?: string) => {
+    this.callerName = name || ''
   }
 
   hangup = () => {

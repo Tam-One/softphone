@@ -107,7 +107,7 @@ class PageCallManage extends React.Component<{
       }
       noScroll
       onBack={Nav().backToPageCallRecents}
-      title={c?.title || intl`Connection failed`}
+      title={c?.partyNumber || intl`Connection failed`}
       transparent={!c?.transferring}
     >
       {!c ? null : c.transferring ? (
@@ -118,10 +118,10 @@ class PageCallManage extends React.Component<{
 
           {!isVideoEnabled && (
             <CallerInfo
-              isUserCalling={false}
-              callerName={''}
-              callerNumber={c.title}
-              containerStyle={{ marginTop: '25%' }}
+              isUserCalling={!c.partyNumber.includes('+')}
+              callerName={c.getCallerName}
+              callerNumber={c.partyNumber}
+              containerStyle={{ marginTop: c.getCallerName ? '5%' : '20%' }}
             />
           )}
           {this.renderCallTime()}
