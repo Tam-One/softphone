@@ -1,4 +1,4 @@
-import { mdiKeyboardBackspace } from '@mdi/js'
+import { mdiChevronLeft } from '@mdi/js'
 import React, { FC } from 'react'
 import { Animated, StyleSheet } from 'react-native'
 
@@ -10,6 +10,13 @@ const css = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+    backgroundColor: 'white',
+    width: '100%',
+    shadowColor: 'lightgrey',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    elevation: 3,
   },
   Inner: {
     width: 50,
@@ -32,7 +39,7 @@ const BackBtn: FC<{
   return (
     <RnTouchableOpacity onPress={onPress} style={css.BackBtn}>
       <Animated.View style={[css.Inner, cssInnerA]}>
-        <RnIcon path={mdiKeyboardBackspace} />
+        <RnIcon path={mdiChevronLeft} size={35} />
       </Animated.View>
     </RnTouchableOpacity>
   )

@@ -1,7 +1,7 @@
 import { menus, normalizeSavedNavigation } from '../components/navigationConfig'
 import PageBackgroundCalls from '../pages/PageBackgroundCalls'
 import PageCallKeypad from '../pages/PageCallKeypad'
-import PageCallManage from '../pages/PageCallManage'
+import PageCallManage from '../pages/PageCallManage/PageCallManage'
 import PageCallParks from '../pages/PageCallParks'
 import PageCallParks2 from '../pages/PageCallParks2'
 import PageCallRecents from '../pages/PageCallRecents'

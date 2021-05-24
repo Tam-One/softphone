@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
-  customButtonIcon: {},
   buttonIconBtn: {
     paddingTop: 8,
     borderRadius: 9,

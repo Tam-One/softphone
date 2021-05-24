@@ -24,9 +24,6 @@ const css = StyleSheet.create({
   Outer__transparent: {
     backgroundColor: 'transparent',
   },
-  Inner__hasBackBtn: {
-    paddingLeft: 35,
-  },
 })
 
 const Header: FC<
@@ -64,12 +61,7 @@ const Header: FC<
             transparent && css.Outer__transparent,
           ]}
         >
-          <View style={onBack && css.Inner__hasBackBtn}>
-            <Title
-              compact={compact as boolean}
-              description={description}
-              title={title as string}
-            />
+          <View>
             {onBack && (
               <BackBtn compact={compact as boolean} onPress={onBack} />
             )}

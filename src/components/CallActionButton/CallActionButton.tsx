@@ -14,23 +14,18 @@ const CallActionButton: FC<{
   imageStyle?: ImageProps['style']
 }> = p => {
   return (
-    <View style={styles.customButtonIcon}>
-      <RnTouchableOpacity
-        disabled={p.disabled}
-        onPress={p.onPress}
-        style={[styles.buttonIconBtn, { backgroundColor: p.bgcolor }]}
+    <RnTouchableOpacity
+      disabled={p.disabled}
+      onPress={p.onPress}
+      style={[styles.buttonIconBtn, { backgroundColor: p.bgcolor }]}
+    >
+      <Image source={p.image} style={[styles.btnLogo, p.imageStyle]}></Image>
+      <RnText
+        style={[styles.buttonIconName, !!p.textcolor && { color: p.textcolor }]}
       >
-        <Image source={p.image} style={[styles.btnLogo, p.imageStyle]}></Image>
-        <RnText
-          style={[
-            styles.buttonIconName,
-            !!p.textcolor && { color: p.textcolor },
-          ]}
-        >
-          {p.name}
-        </RnText>
-      </RnTouchableOpacity>
-    </View>
+        {p.name}
+      </RnText>
+    </RnTouchableOpacity>
   )
 }
 
