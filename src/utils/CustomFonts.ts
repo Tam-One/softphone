@@ -4,6 +4,7 @@ const CustomFonts = {
   CallTextLineHeight: 28,
   CallerName: 26,
   SmallFooterText: 11,
+  BackText: 17,
 }
 
 export default CustomFonts

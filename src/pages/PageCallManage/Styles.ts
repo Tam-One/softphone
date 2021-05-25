@@ -1,7 +1,6 @@
+import g from 'components/variables'
 import { StyleSheet } from 'react-native'
-
-import g from '../../components/variables'
-import CustomColors from '../../utils/CustomColors'
+import CustomColors from 'utils/CustomColors'
 
 const styles = StyleSheet.create({
   video: {
@@ -10,7 +9,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'black',
+    backgroundColor: CustomColors.Black,
   },
   videoSpace: {
     flex: 1,

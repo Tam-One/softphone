@@ -1,3 +1,6 @@
+import Footer from 'components/Footer'
+import Header from 'components/Header/Header'
+import { HeaderDropdownItem } from 'components/HeaderDropdown'
 import { observer } from 'mobx-react'
 import React, { FC, useState } from 'react'
 import {
@@ -8,12 +11,8 @@ import {
   View,
 } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
-
-import RnKeyboard from '../stores/RnKeyboard'
-import { toLowerCaseFirstChar } from '../utils/string'
-import Footer from './Footer'
-import Header from './Header'
-import { HeaderDropdownItem } from './HeaderDropdown'
+import RnKeyboard from 'stores/RnKeyboard'
+import { toLowerCaseFirstChar } from 'utils/string'
 
 const css = StyleSheet.create({
   Layout: {

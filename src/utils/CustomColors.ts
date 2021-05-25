@@ -6,6 +6,9 @@ const CustomColors = {
   AliceBlue: '#E7F3FF',
   Green: '#35CE95',
   IconActiveBlue: '#4088FF',
+  LightGrey: 'lightgrey',
+  Black: 'black',
+  Transparent: 'transparent',
 }
 
 export default CustomColors

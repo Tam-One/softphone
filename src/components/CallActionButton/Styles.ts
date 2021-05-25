@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import CustomColors from 'utils/CustomColors'
 
 const styles = StyleSheet.create({
   buttonIconBtn: {
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     justifyContent: 'center',
-    shadowColor: 'lightgrey',
+    shadowColor: CustomColors.LightGrey,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
   buttonIconName: {
     paddingTop: 5,
     fontSize: 11,
-    color: 'black',
+    color: CustomColors.Black,
   },
   btnLogo: {
     width: 22,

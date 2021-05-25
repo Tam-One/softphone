@@ -1,8 +1,7 @@
+import styles from 'components/CallActionButton/Styles'
+import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
 import { Image, ImageProps, ImageSourcePropType, View } from 'react-native'
-
-import { RnText, RnTouchableOpacity } from '../Rn'
-import styles from './Styles'
 
 const CallActionButton: FC<{
   disabled?: boolean
@@ -13,17 +12,18 @@ const CallActionButton: FC<{
   image: ImageSourcePropType
   imageStyle?: ImageProps['style']
 }> = p => {
+  const { disabled, onPress, bgcolor, name, textcolor, image, imageStyle } = p
   return (
     <RnTouchableOpacity
-      disabled={p.disabled}
-      onPress={p.onPress}
-      style={[styles.buttonIconBtn, { backgroundColor: p.bgcolor }]}
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.buttonIconBtn, { backgroundColor: bgcolor }]}
     >
-      <Image source={p.image} style={[styles.btnLogo, p.imageStyle]}></Image>
+      <Image source={image} style={[styles.btnLogo, imageStyle]}></Image>
       <RnText
-        style={[styles.buttonIconName, !!p.textcolor && { color: p.textcolor }]}
+        style={[styles.buttonIconName, !!textcolor && { color: textcolor }]}
       >
-        {p.name}
+        {name}
       </RnText>
     </RnTouchableOpacity>
   )

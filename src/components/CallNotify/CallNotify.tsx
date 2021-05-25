@@ -1,15 +1,14 @@
+import CallButtons from 'components/CallButtons/CallButtons'
+import CallerInfo from 'components/CallerInfo/CallerInfo'
+import styles from 'components/CallNotify/Styles'
+import CustomGradient from 'components/CustomGradient/CustomGradient'
+import PoweredBy from 'components/PoweredBy/PoweredBy'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { View } from 'react-native'
-
-import callStore from '../../stores/callStore'
-import contactStore from '../../stores/contactStore'
-import CustomImages from '../../utils/CustomImages'
-import CallButtons from '../CallButtons/CallButtons'
-import CallerInfo from '../CallerInfo/CallerInfo'
-import CustomGradient from '../CustomGradient/CustomGradient'
-import PoweredBy from '../PoweredBy/PoweredBy'
-import styles from './Styles'
+import callStore from 'stores/callStore'
+import contactStore from 'stores/contactStore'
+import CustomImages from 'utils/CustomImages'
 
 @observer
 class CallNotify extends React.Component {
@@ -67,7 +66,7 @@ class CallNotify extends React.Component {
                 lable={'Weiger'}
               />
               <CallButtons
-                onPress={() => answer(undefined, callerName)}
+                onPress={() => answer({}, callerName)}
                 image={CustomImages.CallAcceptedLogo}
                 lable={'Accepteer'}
               />

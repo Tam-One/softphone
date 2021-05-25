@@ -1,28 +1,27 @@
+import CallActionButton from 'components/CallActionButton/CallActionButton'
+import CallButtons from 'components/CallButtons/CallButtons'
+import CallerInfo from 'components/CallerInfo/CallerInfo'
+import CustomGradient from 'components/CustomGradient/CustomGradient'
+import FieldButton from 'components/FieldButton'
+import Layout from 'components/Layout'
+import PoweredBy from 'components/PoweredBy/PoweredBy'
+import { RnTouchableOpacity } from 'components/Rn'
+import RnText from 'components/RnText'
+import VideoPlayer from 'components/VideoPlayer'
 import { toInteger } from 'lodash'
 import { action, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import moment from 'moment'
+import styles from 'pages/PageCallManage/Styles'
+import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
 import { Platform, StyleSheet, View } from 'react-native'
-
-import CallActionButton from '../../components/CallActionButton/CallActionButton'
-import CallButtons from '../../components/CallButtons/CallButtons'
-import CallerInfo from '../../components/CallerInfo/CallerInfo'
-import CustomGradient from '../../components/CustomGradient/CustomGradient'
-import FieldButton from '../../components/FieldButton'
-import Layout from '../../components/Layout'
-import PoweredBy from '../../components/PoweredBy/PoweredBy'
-import { RnTouchableOpacity } from '../../components/Rn'
-import RnText from '../../components/RnText'
-import VideoPlayer from '../../components/VideoPlayer'
-import Call from '../../stores/Call'
-import callStore from '../../stores/callStore'
-import intl from '../../stores/intl'
-import Nav from '../../stores/Nav'
-import CustomColors from '../../utils/CustomColors'
-import CustomImages from '../../utils/CustomImages'
-import PageTransferAttend from '../PageTransferAttend'
-import styles from './Styles'
+import Call from 'stores/Call'
+import callStore from 'stores/callStore'
+import intl from 'stores/intl'
+import Nav from 'stores/Nav'
+import CustomColors from 'utils/CustomColors'
+import CustomImages from 'utils/CustomImages'
 
 @observer
 class PageCallManage extends React.Component<{
@@ -81,7 +80,7 @@ class PageCallManage extends React.Component<{
     return (
       <View style={styles.timerContainer}>
         <View style={styles.timerDisplayBox}>
-          <RnText style={{ color: 'white' }}>
+          <RnText style={{ color: CustomColors.White }}>
             {hours}
             {mins}:{secs}
           </RnText>
@@ -90,47 +89,52 @@ class PageCallManage extends React.Component<{
     )
   }
 
-  renderCall = (c?: Call, isVideoEnabled?: boolean) => (
-    <Layout
-      compact
-      dropdown={
-        isVideoEnabled && !c?.transferring
-          ? [
-              {
-                label: this.showButtonsInVideoCall
-                  ? intl`Hide call menu buttons`
-                  : intl`Show call menu buttons`,
-                onPress: this.toggleButtons,
-              },
-            ]
-          : undefined
-      }
-      noScroll
-      onBack={Nav().backToPageCallRecents}
-      title={c?.partyNumber || intl`Connection failed`}
-      transparent={!c?.transferring}
-    >
-      {!c ? null : c.transferring ? (
-        <PageTransferAttend />
-      ) : (
-        <>
-          {isVideoEnabled && this.renderVideo(c)}
+  renderCall = (c?: any, isVideoEnabled?: boolean) => {
+    if (!c) {
+      return
+    }
+    if (c && c.transferring) {
+      return <PageTransferAttend />
+    } else {
+      return (
+        <Layout
+          compact
+          dropdown={
+            isVideoEnabled && !c?.tsransferring
+              ? [
+                  {
+                    label: this.showButtonsInVideoCall
+                      ? intl`Hide call menu buttons`
+                      : intl`Show call menu buttons`,
+                    onPress: this.toggleButtons,
+                  },
+                ]
+              : undefined
+          }
+          noScroll
+          onBack={Nav().backToPageCallRecents}
+          title={c?.partyNumber || intl`Connection failed`}
+          transparent={!c?.transferring}
+        >
+          <>
+            {isVideoEnabled && this.renderVideo(c)}
 
-          {!isVideoEnabled && (
-            <CallerInfo
-              isUserCalling={!c.partyNumber.includes('+')}
-              callerName={c.getCallerName}
-              callerNumber={c.partyNumber}
-              containerStyle={{ marginTop: c.getCallerName ? '5%' : '20%' }}
-            />
-          )}
-          {this.renderCallTime()}
-          {this.renderBtns(c, isVideoEnabled)}
-          {this.renderHangupBtn(c, isVideoEnabled)}
-        </>
-      )}
-    </Layout>
-  )
+            {!isVideoEnabled && (
+              <CallerInfo
+                isUserCalling={!c.partyNumber.includes('+')}
+                callerName={c.getCallerName}
+                callerNumber={c.partyNumber}
+                containerStyle={{ marginTop: c.getCallerName ? '5%' : '20%' }}
+              />
+            )}
+            {this.renderCallTime()}
+            {this.renderBtns(c, isVideoEnabled)}
+            {this.renderHangupBtn(c, isVideoEnabled)}
+          </>
+        </Layout>
+      )
+    }
+  }
 
   renderVideo = (c: Call) => (
     <>
@@ -151,7 +155,9 @@ class PageCallManage extends React.Component<{
     }
     const Container = isVideoEnabled ? RnTouchableOpacity : View
     const activeColor = CustomColors.IconActiveBlue
-    const n = callStore.backgroundCalls.length
+    const backgrounCallsLength = callStore.backgroundCalls.length
+    const nonActiveColor = CustomColors.White
+    const textActiveColor = CustomColors.Black
     return (
       <Container
         onPress={isVideoEnabled ? this.toggleButtons : undefined}
@@ -162,37 +168,43 @@ class PageCallManage extends React.Component<{
         <View style={!c.answered && styles.btnsHidden}>
           <View style={styles.btnsInnerView}>
             <CallActionButton
-              bgcolor={c.muted ? activeColor : 'white'}
+              bgcolor={c.muted ? activeColor : nonActiveColor}
               name={c.muted ? intl`Unmute` : intl`Mute`}
               onPress={() => c.toggleMuted()}
-              textcolor={c.muted ? 'white' : 'black'}
+              textcolor={c.muted ? nonActiveColor : textActiveColor}
               image={
                 c.muted ? CustomImages.MicrophoneOff : CustomImages.Microphone
               }
               imageStyle={styles.actionBtnImage}
             />
             <CallActionButton
-              bgcolor={c.holding ? activeColor : 'white'}
+              bgcolor={c.holding ? activeColor : nonActiveColor}
               name={c.holding ? intl`Unhold` : intl`Hold`}
               onPress={() => c.toggleHold()}
-              textcolor={c.holding ? 'white' : 'black'}
+              textcolor={c.holding ? nonActiveColor : textActiveColor}
               image={c.holding ? CustomImages.Unhold : CustomImages.Pause}
               imageStyle={styles.actionBtnImage}
             />
             <CallActionButton
-              bgcolor={'white'}
+              bgcolor={nonActiveColor}
               name={intl`Video`}
               onPress={c.localVideoEnabled ? c.disableVideo : c.enableVideo}
-              textcolor={'black'}
+              textcolor={textActiveColor}
               image={CustomImages.Video}
               imageStyle={styles.actionBtnImage}
             />
             {Platform.OS !== 'web' && (
               <CallActionButton
-                bgcolor={callStore.isLoudSpeakerEnabled ? activeColor : 'white'}
+                bgcolor={
+                  callStore.isLoudSpeakerEnabled ? activeColor : nonActiveColor
+                }
                 name={intl`Speaker`}
                 onPress={callStore.toggleLoudSpeaker}
-                textcolor={callStore.isLoudSpeakerEnabled ? 'white' : 'black'}
+                textcolor={
+                  callStore.isLoudSpeakerEnabled
+                    ? nonActiveColor
+                    : textActiveColor
+                }
                 image={
                   callStore.isLoudSpeakerEnabled
                     ? CustomImages.VolumeHigh
@@ -205,42 +217,42 @@ class PageCallManage extends React.Component<{
           <View style={styles.btnsSpace} />
           <View style={styles.btnsInnerView}>
             <CallActionButton
-              bgcolor={c.recording ? activeColor : 'white'}
+              bgcolor={c.recording ? activeColor : nonActiveColor}
               name={intl`Record`}
               onPress={c.toggleRecording}
-              textcolor={c.recording ? 'white' : 'black'}
+              textcolor={c.recording ? nonActiveColor : textActiveColor}
               image={
                 c.recording ? CustomImages.RecordWhite : CustomImages.Record
               }
             />
             <CallActionButton
-              bgcolor='white'
+              bgcolor={nonActiveColor}
               name={intl`Park`}
               onPress={Nav().goToPageCallParks2}
-              textcolor='black'
+              textcolor={textActiveColor}
               image={CustomImages.Park}
             />
             <CallActionButton
-              bgcolor='white'
+              bgcolor={nonActiveColor}
               name={intl`Keys`}
               onPress={Nav().goToPageDtmfKeypad}
-              textcolor='black'
+              textcolor={textActiveColor}
               image={CustomImages.Keys}
             />
             <CallActionButton
-              bgcolor='white'
+              bgcolor={nonActiveColor}
               name={intl`Transfer`}
               onPress={Nav().goToPageTransferDial}
-              textcolor='black'
+              textcolor={textActiveColor}
               image={CustomImages.Transfer}
             />
           </View>
         </View>
-        {n > 0 && (
+        {backgrounCallsLength > 0 && (
           <FieldButton
             label={intl`BACKGROUND CALLS`}
             onCreateBtnPress={Nav().goToPageBackgroundCalls}
-            value={intl`${n} other calls are in background`}
+            value={intl`${backgrounCallsLength} other calls are in background`}
           />
         )}
         <View style={styles.btnsVerticalMargin} />
