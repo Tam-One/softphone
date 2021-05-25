@@ -1,13 +1,12 @@
 import { action, computed, observable } from 'mobx'
 import RNCallKeep from 'react-native-callkeep'
+import { CallStore } from 'stores/callStore'
+import { intlDebug } from 'stores/intl'
+import Nav from 'stores/Nav'
+import RnAlert from 'stores/RnAlert'
+import timerStore from 'stores/timerStore'
 
-import pbx from '../api/pbx'
 import sip from '../api/sip'
-import { CallStore } from './callStore'
-import { intlDebug } from './intl'
-import Nav from './Nav'
-import RnAlert from './RnAlert'
-import timerStore from './timerStore'
 
 export default class Call {
   constructor(private store: CallStore) {}
