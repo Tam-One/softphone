@@ -1,16 +1,15 @@
 import { mdiMagnify, mdiPhone, mdiVideo } from '@mdi/js'
+import UserItem from 'components/ContactUserItem'
+import Field from 'components/Field'
+import Layout from 'components/Layout/Layout'
 import { observer } from 'mobx-react'
 import moment from 'moment'
 import React from 'react'
-
-import UserItem from '../components/ContactUserItem'
-import Field from '../components/Field'
-import Layout from '../components/Layout'
-import { getAuthStore } from '../stores/authStore'
-import { AuthStore } from '../stores/authStore2'
-import callStore from '../stores/callStore'
-import contactStore from '../stores/contactStore'
-import intl from '../stores/intl'
+import { getAuthStore } from 'stores/authStore'
+import { AuthStore } from 'stores/authStore2'
+import callStore from 'stores/callStore'
+import contactStore from 'stores/contactStore'
+import intl from 'stores/intl'
 
 @observer
 class PageCallRecents extends React.Component {

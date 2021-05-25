@@ -8,8 +8,7 @@ import { useAnimation } from 'utils/animation'
 const BackBtn: FC<{
   compact: boolean
   onPress(): void
-}> = p => {
-  const { compact, onPress } = p
+}> = ({ compact, onPress }) => {
   const cssInnerA = useAnimation(compact, {
     height: [70, 40],
     paddingVertical: [20, 5],

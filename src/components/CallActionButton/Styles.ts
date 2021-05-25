@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
 
 const styles = StyleSheet.create({
   buttonIconBtn: {
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
   },
   buttonIconName: {
     paddingTop: 5,
-    fontSize: 11,
+    fontSize: CustomFonts.SmallFooterText,
     color: CustomColors.Black,
   },
   btnLogo: {

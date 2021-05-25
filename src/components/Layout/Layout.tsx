@@ -1,35 +1,18 @@
 import Footer from 'components/Footer'
 import Header from 'components/Header/Header'
 import { HeaderDropdownItem } from 'components/HeaderDropdown'
+import styles from 'components/Layout/Styles'
 import { observer } from 'mobx-react'
 import React, { FC, useState } from 'react'
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
-  StyleSheet,
   View,
 } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import RnKeyboard from 'stores/RnKeyboard'
 import { toLowerCaseFirstChar } from 'utils/string'
-
-const css = StyleSheet.create({
-  Layout: {
-    flex: 1,
-    height: '100%',
-    backgroundColor: 'white',
-  },
-  Layout__transparent: {
-    backgroundColor: 'transparent',
-  },
-  Scroller: {
-    flexGrow: 1,
-  },
-  FooterSpaceInsideScroller: {
-    height: 15,
-  },
-})
 
 const Layout: FC<
   Partial<{
@@ -69,12 +52,12 @@ const Layout: FC<
   }, {} as { [k: string]: unknown })
 
   Object.assign(containerProps, {
-    style: [css.Layout, props.transparent && css.Layout__transparent],
+    style: [styles.layout, props.transparent && styles.layoutTransparent],
   })
 
   if (!props.noScroll) {
     Object.assign(containerProps, {
-      contentContainerStyle: [css.Scroller],
+      contentContainerStyle: [styles.scroller],
       keyboardShouldPersistTaps: 'always',
       onScroll: (e: NativeSyntheticEvent<NativeScrollEvent>) =>
         // eslint-disable-next-line no-mixed-operators
@@ -116,7 +99,7 @@ const Layout: FC<
       <Container {...containerProps}>
         <View style={{ height: headerSpace }} />
         {props.children}
-        <View style={css.FooterSpaceInsideScroller} />
+        <View style={styles.footerSpaceInsideScroller} />
       </Container>
       <View style={{ height: footerSpace }} />
       <Footer {...props} menu={props.menu as string} />

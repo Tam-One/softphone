@@ -11,8 +11,7 @@ const CallActionButton: FC<{
   textcolor?: string
   image: ImageSourcePropType
   imageStyle?: ImageProps['style']
-}> = p => {
-  const { disabled, onPress, bgcolor, name, textcolor, image, imageStyle } = p
+}> = ({ disabled, onPress, bgcolor, name, textcolor, image, imageStyle }) => {
   return (
     <RnTouchableOpacity
       disabled={disabled}

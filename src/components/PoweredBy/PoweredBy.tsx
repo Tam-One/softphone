@@ -6,8 +6,8 @@ import CustomImages from 'utils/CustomImages'
 
 const PoweredBy: FC<{
   containerStyle?: TouchableOpacityProps['style']
-}> = p => (
-  <View style={[styles.poweredBy, p.containerStyle]}>
+}> = ({ containerStyle }) => (
+  <View style={[styles.poweredBy, containerStyle]}>
     <RnText style={styles.poweredByText}>{'POWERED BY'}</RnText>
     <Image source={CustomImages.QooqieLogo} style={styles.qooqieLogo}></Image>
   </View>

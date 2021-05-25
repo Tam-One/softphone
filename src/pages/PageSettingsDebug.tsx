@@ -1,17 +1,16 @@
 import { mdiKeyboardBackspace } from '@mdi/js'
+import Field from 'components/Field'
+import Layout from 'components/Layout/Layout'
+import { RnText } from 'components/Rn'
+import { currentVersion } from 'components/variables'
 import filesize from 'filesize'
 import { observer } from 'mobx-react'
 import moment from 'moment'
 import React, { Component } from 'react'
 import { Platform, StyleSheet } from 'react-native'
-
-import Field from '../components/Field'
-import Layout from '../components/Layout'
-import { RnText } from '../components/Rn'
-import { currentVersion } from '../components/variables'
-import debugStore from '../stores/debugStore'
-import intl from '../stores/intl'
-import Nav from '../stores/Nav'
+import debugStore from 'stores/debugStore'
+import intl from 'stores/intl'
+import Nav from 'stores/Nav'
 
 const css = StyleSheet.create({
   BtnIcon: {

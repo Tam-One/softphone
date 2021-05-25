@@ -1,18 +1,17 @@
 import { mdiDotsHorizontal, mdiLadybug, mdiUnfoldMoreHorizontal } from '@mdi/js'
+import BrekekeGradient from 'components/BrekekeGradient'
+import Layout from 'components/Layout/Layout'
+import ProfileSignInItem from 'components/ProfileSignInItem'
+import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
+import g, { currentVersion } from 'components/variables'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { FlatList, Platform, StyleSheet, View } from 'react-native'
-
-import BrekekeGradient from '../components/BrekekeGradient'
-import Layout from '../components/Layout'
-import ProfileSignInItem from '../components/ProfileSignInItem'
-import { RnIcon, RnText, RnTouchableOpacity } from '../components/Rn'
-import g, { currentVersion } from '../components/variables'
-import intl from '../stores/intl'
-import intlStore from '../stores/intlStore'
-import Nav from '../stores/Nav'
-import profileStore, { Profile } from '../stores/profileStore'
+import intl from 'stores/intl'
+import intlStore from 'stores/intlStore'
+import Nav from 'stores/Nav'
+import profileStore, { Profile } from 'stores/profileStore'
 
 const css = StyleSheet.create({
   PageProfileSignIn_ListServers: {

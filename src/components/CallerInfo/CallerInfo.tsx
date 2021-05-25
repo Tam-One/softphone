@@ -11,8 +11,7 @@ const CallerInfo: FC<{
   callerName: string
   callerNumber: string
   containerStyle?: TouchableOpacityProps['style']
-}> = p => {
-  const { isUserCalling, callerName, callerNumber, containerStyle } = p
+}> = ({ isUserCalling, callerName, callerNumber, containerStyle }) => {
   return (
     <View style={[styles.notifyInfo, containerStyle]}>
       {!!callerName && (
