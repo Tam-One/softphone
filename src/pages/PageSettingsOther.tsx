@@ -1,4 +1,5 @@
 import { mdiCheck, mdiTranslate } from '@mdi/js'
+import uc from 'api/uc'
 import Field from 'components/Field'
 import Layout from 'components/Layout/Layout'
 import { observer } from 'mobx-react'
@@ -7,8 +8,6 @@ import { getAuthStore } from 'stores/authStore'
 import intl, { intlDebug } from 'stores/intl'
 import intlStore from 'stores/intlStore'
 import RnAlert from 'stores/RnAlert'
-
-import uc from '../api/uc'
 
 @observer
 class PageSettingsOther extends Component {

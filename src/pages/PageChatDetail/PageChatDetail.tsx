@@ -1,3 +1,4 @@
+import uc from 'api/uc'
 import { numberOfChatsPerLoad } from 'components/chatConfig'
 import MessageList from 'components/ChatMessageList'
 import ChatInput from 'components/FooterChatInput'
@@ -24,8 +25,6 @@ import RnAlert from 'stores/RnAlert'
 import pickFile from 'utils/pickFile'
 import saveBlob from 'utils/saveBlob'
 import { arrToMap } from 'utils/toMap'
-
-import uc from '../../api/uc'
 
 @observer
 class PageChatDetail extends React.Component<{

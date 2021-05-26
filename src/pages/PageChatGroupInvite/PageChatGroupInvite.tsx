@@ -1,3 +1,4 @@
+import uc from 'api/uc'
 import UserItem from 'components/ContactUserItem'
 import Field from 'components/Field'
 import Layout from 'components/Layout/Layout'
@@ -12,8 +13,6 @@ import contactStore from 'stores/contactStore'
 import intl, { intlDebug } from 'stores/intl'
 import Nav from 'stores/Nav'
 import RnAlert from 'stores/RnAlert'
-
-import uc from '../../api/uc'
 
 @observer
 class PageChatGroupInvite extends React.Component<{

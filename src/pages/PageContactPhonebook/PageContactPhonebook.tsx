@@ -5,6 +5,7 @@ import {
   mdiInformation,
   mdiPhone,
 } from '@mdi/js'
+import pbx from 'api/pbx'
 import UserItem from 'components/ContactUserItem'
 import Field from 'components/Field'
 import Layout from 'components/Layout/Layout'
@@ -23,8 +24,6 @@ import profileStore from 'stores/profileStore'
 import RnAlert from 'stores/RnAlert'
 import RnPicker from 'stores/RnPicker'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
-
-import pbx from '../../api/pbx'
 
 @observer
 class PageContactPhonebook extends React.Component {

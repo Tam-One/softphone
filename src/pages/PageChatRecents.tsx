@@ -1,3 +1,4 @@
+import { UcMessageLog } from 'api/brekekejs'
 import ListUsers from 'components/ChatListUsers'
 import Field from 'components/Field'
 import Layout from 'components/Layout/Layout'
@@ -16,8 +17,6 @@ import Nav from 'stores/Nav'
 import profileStore from 'stores/profileStore'
 import { filterTextOnly, formatChatContent } from 'utils/formatChatContent'
 import { arrToMap } from 'utils/toMap'
-
-import { UcMessageLog } from '../api/brekekejs'
 
 @observer
 class PageChatRecents extends React.Component {

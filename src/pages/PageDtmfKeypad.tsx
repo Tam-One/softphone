@@ -1,3 +1,4 @@
+import sip from 'api/sip'
 import KeyPad from 'components/CallKeyPad'
 import ShowNumber from 'components/CallShowNumbers'
 import Layout from 'components/Layout/Layout'
@@ -15,8 +16,6 @@ import intl, { intlDebug } from 'stores/intl'
 import Nav from 'stores/Nav'
 import RnAlert from 'stores/RnAlert'
 import RnKeyboard from 'stores/RnKeyboard'
-
-import sip from '../api/sip'
 
 @observer
 class PageDtmfKeypad extends React.Component<{
