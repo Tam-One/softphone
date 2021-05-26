@@ -3,7 +3,7 @@ const CustomImages = {
   CallDeclinedLogo: require('assets/decline-call.png'),
   CountryFlagLogo: require('assets/country.png'),
   QooqieLogo: require('assets/qooqie-logo.png'),
-  Keys: require('assets//CallActionBtnImages/keys.png'),
+  Keys: require('assets/CallActionBtnImages/keys.png'),
   MicrophoneOff: require('assets/CallActionBtnImages/unmute.png'),
   Microphone: require('assets/CallActionBtnImages/microphone.png'),
   Park: require('assets/CallActionBtnImages/park.png'),

@@ -14,8 +14,8 @@ const BackBtn: FC<{
     paddingVertical: [20, 5],
   })
   return (
-    <RnTouchableOpacity onPress={onPress} style={styles.BackBtn}>
-      <Animated.View style={[styles.Inner, cssInnerA]}>
+    <RnTouchableOpacity onPress={onPress} style={styles.backBtn}>
+      <Animated.View style={[styles.inner, cssInnerA]}>
         <RnIcon path={mdiChevronLeft} size={35} />
       </Animated.View>
     </RnTouchableOpacity>

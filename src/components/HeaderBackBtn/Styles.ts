@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
 
 const styles = StyleSheet.create({
-  BackBtn: {
+  backBtn: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 3,
   },
-  Inner: {
+  inner: {
     width: 50,
     height: 70,
     paddingHorizontal: 0,
