@@ -19,7 +19,10 @@ module.exports = {
     'import/first': 2,
     'import/newline-after-import': 2,
     'import/no-duplicates': 2,
-    'import/no-extraneous-dependencies': 0,
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: true, packageDir: './' },
+    ],
     // compatible with prettier
     '@typescript-eslint/member-delimiter-style': [
       2,

@@ -3,70 +3,17 @@ import BrekekeGradient from 'components/BrekekeGradient'
 import Layout from 'components/Layout/Layout'
 import ProfileSignInItem from 'components/ProfileSignInItem'
 import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
-import g, { currentVersion } from 'components/variables'
+import { currentVersion } from 'components/variables'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react'
+import styles from 'pages/PageProfileSingIn/Styles'
 import React from 'react'
-import { FlatList, Platform, StyleSheet, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 import intl from 'stores/intl'
 import intlStore from 'stores/intlStore'
 import Nav from 'stores/Nav'
 import profileStore, { Profile } from 'stores/profileStore'
-
-const css = StyleSheet.create({
-  PageProfileSignIn_ListServers: {
-    height: '70%',
-    minHeight: 320,
-  },
-  PageProfileSignIn_Spacing: {
-    flex: 1,
-    maxHeight: '20%',
-  },
-  Space: {
-    height: 15,
-  },
-  CornerButton: {
-    position: 'absolute',
-    bottom: 0,
-    paddingTop: 25,
-    paddingBottom: 10,
-    paddingHorizontal: 15,
-    ...g.backdropZindex,
-  },
-  CornerButton__info: {
-    left: 0,
-  },
-  CornerButton__language: {
-    right: 0,
-  },
-  CornerButton_Inner: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  CornerButton_Inner__info: {
-    paddingLeft: 19,
-  },
-  CornerButton_Inner__language: {
-    paddingRight: 18,
-  },
-  CornerButton_Icon: {
-    position: 'absolute',
-    ...Platform.select({
-      android: {
-        top: 4,
-      },
-      default: {
-        top: 2,
-      },
-    }),
-  },
-  CornerButton_Icon__info: {
-    left: 0,
-  },
-  CornerButton_Icon__language: {
-    right: 0,
-  },
-})
+import CustomColors from 'utils/CustomColors'
 
 const PageProfileSignIn = observer(() => {
   const l = profileStore.profiles.length
@@ -79,7 +26,7 @@ const PageProfileSignIn = observer(() => {
         title={intl`Accounts`}
         transparent
       >
-        <View style={css.PageProfileSignIn_Spacing} />
+        <View style={styles.pageProfileSignInSpacing} />
         {!!l && (
           <FlatList
             data={
@@ -91,21 +38,21 @@ const PageProfileSignIn = observer(() => {
               <ProfileSignInItem id={item.id} last={index === l - 1} />
             )}
             showsHorizontalScrollIndicator={false}
-            style={css.PageProfileSignIn_ListServers}
+            style={styles.pageProfileSignInListServers}
           />
         )}
         {!l && <ProfileSignInItem empty />}
       </Layout>
       <RnTouchableOpacity
         onPress={Nav().goToPageSettingsDebug}
-        style={css.CornerButton}
+        style={styles.cornerButton}
       >
-        <View style={[css.CornerButton_Inner, css.CornerButton_Inner__info]}>
+        <View style={[styles.cornerButtonInner, styles.cornerButtonInnerInfo]}>
           <RnIcon
-            color='white'
+            color={CustomColors.White}
             path={mdiLadybug}
             size={16}
-            style={[css.CornerButton_Icon, css.CornerButton_Icon__info]}
+            style={[styles.cornerButtonInfo, styles.cornerButtonIconInfo]}
           />
           <RnText bold white>
             {currentVersion}
@@ -114,27 +61,27 @@ const PageProfileSignIn = observer(() => {
       </RnTouchableOpacity>
       <RnTouchableOpacity
         onPress={intlStore.localeLoading ? undefined : intlStore.selectLocale}
-        style={[css.CornerButton, css.CornerButton__language]}
+        style={[styles.cornerButton, styles.cornerButtonLanguage]}
       >
         <View
-          style={[css.CornerButton_Inner, css.CornerButton_Inner__language]}
+          style={[styles.cornerButtonInner, styles.cornerButtonInnerLanguage]}
         >
           <RnText bold white>
             {intlStore.localeLoading ? '\u200a' : intlStore.localeName}
           </RnText>
           <RnIcon
-            color='white'
+            color={CustomColors.White}
             path={
               intlStore.localeLoading
                 ? mdiDotsHorizontal
                 : mdiUnfoldMoreHorizontal
             }
             size={16}
-            style={[css.CornerButton_Icon, css.CornerButton_Icon__language]}
+            style={[styles.cornerButtonInfo, styles.cornerButtonIconLanguage]}
           />
         </View>
       </RnTouchableOpacity>
-      <View style={css.Space} />
+      <View style={styles.space} />
     </BrekekeGradient>
   )
 })

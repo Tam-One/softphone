@@ -9,12 +9,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "baseUrl": "./",
     "paths": {
       "utils/*": ["./src/utils/*"],
       "pages/*": ["./src/pages/*"],
       "components/*": ["./src/components/*"],
-      "stores/*": ["./src/stores/*"]
-    }
+      "stores/*": ["./src/stores/*"],
+      "api/*": ["./src/api/*"],
+      "assets/*": ["./src/assets/*"]
+    },
+    "noImplicitAny": false
   },
   "include": ["src"]
 }

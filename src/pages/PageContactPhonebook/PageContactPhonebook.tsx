@@ -11,8 +11,9 @@ import Layout from 'components/Layout/Layout'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'
+import styles from 'pages/PageContactPhonebook/Styles'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { getAuthStore } from 'stores/authStore'
 import callStore from 'stores/callStore'
 import contactStore, { Phonebook2 } from 'stores/contactStore'
@@ -23,13 +24,7 @@ import RnAlert from 'stores/RnAlert'
 import RnPicker from 'stores/RnPicker'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
 
-import pbx from '../api/pbx'
-
-const css = StyleSheet.create({
-  Loading: {
-    marginTop: 20,
-  },
-})
+import pbx from '../../api/pbx'
 
 @observer
 class PageContactPhonebook extends React.Component {
@@ -224,7 +219,7 @@ class PageContactPhonebook extends React.Component {
         </View>
         {contactStore.loading ? (
           <RnText
-            style={css.Loading}
+            style={styles.loading}
             warning
             small
             normal
@@ -233,7 +228,7 @@ class PageContactPhonebook extends React.Component {
         ) : contactStore.hasLoadmore ? (
           <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
             <RnText
-              style={css.Loading}
+              style={styles.loading}
               primary
               small
               normal

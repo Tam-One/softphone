@@ -3,16 +3,15 @@ import MessageList from 'components/ChatMessageList'
 import ChatInput from 'components/FooterChatInput'
 import Layout from 'components/Layout/Layout'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
-import g from 'components/variables'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
+import styles from 'pages/PageChatDetail/Styles'
 import React from 'react'
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
   ScrollView,
-  StyleSheet,
   TextInputSelectionChangeEventData,
   View,
 } from 'react-native'
@@ -26,22 +25,7 @@ import pickFile from 'utils/pickFile'
 import saveBlob from 'utils/saveBlob'
 import { arrToMap } from 'utils/toMap'
 
-import uc from '../api/uc'
-
-const css = StyleSheet.create({
-  LoadMore: {
-    alignSelf: 'center',
-    paddingBottom: 15,
-    fontSize: g.fontSizeSmall,
-    paddingHorizontal: 10,
-  },
-  LoadMore__btn: {
-    color: g.colors.primary,
-  },
-  LoadMore__finished: {
-    color: g.colors.warning,
-  },
-})
+import uc from '../../api/uc'
 
 @observer
 class PageChatDetail extends React.Component<{
@@ -123,9 +107,9 @@ class PageChatDetail extends React.Component<{
         title={u?.name}
       >
         {loadingRecent ? (
-          <RnText style={css.LoadMore}>{intl`Loading...`}</RnText>
+          <RnText style={styles.loadMore}>{intl`Loading...`}</RnText>
         ) : allMessagesLoaded ? (
-          <RnText center style={[css.LoadMore, css.LoadMore__finished]}>
+          <RnText center style={[styles.loadMore, styles.loadMoreFinished]}>
             {this.chatIds.length === 0
               ? intl`There's currently no message in this thread`
               : intl`All messages in this thread have been loaded`}
@@ -136,7 +120,7 @@ class PageChatDetail extends React.Component<{
           >
             <RnText
               bold={!loadingMore}
-              style={[css.LoadMore, !loadingMore && css.LoadMore__btn]}
+              style={[styles.loadMore, !loadingMore && styles.loadMoreBtn]}
             >
               {loadingMore ? intl`Loading...` : intl`Load more messages`}
             </RnText>

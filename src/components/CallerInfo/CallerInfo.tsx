@@ -4,6 +4,7 @@ import React, { FC } from 'react'
 import { Image, TouchableOpacityProps, View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
 import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
 import CustomImages from 'utils/CustomImages'
 
 const CallerInfo: FC<{
@@ -17,7 +18,7 @@ const CallerInfo: FC<{
       {!!callerName && (
         <>
           <UserAvatar
-            size={66}
+            size={CustomFonts.AvatarSize}
             name={callerName}
             bgColor={CustomColors.DodgerBlue}
           />

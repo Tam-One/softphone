@@ -5,6 +5,7 @@ const CustomFonts = {
   CallerName: 26,
   SmallFooterText: 11,
   BackText: 17,
+  AvatarSize: 66,
 }
 
 export default CustomFonts
