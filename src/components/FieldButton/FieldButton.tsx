@@ -12,8 +12,7 @@ const FieldButton: FC<
     label: string
     value: string
   }>
-> = p0 => {
-  const { style, ...p } = p0
+> = ({ style, ...p }) => {
   return (
     <RnTouchableOpacity
       onPress={p.onCreateBtnPress}

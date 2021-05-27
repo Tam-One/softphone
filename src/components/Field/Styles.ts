@@ -1,7 +1,6 @@
+import g from 'components/variables'
 import { Platform, StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
-
-import g from '../variables'
 
 const styles = StyleSheet.create({
   field: {
