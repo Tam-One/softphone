@@ -1,14 +1,13 @@
+import UserItem from 'components/ContactUserItem'
+import Field from 'components/Field'
+import Layout from 'components/Layout/Layout'
+import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import React from 'react'
-
-import UserItem from '../components/ContactUserItem'
-import Field from '../components/Field'
-import Layout from '../components/Layout'
-import { RnText, RnTouchableOpacity } from '../components/Rn'
-import { getAuthStore } from '../stores/authStore'
-import callStore from '../stores/callStore'
-import intl from '../stores/intl'
-import Nav from '../stores/Nav'
+import { getAuthStore } from 'stores/authStore'
+import callStore from 'stores/callStore'
+import intl from 'stores/intl'
+import Nav from 'stores/Nav'
 
 @observer
 class PageCallParks extends React.Component<{

@@ -1,14 +1,13 @@
+import Layout from 'components/Layout/Layout'
 import cloneDeep from 'lodash/cloneDeep'
 import isEqual from 'lodash/isEqual'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
-
-import { Phonebook2 } from '../stores/contactStore'
-import intl from '../stores/intl'
-import RnAlert from '../stores/RnAlert'
-import useForm from '../utils/useForm'
-import useStore from '../utils/useStore'
-import Layout from './Layout'
+import { Phonebook2 } from 'stores/contactStore'
+import intl from 'stores/intl'
+import RnAlert from 'stores/RnAlert'
+import useForm from 'utils/useForm'
+import useStore from 'utils/useStore'
 
 const genEmptyPhonebook = () => {
   return {

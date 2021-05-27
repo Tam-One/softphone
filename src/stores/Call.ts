@@ -1,13 +1,12 @@
 import { action, computed, observable } from 'mobx'
 import RNCallKeep from 'react-native-callkeep'
+import { CallStore } from 'stores/callStore'
+import { intlDebug } from 'stores/intl'
+import Nav from 'stores/Nav'
+import RnAlert from 'stores/RnAlert'
+import timerStore from 'stores/timerStore'
 
-import pbx from '../api/pbx'
 import sip from '../api/sip'
-import { CallStore } from './callStore'
-import { intlDebug } from './intl'
-import Nav from './Nav'
-import RnAlert from './RnAlert'
-import timerStore from './timerStore'
 
 export default class Call {
   constructor(private store: CallStore) {}
@@ -17,8 +16,10 @@ export default class Call {
   @observable partyName = ''
   @observable pbxTalkerId = ''
   @observable pbxTenant = ''
-  @computed get title() {
-    return this.partyName || this.partyNumber || this.pbxTalkerId || this.id
+  @observable callerName = ''
+
+  @computed get getCallerName() {
+    return this.callerName
   }
 
   @observable incoming = false
@@ -32,17 +33,22 @@ export default class Call {
   callkeepAlreadyAnswered = false
   callkeepAlreadyRejected = false
 
-  answer = (options?: object) => {
+  answer = (options?: object, callerName?: string) => {
     this.answered = true
     this.store.currentCallId = this.id
     sip.answerSession(this.id, {
       videoEnabled: this.remoteVideoEnabled,
       ...options,
     })
+    this.setCallerName(callerName)
     Nav().goToPageCallManage()
     if (this.callkeepUuid && !this.callkeepAlreadyAnswered) {
       RNCallKeep.answerIncomingCall(this.callkeepUuid)
     }
+  }
+
+  setCallerName = (name?: string) => {
+    this.callerName = name || ''
   }
 
   hangup = () => {

@@ -5,31 +5,25 @@ import {
   mdiInformation,
   mdiPhone,
 } from '@mdi/js'
+import pbx from 'api/pbx'
+import UserItem from 'components/ContactUserItem'
+import Field from 'components/Field'
+import Layout from 'components/Layout/Layout'
+import { RnText, RnTouchableOpacity } from 'components/Rn'
 import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'
+import styles from 'pages/PageContactPhonebook/Styles'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-
-import pbx from '../api/pbx'
-import UserItem from '../components/ContactUserItem'
-import Field from '../components/Field'
-import Layout from '../components/Layout'
-import { RnText, RnTouchableOpacity } from '../components/Rn'
-import { getAuthStore } from '../stores/authStore'
-import callStore from '../stores/callStore'
-import contactStore, { Phonebook2 } from '../stores/contactStore'
-import intl, { intlDebug } from '../stores/intl'
-import Nav from '../stores/Nav'
-import profileStore from '../stores/profileStore'
-import RnAlert from '../stores/RnAlert'
-import RnPicker from '../stores/RnPicker'
-import { BackgroundTimer } from '../utils/BackgroundTimer'
-
-const css = StyleSheet.create({
-  Loading: {
-    marginTop: 20,
-  },
-})
+import { View } from 'react-native'
+import { getAuthStore } from 'stores/authStore'
+import callStore from 'stores/callStore'
+import contactStore, { Phonebook2 } from 'stores/contactStore'
+import intl, { intlDebug } from 'stores/intl'
+import Nav from 'stores/Nav'
+import profileStore from 'stores/profileStore'
+import RnAlert from 'stores/RnAlert'
+import RnPicker from 'stores/RnPicker'
+import { BackgroundTimer } from 'utils/BackgroundTimer'
 
 @observer
 class PageContactPhonebook extends React.Component {
@@ -224,7 +218,7 @@ class PageContactPhonebook extends React.Component {
         </View>
         {contactStore.loading ? (
           <RnText
-            style={css.Loading}
+            style={styles.loading}
             warning
             small
             normal
@@ -233,7 +227,7 @@ class PageContactPhonebook extends React.Component {
         ) : contactStore.hasLoadmore ? (
           <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
             <RnText
-              style={css.Loading}
+              style={styles.loading}
               primary
               small
               normal

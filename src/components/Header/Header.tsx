@@ -1,33 +1,14 @@
+import styles from 'components/Header/Styles'
+import BackBtn from 'components/HeaderBackBtn/HeaderBackBtn'
+import CreateBtn from 'components/HeaderCreateBtn'
+import Dropdown, {
+  DropdownBtn,
+  HeaderDropdownItem,
+} from 'components/HeaderDropdown'
+import Navigation from 'components/HeaderNavigation'
+import Title from 'components/HeaderTitle'
 import React, { FC, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-
-import BackBtn from './HeaderBackBtn'
-import CreateBtn from './HeaderCreateBtn'
-import Dropdown, { DropdownBtn, HeaderDropdownItem } from './HeaderDropdown'
-import Navigation from './HeaderNavigation'
-import Title from './HeaderTitle'
-import g from './variables'
-
-const css = StyleSheet.create({
-  Header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-  },
-  Outer: {
-    backgroundColor: g.bg,
-  },
-  Outer__compact: {
-    ...g.boxShadow,
-  },
-  Outer__transparent: {
-    backgroundColor: 'transparent',
-  },
-  Inner__hasBackBtn: {
-    paddingLeft: 35,
-  },
-})
+import { View } from 'react-native'
 
 const Header: FC<
   Partial<{
@@ -56,15 +37,15 @@ const Header: FC<
   const [dropdownActive, setDropdownActive] = useState(false)
   return (
     <>
-      <View style={css.Header}>
+      <View style={styles.header}>
         <View
           style={[
-            css.Outer,
-            compact && css.Outer__compact,
-            transparent && css.Outer__transparent,
+            styles.outer,
+            compact && styles.outerCompact,
+            transparent && styles.outerTransparent,
           ]}
         >
-          <View style={onBack && css.Inner__hasBackBtn}>
+          <View style={onBack && styles.innerHasBackBtn}>
             <Title
               compact={compact as boolean}
               description={description}

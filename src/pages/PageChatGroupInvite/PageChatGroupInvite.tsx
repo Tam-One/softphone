@@ -1,48 +1,18 @@
+import uc from 'api/uc'
+import UserItem from 'components/ContactUserItem'
+import Field from 'components/Field'
+import Layout from 'components/Layout/Layout'
+import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
+import styles from 'pages/PageChatGroupInvite/Styles'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-
-import uc from '../api/uc'
-import UserItem from '../components/ContactUserItem'
-import Field from '../components/Field'
-import Layout from '../components/Layout'
-import { RnText, RnTouchableOpacity } from '../components/Rn'
-import g from '../components/variables'
-import chatStore from '../stores/chatStore'
-import contactStore from '../stores/contactStore'
-import intl, { intlDebug } from '../stores/intl'
-import Nav from '../stores/Nav'
-import RnAlert from '../stores/RnAlert'
-
-const css = StyleSheet.create({
-  PageChatGroupInvite: {},
-  PageChatGroupInvite_TextInput: {
-    padding: 10,
-    ...g.boxShadow,
-  },
-  PageChatGroupInvite_Outer: {
-    paddingTop: 5,
-    paddingHorizontal: 10,
-  },
-  PageChatGroupInvite_BtnSave: {
-    marginTop: 15,
-    padding: 10,
-    borderRadius: g.borderRadius,
-    backgroundColor: g.colors.primary,
-  },
-  PageChatGroupInvite_BtnText: {
-    alignItems: 'center',
-  },
-  PageChatGroupInvite_GroupName: {
-    fontSize: g.fontSizeTitle,
-    padding: 5,
-  },
-  PageChatGroupInvite_Text: {
-    paddingTop: 15,
-    fontSize: g.fontSizeTitle,
-  },
-})
+import { View } from 'react-native'
+import chatStore from 'stores/chatStore'
+import contactStore from 'stores/contactStore'
+import intl, { intlDebug } from 'stores/intl'
+import Nav from 'stores/Nav'
+import RnAlert from 'stores/RnAlert'
 
 @observer
 class PageChatGroupInvite extends React.Component<{
@@ -58,19 +28,21 @@ class PageChatGroupInvite extends React.Component<{
   render() {
     return (
       <Layout onBack={this.back} title={intl`Inviting Group Member`}>
-        <View style={css.PageChatGroupInvite_Outer}>
-          <RnText style={css.PageChatGroupInvite_GroupName}>
+        <View style={styles.pageChatGroupInviteOuter}>
+          <RnText style={styles.pageChatGroupInviteGroupName}>
             {chatStore.getGroup(this.props.groupId).name}
           </RnText>
           <RnTouchableOpacity
             onPress={this.invite}
-            style={css.PageChatGroupInvite_BtnSave}
+            style={styles.pageChatGroupInviteBtnSave}
           >
             <RnText
-              style={css.PageChatGroupInvite_BtnText}
+              style={styles.pageChatGroupInviteBtnText}
             >{intl`Invite`}</RnText>
           </RnTouchableOpacity>
-          <RnText style={css.PageChatGroupInvite_Text}>{intl`Members`}</RnText>
+          <RnText
+            style={styles.pageChatGroupInviteText}
+          >{intl`Members`}</RnText>
         </View>
         <Field isGroup />
         {this.buddyIds.map((id, i) => (

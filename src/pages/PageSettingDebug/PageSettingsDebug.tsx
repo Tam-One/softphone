@@ -1,30 +1,17 @@
 import { mdiKeyboardBackspace } from '@mdi/js'
+import Field from 'components/Field'
+import Layout from 'components/Layout/Layout'
+import { RnText } from 'components/Rn'
+import { currentVersion } from 'components/variables'
 import filesize from 'filesize'
 import { observer } from 'mobx-react'
 import moment from 'moment'
+import styles from 'pages/PageSettingDebug/Styles'
 import React, { Component } from 'react'
-import { Platform, StyleSheet } from 'react-native'
-
-import Field from '../components/Field'
-import Layout from '../components/Layout'
-import { RnText } from '../components/Rn'
-import { currentVersion } from '../components/variables'
-import debugStore from '../stores/debugStore'
-import intl from '../stores/intl'
-import Nav from '../stores/Nav'
-
-const css = StyleSheet.create({
-  BtnIcon: {
-    transform: [
-      {
-        rotate: '180deg',
-      },
-    ],
-  },
-  Text: {
-    paddingHorizontal: 20,
-  },
-})
+import { Platform } from 'react-native'
+import debugStore from 'stores/debugStore'
+import intl from 'stores/intl'
+import Nav from 'stores/Nav'
 
 @observer
 class PageSettingsDebug extends Component {
@@ -61,7 +48,7 @@ class PageSettingsDebug extends Component {
             />
             <Field
               createBtnIcon={mdiKeyboardBackspace}
-              createBtnIconStyle={css.BtnIcon}
+              createBtnIconStyle={styles.btnIcon}
               label={intl`OPEN DEBUG LOG`}
               onCreateBtnPress={debugStore.openLogFile}
               onTouchPress={debugStore.openLogFile}
@@ -71,7 +58,7 @@ class PageSettingsDebug extends Component {
             <Field hasMargin isGroup label={intl`UPDATE`} />
             <Field
               createBtnIcon={mdiKeyboardBackspace}
-              createBtnIconStyle={css.BtnIcon}
+              createBtnIconStyle={styles.btnIcon}
               label={intl`UPDATE`}
               onCreateBtnPress={debugStore.openInStore}
               onTouchPress={debugStore.openInStore}
@@ -81,7 +68,7 @@ class PageSettingsDebug extends Component {
               normal
               primary={!debugStore.isUpdateAvailable}
               small
-              style={css.Text}
+              style={styles.text}
               warning={debugStore.isUpdateAvailable}
             >
               {intl`Current version: ${currentVersion}`}
@@ -98,10 +85,10 @@ class PageSettingsDebug extends Component {
         )}
         {Platform.OS === 'web' && (
           <>
-            <RnText normal primary small style={css.Text}>
+            <RnText normal primary small style={styles.text}>
               {intl`Current version: ${currentVersion}`}
             </RnText>
-            <RnText normal warning small style={css.Text}>
+            <RnText normal warning small style={styles.text}>
               {intl`You are running an in-browser version of Brekeke Phone`}
             </RnText>
           </>

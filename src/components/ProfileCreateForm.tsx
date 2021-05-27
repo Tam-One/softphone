@@ -1,17 +1,16 @@
+import Layout from 'components/Layout/Layout'
+import { RnText } from 'components/Rn'
 import cloneDeep from 'lodash/cloneDeep'
 import isEqual from 'lodash/isEqual'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
 import { View } from 'react-native'
-
-import { getAuthStore } from '../stores/authStore'
-import intl from '../stores/intl'
-import profileStore, { Profile } from '../stores/profileStore'
-import RnAlert from '../stores/RnAlert'
-import useForm from '../utils/useForm'
-import useStore from '../utils/useStore'
-import Layout from './Layout'
-import { RnText } from './Rn'
+import { getAuthStore } from 'stores/authStore'
+import intl from 'stores/intl'
+import profileStore, { Profile } from 'stores/profileStore'
+import RnAlert from 'stores/RnAlert'
+import useForm from 'utils/useForm'
+import useStore from 'utils/useStore'
 
 const ProfileCreateForm: FC<{
   updatingProfile?: Profile
