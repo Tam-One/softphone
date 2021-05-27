@@ -4,11 +4,16 @@ const CustomColors = {
   Grey: '#BCC4CC',
   White: '#FFFFFF',
   AliceBlue: '#E7F3FF',
+  lightAliceBlue: '#E8F3FF',
   Green: '#35CE95',
   IconActiveBlue: '#4088FF',
   LightGrey: 'lightgrey',
   Black: 'black',
   Transparent: 'transparent',
+  DarkGrey: '#D3D7DB',
+  Tomato: '#FF5757',
+  LightGold: '#FFC260',
+  GreenMantis: '#74bf53',
 }
 
 export default CustomColors

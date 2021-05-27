@@ -4,6 +4,15 @@ import {
   mdiPlus,
   mdiUnfoldMoreHorizontal,
 } from '@mdi/js'
+import styles from 'components/Field/Styles'
+import {
+  RnIcon,
+  RnSwitch,
+  RnText,
+  RnTextInput,
+  RnTouchableOpacity,
+} from 'components/Rn'
+import g from 'components/variables'
 import flow from 'lodash/flow'
 import omit from 'lodash/omit'
 import { observer } from 'mobx-react'
@@ -18,144 +27,9 @@ import {
   View,
   ViewProps,
 } from 'react-native'
-
-import intl from '../stores/intl'
-import RnPicker from '../stores/RnPicker'
-import useStore from '../utils/useStore'
-import { RnIcon, RnSwitch, RnText, RnTextInput, RnTouchableOpacity } from './Rn'
-import g from './variables'
-
-const css = StyleSheet.create({
-  Field: {
-    borderBottomWidth: 1,
-    borderColor: g.borderBg,
-    alignItems: 'stretch',
-    marginHorizontal: 15,
-    ...Platform.select({
-      android: {
-        paddingBottom: 2,
-      },
-    }),
-  },
-  Field__focusing: {
-    backgroundColor: g.colors.primaryFn(0.5),
-  },
-  Field__disabled: {
-    backgroundColor: g.hoverBg,
-  },
-  Field__group: {
-    marginHorizontal: 0,
-    marginTop: 15,
-    backgroundColor: g.borderBg,
-    padding: 15,
-  },
-  Field__groupMargin: {
-    marginTop: 30,
-  },
-  Field__transparent: {
-    borderColor: 'transparent',
-    marginHorizontal: 0,
-  },
-  Field_Label: {
-    paddingTop: 13,
-    paddingBottom: 0,
-    paddingLeft: 7,
-    ...Platform.select({
-      android: {
-        paddingTop: 3,
-        top: 6,
-      },
-      web: {
-        // Fix form auto fill style on web
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-      },
-    }),
-  },
-  Field_LabelText: {
-    color: g.subColor,
-    fontWeight: g.fontWeight,
-  },
-  Field_LabelTextGroup: {
-    ...Platform.select({
-      android: {
-        top: -6,
-      },
-    }),
-  },
-  Field_TextInput: {
-    width: '100%',
-    paddingBottom: 3,
-    paddingLeft: 7,
-    paddingRight: 40,
-    fontWeight: 'bold',
-    overflow: 'hidden',
-    ...Platform.select({
-      android: {
-        paddingTop: 0,
-        paddingBottom: 0,
-        lineHeight: g.lineHeight,
-        // Should not set height and overflow here
-        //    it will cause scroll issue with the input
-        // height: g.lineHeight,
-      },
-      web: {
-        // Fix form auto fill style on web
-        paddingTop: 28,
-      },
-      default: {
-        paddingTop: 1,
-      },
-    }),
-  },
-  Field_Switch: {
-    position: 'absolute',
-    top: 22,
-    right: 11,
-  },
-  Field_Btn: {
-    position: 'absolute',
-    top: 11,
-    right: 5,
-    width: 40,
-    height: 30,
-    borderRadius: g.borderRadius,
-  },
-  Field_Btn__create: {
-    backgroundColor: g.colors.primaryFn(0.5),
-  },
-  Field_Btn__remove: {
-    backgroundColor: g.colors.dangerFn(0.5),
-  },
-  Field_Icon: {
-    position: 'absolute',
-    top: 15,
-    right: 15,
-  },
-  Field_Error: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  Field_ErrorInner: {
-    alignSelf: 'flex-start',
-    marginVertical: 2,
-    marginHorizontal: 15,
-    paddingVertical: 2,
-    paddingHorizontal: 10,
-    backgroundColor: g.colors.danger,
-    borderRadius: g.borderRadius,
-  },
-  Field_ErrorIcon: {
-    position: 'absolute',
-    top: -8,
-    left: 2,
-  },
-  Field_ErrorLabel: {
-    color: g.revColor,
-  },
-})
+import intl from 'stores/intl'
+import RnPicker from 'stores/RnPicker'
+import useStore from 'utils/useStore'
 
 const noop = () => {}
 
@@ -198,12 +72,12 @@ const Field: FC<
     return (
       <View
         style={[
-          css.Field,
-          css.Field__group,
-          props.hasMargin && css.Field__groupMargin,
+          styles.field,
+          styles.fieldGroup,
+          props.hasMargin && styles.fieldGroupMargin,
         ]}
       >
-        <RnText small style={css.Field_LabelTextGroup}>
+        <RnText small style={styles.fieldLabelTextGroup}>
           {props.label}
         </RnText>
       </View>
@@ -226,7 +100,7 @@ const Field: FC<
       iconRender: () => (
         <RnTouchableOpacity
           onPress={props.onCreateBtnPress}
-          style={[css.Field_Btn, css.Field_Btn__create, props.createBtnStyle]}
+          style={[styles.fieldBtn, styles.fieldBtnCreate, props.createBtnStyle]}
         >
           <RnIcon
             color={g.colors.primary}
@@ -243,7 +117,7 @@ const Field: FC<
       iconRender: () => (
         <RnTouchableOpacity
           onPress={props.onRemoveBtnPress}
-          style={[css.Field_Btn, css.Field_Btn__remove, props.removeBtnStyle]}
+          style={[styles.fieldBtn, styles.fieldBtnRemove, props.removeBtnStyle]}
         >
           <RnIcon
             color={g.colors.danger}
@@ -262,7 +136,7 @@ const Field: FC<
           props.valueRender ||
           ((v: boolean) => (v ? intl`Enabled` : intl`Disabled`)),
         iconRender: (v: boolean) => (
-          <RnSwitch enabled={v} style={css.Field_Switch} />
+          <RnSwitch enabled={v} style={styles.fieldSwitch} />
         ),
         onTouchPress: () => {
           props.onValueChange?.(!props.value)
@@ -315,7 +189,7 @@ const Field: FC<
               props.onCreateBtnPress || noop,
               props.onSubmitEditing || noop,
             ])}
-            style={[css.Field_TextInput, props.style]}
+            style={[styles.fieldTextInput, props.style]}
             value={props.value as string}
           />
         ),
@@ -329,8 +203,8 @@ const Field: FC<
   }
   const Container = props.onTouchPress ? RnTouchableOpacity : View
   const label = (
-    <View pointerEvents='none' style={css.Field_Label}>
-      <RnText small style={css.Field_LabelText}>
+    <View pointerEvents='none' style={styles.fieldLabel}>
+      <RnText small style={styles.fieldLabelText}>
         {props.label}
       </RnText>
     </View>
@@ -341,10 +215,10 @@ const Field: FC<
         accessible={!props.inputElement}
         onPress={props.onTouchPress}
         style={[
-          css.Field,
-          $.isFocusing && css.Field__focusing,
-          props.disabled && css.Field__disabled,
-          props.transparent && css.Field__transparent,
+          styles.field,
+          $.isFocusing && styles.fieldFocusing,
+          props.disabled && styles.fieldDisabled,
+          props.transparent && styles.fieldTransparent,
         ]}
       >
         {/* Fix form auto fill style on web */}
@@ -354,7 +228,7 @@ const Field: FC<
             <RnTextInput
               disabled
               secureTextEntry={!!(props.secureTextEntry && props.value)}
-              style={css.Field_TextInput}
+              style={styles.fieldTextInput}
               value={
                 (props.valueRender && props.valueRender(props.value)) ||
                 props.value ||
@@ -371,22 +245,22 @@ const Field: FC<
             <RnIcon
               path={props.icon}
               pointerEvents='none'
-              style={css.Field_Icon}
+              style={styles.fieldIcon}
             />
           ))}
       </Container>
       {props.error && (
         <RnTouchableOpacity
           onPress={() => inputRef.current?.focus()}
-          style={css.Field_Error}
+          style={styles.fieldError}
         >
-          <View style={css.Field_ErrorInner}>
+          <View style={styles.fieldErrorInner}>
             <RnIcon
               color={g.colors.danger}
               path={mdiCardsDiamond}
-              style={css.Field_ErrorIcon}
+              style={styles.fieldErrorIcon}
             />
-            <RnText small style={css.Field_ErrorLabel}>
+            <RnText small style={styles.fieldErrorLabel}>
               {props.error}
             </RnText>
           </View>

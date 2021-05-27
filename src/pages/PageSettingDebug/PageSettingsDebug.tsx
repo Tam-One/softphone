@@ -1,5 +1,5 @@
 import { mdiKeyboardBackspace } from '@mdi/js'
-import Field from 'components/Field'
+import Field from 'components/Field/Field'
 import Layout from 'components/Layout/Layout'
 import { RnText } from 'components/Rn'
 import { currentVersion } from 'components/variables'

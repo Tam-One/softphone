@@ -6,6 +6,9 @@ const CustomFonts = {
   SmallFooterText: 11,
   BackText: 17,
   AvatarSize: 66,
+  smallIconFont: 14,
+  smallLabel: 12,
+  smallSubText: 13,
 }
 
 export default CustomFonts

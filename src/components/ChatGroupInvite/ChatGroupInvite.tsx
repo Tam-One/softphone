@@ -1,53 +1,24 @@
 import { mdiCheck, mdiClose } from '@mdi/js'
+import uc from 'api/uc'
+import ButtonIcon from 'components/ButtonIcon'
+import { formatDateTimeSemantic } from 'components/chatConfig'
+import styles from 'components/ChatGroupInvite/Styles'
+import UserItem from 'components/ContactUserItem/ContactUserItem'
+import { RnText, RnTouchableOpacity } from 'components/Rn'
+import g from 'components/variables'
 import sortBy from 'lodash/sortBy'
 import { action, computed, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
-import { StyleSheet, View } from 'react-native'
-
-import uc from '../api/uc'
-import Call from '../stores/Call'
-import chatStore from '../stores/chatStore'
-import contactStore from '../stores/contactStore'
-import intl, { intlDebug } from '../stores/intl'
-import Nav from '../stores/Nav'
-import RnAlert from '../stores/RnAlert'
-import RnStacker from '../stores/RnStacker'
-import { filterTextOnly } from '../utils/formatChatContent'
-import ButtonIcon from './ButtonIcon'
-import { formatDateTimeSemantic } from './chatConfig'
-import UserItem from './ContactUserItem'
-import { RnText, RnTouchableOpacity } from './Rn'
-import g from './variables'
-
-const css = StyleSheet.create({
-  Notify: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: g.borderBg,
-    backgroundColor: g.hoverBg,
-  },
-  Notify_Info: {
-    flex: 1,
-    paddingLeft: 12,
-    paddingVertical: 5,
-  },
-  Notify_Btn_reject: {
-    borderColor: g.colors.danger,
-  },
-  Notify_Btn_accept: {
-    borderColor: g.colors.primary,
-  },
-
-  NotifyUnread: {
-    borderBottomWidth: 0,
-  },
-  NotifyUnreadBtn: {
-    flex: 1,
-    backgroundColor: g.colors.primaryFn(0.5),
-  },
-})
+import { View } from 'react-native'
+import Call from 'stores/Call'
+import chatStore from 'stores/chatStore'
+import contactStore from 'stores/contactStore'
+import intl, { intlDebug } from 'stores/intl'
+import Nav from 'stores/Nav'
+import RnAlert from 'stores/RnAlert'
+import RnStacker from 'stores/RnStacker'
+import { filterTextOnly } from 'utils/formatChatContent'
 
 const Notify: FC<{
   id: string
@@ -61,10 +32,10 @@ const Notify: FC<{
 }> = observer(p0 => {
   const { call: c, ...p } = p0
   return (
-    <View style={css.Notify}>
+    <View style={styles.notify}>
       {!!p.type && (
         <>
-          <View style={css.Notify_Info}>
+          <View style={styles.notifyInfo}>
             <RnText bold>{p.name}</RnText>
             <RnText>{intl`Group chat invited by ${p.inviter}`}</RnText>
           </View>
@@ -74,7 +45,7 @@ const Notify: FC<{
             onPress={() => p.reject(p.id)}
             path={mdiClose}
             size={20}
-            style={css.Notify_Btn_reject}
+            style={styles.notifyBtnReject}
           />
           <ButtonIcon
             bdcolor={g.colors.primary}
@@ -82,7 +53,7 @@ const Notify: FC<{
             onPress={() => p.accept(p.id)}
             path={mdiCheck}
             size={20}
-            style={css.Notify_Btn_accept}
+            style={styles.notifyBtnAccept}
             disabled={p.loading}
           />
         </>
@@ -274,9 +245,9 @@ class UnreadChatNoti extends React.Component {
       isGroup,
     } = this.unreadChat
     return (
-      <View style={[css.Notify, css.NotifyUnread]}>
+      <View style={[styles.notify, styles.notifyUnread]}>
         <RnTouchableOpacity
-          style={css.NotifyUnreadBtn}
+          style={styles.notifyUnreadBtn}
           onPress={this.onUnreadPress}
         >
           <UserItem

@@ -1,21 +1,20 @@
 // Main entry for the create-react-app web bundle
 
 import { mdiAndroid, mdiApple, mdiWeb } from '@mdi/js'
+import brand from 'assets/brand.png'
+import logo from 'assets/logo.png'
+// @ts-ignore
+import App from 'components/App/App.tsx'
+import styles from 'components/AppWeb/Styles'
+import BrekekeGradient from 'components/BrekekeGradient'
+import { RnIcon, RnImage, RnText, RnTouchableOpacity } from 'components/Rn'
 import qs from 'qs'
 import React, { ReactElement, useState } from 'react'
 import { isAndroid, isIOS } from 'react-device-detect'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
+import intl from 'stores/intl'
 import Url from 'url-parse'
-
-import brand from '../assets/brand.png'
-import logo from '../assets/logo.png'
-import intl from '../stores/intl'
-import parse from '../utils/deeplink-parse'
-// @ts-ignore
-import App from './App.tsx'
-import BrekekeGradient from './BrekekeGradient'
-import { RnIcon, RnImage, RnText, RnTouchableOpacity } from './Rn'
-import v from './variables'
+import parse from 'utils/deeplink-parse'
 
 const globalCss = `* {
   outline: none !important;
@@ -38,53 +37,6 @@ requestAnimationFrame(() => {
   h.appendChild(s)
 })
 
-const css = StyleSheet.create({
-  WebApp: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'fixed' as 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  WebApp_Logo: {
-    width: 80,
-    height: 80,
-  },
-  WebApp_Brand: {
-    width: 150,
-    height: 54,
-    marginTop: 10,
-  },
-  WebApp_Btn: {
-    position: 'relative',
-    width: 270,
-    padding: 15,
-    borderRadius: v.borderRadius,
-    marginTop: 10,
-  },
-  WebApp_Btn__app: {
-    marginTop: 30,
-    backgroundColor: 'black',
-  },
-  WebApp_Btn__browser: {
-    backgroundColor: 'white',
-    marginBottom: 50,
-  },
-  WebApp_BtnTxt__browser: {
-    color: 'white',
-  },
-  WebApp_Icon: {
-    position: 'absolute',
-    top: 11,
-    right: 10,
-  },
-})
-
 const AppSelection = () => {
   const [isBrowser, setIsBrowser] = useState(!isIOS && !isAndroid)
   let child: ReactElement | null = null
@@ -102,38 +54,38 @@ const AppSelection = () => {
           source={{
             uri: logo,
           }}
-          style={css.WebApp_Logo}
+          style={styles.webAppLogo}
         />
         <RnImage
           source={{
             uri: brand,
           }}
-          style={css.WebApp_Brand}
+          style={styles.webAppBrand}
         />
         <a href={appUrl}>
-          <RnTouchableOpacity style={[css.WebApp_Btn, css.WebApp_Btn__app]}>
-            <RnText small style={css.WebApp_BtnTxt__browser}>
+          <RnTouchableOpacity style={[styles.webAppBtn, styles.webAppBtnApp]}>
+            <RnText small style={styles.webAppBtnTxtBrowser}>
               {intl`OPEN IN APP`}
             </RnText>
             <RnIcon
               color='white'
               path={isIOS ? mdiApple : mdiAndroid}
-              style={css.WebApp_Icon}
+              style={styles.webAppIcon}
             />
           </RnTouchableOpacity>
         </a>
         <RnTouchableOpacity
           onPress={() => setIsBrowser(true)}
-          style={[css.WebApp_Btn, css.WebApp_Btn__browser]}
+          style={[styles.webAppBtn, styles.webAppBtnBrowser]}
         >
           <RnText small>{intl`OPEN IN BROWSER`}</RnText>
-          <RnIcon path={mdiWeb} style={css.WebApp_Icon} />
+          <RnIcon path={mdiWeb} style={styles.webAppIcon} />
         </RnTouchableOpacity>
       </>
     )
   }
   const Container = isBrowser ? View : BrekekeGradient
-  return <Container style={css.WebApp}>{child}</Container>
+  return <Container style={styles.webApp}>{child}</Container>
 }
 
 export default AppSelection

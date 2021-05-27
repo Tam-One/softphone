@@ -1,5 +1,5 @@
-import UserItem from 'components/ContactUserItem'
-import Field from 'components/Field'
+import UserItem from 'components/ContactUserItem/ContactUserItem'
+import Field from 'components/Field/Field'
 import Layout from 'components/Layout/Layout'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'

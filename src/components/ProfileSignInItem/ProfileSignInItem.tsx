@@ -6,57 +6,19 @@ import {
   mdiServerNetwork,
   mdiWeb,
 } from '@mdi/js'
+import Field from 'components/Field/Field'
+import FooterActions from 'components/FooterActions'
+import styles from 'components/ProfileSignInItem/Styles'
+import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
-import { ActivityIndicator, StyleSheet, View } from 'react-native'
-
-import { getAuthStore } from '../stores/authStore'
-import intl from '../stores/intl'
-import Nav from '../stores/Nav'
-import profileStore from '../stores/profileStore'
-import RnAlert from '../stores/RnAlert'
-import Field from './Field'
-import FooterActions from './FooterActions'
-import { RnText, RnTouchableOpacity } from './Rn'
-import g from './variables'
-
-const css = StyleSheet.create({
-  ProfileSignInItem: {
-    backgroundColor: g.bg,
-    marginBottom: 15,
-    marginLeft: 15,
-    borderRadius: g.borderRadius,
-    width: 280,
-  },
-  ProfileSignInItem__last: {
-    marginRight: 15,
-  },
-  ProfileSignInItem__empty: {
-    height: '70%',
-    minHeight: 320,
-    marginVertical: 45,
-    marginLeft: 15,
-    padding: 15,
-  },
-  ProfileSignInItem_Btns: {
-    position: 'absolute',
-    bottom: 15,
-    left: 15,
-    right: 15,
-  },
-  Loading: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'black',
-    opacity: 0.3,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
+import { ActivityIndicator, View } from 'react-native'
+import { getAuthStore } from 'stores/authStore'
+import intl from 'stores/intl'
+import Nav from 'stores/Nav'
+import profileStore from 'stores/profileStore'
+import RnAlert from 'stores/RnAlert'
+import CustomColors from 'utils/CustomColors'
 
 const ProfileSignInItem: FC<{
   empty?: boolean
@@ -65,11 +27,11 @@ const ProfileSignInItem: FC<{
 }> = observer(props => {
   if (props.empty || !props.id) {
     return (
-      <View style={[css.ProfileSignInItem, css.ProfileSignInItem__empty]}>
+      <View style={[styles.profileSignInItem, styles.profileSignInItemEmpty]}>
         <RnText subTitle>{intl`No account`}</RnText>
         <RnText>{intl`There is no account created`}</RnText>
         <RnText>{intl`Tap the below button to create one`}</RnText>
-        <View style={css.ProfileSignInItem_Btns}>
+        <View style={styles.profileSignInItemBtns}>
           <FooterActions
             onNext={Nav().goToPageProfileCreate}
             onNextText={intl`CREATE NEW ACCOUNT`}
@@ -82,7 +44,10 @@ const ProfileSignInItem: FC<{
   const isLoading = profileStore.pnSyncLoadingMap[props.id]
   return (
     <View
-      style={[css.ProfileSignInItem, props.last && css.ProfileSignInItem__last]}
+      style={[
+        styles.profileSignInItem,
+        props.last && styles.profileSignInItemLast,
+      ]}
     >
       <RnTouchableOpacity
         onPress={() => Nav().goToPageProfileUpdate({ id: p.id })}
@@ -112,7 +77,7 @@ const ProfileSignInItem: FC<{
         type='Switch'
         value={p.ucEnabled}
       />
-      <View style={css.ProfileSignInItem_Btns}>
+      <View style={styles.profileSignInItemBtns}>
         <FooterActions
           onBack={() => {
             RnAlert.prompt({
@@ -142,8 +107,8 @@ const ProfileSignInItem: FC<{
         />
       </View>
       {isLoading && (
-        <View style={css.Loading}>
-          <ActivityIndicator size='small' color='white' />
+        <View style={styles.loading}>
+          <ActivityIndicator size='small' color={CustomColors.White} />
         </View>
       )}
     </View>

@@ -1,6 +1,6 @@
 import { UcMessageLog } from 'api/brekekejs'
-import ListUsers from 'components/ChatListUsers'
-import Field from 'components/Field'
+import ListUsers from 'components/ChatListUsers/ChatListUsers'
+import Field from 'components/Field/Field'
 import Layout from 'components/Layout/Layout'
 import { RnText } from 'components/Rn'
 import stableStringify from 'json-stable-stringify'
