@@ -5,7 +5,7 @@ import { formatDateTimeSemantic } from 'components/chatConfig'
 import styles from 'components/ChatGroupInvite/Styles'
 import UserItem from 'components/ContactUserItem/ContactUserItem'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
-import g from 'components/variables'
+import globalVariables from 'components/variables'
 import sortBy from 'lodash/sortBy'
 import { action, computed, observable } from 'mobx'
 import { observer } from 'mobx-react'
@@ -20,6 +20,10 @@ import RnAlert from 'stores/RnAlert'
 import RnStacker from 'stores/RnStacker'
 import { filterTextOnly } from 'utils/formatChatContent'
 
+const {
+  colors: { primary, danger },
+} = globalVariables
+
 const Notify: FC<{
   id: string
   call?: Call
@@ -29,38 +33,39 @@ const Notify: FC<{
   reject: Function
   accept: Function
   loading: boolean
-}> = observer(p0 => {
-  const { call: c, ...p } = p0
-  return (
-    <View style={styles.notify}>
-      {!!p.type && (
-        <>
-          <View style={styles.notifyInfo}>
-            <RnText bold>{p.name}</RnText>
-            <RnText>{intl`Group chat invited by ${p.inviter}`}</RnText>
-          </View>
-          <ButtonIcon
-            bdcolor={g.colors.danger}
-            color={g.colors.danger}
-            onPress={() => p.reject(p.id)}
-            path={mdiClose}
-            size={20}
-            style={styles.notifyBtnReject}
-          />
-          <ButtonIcon
-            bdcolor={g.colors.primary}
-            color={g.colors.primary}
-            onPress={() => p.accept(p.id)}
-            path={mdiCheck}
-            size={20}
-            style={styles.notifyBtnAccept}
-            disabled={p.loading}
-          />
-        </>
-      )}
-    </View>
-  )
-})
+}> = observer(
+  ({ call: c, type, inviter, reject, name, id, accept, loading }) => {
+    return (
+      <View style={styles.notify}>
+        {!!type && (
+          <>
+            <View style={styles.notifyInfo}>
+              <RnText bold>{name}</RnText>
+              <RnText>{intl`Group chat invited by ${inviter}`}</RnText>
+            </View>
+            <ButtonIcon
+              bdcolor={danger}
+              color={danger}
+              onPress={() => reject(id)}
+              path={mdiClose}
+              size={20}
+              style={styles.notifyBtnReject}
+            />
+            <ButtonIcon
+              bdcolor={primary}
+              color={primary}
+              onPress={() => accept(id)}
+              path={mdiCheck}
+              size={20}
+              style={styles.notifyBtnAccept}
+              disabled={loading}
+            />
+          </>
+        )}
+      </View>
+    )
+  },
+)
 
 @observer
 class ChatGroupInvite extends React.Component {

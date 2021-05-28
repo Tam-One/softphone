@@ -6,6 +6,7 @@ import RnTouchableOpacity from 'components/RnTouchableOpacity'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
 
 const CustomHeader: FC<
   Partial<{
@@ -22,7 +23,7 @@ const CustomHeader: FC<
             path={mdiChevronLeft}
             style={styles.buttonIcon}
             color={CustomColors.DodgerBlue}
-            size={27}
+            size={CustomFonts.BackButton}
           />
           <RnText style={styles.backText}>{'Back'}</RnText>
         </RnTouchableOpacity>

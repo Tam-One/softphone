@@ -1,19 +1,23 @@
-import g from 'components/variables'
+import globalVariables from 'components/variables'
 import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
 
+const {
+  bg,
+  colors: { warning, danger },
+} = globalVariables
 const styles = StyleSheet.create({
   app: {
-    backgroundColor: g.bg,
+    backgroundColor: bg,
   },
   appInner: {
     flex: 1,
   },
   appConnectionStatus: {
-    backgroundColor: g.colors.warning,
+    backgroundColor: warning,
   },
   appConnectionStatusFailure: {
-    backgroundColor: g.colors.danger,
+    backgroundColor: danger,
   },
   appConnectionStatusInner: {
     paddingHorizontal: 5,

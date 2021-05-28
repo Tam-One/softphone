@@ -1,11 +1,22 @@
-import g from 'components/variables'
+import globalVariables from 'components/variables'
 import { Platform, StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
+
+const {
+  hoverBg,
+  borderBg,
+  subColor,
+  fontWeight,
+  lineHeight,
+  borderRadius,
+  revColor,
+  colors: { primaryFn, dangerFn, danger },
+} = globalVariables
 
 const styles = StyleSheet.create({
   field: {
     borderBottomWidth: 1,
-    borderColor: g.borderBg,
+    borderColor: borderBg,
     alignItems: 'stretch',
     marginHorizontal: 15,
     ...Platform.select({
@@ -15,10 +26,10 @@ const styles = StyleSheet.create({
     }),
   },
   fieldFocusing: {
-    backgroundColor: g.colors.primaryFn(0.5),
+    backgroundColor: primaryFn(0.5),
   },
   fieldDisabled: {
-    backgroundColor: g.hoverBg,
+    backgroundColor: hoverBg,
   },
   fieldGroup: {
     marginHorizontal: 0,
@@ -52,8 +63,8 @@ const styles = StyleSheet.create({
     }),
   },
   fieldLabelText: {
-    color: g.subColor,
-    fontWeight: g.fontWeight,
+    color: subColor,
+    fontWeight: fontWeight,
   },
   fieldLabelTextGroup: {
     ...Platform.select({
@@ -73,7 +84,7 @@ const styles = StyleSheet.create({
       android: {
         paddingTop: 0,
         paddingBottom: 0,
-        lineHeight: g.lineHeight,
+        lineHeight: lineHeight,
         // Should not set height and overflow here
         //    it will cause scroll issue with the input
         // height: g.lineHeight,
@@ -98,13 +109,13 @@ const styles = StyleSheet.create({
     right: 5,
     width: 40,
     height: 30,
-    borderRadius: g.borderRadius,
+    borderRadius: borderRadius,
   },
   fieldBtnCreate: {
-    backgroundColor: g.colors.primaryFn(0.5),
+    backgroundColor: primaryFn(0.5),
   },
   fieldBtnRemove: {
-    backgroundColor: g.colors.dangerFn(0.5),
+    backgroundColor: dangerFn(0.5),
   },
   fieldIcon: {
     position: 'absolute',
@@ -121,8 +132,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingVertical: 2,
     paddingHorizontal: 10,
-    backgroundColor: g.colors.danger,
-    borderRadius: g.borderRadius,
+    backgroundColor: danger,
+    borderRadius: borderRadius,
   },
   fieldErrorIcon: {
     position: 'absolute',
@@ -130,7 +141,7 @@ const styles = StyleSheet.create({
     left: 2,
   },
   fieldErrorLabel: {
-    color: g.revColor,
+    color: revColor,
   },
 })
 

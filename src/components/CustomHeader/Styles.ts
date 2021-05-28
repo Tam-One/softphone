@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     color: CustomColors.DarkBlue,
-    fontSize: CustomFonts.smallSubText,
+    fontSize: CustomFonts.SmallSubText,
     alignSelf: 'center',
     paddingBottom: 12,
   },

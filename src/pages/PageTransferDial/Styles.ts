@@ -4,7 +4,7 @@ import CustomFonts from 'utils/CustomFonts'
 
 const styles = StyleSheet.create({
   transferSeparatorText: {
-    fontSize: CustomFonts.smallLabel,
+    fontSize: CustomFonts.SmallLabel,
     color: CustomColors.DodgerBlue,
   },
   transferSeparator: {

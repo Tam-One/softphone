@@ -1,13 +1,19 @@
-import g from 'components/variables'
+import globalVariables from 'components/variables'
 import { StyleSheet } from 'react-native'
+
+const {
+  borderBg,
+  hoverBg,
+  colors: { primary, primaryFn, danger },
+} = globalVariables
 
 const styles = StyleSheet.create({
   notify: {
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: g.borderBg,
-    backgroundColor: g.hoverBg,
+    borderColor: borderBg,
+    backgroundColor: hoverBg,
   },
   notifyInfo: {
     flex: 1,
@@ -15,17 +21,17 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   notifyBtnReject: {
-    borderColor: g.colors.danger,
+    borderColor: danger,
   },
   notifyBtnAccept: {
-    borderColor: g.colors.primary,
+    borderColor: primary,
   },
   notifyUnread: {
     borderBottomWidth: 0,
   },
   notifyUnreadBtn: {
     flex: 1,
-    backgroundColor: g.colors.primaryFn(0.5),
+    backgroundColor: primaryFn(0.5),
   },
 })
 

@@ -1,8 +1,6 @@
 // Main entry for the create-react-app web bundle
 
 import { mdiAndroid, mdiApple, mdiWeb } from '@mdi/js'
-import brand from 'assets/brand.png'
-import logo from 'assets/logo.png'
 // @ts-ignore
 import App from 'components/App/App.tsx'
 import styles from 'components/AppWeb/Styles'
@@ -14,6 +12,7 @@ import { isAndroid, isIOS } from 'react-device-detect'
 import { View } from 'react-native'
 import intl from 'stores/intl'
 import Url from 'url-parse'
+import CustomImages from 'utils/CustomImages'
 import parse from 'utils/deeplink-parse'
 
 const globalCss = `* {
@@ -52,13 +51,13 @@ const AppSelection = () => {
       <>
         <RnImage
           source={{
-            uri: logo,
+            uri: CustomImages.Logo,
           }}
           style={styles.webAppLogo}
         />
         <RnImage
           source={{
-            uri: brand,
+            uri: CustomImages.Brand,
           }}
           style={styles.webAppBrand}
         />

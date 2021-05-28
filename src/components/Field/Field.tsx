@@ -12,7 +12,7 @@ import {
   RnTextInput,
   RnTouchableOpacity,
 } from 'components/Rn'
-import g from 'components/variables'
+import globalVariables from 'components/variables'
 import flow from 'lodash/flow'
 import omit from 'lodash/omit'
 import { observer } from 'mobx-react'
@@ -32,6 +32,9 @@ import RnPicker from 'stores/RnPicker'
 import useStore from 'utils/useStore'
 
 const noop = () => {}
+const {
+  colors: { primary, danger },
+} = globalVariables
 
 const Field: FC<
   Partial<{
@@ -103,7 +106,7 @@ const Field: FC<
           style={[styles.fieldBtn, styles.fieldBtnCreate, props.createBtnStyle]}
         >
           <RnIcon
-            color={g.colors.primary}
+            color={primary}
             path={props.createBtnIcon || mdiPlus}
             size={18}
             style={props.createBtnIconStyle}
@@ -120,7 +123,7 @@ const Field: FC<
           style={[styles.fieldBtn, styles.fieldBtnRemove, props.removeBtnStyle]}
         >
           <RnIcon
-            color={g.colors.danger}
+            color={danger}
             path={props.removeBtnIcon || mdiClose}
             size={15}
             style={props.removeBtnIconStyle}
@@ -256,7 +259,7 @@ const Field: FC<
         >
           <View style={styles.fieldErrorInner}>
             <RnIcon
-              color={g.colors.danger}
+              color={danger}
               path={mdiCardsDiamond}
               style={styles.fieldErrorIcon}
             />

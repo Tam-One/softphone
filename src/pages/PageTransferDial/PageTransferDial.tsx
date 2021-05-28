@@ -26,7 +26,7 @@ class PageTransferDial extends React.Component {
   }
 
   resolveMatch = (id: string, isPhoneBook?: boolean) => {
-    var match: any = {}
+    let match: any = {}
     if (isPhoneBook) {
       match = contactStore.getPhonebook(id) || {}
     } else {
@@ -85,27 +85,33 @@ class PageTransferDial extends React.Component {
           title={'Transfer'}
         />
         <ScrollView>
-          {groups.map(_g => (
-            <React.Fragment key={_g.key}>
-              <View style={styles.transferSeparator}>
-                <RnText style={styles.transferSeparatorText}>{_g.key}</RnText>
-              </View>
-              {_g.contacts.map((u, i) => (
-                <UserItem
-                  showNewAvatar={true}
-                  iconFuncs={[
-                    () =>
-                      callStore.currentCall?.transferAttended(u.number, u.name),
-                    () => callStore.currentCall?.transferBlind(u.number),
-                  ]}
-                  icons={[mdiPhoneOutgoing, mdiPhone]}
-                  key={i}
-                  {...u}
-                  number={u.number}
-                />
-              ))}
-            </React.Fragment>
-          ))}
+          {groups.map(group => {
+            const { key, contacts } = group
+            return (
+              <React.Fragment key={key}>
+                <View style={styles.transferSeparator}>
+                  <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                </View>
+                {contacts.map((contact, index) => {
+                  const { number, name } = contact
+                  return (
+                    <UserItem
+                      showNewAvatar={true}
+                      iconFuncs={[
+                        () =>
+                          callStore.currentCall?.transferAttended(number, name),
+                        () => callStore.currentCall?.transferBlind(number),
+                      ]}
+                      icons={[mdiPhoneOutgoing, mdiPhone]}
+                      key={index}
+                      {...contact}
+                      number={number}
+                    />
+                  )
+                })}
+              </React.Fragment>
+            )
+          })}
         </ScrollView>
       </View>
     )

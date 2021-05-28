@@ -1,6 +1,12 @@
-import g from 'components/variables'
+import globalVariables from 'components/variables'
 import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
+
+const {
+  subColor,
+  colors: { primaryFn },
+} = globalVariables
 
 const styles = StyleSheet.create({
   outer: {
@@ -14,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   innerSelected: {
-    backgroundColor: g.colors.primaryFn(0.5),
+    backgroundColor: primaryFn(0.5),
   },
   withSpace: {
     marginVertical: 5,
@@ -22,7 +28,7 @@ const styles = StyleSheet.create({
   text: {
     flex: 1,
     paddingLeft: 10,
-    fontSize: 18,
+    fontSize: CustomFonts.MediumText,
   },
   nameWithStatus: {
     flexDirection: 'row',
@@ -31,7 +37,7 @@ const styles = StyleSheet.create({
   status: {
     top: 2,
     left: 3,
-    color: g.subColor,
+    color: subColor,
   },
   detail: {
     flexDirection: 'row',
@@ -41,7 +47,7 @@ const styles = StyleSheet.create({
   },
   callCreatedAt: {
     left: 3,
-    color: g.subColor,
+    color: subColor,
   },
   buttonIcon: {
     padding: 10,

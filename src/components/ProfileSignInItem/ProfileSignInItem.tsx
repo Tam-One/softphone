@@ -24,8 +24,8 @@ const ProfileSignInItem: FC<{
   empty?: boolean
   id?: string
   last?: boolean
-}> = observer(props => {
-  if (props.empty || !props.id) {
+}> = observer(({ empty, id: profileId, last }) => {
+  if (empty || !profileId) {
     return (
       <View style={[styles.profileSignInItem, styles.profileSignInItemEmpty]}>
         <RnText subTitle>{intl`No account`}</RnText>
@@ -40,42 +40,48 @@ const ProfileSignInItem: FC<{
       </View>
     )
   }
-  const p = profileStore.profilesMap[props.id]
-  const isLoading = profileStore.pnSyncLoadingMap[props.id]
+  const profileMap = profileStore.profilesMap[profileId]
+  const {
+    id,
+    pbxUsername,
+    pbxTenant,
+    pbxHostname,
+    pbxPort,
+    pushNotificationEnabled,
+    ucEnabled,
+  } = profileMap
+  const isLoading = profileStore.pnSyncLoadingMap[profileId]
   return (
     <View
-      style={[
-        styles.profileSignInItem,
-        props.last && styles.profileSignInItemLast,
-      ]}
+      style={[styles.profileSignInItem, last && styles.profileSignInItemLast]}
     >
       <RnTouchableOpacity
-        onPress={() => Nav().goToPageProfileUpdate({ id: p.id })}
+        onPress={() => Nav().goToPageProfileUpdate({ id: id })}
       >
         <Field
           icon={mdiAccountCircleOutline}
           label={intl`USERNAME`}
-          value={p.pbxUsername}
+          value={pbxUsername}
         />
-        <Field icon={mdiApplication} label={intl`TENANT`} value={p.pbxTenant} />
-        <Field icon={mdiWeb} label={intl`HOSTNAME`} value={p.pbxHostname} />
-        <Field icon={mdiServerNetwork} label={intl`PORT`} value={p.pbxPort} />
+        <Field icon={mdiApplication} label={intl`TENANT`} value={pbxTenant} />
+        <Field icon={mdiWeb} label={intl`HOSTNAME`} value={pbxHostname} />
+        <Field icon={mdiServerNetwork} label={intl`PORT`} value={pbxPort} />
       </RnTouchableOpacity>
       <Field
         label={intl`PUSH NOTIFICATION`}
         onValueChange={(v: boolean) =>
-          profileStore.upsertProfile({ id: p.id, pushNotificationEnabled: v })
+          profileStore.upsertProfile({ id: id, pushNotificationEnabled: v })
         }
         type='Switch'
-        value={p.pushNotificationEnabled}
+        value={pushNotificationEnabled}
       />
       <Field
         label={intl`UC`}
         onValueChange={(v: boolean) =>
-          profileStore.upsertProfile({ id: p.id, ucEnabled: v })
+          profileStore.upsertProfile({ id: id, ucEnabled: v })
         }
         type='Switch'
-        value={p.ucEnabled}
+        value={ucEnabled}
       />
       <View style={styles.profileSignInItemBtns}>
         <FooterActions
@@ -86,22 +92,22 @@ const ProfileSignInItem: FC<{
                 <>
                   <View>
                     <RnText small>
-                      {p.pbxUsername} - {p.pbxHostname}
+                      {pbxUsername} - {pbxHostname}
                     </RnText>
                   </View>
                   <RnText>{intl`Do you want to remove this account?`}</RnText>
                 </>
               ),
               onConfirm: () => {
-                profileStore.removeProfile(p.id)
+                profileStore.removeProfile(id)
               },
             })
           }}
           onBackIcon={mdiClose}
-          onMore={() => Nav().goToPageProfileUpdate({ id: p.id })}
+          onMore={() => Nav().goToPageProfileUpdate({ id: id })}
           onMoreIcon={mdiDotsHorizontal}
           onNext={() => {
-            getAuthStore().signIn(p.id)
+            getAuthStore().signIn(id)
           }}
           onNextText={intl`SIGN IN`}
         />

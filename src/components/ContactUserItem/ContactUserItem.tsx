@@ -104,7 +104,7 @@ const UserItem: FC<
               <RnIcon
                 color={iconColor}
                 path={iconPath}
-                size={CustomFonts.smallIconFont}
+                size={CustomFonts.SmallIconFont}
                 style={styles.callIcon}
               />
               <RnText normal small style={styles.callCreatedAt}>

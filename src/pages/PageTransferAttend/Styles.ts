@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
 
 const styles = StyleSheet.create({
   outer: {
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   callerName: {
     marginTop: 7,
     fontWeight: '400',
-    fontSize: 13,
+    fontSize: CustomFonts.SmallSubText,
   },
 })
 

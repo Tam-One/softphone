@@ -12,15 +12,16 @@ const FieldButton: FC<
     label: string
     value: string
   }>
-> = ({ style, ...p }) => {
+> = ({ ...props }) => {
+  const { style, onCreateBtnPress } = props
   return (
     <RnTouchableOpacity
-      onPress={p.onCreateBtnPress}
+      onPress={onCreateBtnPress}
       style={[styles.fieldButton, style]}
     >
       <View style={styles.inner}>
         <Field
-          {...p}
+          {...props}
           createBtnIcon={mdiKeyboardBackspace}
           createBtnIconStyle={styles.createBtnIcon}
           createBtnStyle={styles.createBtn}

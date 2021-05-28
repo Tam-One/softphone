@@ -1,10 +1,14 @@
 import { StyleSheet } from 'react-native'
 
-import g from '../variables'
+import globalVariables from '../variables'
+
+const {
+  colors: { primaryFn },
+} = globalVariables
 
 const styles = StyleSheet.create({
   unread: {
-    backgroundColor: g.colors.primaryFn(0.5),
+    backgroundColor: primaryFn(0.5),
   },
 })
 

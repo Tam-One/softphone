@@ -35,9 +35,10 @@ class PageCallManage extends React.Component<{
 
   componentDidMount() {
     this.hideButtonsIfVideo()
+    const { curTime } = this.state
     this.intervalID = setInterval(() => {
       this.setState({
-        curTime: this.state.curTime + 1,
+        curTime: curTime + 1,
       })
     }, 1000)
   }

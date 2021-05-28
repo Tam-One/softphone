@@ -14,27 +14,39 @@ import UserAvatar from 'react-native-user-avatar'
 import callStore from 'stores/callStore'
 import intl from 'stores/intl'
 import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
 
 @observer
 class PageTransferAttend extends React.Component {
   render() {
-    const c = callStore.currentCall
-    if (!c) {
+    const currentCall = callStore.currentCall
+    const {
+      partyName,
+      partyNumber,
+      callerName,
+      transferringName,
+      transferring,
+      stopTransferring,
+      hangup,
+      conferenceTransferring,
+    }: any = currentCall
+
+    if (!currentCall) {
       return null
     }
-    var userAvatarName = c.callerName || c.partyName || c.partyNumber
-    if (userAvatarName === c.partyNumber) {
+    var userAvatarName = callerName || partyName || partyNumber
+    if (userAvatarName === partyNumber) {
       userAvatarName = userAvatarName?.split('').join(' ')
     }
-    var transferingAvatarName = c.transferringName
-    if (transferingAvatarName === c.transferring) {
+    var transferingAvatarName = transferringName
+    if (transferingAvatarName === transferring) {
       transferingAvatarName = transferingAvatarName?.split('').join(' ')
     }
     return (
       <View style={styles.outer}>
         {/* <RnText center subTitle>{intl`Transferring`}</RnText> */}
         <CustomHeader
-          onBack={c.stopTransferring}
+          onBack={stopTransferring}
           title={'Transfering'}
           description={'Choose option for transferring this contact'}
         />
@@ -42,36 +54,36 @@ class PageTransferAttend extends React.Component {
           <View style={[styles.inner, styles.innerInfo]}>
             <View style={[styles.info, styles.infoFrom]}>
               <UserAvatar
-                size={80}
+                size={CustomFonts.LargeAvatarSize}
                 name={userAvatarName}
                 bgColor={CustomColors.DodgerBlue}
               />
               <RnText center singleLine small style={styles.callerName}>
-                {c.callerName || c.partyName || c.partyNumber}
+                {callerName || partyName || partyNumber}
               </RnText>
             </View>
             <View style={styles.arrow}>
               <RnIcon
                 path={mdiArrowRight}
                 color={CustomColors.DarkBlue}
-                size={26}
+                size={CustomFonts.CallerName}
               />
             </View>
             <View style={[styles.info, styles.infoTo]}>
               <UserAvatar
-                size={80}
+                size={CustomFonts.LargeAvatarSize}
                 name={transferingAvatarName}
                 bgColor={CustomColors.DodgerBlue}
               />
               <RnText center singleLine small style={styles.callerName}>
-                {c.transferringName || c.transferring}
+                {transferringName || transferring}
               </RnText>
             </View>
           </View>
           <View style={styles.inner}>
             <View style={styles.btnOuter}>
               <RnTouchableOpacity
-                onPress={c.stopTransferring}
+                onPress={stopTransferring}
                 style={[styles.btn, styles.btnStop]}
               >
                 <RnIcon path={mdiPhoneOff} color={CustomColors.White} />
@@ -82,7 +94,7 @@ class PageTransferAttend extends React.Component {
             </View>
             <View style={styles.btnOuter}>
               <RnTouchableOpacity
-                onPress={c.hangup}
+                onPress={hangup}
                 style={[styles.btn, styles.btnHangup]}
               >
                 <RnIcon path={mdiPhoneHangup} color={CustomColors.White} />
@@ -93,7 +105,7 @@ class PageTransferAttend extends React.Component {
             </View>
             <View style={styles.btnOuter}>
               <RnTouchableOpacity
-                onPress={c.conferenceTransferring}
+                onPress={conferenceTransferring}
                 style={[styles.btn, styles.btnConference]}
               >
                 <RnIcon path={mdiPhoneForward} color={CustomColors.White} />
