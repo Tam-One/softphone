@@ -1,4 +1,4 @@
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 import { RnText } from 'components/Rn'
 import cloneDeep from 'lodash/cloneDeep'
 import isEqual from 'lodash/isEqual'

@@ -1,7 +1,7 @@
 import { mdiCheck, mdiTranslate } from '@mdi/js'
 import uc from 'api/uc'
 import Field from 'components/Field'
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 import { observer } from 'mobx-react'
 import React, { Component } from 'react'
 import { getAuthStore } from 'stores/authStore'

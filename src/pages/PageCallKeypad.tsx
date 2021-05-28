@@ -1,6 +1,6 @@
 import KeyPad from 'components/CallKeyPad'
 import ShowNumber from 'components/CallShowNumbers'
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'

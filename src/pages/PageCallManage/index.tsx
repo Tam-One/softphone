@@ -1,17 +1,16 @@
-import CallActionButton from 'components/CallActionButton/CallActionButton'
-import CallButtons from 'components/CallButtons/CallButtons'
-import CallerInfo from 'components/CallerInfo/CallerInfo'
-import CustomGradient from 'components/CustomGradient/CustomGradient'
+import CallActionButton from 'components/CallActionButton'
+import CallButtons from 'components/CallButtons'
+import CallerInfo from 'components/CallerInfo'
+import CustomGradient from 'components/CustomGradient'
 import FieldButton from 'components/FieldButton'
-import Layout from 'components/Layout/Layout'
-import PoweredBy from 'components/PoweredBy/PoweredBy'
+import Layout from 'components/Layout'
+import PoweredBy from 'components/PoweredBy'
 import { RnTouchableOpacity } from 'components/Rn'
 import RnText from 'components/RnText'
 import VideoPlayer from 'components/VideoPlayer'
 import { toInteger } from 'lodash'
 import { action, observable } from 'mobx'
 import { observer } from 'mobx-react'
-import moment from 'moment'
 import styles from 'pages/PageCallManage/Styles'
 import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
@@ -31,15 +30,15 @@ class PageCallManage extends React.Component<{
   alreadySetShowButtonsInVideoCall = false
   intervalID = 0
   state = {
-    startedTime: new Date().toLocaleString(),
-    curTime: new Date().toLocaleString(),
+    curTime: 0,
   }
 
   componentDidMount() {
     this.hideButtonsIfVideo()
+    const { curTime } = this.state
     this.intervalID = setInterval(() => {
       this.setState({
-        curTime: new Date().toLocaleString(),
+        curTime: curTime + 1,
       })
     }, 1000)
   }
@@ -68,13 +67,12 @@ class PageCallManage extends React.Component<{
   }
 
   renderCallTime = () => {
-    const timeInSec =
-      moment(this.state.curTime).diff(this.state.startedTime) / 1000
-    const isSecs = toInteger(timeInSec % 6)
+    const timeInSec = this.state.curTime
+    const isSecs = toInteger(timeInSec % 60)
     const secs = isSecs < 10 ? '0' + isSecs : isSecs
-    const isMins = toInteger(timeInSec / 6)
+    const isMins = toInteger(timeInSec / 60)
     const mins = isMins < 10 ? '0' + isMins : isMins
-    const isHours = toInteger(timeInSec / 60)
+    const isHours = toInteger(timeInSec / 360)
     const hours = isHours ? isHours + ':' : null
 
     return (

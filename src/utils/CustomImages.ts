@@ -16,6 +16,8 @@ const CustomImages = {
   Video: require('assets/CallActionBtnImages/video.png'),
   VolumeHigh: require('assets/CallActionBtnImages/volume-high.png'),
   VolumeMedium: require('assets/CallActionBtnImages/volume-medium.png'),
+  Brand: require('assets/brand.png'),
+  Logo: require('assets/logo.png'),
 }
 
 export default CustomImages

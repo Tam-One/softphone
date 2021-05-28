@@ -1,6 +1,6 @@
 import { mdiDotsHorizontal, mdiLadybug, mdiUnfoldMoreHorizontal } from '@mdi/js'
 import BrekekeGradient from 'components/BrekekeGradient'
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 import ProfileSignInItem from 'components/ProfileSignInItem'
 import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
 import { currentVersion } from 'components/variables'

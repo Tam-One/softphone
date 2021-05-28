@@ -1,3 +1,5 @@
+import pbx from 'api/pbx'
+import sip from 'api/sip'
 import { action, computed, observable } from 'mobx'
 import RNCallKeep from 'react-native-callkeep'
 import { CallStore } from 'stores/callStore'
@@ -5,8 +7,6 @@ import { intlDebug } from 'stores/intl'
 import Nav from 'stores/Nav'
 import RnAlert from 'stores/RnAlert'
 import timerStore from 'stores/timerStore'
-
-import sip from '../api/sip'
 
 export default class Call {
   constructor(private store: CallStore) {}
@@ -111,6 +111,8 @@ export default class Call {
   }
 
   @observable transferring = ''
+  @observable transferringName = ''
+
   private prevTransferring = ''
   transferBlind = (number: string) => {
     Nav().backToPageCallManage()
@@ -118,8 +120,9 @@ export default class Call {
       .transferTalkerBlind(this.pbxTenant, this.pbxTalkerId, number)
       .catch(this.onTransferFailure)
   }
-  @action transferAttended = (number: string) => {
+  @action transferAttended = (number: string, name?: string) => {
     this.transferring = number
+    this.transferringName = name || number
     Nav().backToPageCallManage()
     return pbx
       .transferTalkerAttended(this.pbxTenant, this.pbxTalkerId, number)

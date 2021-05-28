@@ -1,10 +1,9 @@
+import styles from 'components/CustomGradient/Styles'
 import React, { FC } from 'react'
 import LinearGradient, {
   LinearGradientProps,
 } from 'react-native-linear-gradient'
-
-import CustomColors from '../../utils/CustomColors'
-import styles from './Styles'
+import CustomColors from 'utils/CustomColors'
 
 const CustomGradient: FC<Omit<LinearGradientProps, 'colors'>> = props => (
   <LinearGradient

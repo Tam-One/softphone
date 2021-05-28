@@ -1,6 +1,6 @@
 import UserItem from 'components/ContactUserItem'
 import Field from 'components/Field'
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import React from 'react'

@@ -1,4 +1,4 @@
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 import cloneDeep from 'lodash/cloneDeep'
 import isEqual from 'lodash/isEqual'
 import { observer } from 'mobx-react'
