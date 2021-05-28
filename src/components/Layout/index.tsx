@@ -1,5 +1,5 @@
 import Footer from 'components/Footer'
-import Header from 'components/Header/Header'
+import Header from 'components/Header'
 import { HeaderDropdownItem } from 'components/HeaderDropdown'
 import styles from 'components/Layout/Styles'
 import { observer } from 'mobx-react'

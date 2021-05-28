@@ -5,7 +5,7 @@ import 'stores/Nav2' // Fix circular dependencies
 import 'stores/authStore2' // Fix circular dependencies
 import 'api/syncPnToken2' // Fix circular dependencies
 
-import App from 'components/App/App'
+import App from 'components/App'
 import { AppRegistry, Platform } from 'react-native'
 import callStore from 'stores/callStore'
 import { setCallStore } from 'stores/cancelRecentPn'

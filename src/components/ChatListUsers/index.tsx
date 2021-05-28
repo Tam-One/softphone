@@ -1,6 +1,6 @@
 import { formatDateTimeSemantic } from 'components/chatConfig'
 import styles from 'components/ChatListUsers/Styles'
-import UserItem from 'components/ContactUserItem/ContactUserItem'
+import UserItem from 'components/ContactUserItem'
 import { RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'

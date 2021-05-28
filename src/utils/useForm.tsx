@@ -1,4 +1,4 @@
-import Field from 'components/Field/Field'
+import Field from 'components/Field'
 import flow from 'lodash/flow'
 import get from 'lodash/get'
 import { observer } from 'mobx-react'

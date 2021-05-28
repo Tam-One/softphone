@@ -1,5 +1,5 @@
 import { mdiKeyboardBackspace } from '@mdi/js'
-import Field from 'components/Field/Field'
+import Field from 'components/Field'
 import styles from 'components/FieldButton/Styles'
 import { RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'

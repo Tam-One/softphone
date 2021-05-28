@@ -4,7 +4,7 @@ import {
   mdiPhoneHangup,
   mdiPhoneOff,
 } from '@mdi/js'
-import CustomHeader from 'components/CustomHeader/CustomHeader'
+import CustomHeader from 'components/CustomHeader'
 import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageTransferAttend/Styles'

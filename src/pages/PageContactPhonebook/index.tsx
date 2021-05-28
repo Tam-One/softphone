@@ -6,9 +6,9 @@ import {
   mdiPhone,
 } from '@mdi/js'
 import pbx from 'api/pbx'
-import UserItem from 'components/ContactUserItem/ContactUserItem'
-import Field from 'components/Field/Field'
-import Layout from 'components/Layout/Layout'
+import UserItem from 'components/ContactUserItem'
+import Field from 'components/Field'
+import Layout from 'components/Layout'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'

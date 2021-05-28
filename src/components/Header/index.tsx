@@ -1,5 +1,5 @@
 import styles from 'components/Header/Styles'
-import BackBtn from 'components/HeaderBackBtn/HeaderBackBtn'
+import BackBtn from 'components/HeaderBackBtn'
 import CreateBtn from 'components/HeaderCreateBtn'
 import Dropdown, {
   DropdownBtn,

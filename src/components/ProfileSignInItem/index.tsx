@@ -6,7 +6,7 @@ import {
   mdiServerNetwork,
   mdiWeb,
 } from '@mdi/js'
-import Field from 'components/Field/Field'
+import Field from 'components/Field'
 import FooterActions from 'components/FooterActions'
 import styles from 'components/ProfileSignInItem/Styles'
 import { RnText, RnTouchableOpacity } from 'components/Rn'

@@ -1,6 +1,6 @@
 import { mdiPhone, mdiPhoneOutgoing } from '@mdi/js'
-import UserItem from 'components/ContactUserItem/ContactUserItem'
-import CustomHeader from 'components/CustomHeader/CustomHeader'
+import UserItem from 'components/ContactUserItem'
+import CustomHeader from 'components/CustomHeader'
 import RnText from 'components/RnText'
 import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'
