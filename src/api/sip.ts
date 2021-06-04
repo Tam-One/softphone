@@ -6,10 +6,11 @@ import getFrontCameraSourceId from 'api/getFrontCameraSourceId'
 import pbx from 'api/pbx'
 import turnConfig from 'api/turnConfig'
 import EventEmitter from 'eventemitter3'
-import appPackageJson from 'package.json'
 import { Platform } from 'react-native'
 import { cancelRecentPn } from 'stores/cancelRecentPn'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
+
+import appPackageJson from '../../package.json'
 
 const sipCreateMediaConstraints = (sourceId?: string) => {
   return ({

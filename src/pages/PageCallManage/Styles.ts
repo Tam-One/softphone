@@ -16,15 +16,17 @@ const styles = StyleSheet.create({
   remoteVideo: {
     width: '100%',
     height: '100%',
+    zIndex: 1,
   },
   localVideo: {
     position: 'absolute',
     width: 120,
     height: 170,
     alignSelf: 'flex-end',
+    zIndex: 99,
   },
   btns: {
-    top: 80, // Header compact height
+    top: 40, // Header compact height
     left: 0,
     right: 0,
     bottom: 0,
