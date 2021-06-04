@@ -1,16 +1,15 @@
 import 'brekekejs/lib/jsonrpc'
 import 'brekekejs/lib/webrtcclient'
 
+import { CallOptions, Sip } from 'api/brekekejs'
+import getFrontCameraSourceId from 'api/getFrontCameraSourceId'
+import pbx from 'api/pbx'
+import turnConfig from 'api/turnConfig'
 import EventEmitter from 'eventemitter3'
+import appPackageJson from 'package.json'
 import { Platform } from 'react-native'
-
-import appPackageJson from '../../package.json'
-import { cancelRecentPn } from '../stores/cancelRecentPn'
-import { BackgroundTimer } from '../utils/BackgroundTimer'
-import { CallOptions, Sip } from './brekekejs'
-import getFrontCameraSourceId from './getFrontCameraSourceId'
-import pbx from './pbx'
-import turnConfig from './turnConfig'
+import { cancelRecentPn } from 'stores/cancelRecentPn'
+import { BackgroundTimer } from 'utils/BackgroundTimer'
 
 const sipCreateMediaConstraints = (sourceId?: string) => {
   return ({
@@ -149,6 +148,7 @@ export class SIP extends EventEmitter {
         videoSessionId: ev.videoClientSessionId,
         remoteVideoEnabled: true,
         remoteVideoStreamObject: videoSession.remoteStreamObject,
+        localVideoStreamObject: videoSession.localStreamObject,
       })
     })
     phone.addEventListener('videoClientSessionEnded', ev => {
@@ -160,6 +160,7 @@ export class SIP extends EventEmitter {
         videoSessionId: ev.videoClientSessionId,
         remoteVideoEnabled: false,
         remoteVideoStreamObject: null,
+        localVideoStreamObject: null,
       })
     })
 

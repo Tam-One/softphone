@@ -69,6 +69,7 @@ class CallNotify extends React.Component {
                 onPress={() => answer({}, callerName)}
                 image={CustomImages.CallAcceptedLogo}
                 lable={'Accepteer'}
+                showAnimation={true}
               />
             </View>
             <PoweredBy />

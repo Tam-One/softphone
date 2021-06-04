@@ -3,17 +3,25 @@ import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
 
 const styles = StyleSheet.create({
-  video: {
-    position: 'absolute',
-    top: 40, // Header compact height
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: CustomColors.Black,
-  },
-  videoSpace: {
+  videoPageContainer: {
     flex: 1,
-    alignSelf: 'stretch',
+    position: 'relative',
+  },
+  videoContainer: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: CustomColors.Transparent,
+  },
+  remoteVideo: {
+    width: '100%',
+    height: '100%',
+  },
+  localVideo: {
+    position: 'absolute',
+    width: 120,
+    height: 170,
+    alignSelf: 'flex-end',
   },
   btns: {
     top: 80, // Header compact height
@@ -23,17 +31,30 @@ const styles = StyleSheet.create({
     paddingBottom: 124, // Hangup button 64 + 2*30
   },
   btnsIsVideoEnabled: {
-    backgroundColor: g.layerBg,
+    position: 'absolute',
+    flex: 1,
+    bottom: 0,
+    top: 0,
+    alignSelf: 'center',
+    justifyContent: 'flex-end',
+    padding: 0,
+    margin: 0,
+  },
+  videoActionsContainer: {
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   btnsHidden: {
     opacity: 0,
   },
   btnsInnerView: {
     flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '85%',
     alignSelf: 'center',
   },
   btnsSpace: {
-    height: 20,
+    marginTop: 21,
   },
   btnsVerticalMargin: {
     flex: 1,
@@ -53,7 +74,14 @@ const styles = StyleSheet.create({
   },
   timerContainer: {
     alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
     marginTop: 19,
+    position: 'relative',
+  },
+  videoTimerDisplayBox: {
+    position: 'absolute',
+    marginTop: 90,
   },
   timerDisplayBox: {
     width: 80,
