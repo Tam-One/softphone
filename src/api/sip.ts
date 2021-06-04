@@ -3,14 +3,13 @@ import 'brekekejs/lib/webrtcclient'
 
 import { CallOptions, Sip } from 'api/brekekejs'
 import getFrontCameraSourceId from 'api/getFrontCameraSourceId'
+import API from 'api/index'
 import pbx from 'api/pbx'
 import turnConfig from 'api/turnConfig'
 import EventEmitter from 'eventemitter3'
 import { Platform } from 'react-native'
 import { cancelRecentPn } from 'stores/cancelRecentPn'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
-
-import appPackageJson from '../../package.json'
 
 const sipCreateMediaConstraints = (sourceId?: string) => {
   return ({
@@ -29,8 +28,9 @@ const sipCreateMediaConstraints = (sourceId?: string) => {
 
 export class SIP extends EventEmitter {
   phone: Sip = null!
-  init = async (o: SipLoginOption) => {
+  init = async (loginOptions: SipLoginOption) => {
     const sourceId = await getFrontCameraSourceId()
+    const { dtmfSendMode } = loginOptions
     const phone = new window.Brekeke.WebrtcClient.Phone({
       logLevel: 'all',
       multiSession: 1,
@@ -44,7 +44,7 @@ export class SIP extends EventEmitter {
           },
         },
       },
-      dtmfSendMode: isNaN(o.dtmfSendMode) ? 1 : o.dtmfSendMode,
+      dtmfSendMode: isNaN(dtmfSendMode) ? 1 : dtmfSendMode,
       ctiAutoAnswer: 1,
       eventTalk: 1,
       configuration: {
@@ -53,24 +53,26 @@ export class SIP extends EventEmitter {
     })
     this.phone = phone
 
-    const h = (ev: { phoneStatus: string }) => {
-      if (!ev) {
+    const connectionEvent = (event: { phoneStatus: string }) => {
+      if (!event) {
         return
       }
-      if (ev.phoneStatus === 'started') {
+      const { phoneStatus } = event
+      if (phoneStatus === 'started') {
         return this.emit('connection-started')
       }
-      if (ev.phoneStatus === 'stopping' || ev.phoneStatus === 'stopped') {
-        phone.removeEventListener('phoneStatusChanged', h)
+      if (phoneStatus === 'stopping' || phoneStatus === 'stopped') {
+        phone.removeEventListener('phoneStatusChanged', connectionEvent)
         BackgroundTimer.setTimeout(() => this.disconnect(), 0)
         BackgroundTimer.setTimeout(
-          () => this.emit('connection-stopped', ev),
+          () => this.emit('connection-stopped', event),
           300,
         )
       }
       return
     }
-    phone.addEventListener('phoneStatusChanged', h)
+
+    phone.addEventListener('phoneStatusChanged', connectionEvent)
 
     // sessionId: "1"
     // sessionStatus: "dialing"
@@ -90,41 +92,57 @@ export class SIP extends EventEmitter {
     // incomingMessage: null
     // remoteUserOptionsTable: {}
     // analyser: null
-    phone.addEventListener('sessionCreated', ev => {
-      if (!ev) {
+    phone.addEventListener('sessionCreated', event => {
+      if (!event) {
         return
       }
+      const { sessionId, rtcSession, withVideo, remoteWithVideo } = event
+
+      const { remote_identity, direction } = rtcSession
+      const {
+        uri: { user },
+        display_name,
+      } = remote_identity
+
       this.emit('session-started', {
-        id: ev.sessionId,
-        incoming: ev.rtcSession.direction === 'incoming',
-        partyNumber: ev.rtcSession.remote_identity.uri.user,
-        partyName: ev.rtcSession.remote_identity.display_name,
-        remoteVideoEnabled: ev.remoteWithVideo,
-        localVideoEnabled: ev.withVideo,
+        id: sessionId,
+        incoming: direction === 'incoming',
+        partyNumber: user,
+        partyName: display_name,
+        remoteVideoEnabled: remoteWithVideo,
+        localVideoEnabled: withVideo,
       })
     })
-    phone.addEventListener('sessionStatusChanged', ev => {
-      if (!ev) {
+
+    phone.addEventListener('sessionStatusChanged', event => {
+      if (!event) {
         return
       }
-      if (ev.sessionStatus === 'terminated') {
-        return this.emit('session-stopped', ev.sessionId)
+      const {
+        sessionId,
+        sessionStatus,
+        remoteStreamObject,
+        withVideo,
+        remoteWithVideo,
+        incomingMessage,
+      } = event
+
+      if (sessionStatus === 'terminated') {
+        return this.emit('session-stopped', sessionId)
       }
       const patch = {
-        id: ev.sessionId,
-        answered: ev.sessionStatus === 'connected',
-        voiceStreamObject: ev.remoteStreamObject,
-        localVideoEnabled: ev.withVideo,
-        remoteVideoEnabled: ev.remoteWithVideo,
+        id: sessionId,
+        answered: sessionStatus === 'connected',
+        voiceStreamObject: remoteStreamObject,
+        localVideoEnabled: withVideo,
+        remoteVideoEnabled: remoteWithVideo,
         pbxTenant: '',
         pbxRoomId: '',
         pbxTalkerId: '',
         pbxUsername: '',
       }
-      if (ev.incomingMessage) {
-        const pbxSessionInfo = ev.incomingMessage.getHeader(
-          'X-PBX-Session-Info',
-        )
+      if (incomingMessage) {
+        const pbxSessionInfo = incomingMessage.getHeader('X-PBX-Session-Info')
         if (typeof pbxSessionInfo === 'string') {
           const infos = pbxSessionInfo.split(';')
           patch.pbxTenant = infos[0]
@@ -137,54 +155,64 @@ export class SIP extends EventEmitter {
       return
     })
 
-    phone.addEventListener('videoClientSessionCreated', ev => {
-      if (!ev) {
+    phone.addEventListener('videoClientSessionCreated', event => {
+      if (!event) {
         return
       }
-      const session = phone.getSession(ev.sessionId)
-      const videoSession =
-        session.videoClientSessionTable[ev.videoClientSessionId]
+      const { sessionId, videoClientSessionId } = event
+
+      const session = phone.getSession(sessionId)
+      const videoSession = session.videoClientSessionTable[videoClientSessionId]
+      const { remoteStreamObject, localStreamObject } = videoSession
       this.emit('session-updated', {
-        id: ev.sessionId,
-        videoSessionId: ev.videoClientSessionId,
+        id: sessionId,
+        videoSessionId: videoClientSessionId,
         remoteVideoEnabled: true,
-        remoteVideoStreamObject: videoSession.remoteStreamObject,
-        localVideoStreamObject: videoSession.localStreamObject,
+        remoteVideoStreamObject: remoteStreamObject,
+        localVideoStreamObject: localStreamObject,
       })
     })
-    phone.addEventListener('videoClientSessionEnded', ev => {
-      if (!ev) {
+    phone.addEventListener('videoClientSessionEnded', event => {
+      if (!event) {
         return
       }
+      const { sessionId, videoClientSessionId } = event
       this.emit('session-updated', {
-        id: ev.sessionId,
-        videoSessionId: ev.videoClientSessionId,
+        id: sessionId,
+        videoSessionId: videoClientSessionId,
         remoteVideoEnabled: false,
         remoteVideoStreamObject: null,
         localVideoStreamObject: null,
       })
     })
 
-    phone.addEventListener('rtcErrorOccurred', ev => {
-      console.error('sip.phone.rtcErrorOccurred:', ev) // TODO
+    phone.addEventListener('rtcErrorOccurred', event => {
+      console.error('sip.phone.rtcErrorOccurred:', event) // TODO
     })
   }
 
   connect = async (sipLoginOption: SipLoginOption) => {
     this.disconnect()
     await this.init(sipLoginOption)
-    //
-    let platformOs: string = Platform.OS
-    if (platformOs === 'ios') {
-      platformOs = 'iOS'
-    } else if (platformOs === 'android') {
-      platformOs = 'Android'
-    } else if (platformOs === 'web') {
-      platformOs = 'Web'
+    const platformConfig = {
+      ios: 'iOS',
+      android: 'Android',
+      web: 'Web',
     }
-    //
+    const version = API.getAppVersion()
+    const {
+      pbxTurnEnabled,
+      hostname,
+      username,
+      accessToken,
+      port,
+    } = sipLoginOption
+
+    let platformOs: string = Platform.OS
+    platformOs = platformConfig[platformOs]
+
     const jssipVersion = '3.2.15'
-    const appVersion = appPackageJson.version
+    const appVersion = version
     const lUseragent =
       'Brekeke Phone for ' +
       platformOs +
@@ -193,24 +221,24 @@ export class SIP extends EventEmitter {
       '/JsSIP ' +
       jssipVersion
     //
-    const callOptions = ((sipLoginOption.pbxTurnEnabled && turnConfig) ||
-      {}) as CallOptions
-    if (!callOptions.pcConfig) {
-      callOptions.pcConfig = {}
+    const callOptions = ((pbxTurnEnabled && turnConfig) || {}) as CallOptions
+    let { pcConfig } = callOptions
+    if (!pcConfig) {
+      pcConfig = {}
     }
-    if (!Array.isArray(callOptions.pcConfig.iceServers)) {
-      callOptions.pcConfig.iceServers = []
+    if (!Array.isArray(pcConfig.iceServers)) {
+      pcConfig.iceServers = []
     }
     if (sipLoginOption.turnConfig) {
-      callOptions.pcConfig.iceServers.push(sipLoginOption.turnConfig)
+      pcConfig.iceServers.push(sipLoginOption.turnConfig)
     }
     this.phone.setDefaultCallOptions(callOptions)
     //
     this.phone.startWebRTC({
-      url: `wss://${sipLoginOption.hostname}:${sipLoginOption.port}/phone`,
+      url: `wss://${hostname}:${port}/phone`,
       tls: true,
-      user: sipLoginOption.username,
-      auth: sipLoginOption.accessToken,
+      user: username,
+      auth: accessToken,
       useVideoClient: true,
       userAgent: lUseragent,
     })
@@ -250,7 +278,8 @@ export class SIP extends EventEmitter {
   }
 
   createSession = (number: string, opts: { videoEnabled?: boolean } = {}) => {
-    return this.phone.makeCall(number, null, opts.videoEnabled)
+    const { videoEnabled } = opts
+    return this.phone.makeCall(number, null, videoEnabled)
   }
 
   hangupSession = (sessionId: string) => {
@@ -262,25 +291,27 @@ export class SIP extends EventEmitter {
     sessionId: string,
     opts: { videoEnabled?: boolean } = {},
   ) => {
-    return this.phone.answer(sessionId, null, opts.videoEnabled)
+    const { videoEnabled } = opts
+    return this.phone.answer(sessionId, null, videoEnabled)
   }
-  sendDTMF = async (p: {
+  sendDTMF = async (props: {
     signal: string
     sessionId: string
     tenant: string
     talkerId: string
   }) => {
-    const c = await pbx.getConfig()
-    const dtmfSendMode = c['webrtcclient.dtmfSendMode']
+    const { signal, sessionId, tenant, talkerId } = props
+    const config = await pbx.getConfig()
+    const dtmfSendMode = config['webrtcclient.dtmfSendMode']
     if (dtmfSendMode && dtmfSendMode !== 'false' && dtmfSendMode !== '0') {
       await pbx.client._pal('sendDTMF', {
-        signal: p.signal,
-        tenant: p.tenant,
-        talker_id: p.talkerId,
+        signal: signal,
+        tenant: tenant,
+        talker_id: talkerId,
       })
       return
     }
-    return this.phone.sendDTMF(p.signal, p.sessionId)
+    return this.phone.sendDTMF(signal, sessionId)
   }
   enableVideo = (sessionId: string) => {
     return this.phone.setWithVideo(sessionId, true)

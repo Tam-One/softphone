@@ -18,8 +18,8 @@ declare global {
 }
 
 export default observer(
-  (p: { sourceObject?: MediaStream | null; style?: object | {} }) => {
-    const { sourceObject, style } = p
+  (props: { sourceObject?: MediaStream | null; style?: object | {} }) => {
+    const { sourceObject, style } = props
     return sourceObject ? (
       <RTCView
         streamURL={sourceObject.toURL()}

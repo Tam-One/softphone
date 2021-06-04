@@ -55,6 +55,8 @@ class PageCallManage extends React.Component<{
       toggleRecording,
     } = currentCall
 
+    const { isLoudSpeakerEnabled, toggleLoudSpeaker } = callStore
+
     const buttonList = {
       mute: (
         <CallActionButton
@@ -88,16 +90,12 @@ class PageCallManage extends React.Component<{
       ),
       speaker: (
         <CallActionButton
-          bgcolor={
-            callStore.isLoudSpeakerEnabled ? activeColor : nonActiveColor
-          }
+          bgcolor={isLoudSpeakerEnabled ? activeColor : nonActiveColor}
           name={intl`Speaker`}
-          onPress={callStore.toggleLoudSpeaker}
-          textcolor={
-            callStore.isLoudSpeakerEnabled ? nonActiveColor : textActiveColor
-          }
+          onPress={toggleLoudSpeaker}
+          textcolor={isLoudSpeakerEnabled ? nonActiveColor : textActiveColor}
           image={
-            callStore.isLoudSpeakerEnabled
+            isLoudSpeakerEnabled
               ? CustomImages.VolumeHigh
               : CustomImages.VolumeMedium
           }
