@@ -25,15 +25,12 @@ import CustomImages from 'utils/CustomImages'
 class PageCallManage extends React.Component<{
   isFromCallBar: boolean
 }> {
-  @observable showButtonsInVideoCall = true
-  alreadySetShowButtonsInVideoCall = false
   intervalID = 0
   state = {
     curTime: 0,
   }
 
-  componentDidMount() {
-    this.hideButtonsIfVideo()
+  startCallTimer = () => {
     this.intervalID = setInterval(() => {
       const { curTime } = this.state
       this.setState({
@@ -149,28 +146,19 @@ class PageCallManage extends React.Component<{
   }
 
   componentDidUpdate() {
-    this.hideButtonsIfVideo()
-    if (!callStore.currentCall && !callStore.backgroundCalls.length) {
+    const { currentCall, backgroundCalls } = callStore
+    const { answered }: any = currentCall || {}
+    const { curTime } = this.state
+    if (!currentCall && !backgroundCalls.length) {
       Nav().backToPageCallRecents()
+    }
+    if (answered && !curTime) {
+      this.startCallTimer()
     }
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalID)
-  }
-
-  @action toggleButtons = () => {
-    this.showButtonsInVideoCall = !this.showButtonsInVideoCall
-  }
-  @action hideButtonsIfVideo = () => {
-    if (
-      !this.props.isFromCallBar &&
-      !this.alreadySetShowButtonsInVideoCall &&
-      callStore.currentCall?.remoteVideoEnabled
-    ) {
-      this.showButtonsInVideoCall = false
-      this.alreadySetShowButtonsInVideoCall = true
-    }
   }
 
   renderCallTime = (isVideoEnabled?: boolean) => {
@@ -200,7 +188,7 @@ class PageCallManage extends React.Component<{
   }
 
   renderCall = (currentCall?: any, isVideoEnabled?: boolean) => {
-    const { transferring, partyNumber, getCallerName } = currentCall
+    const { transferring, partyNumber, getCallerName, answered } = currentCall
     if (!currentCall) {
       return
     }
@@ -212,18 +200,6 @@ class PageCallManage extends React.Component<{
       return (
         <Layout
           compact
-          dropdown={
-            isVideoEnabled
-              ? [
-                  {
-                    label: this.showButtonsInVideoCall
-                      ? intl`Hide call menu buttons`
-                      : intl`Show call menu buttons`,
-                    onPress: this.toggleButtons,
-                  },
-                ]
-              : undefined
-          }
           noScroll
           onBack={Nav().backToPageCallRecents}
           title={partyNumber || intl`Connection failed`}
@@ -236,7 +212,7 @@ class PageCallManage extends React.Component<{
               callerNumber={partyNumber}
               containerStyle={{ marginTop: getCallerName ? '5%' : '20%' }}
             />
-            {this.renderCallTime()}
+            {answered && this.renderCallTime()}
             {this.renderBtns(currentCall)}
             {this.renderHangupBtn(currentCall)}
           </>
@@ -310,10 +286,12 @@ class PageCallManage extends React.Component<{
     const backgrounCallsLength = callStore.backgroundCalls.length
     const actionButtonsList = this.getActionsButtonList(currentCall)
     const { answered, localVideoEnabled } = currentCall
-
+    if (!answered) {
+      return
+    }
     return (
       <View style={[styles.btns]}>
-        <View style={!answered && styles.btnsHidden}>
+        <View>
           <View style={styles.btnsInnerView}>
             {actionButtonsList['mute']}
             {actionButtonsList['hold']}
