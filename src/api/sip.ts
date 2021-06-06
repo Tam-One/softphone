@@ -1,9 +1,9 @@
 import 'brekekejs/lib/jsonrpc'
 import 'brekekejs/lib/webrtcclient'
 
+import { APP_VERSION } from '@env'
 import { CallOptions, Sip } from 'api/brekekejs'
 import getFrontCameraSourceId from 'api/getFrontCameraSourceId'
-import API from 'api/index'
 import pbx from 'api/pbx'
 import turnConfig from 'api/turnConfig'
 import EventEmitter from 'eventemitter3'
@@ -199,7 +199,7 @@ export class SIP extends EventEmitter {
       android: 'Android',
       web: 'Web',
     }
-    const version = API.getAppVersion()
+    const version = APP_VERSION
     const {
       pbxTurnEnabled,
       hostname,
