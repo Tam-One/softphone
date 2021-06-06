@@ -216,10 +216,6 @@ class Api {
   }) => {
     chatStore.upsertFile(file)
   }
-
-  getAppVersion = () => {
-    return '2.7.16'
-  }
 }
 
 export default new Api()
