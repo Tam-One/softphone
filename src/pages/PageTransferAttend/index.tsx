@@ -20,7 +20,7 @@ import CustomFonts from 'utils/CustomFonts'
 @observer
 class PageTransferAttend extends React.Component {
   render() {
-    const { currentCall } = callStore || {}
+    const currentCall: any = callStore.currentCall || {}
     const {
       partyName,
       partyNumber,

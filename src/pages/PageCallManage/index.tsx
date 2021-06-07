@@ -340,7 +340,7 @@ class PageCallManage extends React.Component<{
   }
 
   render() {
-    const { currentCall }: any = callStore || {}
+    const currentCall: any = callStore.currentCall || {}
     const { remoteVideoEnabled, localVideoEnabled } = currentCall
     const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
     return <>{this.renderCall(currentCall, isVideoEnabled)}</>

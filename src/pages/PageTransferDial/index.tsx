@@ -21,7 +21,7 @@ class PageTransferDial extends React.Component {
   }
 
   componentDidUpdate() {
-    const { currentCall }: any = callStore || {}
+    const currentCall: any = callStore.currentCall || {}
     const { id } = currentCall
     if (this.prevId && this.prevId !== id) {
       Nav().backToPageCallManage()
@@ -64,9 +64,9 @@ class PageTransferDial extends React.Component {
 
     const map = {} as { [k: string]: User[] }
     contacts.forEach(user => {
-      let { name, number } = user
-      name = name || number || ''
-      let firstChar = name.charAt(0).toUpperCase()
+      const { name, number } = user
+      user.name = name || number || ''
+      let firstChar = user.name.charAt(0).toUpperCase()
       if (!/[A-Z]/.test(firstChar)) {
         firstChar = '#'
       }
@@ -86,7 +86,7 @@ class PageTransferDial extends React.Component {
       contacts = orderBy(contacts, 'name')
     })
 
-    const { currentCall }: any = callStore || {}
+    const currentCall: any = callStore.currentCall || {}
     const { transferAttended, transferBlind } = currentCall || {}
 
     return (
