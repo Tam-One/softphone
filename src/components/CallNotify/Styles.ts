@@ -17,7 +17,15 @@ const styles = StyleSheet.create({
   },
   notifyContainer: {
     flex: 1,
-    marginBottom: 20,
+    marginBottom: 40,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    zIndex: 9,
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
   },
 })
 

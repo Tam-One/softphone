@@ -1,5 +1,6 @@
 import { mdiPhone, mdiPhoneOutgoing } from '@mdi/js'
 import UserItem from 'components/ContactUserItem'
+import CustomGradient from 'components/CustomGradient'
 import CustomHeader from 'components/CustomHeader'
 import RnText from 'components/RnText'
 import orderBy from 'lodash/orderBy'
@@ -10,75 +11,86 @@ import { ScrollView, View } from 'react-native'
 import callStore from 'stores/callStore'
 import contactStore from 'stores/contactStore'
 import Nav from 'stores/Nav'
-import CustomColors from 'utils/CustomColors'
 
 @observer
 class PageTransferDial extends React.Component {
   prevId?: string
+
   componentDidMount() {
     this.componentDidUpdate()
   }
+
   componentDidUpdate() {
-    if (this.prevId && this.prevId !== callStore.currentCall?.id) {
+    const { currentCall }: any = callStore || {}
+    const { id } = currentCall
+    if (this.prevId && this.prevId !== id) {
       Nav().backToPageCallManage()
     }
-    this.prevId = callStore.currentCall?.id
+    this.prevId = id
   }
 
   resolveMatch = (id: string, isPhoneBook?: boolean) => {
+    const { getPhonebook, getPBXUser, getUCUser } = contactStore
     let match: any = {}
     if (isPhoneBook) {
-      match = contactStore.getPhonebook(id) || {}
+      match = getPhonebook(id) || {}
     } else {
-      match = contactStore.getPBXUser(id) || {}
+      match = getPBXUser(id) || {}
     }
-    var ucUser = contactStore.getUCUser(id) || {}
-
+    var ucUser = getUCUser(id) || {}
+    const { name, talkers } = match
+    const { avatar } = ucUser
     return {
-      name: match.name,
-      avatar: ucUser.avatar,
+      name: name,
+      avatar: avatar,
       number: id,
-      calling: !!match.talkers?.filter(t => t.status === 'calling').length,
-      ringing: !!match.talkers?.filter(t => t.status === 'ringing').length,
-      talking: !!match.talkers?.filter(t => t.status === 'talking').length,
-      holding: !!match.talkers?.filter(t => t.status === 'holding').length,
+      calling: !!talkers?.filter(t => t.status === 'calling').length,
+      ringing: !!talkers?.filter(t => t.status === 'ringing').length,
+      talking: !!talkers?.filter(t => t.status === 'talking').length,
+      holding: !!talkers?.filter(t => t.status === 'holding').length,
     }
   }
 
   render() {
-    const users = contactStore.pbxUsers
-      .map(u => u.id)
-      .map(u => this.resolveMatch(u, false))
-    const phonbookContacts = contactStore.phoneBooks
-      .map(u => u.id)
-      .map(u => this.resolveMatch(u, true))
+    const { pbxUsers, phoneBooks } = contactStore
+    const users = pbxUsers
+      .map(user => user.id)
+      .map(user => this.resolveMatch(user, false))
+    const phonbookContacts = phoneBooks
+      .map(user => user.id)
+      .map(user => this.resolveMatch(user, true))
     type User = typeof users[0]
     const contacts = [...users, ...phonbookContacts]
 
     const map = {} as { [k: string]: User[] }
-    contacts.forEach(u => {
-      u.name = u.name || u.number || ''
-      let c0 = u.name.charAt(0).toUpperCase()
-      if (!/[A-Z]/.test(c0)) {
-        c0 = '#'
+    contacts.forEach(user => {
+      let { name, number } = user
+      name = name || number || ''
+      let firstChar = name.charAt(0).toUpperCase()
+      if (!/[A-Z]/.test(firstChar)) {
+        firstChar = '#'
       }
-      if (!map[c0]) {
-        map[c0] = []
+      if (!map[firstChar]) {
+        map[firstChar] = []
       }
-      map[c0].push(u)
+      map[firstChar].push(user)
     })
 
-    let groups = Object.keys(map).map(k => ({
-      key: k,
-      contacts: map[k],
+    let groups = Object.keys(map).map(key => ({
+      key: key,
+      contacts: map[key],
     }))
     groups = orderBy(groups, 'key')
-    groups.forEach(g => {
-      g.contacts = orderBy(g.contacts, 'name')
+    groups.forEach(group => {
+      let { contacts }: any = group
+      contacts = orderBy(contacts, 'name')
     })
 
+    const { currentCall }: any = callStore || {}
+    const { transferAttended, transferBlind } = currentCall || {}
+
     return (
-      <View style={{ backgroundColor: CustomColors.AliceBlue, flex: 1 }}>
+      <CustomGradient>
         <CustomHeader
           onBack={Nav().backToPageCallManage}
           description={'Select target to start transfer'}
@@ -92,28 +104,33 @@ class PageTransferDial extends React.Component {
                 <View style={styles.transferSeparator}>
                   <RnText style={styles.transferSeparatorText}>{key}</RnText>
                 </View>
-                {contacts.map((contact, index) => {
-                  const { number, name } = contact
-                  return (
-                    <UserItem
-                      showNewAvatar={true}
-                      iconFuncs={[
-                        () =>
-                          callStore.currentCall?.transferAttended(number, name),
-                        () => callStore.currentCall?.transferBlind(number),
-                      ]}
-                      icons={[mdiPhoneOutgoing, mdiPhone]}
-                      key={index}
-                      {...contact}
-                      number={number}
-                    />
-                  )
-                })}
+                <View>
+                  {contacts.map((contact, index) => {
+                    const { number, name } = contact
+                    return (
+                      <UserItem
+                        showNewAvatar={true}
+                        iconFuncs={[
+                          () => transferAttended(number, name),
+                          () => transferBlind(number),
+                        ]}
+                        icons={[mdiPhoneOutgoing, mdiPhone]}
+                        key={index}
+                        {...contact}
+                        number={number}
+                        containerStyle={{
+                          borderBottomWidth:
+                            index === contacts.length - 1 ? 0 : 1,
+                        }}
+                      />
+                    )
+                  })}
+                </View>
               </React.Fragment>
             )
           })}
         </ScrollView>
-      </View>
+      </CustomGradient>
     )
   }
 }

@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     color: CustomColors.DodgerBlue,
   },
   transferSeparator: {
-    backgroundColor: CustomColors.White,
-    paddingLeft: 21,
+    backgroundColor: CustomColors.LightBlue,
+    paddingLeft: 17,
   },
 })
 

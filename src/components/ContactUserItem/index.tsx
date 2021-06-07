@@ -2,13 +2,37 @@ import { mdiPhoneIncoming, mdiPhoneMissed, mdiPhoneOutgoing } from '@mdi/js'
 import Avatar from 'components/Avatar'
 import styles from 'components/ContactUserItem/Styles'
 import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
-import g from 'components/variables'
+import globalVariables from 'components/variables'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
 import intl from 'stores/intl'
 import CustomColors from 'utils/CustomColors'
 import CustomFonts from 'utils/CustomFonts'
+
+const {
+  colors: { danger, primary, warning },
+} = globalVariables
+
+const getIconColor = (incoming, answered) => {
+  if (!incoming) {
+    return warning
+  } else if (answered) {
+    return primary
+  } else {
+    return danger
+  }
+}
+
+const getIconPath = (incoming, answered) => {
+  if (!incoming) {
+    return mdiPhoneOutgoing
+  } else if (answered) {
+    return mdiPhoneIncoming
+  } else {
+    return mdiPhoneMissed
+  }
+}
 
 const UserItem: FC<
   Partial<{
@@ -29,6 +53,7 @@ const UserItem: FC<
     statusText: string
     showNewAvatar?: boolean
     number?: string
+    containerStyle?: object
   }>
 > = ({
   answered,
@@ -48,28 +73,19 @@ const UserItem: FC<
   statusText,
   showNewAvatar,
   number,
+  containerStyle,
 }) => {
   var userAvatarName = name
 
   if (name === number) {
     userAvatarName = userAvatarName?.split('').join(' ')
   }
-  const iconPath =
-    incoming && !answered
-      ? mdiPhoneMissed
-      : incoming && answered
-      ? mdiPhoneIncoming
-      : mdiPhoneOutgoing
+  const iconPath = getIconPath(incoming, answered)
 
-  const iconColor =
-    incoming && !answered
-      ? g.colors.danger
-      : incoming && answered
-      ? g.colors.primary
-      : g.colors.warning
+  const iconColor = getIconColor(incoming, answered)
 
   return (
-    <View style={styles.outer}>
+    <View style={[styles.outer, containerStyle && containerStyle]}>
       <View style={[styles.inner, selected && styles.innerSelected]}>
         {!showNewAvatar && (
           <Avatar source={{ uri: avatar as string }} style={styles.withSpace} />
@@ -120,9 +136,9 @@ const UserItem: FC<
             </RnText>
           </View>
         )}
-        {icons?.map((v, i) => (
-          <RnTouchableOpacity key={i} onPress={() => iconFuncs?.[i]()}>
-            <RnIcon path={v} style={styles.buttonIcon} />
+        {icons?.map((icon, index) => (
+          <RnTouchableOpacity key={index} onPress={() => iconFuncs?.[index]()}>
+            <RnIcon path={icon} style={styles.buttonIcon} />
           </RnTouchableOpacity>
         ))}
       </View>

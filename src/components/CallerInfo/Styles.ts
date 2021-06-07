@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native'
+import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
 
-import CustomColors from '../../utils/CustomColors'
-import CustomFonts from '../../utils/CustomFonts'
-
+const callerFontWeight = '600'
 const styles = StyleSheet.create({
   notifyInfo: {
     alignItems: 'center',
@@ -13,11 +13,13 @@ const styles = StyleSheet.create({
     color: CustomColors.DodgerBlue,
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
+    fontWeight: callerFontWeight,
   },
   userNumber: {
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
+    fontWeight: callerFontWeight,
   },
   flagLogo: {
     width: 20,
@@ -29,6 +31,7 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.CallerName,
     lineHeight: CustomFonts.CallTextLineHeight,
     margin: 7,
+    fontWeight: callerFontWeight,
   },
   notifyContainer: {
     flexDirection: 'row',

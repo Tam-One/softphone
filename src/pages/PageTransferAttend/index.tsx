@@ -4,6 +4,7 @@ import {
   mdiPhoneHangup,
   mdiPhoneOff,
 } from '@mdi/js'
+import CustomGradient from 'components/CustomGradient'
 import CustomHeader from 'components/CustomHeader'
 import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
@@ -19,7 +20,7 @@ import CustomFonts from 'utils/CustomFonts'
 @observer
 class PageTransferAttend extends React.Component {
   render() {
-    const currentCall = callStore.currentCall
+    const { currentCall } = callStore || {}
     const {
       partyName,
       partyNumber,
@@ -43,7 +44,7 @@ class PageTransferAttend extends React.Component {
       transferingAvatarName = transferingAvatarName?.split('').join(' ')
     }
     return (
-      <View style={styles.outer}>
+      <CustomGradient>
         {/* <RnText center subTitle>{intl`Transferring`}</RnText> */}
         <CustomHeader
           onBack={stopTransferring}
@@ -116,7 +117,7 @@ class PageTransferAttend extends React.Component {
             </View>
           </View>
         </View>
-      </View>
+      </CustomGradient>
     )
   }
 }
