@@ -211,27 +211,33 @@ export class SIP extends EventEmitter {
     platformOs = platformConfig[platformOs]
 
     const jssipVersion = '3.2.15'
-    const appVersion = APP_VERSION
     const lUseragent =
       'Brekeke Phone for ' +
       platformOs +
       ' ' +
-      appVersion +
+      APP_VERSION +
       '/JsSIP ' +
       jssipVersion
     //
     const callOptions = ((pbxTurnEnabled && turnConfig) || {}) as CallOptions
-    let { pcConfig } = callOptions
-    if (!pcConfig) {
-      pcConfig = {}
+    const { pcConfig } = callOptions
+    let pcConfigObj = { ...pcConfig }
+
+    if (!pcConfigObj) {
+      pcConfigObj = {}
     }
-    if (!Array.isArray(pcConfig.iceServers)) {
-      pcConfig.iceServers = []
+    if (!Array.isArray(pcConfigObj.iceServers)) {
+      pcConfigObj.iceServers = []
     }
     if (sipLoginOption.turnConfig) {
-      pcConfig.iceServers = [...pcConfig.iceServers, sipLoginOption.turnConfig]
+      pcConfigObj.iceServers = [
+        ...pcConfigObj.iceServers,
+        sipLoginOption.turnConfig,
+      ]
     }
-    this.phone.setDefaultCallOptions(callOptions)
+    let callOptionsObj = { ...callOptions, pcConfig: pcConfigObj }
+
+    this.phone.setDefaultCallOptions(callOptionsObj)
     //
     this.phone.startWebRTC({
       url: `wss://${hostname}:${port}/phone`,
