@@ -199,7 +199,6 @@ export class SIP extends EventEmitter {
       android: 'Android',
       web: 'Web',
     }
-    const version = APP_VERSION
     const {
       pbxTurnEnabled,
       hostname,
@@ -212,7 +211,7 @@ export class SIP extends EventEmitter {
     platformOs = platformConfig[platformOs]
 
     const jssipVersion = '3.2.15'
-    const appVersion = version
+    const appVersion = APP_VERSION
     const lUseragent =
       'Brekeke Phone for ' +
       platformOs +
@@ -230,7 +229,7 @@ export class SIP extends EventEmitter {
       pcConfig.iceServers = []
     }
     if (sipLoginOption.turnConfig) {
-      pcConfig.iceServers.push(sipLoginOption.turnConfig)
+      pcConfig.iceServers = [...pcConfig.iceServers, sipLoginOption.turnConfig]
     }
     this.phone.setDefaultCallOptions(callOptions)
     //

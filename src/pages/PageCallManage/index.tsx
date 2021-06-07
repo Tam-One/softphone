@@ -246,7 +246,8 @@ class PageCallManage extends React.Component<{
   }
 
   renderVideoActionBtns = (currentCall: Call) => {
-    const backgrounCallsLength = callStore.backgroundCalls.length
+    const { backgroundCalls } = callStore
+    const backgrounCallsLength = backgroundCalls.length
     const actionButtonsList = this.getActionsButtonList(currentCall)
     const { hangup } = currentCall
 
@@ -281,7 +282,8 @@ class PageCallManage extends React.Component<{
   }
 
   renderBtns = (currentCall: Call) => {
-    const backgrounCallsLength = callStore.backgroundCalls.length
+    const { backgroundCalls } = callStore
+    const backgrounCallsLength = backgroundCalls.length
     const actionButtonsList = this.getActionsButtonList(currentCall)
     const { answered, localVideoEnabled } = currentCall
     if (!answered) {
