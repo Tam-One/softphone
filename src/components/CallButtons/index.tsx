@@ -1,4 +1,6 @@
-import React, { FC } from 'react'
+import styles from 'components/CallButtons/Styles'
+import { RnText } from 'components/Rn'
+import React, { FC, useEffect, useState } from 'react'
 import {
   Image,
   ImageSourcePropType,
@@ -6,20 +8,42 @@ import {
   View,
 } from 'react-native'
 
-import { RnText } from '../Rn'
-import styles from './Styles'
-
 const CallButtons: FC<{
   onPress(): void
   image: ImageSourcePropType
   lable: string
-}> = p => (
-  <View style={styles.actionBtnContainer}>
-    <TouchableOpacity onPress={p.onPress}>
-      <Image source={p.image} style={styles.actionBtn}></Image>
-    </TouchableOpacity>
-    <RnText style={styles.actionBtnText}>{p.lable}</RnText>
-  </View>
-)
+  showAnimation?: boolean
+  containerStyle?: object
+}> = ({ onPress, image, lable, showAnimation, containerStyle }) => {
+  const [animationTrigger, setAnimationTrigger] = useState(showAnimation)
+  const animationTime = 1000
+
+  useEffect(() => {
+    let timer: any = null
+    if (showAnimation) {
+      timer = setInterval(() => {
+        setAnimationTrigger(prevAnimationTrigger => !prevAnimationTrigger)
+      }, animationTime)
+    }
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
+
+  return (
+    <View style={[styles.actionBtnContainer, containerStyle && containerStyle]}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={animationTrigger && styles.animationContainer}
+      >
+        <Image
+          source={image}
+          style={[styles.actionBtn, animationTrigger && styles.animationImage]}
+        ></Image>
+      </TouchableOpacity>
+      <RnText style={styles.actionBtnText}>{lable}</RnText>
+    </View>
+  )
+}
 
 export default CallButtons

@@ -65,6 +65,8 @@ export default class Call {
   disableVideo = () => sip.disableVideo(this.id)
 
   @observable remoteVideoStreamObject: MediaStream | null = null
+  @observable localVideoStreamObject: MediaStream | null = null
+
   voiceStreamObject: MediaStream | null = null
 
   @observable muted = false

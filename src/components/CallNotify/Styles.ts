@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   notifyContainer: {
     flex: 1,
-    marginBottom: 100,
+    marginBottom: 20,
   },
 })
 

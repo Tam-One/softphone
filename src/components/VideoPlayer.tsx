@@ -17,10 +17,18 @@ declare global {
   }
 }
 
-export default observer((p: { sourceObject?: MediaStream | null }) =>
-  p.sourceObject ? (
-    <RTCView streamURL={p.sourceObject.toURL()} style={css.video} />
-  ) : (
-    <ActivityIndicator style={css.video} />
-  ),
+export default observer(
+  (props: { sourceObject?: MediaStream | null; style?: object | {} }) => {
+    const { sourceObject, style } = props
+    return sourceObject ? (
+      <RTCView
+        streamURL={sourceObject.toURL()}
+        style={{ ...css.video, ...style }}
+        objectFit='cover'
+        mirror={true}
+      />
+    ) : (
+      <ActivityIndicator style={css.video} />
+    )
+  },
 )

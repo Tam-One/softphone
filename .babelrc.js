@@ -8,5 +8,6 @@ module.exports = {
     babelPluginIntl,
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     '@babel/plugin-proposal-optional-chaining',
+    'module:react-native-dotenv',
   ],
 }

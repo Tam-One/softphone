@@ -14,6 +14,7 @@ const CustomColors = {
   Tomato: '#FF5757',
   LightGold: '#FFC260',
   GreenMantis: '#74bf53',
+  lightGreen: '#C9EEDC',
 }
 
 export default CustomColors

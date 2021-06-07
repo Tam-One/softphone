@@ -5,7 +5,6 @@ import CustomGradient from 'components/CustomGradient'
 import FieldButton from 'components/FieldButton'
 import Layout from 'components/Layout'
 import PoweredBy from 'components/PoweredBy'
-import { RnTouchableOpacity } from 'components/Rn'
 import RnText from 'components/RnText'
 import VideoPlayer from 'components/VideoPlayer'
 import { toInteger } from 'lodash'
@@ -14,7 +13,7 @@ import { observer } from 'mobx-react'
 import styles from 'pages/PageCallManage/Styles'
 import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
-import { Platform, StyleSheet, View } from 'react-native'
+import { Platform, View } from 'react-native'
 import Call from 'stores/Call'
 import callStore from 'stores/callStore'
 import intl from 'stores/intl'
@@ -26,15 +25,12 @@ import CustomImages from 'utils/CustomImages'
 class PageCallManage extends React.Component<{
   isFromCallBar: boolean
 }> {
-  @observable showButtonsInVideoCall = true
-  alreadySetShowButtonsInVideoCall = false
   intervalID = 0
   state = {
     curTime: 0,
   }
 
-  componentDidMount() {
-    this.hideButtonsIfVideo()
+  startCallTimer = () => {
     this.intervalID = setInterval(() => {
       const { curTime } = this.state
       this.setState({
@@ -42,31 +38,128 @@ class PageCallManage extends React.Component<{
       })
     }, 1000)
   }
+
+  getActionsButtonList = (currentCall: any) => {
+    const activeColor = CustomColors.IconActiveBlue
+    const nonActiveColor = CustomColors.White
+    const textActiveColor = CustomColors.Black
+    const {
+      muted,
+      toggleMuted,
+      holding,
+      toggleHold,
+      localVideoEnabled,
+      disableVideo,
+      enableVideo,
+      recording,
+      toggleRecording,
+    } = currentCall
+
+    const { isLoudSpeakerEnabled, toggleLoudSpeaker } = callStore
+
+    const buttonList = {
+      mute: (
+        <CallActionButton
+          bgcolor={muted ? activeColor : nonActiveColor}
+          name={muted ? intl`Unmute` : intl`Mute`}
+          onPress={() => toggleMuted()}
+          textcolor={muted ? nonActiveColor : textActiveColor}
+          image={muted ? CustomImages.MicrophoneOff : CustomImages.Microphone}
+          imageStyle={styles.actionBtnImage}
+        />
+      ),
+      hold: (
+        <CallActionButton
+          bgcolor={holding ? activeColor : nonActiveColor}
+          name={holding ? intl`Unhold` : intl`Hold`}
+          onPress={() => toggleHold()}
+          textcolor={holding ? nonActiveColor : textActiveColor}
+          image={holding ? CustomImages.Unhold : CustomImages.Pause}
+          imageStyle={styles.actionBtnImage}
+        />
+      ),
+      video: (
+        <CallActionButton
+          bgcolor={localVideoEnabled ? activeColor : nonActiveColor}
+          name={intl`Video`}
+          onPress={localVideoEnabled ? disableVideo : enableVideo}
+          textcolor={localVideoEnabled ? nonActiveColor : textActiveColor}
+          image={localVideoEnabled ? CustomImages.VideoOff : CustomImages.Video}
+          imageStyle={styles.actionBtnImage}
+        />
+      ),
+      speaker: (
+        <CallActionButton
+          bgcolor={isLoudSpeakerEnabled ? activeColor : nonActiveColor}
+          name={intl`Speaker`}
+          onPress={toggleLoudSpeaker}
+          textcolor={isLoudSpeakerEnabled ? nonActiveColor : textActiveColor}
+          image={
+            isLoudSpeakerEnabled
+              ? CustomImages.VolumeHigh
+              : CustomImages.VolumeMedium
+          }
+          imageStyle={styles.actionBtnImage}
+        />
+      ),
+      record: (
+        <CallActionButton
+          bgcolor={recording ? activeColor : nonActiveColor}
+          name={intl`Record`}
+          onPress={toggleRecording}
+          textcolor={recording ? nonActiveColor : textActiveColor}
+          image={recording ? CustomImages.RecordWhite : CustomImages.Record}
+        />
+      ),
+      park: (
+        <CallActionButton
+          bgcolor={nonActiveColor}
+          name={intl`Park`}
+          onPress={Nav().goToPageCallParks2}
+          textcolor={textActiveColor}
+          image={CustomImages.Park}
+        />
+      ),
+      keys: (
+        <CallActionButton
+          bgcolor={nonActiveColor}
+          name={intl`Keys`}
+          onPress={Nav().goToPageDtmfKeypad}
+          textcolor={textActiveColor}
+          image={CustomImages.Keys}
+        />
+      ),
+      transfer: (
+        <CallActionButton
+          bgcolor={nonActiveColor}
+          name={intl`Transfer`}
+          onPress={Nav().goToPageTransferDial}
+          textcolor={textActiveColor}
+          image={CustomImages.Transfer}
+        />
+      ),
+    }
+
+    return buttonList
+  }
+
   componentDidUpdate() {
-    this.hideButtonsIfVideo()
-    if (!callStore.currentCall && !callStore.backgroundCalls.length) {
+    const { currentCall, backgroundCalls } = callStore
+    const { answered }: any = currentCall || {}
+    const { curTime } = this.state
+    if (!currentCall && !backgroundCalls.length) {
       Nav().backToPageCallRecents()
     }
+    if (answered && !curTime) {
+      this.startCallTimer()
+    }
   }
+
   componentWillUnmount() {
     clearInterval(this.intervalID)
   }
 
-  @action toggleButtons = () => {
-    this.showButtonsInVideoCall = !this.showButtonsInVideoCall
-  }
-  @action hideButtonsIfVideo = () => {
-    if (
-      !this.props.isFromCallBar &&
-      !this.alreadySetShowButtonsInVideoCall &&
-      callStore.currentCall?.remoteVideoEnabled
-    ) {
-      this.showButtonsInVideoCall = false
-      this.alreadySetShowButtonsInVideoCall = true
-    }
-  }
-
-  renderCallTime = () => {
+  renderCallTime = (isVideoEnabled?: boolean) => {
     const timeInSec = this.state.curTime
     const isSecs = toInteger(timeInSec % 60)
     const secs = isSecs < 10 ? '0' + isSecs : isSecs
@@ -76,7 +169,12 @@ class PageCallManage extends React.Component<{
     const hours = isHours ? isHours + ':' : null
 
     return (
-      <View style={styles.timerContainer}>
+      <View
+        style={[
+          styles.timerContainer,
+          isVideoEnabled && styles.videoTimerDisplayBox,
+        ]}
+      >
         <View style={styles.timerDisplayBox}>
           <RnText style={{ color: CustomColors.White }}>
             {hours}
@@ -87,162 +185,88 @@ class PageCallManage extends React.Component<{
     )
   }
 
-  renderCall = (c?: any, isVideoEnabled?: boolean) => {
-    if (!c) {
+  renderCall = (currentCall?: any, isVideoEnabled?: boolean) => {
+    const { transferring, partyNumber, getCallerName, answered } = currentCall
+    if (!currentCall) {
       return
     }
-    if (c && c.transferring) {
+    if (currentCall && transferring) {
       return <PageTransferAttend />
+    } else if (isVideoEnabled) {
+      return this.renderVideoPage(currentCall)
     } else {
       return (
         <Layout
           compact
-          dropdown={
-            isVideoEnabled && !c?.tsransferring
-              ? [
-                  {
-                    label: this.showButtonsInVideoCall
-                      ? intl`Hide call menu buttons`
-                      : intl`Show call menu buttons`,
-                    onPress: this.toggleButtons,
-                  },
-                ]
-              : undefined
-          }
           noScroll
           onBack={Nav().backToPageCallRecents}
-          title={c?.partyNumber || intl`Connection failed`}
-          transparent={!c?.transferring}
+          title={partyNumber || intl`Connection failed`}
+          transparent={!transferring}
         >
           <>
-            {isVideoEnabled && this.renderVideo(c)}
-
-            {!isVideoEnabled && (
-              <CallerInfo
-                isUserCalling={!c.partyNumber.includes('+')}
-                callerName={c.getCallerName}
-                callerNumber={c.partyNumber}
-                containerStyle={{ marginTop: c.getCallerName ? '5%' : '20%' }}
-              />
-            )}
-            {this.renderCallTime()}
-            {this.renderBtns(c, isVideoEnabled)}
-            {this.renderHangupBtn(c, isVideoEnabled)}
+            <CallerInfo
+              isUserCalling={!partyNumber?.includes('+')}
+              callerName={getCallerName}
+              callerNumber={partyNumber}
+              containerStyle={{ marginTop: getCallerName ? '5%' : '20%' }}
+            />
+            {answered && this.renderCallTime()}
+            {this.renderBtns(currentCall)}
+            {this.renderHangupBtn(currentCall)}
           </>
         </Layout>
       )
     }
   }
 
-  renderVideo = (c: Call) => (
-    <>
-      <View style={styles.videoSpace} />
-      <View style={styles.video}>
-        <VideoPlayer sourceObject={c.remoteVideoStreamObject} />
-      </View>
-      <RnTouchableOpacity
-        onPress={this.toggleButtons}
-        style={StyleSheet.absoluteFill}
-      />
-    </>
-  )
-
-  renderBtns = (c: Call, isVideoEnabled?: boolean) => {
-    if (isVideoEnabled && !this.showButtonsInVideoCall) {
-      return null
-    }
-    const Container = isVideoEnabled ? RnTouchableOpacity : View
-    const activeColor = CustomColors.IconActiveBlue
-    const backgrounCallsLength = callStore.backgroundCalls.length
-    const nonActiveColor = CustomColors.White
-    const textActiveColor = CustomColors.Black
+  renderVideoPage = (currentCall?: any) => {
     return (
-      <Container
-        onPress={isVideoEnabled ? this.toggleButtons : undefined}
-        style={[styles.btns, isVideoEnabled && styles.btnsIsVideoEnabled]}
-      >
-        <View style={styles.btnsVerticalMargin} />
-        {/* TODO add Connecting... */}
-        <View style={!c.answered && styles.btnsHidden}>
+      <View style={styles.videoPageContainer}>
+        {this.renderVideo(currentCall)}
+        {this.renderCallTime(true)}
+        {this.renderVideoActionBtns(currentCall)}
+      </View>
+    )
+  }
+
+  renderVideo = (currentCall: Call) => {
+    const { remoteVideoStreamObject, localVideoStreamObject } = currentCall
+    return (
+      <View style={styles.videoContainer}>
+        <VideoPlayer
+          sourceObject={remoteVideoStreamObject}
+          style={styles.remoteVideo}
+        />
+        <VideoPlayer
+          sourceObject={localVideoStreamObject}
+          style={styles.localVideo}
+        />
+      </View>
+    )
+  }
+
+  renderVideoActionBtns = (currentCall: Call) => {
+    const { backgroundCalls } = callStore
+    const backgrounCallsLength = backgroundCalls.length
+    const actionButtonsList = this.getActionsButtonList(currentCall)
+    const { hangup } = currentCall
+
+    return (
+      <View style={styles.btnsIsVideoEnabled}>
+        <View style={styles.videoActionsContainer}>
           <View style={styles.btnsInnerView}>
-            <CallActionButton
-              bgcolor={c.muted ? activeColor : nonActiveColor}
-              name={c.muted ? intl`Unmute` : intl`Mute`}
-              onPress={() => c.toggleMuted()}
-              textcolor={c.muted ? nonActiveColor : textActiveColor}
-              image={
-                c.muted ? CustomImages.MicrophoneOff : CustomImages.Microphone
-              }
-              imageStyle={styles.actionBtnImage}
-            />
-            <CallActionButton
-              bgcolor={c.holding ? activeColor : nonActiveColor}
-              name={c.holding ? intl`Unhold` : intl`Hold`}
-              onPress={() => c.toggleHold()}
-              textcolor={c.holding ? nonActiveColor : textActiveColor}
-              image={c.holding ? CustomImages.Unhold : CustomImages.Pause}
-              imageStyle={styles.actionBtnImage}
-            />
-            <CallActionButton
-              bgcolor={nonActiveColor}
-              name={intl`Video`}
-              onPress={c.localVideoEnabled ? c.disableVideo : c.enableVideo}
-              textcolor={textActiveColor}
-              image={CustomImages.Video}
-              imageStyle={styles.actionBtnImage}
-            />
-            {Platform.OS !== 'web' && (
-              <CallActionButton
-                bgcolor={
-                  callStore.isLoudSpeakerEnabled ? activeColor : nonActiveColor
-                }
-                name={intl`Speaker`}
-                onPress={callStore.toggleLoudSpeaker}
-                textcolor={
-                  callStore.isLoudSpeakerEnabled
-                    ? nonActiveColor
-                    : textActiveColor
-                }
-                image={
-                  callStore.isLoudSpeakerEnabled
-                    ? CustomImages.VolumeHigh
-                    : CustomImages.VolumeMedium
-                }
-                imageStyle={styles.actionBtnImage}
-              />
-            )}
+            {actionButtonsList['mute']}
+            {actionButtonsList['hold']}
+            {actionButtonsList['video']}
           </View>
-          <View style={styles.btnsSpace} />
-          <View style={styles.btnsInnerView}>
-            <CallActionButton
-              bgcolor={c.recording ? activeColor : nonActiveColor}
-              name={intl`Record`}
-              onPress={c.toggleRecording}
-              textcolor={c.recording ? nonActiveColor : textActiveColor}
-              image={
-                c.recording ? CustomImages.RecordWhite : CustomImages.Record
-              }
-            />
-            <CallActionButton
-              bgcolor={nonActiveColor}
-              name={intl`Park`}
-              onPress={Nav().goToPageCallParks2}
-              textcolor={textActiveColor}
-              image={CustomImages.Park}
-            />
-            <CallActionButton
-              bgcolor={nonActiveColor}
-              name={intl`Keys`}
-              onPress={Nav().goToPageDtmfKeypad}
-              textcolor={textActiveColor}
-              image={CustomImages.Keys}
-            />
-            <CallActionButton
-              bgcolor={nonActiveColor}
-              name={intl`Transfer`}
-              onPress={Nav().goToPageTransferDial}
-              textcolor={textActiveColor}
-              image={CustomImages.Transfer}
+          <View style={[styles.btnsInnerView, styles.btnsSpace]}>
+            {actionButtonsList['record']}
+            {Platform.OS !== 'web' && actionButtonsList['speaker']}
+            <CallButtons
+              onPress={hangup}
+              image={CustomImages.CallDeclinedLogo}
+              lable={''}
+              containerStyle={{ width: 80 }}
             />
           </View>
         </View>
@@ -253,29 +277,69 @@ class PageCallManage extends React.Component<{
             value={intl`${backgrounCallsLength} other calls are in background`}
           />
         )}
-        <View style={styles.btnsVerticalMargin} />
-      </Container>
+      </View>
     )
   }
 
-  renderHangupBtn = (c: Call, isVideoEnabled?: boolean) => (
-    <View style={styles.footerContainer}>
-      <View style={styles.actionBtnContainer}>
-        <CallButtons
-          onPress={c.hangup}
-          image={CustomImages.CallDeclinedLogo}
-          lable={''}
-        />
+  renderBtns = (currentCall: Call) => {
+    const { backgroundCalls } = callStore
+    const backgrounCallsLength = backgroundCalls.length
+    const actionButtonsList = this.getActionsButtonList(currentCall)
+    const { answered, localVideoEnabled } = currentCall
+    if (!answered) {
+      return
+    }
+    return (
+      <View style={[styles.btns]}>
+        <View>
+          <View style={styles.btnsInnerView}>
+            {actionButtonsList['mute']}
+            {actionButtonsList['hold']}
+            {console.log(localVideoEnabled, 'localVideoEnabled')}
+            {actionButtonsList['video']}
+            {Platform.OS !== 'web' && actionButtonsList['speaker']}
+          </View>
+          <View style={styles.btnsSpace} />
+          <View style={styles.btnsInnerView}>
+            {actionButtonsList['record']}
+            {actionButtonsList['park']}
+            {actionButtonsList['keys']}
+            {actionButtonsList['transfer']}
+          </View>
+        </View>
+        {backgrounCallsLength > 0 && (
+          <FieldButton
+            label={intl`BACKGROUND CALLS`}
+            onCreateBtnPress={Nav().goToPageBackgroundCalls}
+            value={intl`${backgrounCallsLength} other calls are in background`}
+          />
+        )}
       </View>
-      {!isVideoEnabled && <PoweredBy containerStyle={{ marginTop: 30 }} />}
-    </View>
-  )
+    )
+  }
+
+  renderHangupBtn = (currentCall: Call) => {
+    const { hangup } = currentCall
+    return (
+      <View style={styles.footerContainer}>
+        <View style={styles.actionBtnContainer}>
+          <CallButtons
+            onPress={hangup}
+            image={CustomImages.CallDeclinedLogo}
+            lable={''}
+          />
+        </View>
+        <PoweredBy containerStyle={{ marginTop: 0 }} />
+      </View>
+    )
+  }
 
   render() {
-    const c = callStore.currentCall
-    const isVideoEnabled = c?.remoteVideoEnabled && c?.localVideoEnabled
+    const currentCall: any = callStore.currentCall || {}
+    const { remoteVideoEnabled, localVideoEnabled } = currentCall
+    const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
     const Container = isVideoEnabled ? React.Fragment : CustomGradient
-    return <Container>{this.renderCall(c, isVideoEnabled)}</Container>
+    return <Container>{this.renderCall(currentCall, isVideoEnabled)}</Container>
   }
 }
 
