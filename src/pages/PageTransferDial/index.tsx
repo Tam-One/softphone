@@ -16,12 +16,8 @@ import Nav from 'stores/Nav'
 class PageTransferDial extends React.Component {
   prevId?: string
 
-  componentDidMount() {
-    this.componentDidUpdate()
-  }
-
   componentDidUpdate() {
-    const currentCall: any = callStore.currentCall || {}
+    const { currentCall = {} } = callStore || {}
     const { id } = currentCall
     if (this.prevId && this.prevId !== id) {
       Nav().backToPageCallManage()

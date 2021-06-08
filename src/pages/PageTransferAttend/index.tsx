@@ -20,7 +20,8 @@ import CustomFonts from 'utils/CustomFonts'
 @observer
 class PageTransferAttend extends React.Component {
   render() {
-    const currentCall: any = callStore.currentCall || {}
+    const { currentCall = {} } = callStore || {}
+
     const {
       partyName,
       partyNumber,
@@ -35,11 +36,11 @@ class PageTransferAttend extends React.Component {
     if (!currentCall) {
       return null
     }
-    var userAvatarName = callerName || partyName || partyNumber
+    let userAvatarName = callerName || partyName || partyNumber
     if (userAvatarName === partyNumber) {
       userAvatarName = userAvatarName?.split('').join(' ')
     }
-    var transferingAvatarName = transferringName
+    let transferingAvatarName = transferringName
     if (transferingAvatarName === transferring) {
       transferingAvatarName = transferingAvatarName?.split('').join(' ')
     }
