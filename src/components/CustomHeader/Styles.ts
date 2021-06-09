@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: CustomColors.lightAliceBlue,
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingLeft: 5,
+    alignItems: 'center',
+    paddingHorizontal: 17,
     shadowColor: CustomColors.LightGrey,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
@@ -16,10 +16,13 @@ const styles = StyleSheet.create({
   },
   buttonIcon: {
     flex: 0,
+    width: 30,
+    height: 30,
   },
   backBtnRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   backText: {
     color: CustomColors.DodgerBlue,
@@ -30,7 +33,9 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
     fontWeight: 'bold',
-    marginLeft: '20%',
+    flex: 1,
+    paddingRight: 59,
+    textAlign: 'center',
   },
   subText: {
     color: CustomColors.DarkBlue,

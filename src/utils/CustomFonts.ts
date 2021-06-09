@@ -12,6 +12,7 @@ const CustomFonts = {
   MediumText: 16,
   BackButton: 27,
   LargeAvatarSize: 80,
+  CallerFontWeight: '600',
 }
 
 export default CustomFonts

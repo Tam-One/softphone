@@ -12,12 +12,14 @@ const CustomImages = {
   RecordWhite: require('assets/CallActionBtnImages/record-circle-white.png'),
   Record: require('assets/CallActionBtnImages/record.png'),
   Transfer: require('assets/CallActionBtnImages/transfer.png'),
-  VideoOff: require('assets/CallActionBtnImages/video-off-white.png'),
-  Video: require('assets/CallActionBtnImages/video.png'),
+  VideoOff: require('assets/CallActionBtnImages/video-off.png'),
+  Video: require('assets/CallActionBtnImages/video-white.png'),
   VolumeHigh: require('assets/CallActionBtnImages/volume-high.png'),
   VolumeMedium: require('assets/CallActionBtnImages/volume-medium.png'),
   Brand: require('assets/brand.png'),
   Logo: require('assets/logo.png'),
+  HeaderBackButton: require('assets/headerBack.png'),
+  BackgroundBlue: require('assets/background_blue.png'),
 }
 
 export default CustomImages

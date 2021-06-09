@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   animationContainer: {
-    backgroundColor: CustomColors.lightGreen,
+    backgroundColor: CustomColors.LightGreen,
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',

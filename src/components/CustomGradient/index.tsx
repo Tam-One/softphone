@@ -1,17 +1,14 @@
 import styles from 'components/CustomGradient/Styles'
-import React, { FC } from 'react'
-import LinearGradient, {
-  LinearGradientProps,
-} from 'react-native-linear-gradient'
-import CustomColors from 'utils/CustomColors'
+import React from 'react'
+import { ImageBackground } from 'react-native'
+import CustomImages from 'utils/CustomImages'
 
-const CustomGradient: FC<Omit<LinearGradientProps, 'colors'>> = props => (
-  <LinearGradient
+const CustomGradient = props => (
+  <ImageBackground
     {...props}
-    colors={[CustomColors.White, CustomColors.AliceBlue]}
-    locations={[0, 0.3, 0.9]}
-    style={[styles.CustomGradient, props.style]}
-  />
+    source={CustomImages.BackgroundBlue}
+    style={styles.CustomGradient}
+  ></ImageBackground>
 )
 
 export default CustomGradient

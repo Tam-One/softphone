@@ -1,8 +1,29 @@
-import g from 'components/variables'
 import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
 
 const styles = StyleSheet.create({
+  customHeaderContainer: {
+    backgroundColor: 'white',
+    height: 40,
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    zIndex: 99,
+  },
+  backBtnContainer: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    position: 'relative',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'repeat',
+    justifyContent: 'center',
+  },
   videoPageContainer: {
     flex: 1,
     position: 'relative',
@@ -63,6 +84,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
+    paddingBottom: 40,
   },
   actionBtnContainer: {
     flex: 1,

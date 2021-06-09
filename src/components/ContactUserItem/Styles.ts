@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
   },
   inner: {
     flexDirection: 'row',
-    paddingLeft: 10,
-    padding: 14,
+    paddingHorizontal: 17,
+    height: 63,
     alignItems: 'center',
   },
   innerSelected: {

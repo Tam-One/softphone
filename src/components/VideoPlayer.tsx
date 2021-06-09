@@ -20,10 +20,11 @@ declare global {
 export default observer(
   (props: { sourceObject?: MediaStream | null; style?: object | {} }) => {
     const { sourceObject, style } = props
+    const videoStyle = style ? style : css.video
     return sourceObject ? (
       <RTCView
         streamURL={sourceObject.toURL()}
-        style={{ ...css.video, ...style }}
+        style={videoStyle}
         objectFit='cover'
         mirror={true}
       />

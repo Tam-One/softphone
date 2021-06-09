@@ -2,13 +2,12 @@ import CallActionButton from 'components/CallActionButton'
 import CallButtons from 'components/CallButtons'
 import CallerInfo from 'components/CallerInfo'
 import CustomGradient from 'components/CustomGradient'
+import CustomHeader from 'components/CustomHeader'
 import FieldButton from 'components/FieldButton'
-import Layout from 'components/Layout'
 import PoweredBy from 'components/PoweredBy'
 import RnText from 'components/RnText'
 import VideoPlayer from 'components/VideoPlayer'
 import { toInteger } from 'lodash'
-import { action, observable } from 'mobx'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageCallManage/Styles'
 import PageTransferAttend from 'pages/PageTransferAttend'
@@ -30,11 +29,13 @@ class PageCallManage extends React.Component<{
     curTime: 0,
   }
 
-  startCallTimer = () => {
+  startCallTimer = answeredAt => {
+    clearInterval(this.intervalID)
     this.intervalID = setInterval(() => {
-      const { curTime } = this.state
+      const date = new Date()
+      const diffInMs = date.getTime() - answeredAt
       this.setState({
-        curTime: curTime + 1,
+        curTime: diffInMs / 1000,
       })
     }, 1000)
   }
@@ -84,7 +85,7 @@ class PageCallManage extends React.Component<{
           name={intl`Video`}
           onPress={localVideoEnabled ? disableVideo : enableVideo}
           textcolor={localVideoEnabled ? nonActiveColor : textActiveColor}
-          image={localVideoEnabled ? CustomImages.VideoOff : CustomImages.Video}
+          image={localVideoEnabled ? CustomImages.Video : CustomImages.VideoOff}
           imageStyle={styles.actionBtnImage}
         />
       ),
@@ -145,13 +146,13 @@ class PageCallManage extends React.Component<{
 
   componentDidUpdate() {
     const { currentCall, backgroundCalls } = callStore
-    const { answered }: any = currentCall || {}
+    const { answered, answeredAt }: any = currentCall || {}
     const { curTime } = this.state
     if (!currentCall && !backgroundCalls.length) {
       Nav().backToPageCallRecents()
     }
     if (answered && !curTime) {
-      this.startCallTimer()
+      this.startCallTimer(answeredAt)
     }
   }
 
@@ -165,7 +166,7 @@ class PageCallManage extends React.Component<{
     const secs = isSecs < 10 ? '0' + isSecs : isSecs
     const isMins = toInteger(timeInSec / 60)
     const mins = isMins < 10 ? '0' + isMins : isMins
-    const isHours = toInteger(timeInSec / 360)
+    const isHours = toInteger(timeInSec / 3600)
     const hours = isHours ? isHours + ':' : null
 
     return (
@@ -196,25 +197,29 @@ class PageCallManage extends React.Component<{
       return this.renderVideoPage(currentCall)
     } else {
       return (
-        <Layout
-          compact
-          noScroll
-          onBack={Nav().backToPageCallRecents}
-          title={partyNumber || intl`Connection failed`}
-          transparent={!transferring}
-        >
-          <>
-            <CallerInfo
-              isUserCalling={!partyNumber?.includes('+')}
-              callerName={getCallerName}
-              callerNumber={partyNumber}
-              containerStyle={{ marginTop: getCallerName ? '5%' : '20%' }}
-            />
-            {answered && this.renderCallTime()}
-            {this.renderBtns(currentCall)}
-            {this.renderHangupBtn(currentCall)}
-          </>
-        </Layout>
+        <>
+          <CustomHeader
+            onBack={Nav().backToPageCallRecents}
+            description={''}
+            title={''}
+            hideBackText={true}
+            containerStyle={styles.customHeaderContainer}
+            backContainerStyle={styles.backBtnContainer}
+          ></CustomHeader>
+          <View style={styles.container}>
+            <CustomGradient>
+              <CallerInfo
+                isUserCalling={!partyNumber?.includes('+')}
+                callerName={getCallerName}
+                callerNumber={partyNumber}
+                containerStyle={{ marginTop: getCallerName ? '15%' : '40%' }}
+              />
+              {answered && this.renderCallTime()}
+              {this.renderBtns(currentCall)}
+              {this.renderHangupBtn(currentCall)}
+            </CustomGradient>
+          </View>
+        </>
       )
     }
   }
@@ -338,8 +343,7 @@ class PageCallManage extends React.Component<{
     const currentCall: any = callStore.currentCall || {}
     const { remoteVideoEnabled, localVideoEnabled } = currentCall
     const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
-    const Container = isVideoEnabled ? React.Fragment : CustomGradient
-    return <Container>{this.renderCall(currentCall, isVideoEnabled)}</Container>
+    return <>{this.renderCall(currentCall, isVideoEnabled)}</>
   }
 }
 
