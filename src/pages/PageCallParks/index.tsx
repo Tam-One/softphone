@@ -28,18 +28,16 @@ class PageCallParks extends React.Component<{
 
   park = () => {
     const { selectedPark } = this.state
-    const parkVal = selectedPark
     const { callParks2 } = this.props
     const { currentCall = {}, startCall }: any = callStore || {}
     const { park } = currentCall
-    return callParks2 ? park(parkVal) : startCall(parkVal || '')
+    return callParks2 ? park(selectedPark) : startCall(selectedPark || '')
   }
 
   render() {
-    const authStore = getAuthStore()
-    const { currentProfile } = authStore
-    const { parks } = currentProfile
-    const profileParks = parks
+    const authStore = getAuthStore() || {}
+    const { currentProfile } = authStore || {}
+    const { parks } = currentProfile || {}
     const { selectedPark } = this.state
 
     return (
@@ -49,7 +47,7 @@ class PageCallParks extends React.Component<{
           description={'Your park numbers'}
           title={'Park'}
         />
-        {!profileParks.length && (
+        {!parks.length && (
           <>
             <View style={styles.noParksContainer}>
               <RnText style={styles.noParksText}>{'Park (0)'}</RnText>
@@ -60,7 +58,7 @@ class PageCallParks extends React.Component<{
           </>
         )}
         <ScrollView>
-          {profileParks.map((park, index) => (
+          {parks.map((park, index) => (
             <RnTouchableOpacity
               key={index}
               onPress={() => this.selectPark(park)}
