@@ -12,7 +12,7 @@ const CustomFonts = {
   MediumText: 16,
   BackButton: 27,
   LargeAvatarSize: 80,
-  CallerFontWeight: '600',
+  HeaderTitle: 22,
 }
 
 export default CustomFonts
