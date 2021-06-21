@@ -1,6 +1,6 @@
 import sip from 'api/sip'
+import ShowNumber from 'components/CallDialledNumbers'
 import KeyPad from 'components/CallKeyPad'
-import ShowNumber from 'components/CallShowNumbers'
 import Layout from 'components/Layout'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
@@ -22,86 +22,106 @@ class PageDtmfKeypad extends React.Component<{
   callId: string
   partyName: string
 }> {
-  @observable txt = ''
-  txtRef = React.createRef<TextInput>()
-  txtSelection = { start: 0, end: 0 }
+  @observable text = ''
+  textRef = React.createRef<TextInput>()
+  textSelection = { start: 0, end: 0 }
 
   showKeyboard = () => {
-    this.txtRef.current?.focus()
+    const {
+      current: { focus },
+    }: any = this.textRef
+
+    if (focus) {
+      focus()
+    }
   }
 
   sendKey = (key: string) => {
-    const c = callStore.calls.find(c => c.id === this.props.callId)
+    const { calls } = callStore
+    const { callId } = this.props
+    const call = calls.find(call => call.id === callId)
+    const { pbxTenant, pbxTalkerId, partyNumber }: any = call
+    const currentProfile: any = getAuthStore()
     sip.sendDTMF({
       signal: key,
-      sessionId: this.props.callId,
-      tenant: c?.pbxTenant || getAuthStore().currentProfile.pbxTenant,
-      talkerId: c?.pbxTalkerId || c?.partyNumber || c?.partyName || '',
+      sessionId: callId,
+      tenant: pbxTenant || currentProfile.pbxTenant,
+      talkerId: pbxTalkerId || partyNumber || partyNumber || '',
     })
   }
 
   callVoice = () => {
-    this.txt = this.txt.trim()
-    if (!this.txt) {
+    this.text = this.text.trim()
+    if (!this.text) {
       RnAlert.error({
         message: intlDebug`No target`,
       })
       return
     }
-    sip.createSession(this.txt, {
+    sip.createSession(this.text, {
       videoEnabled: false,
     })
     Nav().goToPageCallManage()
   }
 
+  onSelectionChange = (
+    event: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
+  ) => {
+    if (RnKeyboard.isKeyboardShowing) {
+      return
+    }
+    const {
+      nativeEvent: {
+        selection: { start, end },
+      },
+    } = event
+
+    Object.assign(this.textSelection, {
+      start: start,
+      end: end,
+    })
+  }
+
+  onNumberPress = val => {
+    this.sendKey(val)
+    const { end, start } = this.textSelection
+    let min = Math.min(start, end)
+    let max = Math.max(start, end)
+    const isDelete = val === ''
+    if (isDelete) {
+      if (start === end && start) {
+        min = min - 1
+      }
+    }
+    // Update text to trigger render
+    const t = this.text
+    this.text = t.substring(0, min) + val + t.substring(max)
+    //
+    const textSelection = min + (isDelete ? 0 : 1)
+    this.textSelection.start = textSelection
+    this.textSelection.end = textSelection
+  }
+
   render() {
+    const { partyName } = this.props
     return (
       <Layout
         description={intl`Keypad dial manually`}
         onBack={Nav().backToPageCallManage}
-        title={this.props.partyName}
+        title={partyName}
       >
         <ShowNumber
-          refInput={this.txtRef}
-          selectionChange={
-            RnKeyboard.isKeyboardShowing
-              ? undefined
-              : (
-                  e: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
-                ) => {
-                  Object.assign(this.txtSelection, {
-                    start: e.nativeEvent.selection.start,
-                    end: e.nativeEvent.selection.end,
-                  })
-                }
-          }
-          setTarget={(v: string) => {
-            this.txt = v
+          refInput={this.textRef}
+          selectionChange={this.onSelectionChange}
+          setTarget={(val: string) => {
+            this.text = val
           }}
-          value={this.txt}
+          value={this.text}
         />
         {!RnKeyboard.isKeyboardShowing && (
           <KeyPad
             callVoice={this.callVoice}
-            onPressNumber={v => {
-              this.sendKey(v)
-              const { end, start } = this.txtSelection
-              let min = Math.min(start, end)
-              let max = Math.max(start, end)
-              const isDelete = v === ''
-              if (isDelete) {
-                if (start === end && start) {
-                  min = min - 1
-                }
-              }
-              // Update text to trigger render
-              const t = this.txt
-              this.txt = t.substring(0, min) + v + t.substring(max)
-              //
-              const p = min + (isDelete ? 0 : 1)
-              this.txtSelection.start = p
-              this.txtSelection.end = p
-            }}
+            onPressNumber={this.onNumberPress}
             showKeyboard={this.showKeyboard}
           />
         )}

@@ -11,10 +11,11 @@ import {
 const CallButtons: FC<{
   onPress(): void
   image: ImageSourcePropType
-  lable: string
+  lable?: string
   showAnimation?: boolean
   containerStyle?: object
-}> = ({ onPress, image, lable, showAnimation, containerStyle }) => {
+  imageStyle?: object
+}> = ({ onPress, image, lable, showAnimation, containerStyle, imageStyle }) => {
   const [animationTrigger, setAnimationTrigger] = useState(showAnimation)
   const animationTime = 1000
 
@@ -38,7 +39,11 @@ const CallButtons: FC<{
       >
         <Image
           source={image}
-          style={[styles.actionBtn, animationTrigger && styles.animationImage]}
+          style={[
+            styles.actionBtn,
+            imageStyle && imageStyle,
+            animationTrigger && styles.animationImage,
+          ]}
         ></Image>
       </TouchableOpacity>
       <RnText style={styles.actionBtnText}>{lable}</RnText>

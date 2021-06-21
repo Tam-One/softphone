@@ -13,6 +13,10 @@ const CustomFonts = {
   BackButton: 27,
   LargeAvatarSize: 80,
   HeaderTitle: 22,
+  DialNumberFont: 30,
+  BigFont: 55,
+  MediumFont: 35,
+  IconFont: 20,
 }
 
 export default CustomFonts
