@@ -70,8 +70,7 @@ class PageCallKeypad extends React.Component {
       min = min - 1
     }
     // Update text to trigger render
-    const text = this.text
-    this.text = text.substring(0, min) + val + text.substring(max)
+    this.text = this.text.substring(0, min) + val + this.text.substring(max)
     //
     const textSelection = min + (isDelete ? 0 : 1)
     this.textSelection.start = textSelection

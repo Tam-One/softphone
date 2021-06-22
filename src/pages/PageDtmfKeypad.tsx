@@ -41,7 +41,7 @@ class PageDtmfKeypad extends React.Component<{
     const { callId } = this.props
     const call = calls.find(call => call.id === callId)
     const { pbxTenant, pbxTalkerId, partyNumber }: any = call
-    const currentProfile: any = getAuthStore()
+    const { currentProfile } = getAuthStore()
     sip.sendDTMF({
       signal: key,
       sessionId: callId,
@@ -94,8 +94,7 @@ class PageDtmfKeypad extends React.Component<{
       }
     }
     // Update text to trigger render
-    const t = this.text
-    this.text = t.substring(0, min) + val + t.substring(max)
+    this.text = this.text.substring(0, min) + val + this.text.substring(max)
     //
     const textSelection = min + (isDelete ? 0 : 1)
     this.textSelection.start = textSelection

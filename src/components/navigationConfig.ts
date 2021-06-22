@@ -142,22 +142,23 @@ export const menus = () => {
   return lastMenus
 }
 
-const saveNavigation = (index: number, key: string) => {
+const saveNavigation = (index: number, keyVal: string) => {
   const arr = menus()
-  const menu = arr[index]
+  let menu = arr[index]
+  const { subMenusMap, defaultSubMenuKey, key } = menu
   const { currentProfile } = getAuthStore()
   let { navIndex, navSubMenus } = currentProfile
   if (!menu || !currentProfile) {
     return
   }
-  if (!(key in menu.subMenusMap)) {
-    key = menu.defaultSubMenuKey
+  if (!(keyVal in subMenusMap)) {
+    keyVal = defaultSubMenuKey
   }
   normalizeSavedNavigation()
-  if (menu.key !== 'settings') {
+  if (key !== 'settings') {
     navIndex = index
   }
-  navSubMenus[index] = key
+  navSubMenus[index] = keyVal
   profileStore.saveProfilesToLocalStorage()
 }
 
