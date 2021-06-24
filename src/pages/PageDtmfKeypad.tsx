@@ -41,11 +41,11 @@ class PageDtmfKeypad extends React.Component<{
     const { callId } = this.props
     const call = calls.find(call => call.id === callId)
     const { pbxTenant, pbxTalkerId, partyNumber }: any = call
-    const { currentProfile } = getAuthStore()
+    const { currentProfile } = getAuthStore() || {}
     sip.sendDTMF({
       signal: key,
       sessionId: callId,
-      tenant: pbxTenant || currentProfile.pbxTenant,
+      tenant: pbxTenant || currentProfile?.pbxTenant,
       talkerId: pbxTalkerId || partyNumber || partyNumber || '',
     })
   }
