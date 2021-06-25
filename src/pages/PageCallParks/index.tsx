@@ -41,7 +41,7 @@ class PageCallParks extends React.Component<{
         {!parks.length && (
           <>
             <View style={styles.noParksContainer}>
-              <RnText style={styles.noParksText}>{'Park (0)'}</RnText>
+              <RnText style={styles.noParksText}>{'Parks (0)'}</RnText>
             </View>
             <RnText style={styles.noParksDesc}>
               {intl`This account has no park number`}
@@ -67,9 +67,9 @@ class PageCallParks extends React.Component<{
   }
 
   render() {
-    const authStore = getAuthStore() || {}
-    const { currentProfile } = authStore || {}
-    const { parks } = currentProfile || {}
+    const {
+      currentProfile: { parks },
+    } = getAuthStore() || {}
     const { selectedPark } = this.state
     const { callParks2 } = this.props
 

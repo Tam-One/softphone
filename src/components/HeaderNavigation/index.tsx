@@ -15,7 +15,6 @@ const Navigation: FC<{
         const { key, navFn, label } = submenu
         const active = key === subMenu
         const { unreadCount } = chatStore
-        const totalUnreadChat = unreadCount
         return (
           <RnTouchableOpacity
             key={key}
@@ -25,11 +24,11 @@ const Navigation: FC<{
             <RnText small style={active && styles.textActive}>
               {label}
             </RnText>
-            {key === 'chat' && !!totalUnreadChat && (
+            {key === 'chat' && !!unreadCount && (
               <View style={styles.unreadOuter}>
                 <View style={[styles.unread]}>
                   <RnText style={styles.unreadText} bold white center>
-                    {totalUnreadChat}
+                    {unreadCount}
                   </RnText>
                 </View>
               </View>

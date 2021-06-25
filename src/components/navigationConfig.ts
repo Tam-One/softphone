@@ -156,8 +156,9 @@ const saveNavigation = (index: number, keyVal: string) => {
 
 export const normalizeSavedNavigation = () => {
   const arr = menus()
-  const { currentProfile } = getAuthStore() || {}
-  let { navIndex, navSubMenus } = currentProfile || {}
+  let {
+    currentProfile: { navIndex, navSubMenus },
+  } = getAuthStore() || {}
 
   if (!arr[navIndex]) {
     navIndex = 0
