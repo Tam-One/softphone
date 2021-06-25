@@ -16,6 +16,10 @@ const CustomColors = {
   GreenMantis: '#74bf53',
   LightGreen: '#C9EEDC',
   LightBlue: '#F4FAFF',
+  DarkAsh: '#858997',
+  MediumBlack: '#272727F0',
+  ActiveBlue: '#007AFF',
+  LightAsh: '#999999',
 }
 
 export default CustomColors

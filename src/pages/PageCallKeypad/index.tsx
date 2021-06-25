@@ -1,27 +1,24 @@
-import sip from 'api/sip'
 import ShowNumber from 'components/CallDialledNumbers'
 import KeyPad from 'components/CallKeyPad'
-import Layout from 'components/Layout'
+import CustomLayout from 'components/CustomLayout'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
+import styles from 'pages/PageCallKeypad/Styles'
 import React from 'react'
 import {
   NativeSyntheticEvent,
+  ScrollView,
   TextInput,
   TextInputSelectionChangeEventData,
+  View,
 } from 'react-native'
-import { getAuthStore } from 'stores/authStore'
 import callStore from 'stores/callStore'
-import intl, { intlDebug } from 'stores/intl'
-import Nav from 'stores/Nav'
+import { intlDebug } from 'stores/intl'
 import RnAlert from 'stores/RnAlert'
 import RnKeyboard from 'stores/RnKeyboard'
 
 @observer
-class PageDtmfKeypad extends React.Component<{
-  callId: string
-  partyName: string
-}> {
+class PageCallKeypad extends React.Component {
   @observable text = ''
   textRef = React.createRef<TextInput>()
   textSelection = { start: 0, end: 0 }
@@ -35,33 +32,15 @@ class PageDtmfKeypad extends React.Component<{
       focus()
     }
   }
-
-  sendKey = (key: string) => {
-    const { calls } = callStore
-    const { callId } = this.props
-    const call = calls.find(call => call.id === callId)
-    const { pbxTenant, pbxTalkerId, partyNumber }: any = call
-    const { currentProfile } = getAuthStore() || {}
-    sip.sendDTMF({
-      signal: key,
-      sessionId: callId,
-      tenant: pbxTenant || currentProfile?.pbxTenant,
-      talkerId: pbxTalkerId || partyNumber || partyNumber || '',
-    })
-  }
-
   callVoice = () => {
     this.text = this.text.trim()
     if (!this.text) {
       RnAlert.error({
-        message: intlDebug`No target`,
+        message: intlDebug`No target to call`,
       })
       return
     }
-    sip.createSession(this.text, {
-      videoEnabled: false,
-    })
-    Nav().goToPageCallManage()
+    callStore.startCall(this.text)
   }
 
   onSelectionChange = (
@@ -83,15 +62,12 @@ class PageDtmfKeypad extends React.Component<{
   }
 
   onNumberPress = val => {
-    this.sendKey(val)
     const { end, start } = this.textSelection
     let min = Math.min(start, end)
     let max = Math.max(start, end)
     const isDelete = val === ''
-    if (isDelete) {
-      if (start === end && start) {
-        min = min - 1
-      }
+    if (isDelete && start === end && start) {
+      min = min - 1
     }
     // Update text to trigger render
     this.text = this.text.substring(0, min) + val + this.text.substring(max)
@@ -102,31 +78,33 @@ class PageDtmfKeypad extends React.Component<{
   }
 
   render() {
-    const { partyName } = this.props
     return (
-      <Layout
-        description={intl`Keypad dial manually`}
-        onBack={Nav().backToPageCallManage}
-        title={partyName}
-      >
-        <ShowNumber
-          refInput={this.textRef}
-          selectionChange={this.onSelectionChange}
-          setTarget={(val: string) => {
-            this.text = val
-          }}
-          value={this.text}
-        />
-        {!RnKeyboard.isKeyboardShowing && (
-          <KeyPad
-            callVoice={this.callVoice}
-            onPressNumber={this.onNumberPress}
-            showKeyboard={this.showKeyboard}
+      <CustomLayout menu='keys' subMenu='keypad'>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollViewContainer}
+        >
+          <ShowNumber
+            refInput={this.textRef}
+            selectionChange={this.onSelectionChange}
+            setTarget={(val: string) => {
+              this.text = val
+            }}
+            value={this.text}
           />
-        )}
-      </Layout>
+          <View style={styles.keyPadContainer}>
+            {!RnKeyboard.isKeyboardShowing && (
+              <KeyPad
+                callVoice={this.callVoice}
+                onPressNumber={this.onNumberPress}
+                showKeyboard={this.showKeyboard}
+              />
+            )}
+          </View>
+        </ScrollView>
+      </CustomLayout>
     )
   }
 }
 
-export default PageDtmfKeypad
+export default PageCallKeypad
