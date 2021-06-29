@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: CustomColors.DodgerBlue,
     paddingHorizontal: 32,
     height: 56,
+    marginTop: 16,
     justifyContent: 'center',
   },
   noParksText: {
@@ -29,7 +30,30 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
   },
   parkContainer: {
-    marginVertical: 27,
+    marginTop: 27,
+    marginBottom: 12,
+  },
+  fieldTextInput: {
+    fontSize: 14,
+    color: CustomColors.DarkAsh,
+  },
+  searchBox: {
+    backgroundColor: CustomColors.White,
+    marginHorizontal: 27,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 15,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  fieldIcon: {
+    width: 3,
+    height: 3,
+    flex: 0.1,
+  },
+  recentList: {
+    paddingLeft: 13,
   },
 })
 

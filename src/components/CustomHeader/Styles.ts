@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: CustomColors.lightAliceBlue,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 17,
+    paddingHorizontal: 10,
     shadowColor: CustomColors.LightGrey,
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     lineHeight: CustomFonts.CallTextLineHeight,
     fontWeight: 'bold',
     flex: 1,
-    paddingRight: 59,
+    paddingRight: 78,
     textAlign: 'center',
   },
   subText: {

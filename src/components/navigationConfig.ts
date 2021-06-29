@@ -52,13 +52,13 @@ const genMenus = () => {
       subMenus: [
         {
           key: 'recents',
-          label: intl`RECENTS`,
+          label: intl`Recents`,
           navFnKey: 'goToPageCallRecents',
         },
         {
           key: 'missed',
           label: intl`Missed`,
-          navFnKey: 'goToPageCallRecents',
+          navFnKey: 'goToMissedCalls',
         },
       ],
       defaultSubMenuKey: 'recents',

@@ -6,17 +6,16 @@ import globalVariables from 'components/variables'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
-import intl from 'stores/intl'
 import CustomColors from 'utils/CustomColors'
 import CustomFonts from 'utils/CustomFonts'
 
 const {
-  colors: { danger, primary, warning },
+  colors: { danger, primary },
 } = globalVariables
 
 const getIconColor = (incoming, answered) => {
   if (!incoming) {
-    return warning
+    return CustomColors.DarkAsh
   } else if (answered) {
     return primary
   } else {
@@ -31,6 +30,14 @@ const getIconPath = (incoming, answered) => {
     return mdiPhoneIncoming
   } else {
     return mdiPhoneMissed
+  }
+}
+
+const getTextColor = (incoming, answered) => {
+  if (!incoming || answered) {
+    return CustomColors.DarkBlue
+  } else {
+    return CustomColors.Red
   }
 }
 
@@ -52,8 +59,10 @@ const UserItem: FC<
     selected: boolean
     statusText: string
     showNewAvatar?: boolean
+    hideAvatar?: boolean
     number?: string
     containerStyle?: object
+    fromMissedCall?: boolean
   }>
 > = ({
   answered,
@@ -72,8 +81,10 @@ const UserItem: FC<
   selected,
   statusText,
   showNewAvatar,
+  hideAvatar,
   number,
   containerStyle,
+  fromMissedCall,
 }) => {
   var userAvatarName = name
 
@@ -84,24 +95,33 @@ const UserItem: FC<
 
   const iconColor = getIconColor(incoming, answered)
 
+  const textColor = getTextColor(incoming, answered)
+
   return (
     <View style={[styles.outer, containerStyle && containerStyle]}>
       <View style={[styles.inner, selected && styles.innerSelected]}>
-        {!showNewAvatar && (
-          <Avatar source={{ uri: avatar as string }} style={styles.withSpace} />
-        )}
-        {!!showNewAvatar && (
-          <View style={styles.nameAvatarContainer}>
-            <UserAvatar
-              style={styles.nameAvatar}
-              name={userAvatarName}
-              bgColor={CustomColors.DodgerBlue}
-            />
+        {!hideAvatar && (
+          <View>
+            {!showNewAvatar && (
+              <Avatar
+                source={{ uri: avatar as string }}
+                style={styles.withSpace}
+              />
+            )}
+            {!!showNewAvatar && (
+              <View style={styles.nameAvatarContainer}>
+                <UserAvatar
+                  style={styles.nameAvatar}
+                  name={userAvatarName}
+                  bgColor={CustomColors.DodgerBlue}
+                />
+              </View>
+            )}
           </View>
         )}
         <View style={[styles.text, styles.withSpace]}>
           <View style={styles.nameWithStatus}>
-            <RnText black bold singleLine>
+            <RnText black bold singleLine style={{ color: textColor }}>
               {name || partyNumber || id}
             </RnText>
             {!!statusText && (
@@ -115,7 +135,7 @@ const UserItem: FC<
               {lastMessage}
             </RnText>
           )}
-          {isRecentCall && !lastMessage && (
+          {!fromMissedCall && isRecentCall && !lastMessage && (
             <View style={styles.detail}>
               <RnIcon
                 color={iconColor}
@@ -124,7 +144,7 @@ const UserItem: FC<
                 style={styles.callIcon}
               />
               <RnText normal small style={styles.callCreatedAt}>
-                {intl`at`} {created}
+                {created}
               </RnText>
             </View>
           )}
@@ -135,6 +155,15 @@ const UserItem: FC<
               {lastMessageDate}
             </RnText>
           </View>
+        )}
+        {!!fromMissedCall && (
+          <RnText
+            normal
+            small
+            style={[styles.callCreatedAt, { marginRight: 11 }]}
+          >
+            {created}
+          </RnText>
         )}
         {icons?.map((icon, index) => (
           <RnTouchableOpacity key={index} onPress={() => iconFuncs?.[index]()}>

@@ -20,6 +20,7 @@ const CustomColors = {
   MediumBlack: '#272727F0',
   ActiveBlue: '#007AFF',
   LightAsh: '#999999',
+  Red: '#C71616',
 }
 
 export default CustomColors

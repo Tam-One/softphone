@@ -5,6 +5,7 @@ import PageCallManage from 'pages/PageCallManage'
 import PageCallParks from 'pages/PageCallParks'
 import PageCallParks2 from 'pages/PageCallParks2'
 import PageCallRecents from 'pages/PageCallRecents'
+import MissedCalls from 'pages/PageCallRecents/MissedCalls'
 import PageChatDetail from 'pages/PageChatDetail'
 import PageChatGroupCreate from 'pages/PageChatGroupCreate'
 import PageChatGroupDetail from 'pages/PageChatGroupDetail'
@@ -42,6 +43,8 @@ export class Nav {
   backToPageCallKeypad = back({ PageCallKeypad }, true)
   goToPageCallRecents = go({ PageCallRecents }, true)
   backToPageCallRecents = back({ PageCallRecents }, true)
+  goToMissedCalls = go({ MissedCalls }, true)
+  backToMissedCalls = back({ MissedCalls }, true)
   goToPageSettingsOther = go({ PageSettingsOther }, true)
   backToPageSettingsOther = back({ PageSettingsOther }, true)
   goToPageCallParks = go({ PageCallParks }, true)
@@ -86,8 +89,10 @@ export class Nav {
     const arr = menus()
     normalizeSavedNavigation()
     const p = getAuthStore().currentProfile
-    const i = p.navIndex
-    const k = p.navSubMenus?.[i]
+    // const i = p.navIndex
+    // const k = p.navSubMenus?.[i]
+    const i = 0
+    const k = 'keypad'
     arr[i].subMenusMap[k].navFn()
   }
 }

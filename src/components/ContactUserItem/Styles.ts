@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   callCreatedAt: {
     left: 3,
-    color: subColor,
+    color: CustomColors.DarkAsh,
   },
   buttonIcon: {
     padding: 10,
