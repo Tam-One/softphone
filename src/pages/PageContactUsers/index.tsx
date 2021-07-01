@@ -1,19 +1,20 @@
-import { mdiMagnify, mdiPhone, mdiVideo } from '@mdi/js'
+import { mdiMagnify, mdiPhone } from '@mdi/js'
 import UserItem from 'components/ContactUserItem'
-import Field from 'components/Field'
-import Layout from 'components/Layout'
-import { RnTouchableOpacity } from 'components/Rn'
+import CustomLayout from 'components/CustomLayout'
+import { RnIcon } from 'components/Rn'
+import RnText from 'components/RnText'
+import RnTextInput from 'components/RnTextInput'
 import orderBy from 'lodash/orderBy'
 import uniq from 'lodash/uniq'
 import { observer } from 'mobx-react'
+import styles from 'pages/PageContactUsers/Styles'
 import React from 'react'
+import { ScrollView, View } from 'react-native'
 import { getAuthStore } from 'stores/authStore'
 import callStore from 'stores/callStore'
 import chatStore, { ChatMessage } from 'stores/chatStore'
 import contactStore from 'stores/contactStore'
-import intl from 'stores/intl'
-import Nav from 'stores/Nav'
-import profileStore from 'stores/profileStore'
+import CustomColors from 'utils/CustomColors'
 import DelayFlag from 'utils/DelayFlag'
 import { filterTextOnly } from 'utils/formatChatContent'
 
@@ -119,69 +120,59 @@ class PageContactUsers extends React.Component {
     })
 
     return (
-      <Layout
-        description={(() => {
-          let desc = intl`PBX users, ${allUsers.length} total`
-          if (allUsers.length && ucEnabled) {
-            desc = desc.replace('PBX', 'PBX/UC')
-            desc = desc.replace(
-              intl`${allUsers.length} total`,
-              intl`${onlineUsers.length}/${allUsers.length} online`,
-            )
-          }
-          return desc
-        })()}
-        menu='contact'
-        subMenu='users'
-        title={intl`Users`}
-      >
-        <Field
-          icon={mdiMagnify}
-          label={intl`SEARCH FOR USERS`}
-          onValueChange={(v: string) => {
-            contactStore.usersSearchTerm = v
-          }}
-          value={contactStore.usersSearchTerm}
-        />
-        {ucEnabled && (
-          <Field
-            label={intl`SHOW OFFLINE USERS`}
-            onValueChange={(v: boolean) => {
-              profileStore.upsertProfile({
-                id: getAuthStore().signedInId,
-                displayOfflineUsers: v,
-              })
-            }}
-            type='Switch'
-            value={getAuthStore().currentProfile.displayOfflineUsers}
-          />
-        )}
-        {groups.map(_g => (
-          <React.Fragment key={_g.key}>
-            <Field isGroup label={_g.key} />
-            {_g.users.map((u, i) => (
-              <RnTouchableOpacity
-                key={i}
-                onPress={
-                  getAuthStore().currentProfile.ucEnabled
-                    ? () => Nav().goToPageChatDetail({ buddy: u.id })
-                    : undefined
-                }
-              >
-                <UserItem
-                  iconFuncs={[
-                    () => callStore.startVideoCall(u.id),
-                    () => callStore.startCall(u.id),
-                  ]}
-                  icons={[mdiVideo, mdiPhone]}
-                  lastMessage={this.getLastMessageChat(u.id)?.text}
-                  {...u}
-                />
-              </RnTouchableOpacity>
-            ))}
-          </React.Fragment>
-        ))}
-      </Layout>
+      <CustomLayout menu='contact' subMenu='users'>
+        <ScrollView style={styles.scrollViewContainer}>
+          <View style={styles.parkContainer}>
+            <View>
+              <RnText style={styles.ParksText}>{'Contacten'}</RnText>
+              <RnText style={styles.noParksDesc}>{'Interne contacten'}</RnText>
+            </View>
+          </View>
+          <View style={styles.searchBox}>
+            <RnIcon
+              path={mdiMagnify}
+              pointerEvents='none'
+              style={styles.fieldIcon}
+              size={10}
+              color={CustomColors.DarkAsh}
+            />
+            <RnTextInput
+              disabled
+              style={styles.fieldTextInput}
+              value={contactStore.usersSearchTerm}
+              onChangeText={(val: string) => {
+                contactStore.usersSearchTerm = val
+              }}
+              placeholder={'Zoeken'}
+            />
+          </View>
+          <View style={styles.listView}>
+            {groups.map(group => {
+              const { key, users } = group
+              return (
+                <React.Fragment key={key}>
+                  <View style={styles.transferSeparator}>
+                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                  </View>
+                  {users.map((user, index) => {
+                    const { id } = user
+                    return (
+                      <UserItem
+                        showNewAvatar={true}
+                        iconFuncs={[() => callStore.startCall(id)]}
+                        icons={[mdiPhone]}
+                        key={index}
+                        {...user}
+                        containerStyle={styles.userItem}
+                      />
+                    )
+                  })}
+                </React.Fragment>
+              )
+            })}
+          </View>
+        </ScrollView>
+      </CustomLayout>
     )
   }
 }

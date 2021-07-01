@@ -20,6 +20,7 @@ const CustomImages = {
   Logo: require('assets/logo.png'),
   HeaderBackButton: require('assets/headerBack.png'),
   BackgroundBlue: require('assets/background_blue.png'),
+  signInBanner: require('assets/login/banner.png'),
 }
 
 export default CustomImages

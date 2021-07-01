@@ -84,12 +84,18 @@ const styles = StyleSheet.create({
     marginTop: footerMargin,
   },
   callButtonContainer: {
-    marginLeft: 65,
     marginRight: 13,
   },
   callButtonImage: {
     width: footerImage,
     height: footerImage,
+  },
+  hideWrapper: {
+    alignItems: 'center',
+    fontSize: CustomFonts.HeaderTitle,
+    color: CustomColors.DarkBlue,
+    textDecorationLine: 'underline',
+    fontWeight: '600',
   },
 })
 

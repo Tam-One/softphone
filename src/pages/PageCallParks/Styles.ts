@@ -5,7 +5,7 @@ import CustomFonts from 'utils/CustomFonts'
 const styles = StyleSheet.create({
   noParksContainer: {
     backgroundColor: CustomColors.DodgerBlue,
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
     height: 56,
     justifyContent: 'center',
   },
@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     color: CustomColors.DarkBlue,
     fontWeight: '800',
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
   },
   noParksDesc: {
     fontSize: CustomFonts.SmallSubText,
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
     paddingVertical: 5,
     color: CustomColors.DarkBlue,
   },

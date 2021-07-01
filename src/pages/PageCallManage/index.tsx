@@ -10,6 +10,7 @@ import VideoPlayer from 'components/VideoPlayer'
 import { toInteger } from 'lodash'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageCallManage/Styles'
+import PageDtmfKeypad from 'pages/PageDtmfKeypad'
 import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
 import { Platform, View } from 'react-native'
@@ -27,6 +28,7 @@ class PageCallManage extends React.Component<{
   intervalID = 0
   state = {
     curTime: 0,
+    showKeyPad: false,
   }
 
   startCallTimer = answeredAt => {
@@ -125,7 +127,7 @@ class PageCallManage extends React.Component<{
         <CallActionButton
           bgcolor={nonActiveColor}
           name={intl`Keys`}
-          onPress={Nav().goToPageDtmfKeypad}
+          onPress={() => this.setState({ showKeyPad: true })}
           textcolor={textActiveColor}
           image={CustomImages.Keys}
         />
@@ -187,7 +189,16 @@ class PageCallManage extends React.Component<{
   }
 
   renderCall = (currentCall?: any, isVideoEnabled?: boolean) => {
-    const { transferring, partyNumber, getCallerName, answered } = currentCall
+    const {
+      transferring,
+      partyNumber,
+      getCallerName,
+      answered,
+      id,
+      partyName,
+      hangup,
+    } = currentCall
+    const { showKeyPad } = this.state
     if (!currentCall) {
       return
     }
@@ -212,10 +223,20 @@ class PageCallManage extends React.Component<{
                 isUserCalling={!partyNumber?.includes('+')}
                 callerName={getCallerName}
                 callerNumber={partyNumber}
-                containerStyle={{ marginTop: getCallerName ? '15%' : '40%' }}
+                containerStyle={{
+                  marginTop: getCallerName || showKeyPad ? '15%' : '40%',
+                }}
               />
               {answered && this.renderCallTime()}
-              {this.renderBtns(currentCall)}
+              {!showKeyPad && this.renderBtns(currentCall)}
+              {showKeyPad && (
+                <PageDtmfKeypad
+                  callId={id}
+                  partyName={partyName}
+                  hangup={hangup}
+                  onHidePress={() => this.setState({ showKeyPad: false })}
+                ></PageDtmfKeypad>
+              )}
               {this.renderHangupBtn(currentCall)}
             </CustomGradient>
           </View>
@@ -325,15 +346,18 @@ class PageCallManage extends React.Component<{
 
   renderHangupBtn = (currentCall: Call) => {
     const { hangup } = currentCall
+    const { showKeyPad } = this.state
     return (
       <View style={styles.footerContainer}>
-        <View style={styles.actionBtnContainer}>
-          <CallButtons
-            onPress={hangup}
-            image={CustomImages.CallDeclinedLogo}
-            lable={''}
-          />
-        </View>
+        {!showKeyPad && (
+          <View style={styles.actionBtnContainer}>
+            <CallButtons
+              onPress={hangup}
+              image={CustomImages.CallDeclinedLogo}
+              lable={''}
+            />
+          </View>
+        )}
         <PoweredBy containerStyle={{ marginTop: 0 }} />
       </View>
     )

@@ -70,12 +70,12 @@ const genMenus = () => {
       subMenus: [
         {
           key: 'phonebook',
-          label: intl`PHONEBOOK`,
+          label: intl`Phonebook`,
           navFnKey: 'goToPageContactPhonebook',
         },
         {
           key: 'users',
-          label: intl`USERS`,
+          label: intl`Users`,
           navFnKey: 'goToPageContactUsers',
         },
       ],
@@ -88,7 +88,7 @@ const genMenus = () => {
       subMenus: [
         {
           key: 'profile',
-          label: intl`CURRENT ACCOUNT`,
+          label: intl`Settings`,
           navFnKey: 'goToPageSettingsProfile',
         },
       ],
@@ -103,14 +103,14 @@ const genMenus = () => {
       (sub: SubMenu) => sub,
     ) as Menu['subMenusMap']
     menu.defaultSubMenu = menu.subMenusMap?.[menu.defaultSubMenuKey]
-    menu.subMenus.forEach(sub => {
-      sub.navFn = () => {
-        if (sub.ucRequired && !getAuthStore().currentProfile.ucEnabled) {
+    menu.subMenus.forEach(ele => {
+      ele.navFn = () => {
+        if (ele.ucRequired && !getAuthStore().currentProfile.ucEnabled) {
           menu.defaultSubMenu.navFn()
           return
         }
-        Nav()[sub.navFnKey]()
-        saveNavigation(index, sub.key)
+        Nav()[ele.navFnKey]()
+        saveNavigation(index, ele.key)
       }
     })
     menu.navFn = () => {
@@ -134,42 +134,35 @@ export const menus = () => {
   return lastMenus
 }
 
-const saveNavigation = (index: number, keyVal: string) => {
+const saveNavigation = (index: number, key: string) => {
   const arr = menus()
-  let menu = arr[index]
-  const { subMenusMap, defaultSubMenuKey, key } = menu
-  const { currentProfile } = getAuthStore() || {}
-  let { navIndex, navSubMenus } = currentProfile || {}
-  if (!menu || !currentProfile) {
+  const menu = arr[index]
+  const profile = getAuthStore().currentProfile
+  if (!menu || !profile) {
     return
   }
-  if (!(keyVal in subMenusMap)) {
-    keyVal = defaultSubMenuKey
+  if (!(key in menu.subMenusMap)) {
+    key = menu.defaultSubMenuKey
   }
   normalizeSavedNavigation()
-  if (key !== 'settings') {
-    navIndex = index
+  if (menu.key !== 'settings') {
+    profile.navIndex = index
   }
-  navSubMenus[index] = keyVal
+  profile.navSubMenus[index] = key
   profileStore.saveProfilesToLocalStorage()
 }
-
 export const normalizeSavedNavigation = () => {
   const arr = menus()
-  let {
-    currentProfile: { navIndex, navSubMenus },
-  } = getAuthStore() || {}
-
-  if (!arr[navIndex]) {
-    navIndex = 0
+  const profile = getAuthStore().currentProfile
+  if (!arr[profile.navIndex]) {
+    profile.navIndex = 0
   }
-  if (navSubMenus?.length !== arr.length) {
-    navSubMenus = arr.map(() => '')
+  if (profile.navSubMenus?.length !== arr.length) {
+    profile.navSubMenus = arr.map(() => '')
   }
-  arr.forEach((ele, index) => {
-    const { subMenusMap, defaultSubMenuKey } = ele
-    if (!(navSubMenus[index] in subMenusMap)) {
-      navSubMenus[index] = defaultSubMenuKey
+  arr.forEach((menu, index) => {
+    if (!(profile.navSubMenus[index] in menu.subMenusMap)) {
+      profile.navSubMenus[index] = menu.defaultSubMenuKey
     }
   })
 }
@@ -183,8 +176,7 @@ export const getSubMenus = (menu: string) => {
     })
     return []
   }
-  const { subMenus } = currentMenu
-  const { currentProfile } = getAuthStore() || {}
-  const { ucEnabled } = currentProfile || {}
-  return subMenus.filter(ele => !(ele.ucRequired && !ucEnabled))
+  return currentMenu.subMenus.filter(
+    ele => !(ele.ucRequired && !getAuthStore().currentProfile.ucEnabled),
+  )
 }

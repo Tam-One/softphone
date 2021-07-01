@@ -18,6 +18,7 @@ import PagePhonebookCreate from 'pages/PagePhonebookCreate'
 import PagePhonebookUpdate from 'pages/PagePhonebookUpdate'
 import PageProfileCreate from 'pages/PageProfileCreate'
 import PageProfileSignIn from 'pages/PageProfileSingIn'
+import EditAccount from 'pages/PageProfileSingIn/EditAccount'
 import PageProfileUpdate from 'pages/PageProfileUpdate'
 import PageSettingsDebug from 'pages/PageSettingDebug'
 import PageSettingsOther from 'pages/PageSettingsOther'
@@ -33,6 +34,8 @@ const back = RnStacker.createBackTo
 export class Nav {
   goToPageProfileSignIn = go({ PageProfileSignIn }, true)
   backToPageProfileSignIn = back({ PageProfileSignIn }, true)
+  goToEditAccount = go({ EditAccount }, true)
+  backToEditAccount = back({ EditAccount }, true)
   goToPageChatRecents = go({ PageChatRecents }, true)
   backToPageChatRecents = back({ PageChatRecents }, true)
   goToPageContactPhonebook = go({ PageContactPhonebook }, true)

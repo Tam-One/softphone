@@ -8,7 +8,7 @@ import CustomImages from 'utils/CustomImages'
 const CustomHeader: FC<
   Partial<{
     description: string
-    onBack(): void
+    onBack?(): void
     title: string
     hideBackText?: boolean
     containerStyle?: object | {}
@@ -25,13 +25,15 @@ const CustomHeader: FC<
   return (
     <View style={[styles.header, containerStyle]}>
       <View style={[styles.headerRow, backContainerStyle]}>
-        <RnTouchableOpacity onPress={onBack} style={styles.backBtnRow}>
-          <Image
-            source={CustomImages.HeaderBackButton}
-            style={styles.buttonIcon}
-          ></Image>
-          {!hideBackText && <RnText style={styles.backText}>{'Back'}</RnText>}
-        </RnTouchableOpacity>
+        {!!onBack && (
+          <RnTouchableOpacity onPress={onBack} style={styles.backBtnRow}>
+            <Image
+              source={CustomImages.HeaderBackButton}
+              style={styles.buttonIcon}
+            ></Image>
+            {!hideBackText && <RnText style={styles.backText}>{'Back'}</RnText>}
+          </RnTouchableOpacity>
+        )}
         <RnText style={styles.headerText}>{title}</RnText>
       </View>
       {!!description && <RnText style={styles.subText}>{description}</RnText>}

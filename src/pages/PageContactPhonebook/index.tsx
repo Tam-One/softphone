@@ -1,29 +1,23 @@
-import {
-  mdiBriefcase,
-  mdiCellphone,
-  mdiHome,
-  mdiInformation,
-  mdiPhone,
-} from '@mdi/js'
+import { mdiBriefcase, mdiCellphone, mdiHome, mdiMagnify } from '@mdi/js'
 import pbx from 'api/pbx'
 import UserItem from 'components/ContactUserItem'
-import Field from 'components/Field'
-import Layout from 'components/Layout'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
+import CustomLayout from 'components/CustomLayout'
+import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
+import RnTextInput from 'components/RnTextInput'
 import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageContactPhonebook/Styles'
 import React from 'react'
-import { View } from 'react-native'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 import { getAuthStore } from 'stores/authStore'
 import callStore from 'stores/callStore'
 import contactStore, { Phonebook2 } from 'stores/contactStore'
 import intl, { intlDebug } from 'stores/intl'
 import Nav from 'stores/Nav'
-import profileStore from 'stores/profileStore'
 import RnAlert from 'stores/RnAlert'
 import RnPicker from 'stores/RnPicker'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
+import CustomColors from 'utils/CustomColors'
 
 @observer
 class PageContactPhonebook extends React.Component {
@@ -147,11 +141,18 @@ class PageContactPhonebook extends React.Component {
     })
   }
 
+  isMatchUser = user => {
+    const { name } = user
+    const { contactSearchBook } = contactStore
+    return name.toLowerCase().includes(contactSearchBook.toLowerCase())
+  }
+
   render() {
     let phonebooks = contactStore.phoneBooks
     if (!getAuthStore().currentProfile.displaySharedContacts) {
       phonebooks = phonebooks.filter(i => i.shared !== true)
     }
+    phonebooks = phonebooks.filter(this.isMatchUser)
 
     const map = {} as { [k: string]: Phonebook2[] }
     phonebooks.forEach(u => {
@@ -174,68 +175,82 @@ class PageContactPhonebook extends React.Component {
       g.phonebooks = orderBy(g.phonebooks, 'name')
     })
     return (
-      <Layout
-        description={intl`Your phonebook contacts`}
-        dropdown={[
-          {
-            label: intl`Create new contact`,
-            onPress: Nav().goToPagePhonebookCreate,
-          },
-          {
-            label: intl`Reload`,
-            onPress: contactStore.loadContacts,
-          },
-        ]}
-        menu='contact'
-        subMenu='phonebook'
-        title={intl`Phonebook`}
-      >
-        <Field
-          label={intl`SHOW SHARED CONTACTS`}
-          onValueChange={(v: boolean) => {
-            profileStore.upsertProfile({
-              id: getAuthStore().signedInId,
-              displaySharedContacts: v,
-            })
-          }}
-          type='Switch'
-          value={getAuthStore().currentProfile.displaySharedContacts}
-        />
-        <View>
-          {groups.map(_g => (
-            <React.Fragment key={_g.key}>
-              <Field isGroup label={_g.key} />
-              {_g.phonebooks.map((u, i) => (
-                <UserItem
-                  iconFuncs={[() => this.onIcon0(u), () => this.update(u.id)]}
-                  icons={[mdiPhone, mdiInformation]}
-                  key={i}
-                  name={u.name}
-                />
-              ))}
-            </React.Fragment>
-          ))}
-        </View>
-        {contactStore.loading ? (
-          <RnText
-            style={styles.loading}
-            warning
-            small
-            normal
-            center
-          >{intl`Loading...`}</RnText>
-        ) : contactStore.hasLoadmore ? (
-          <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
+      <CustomLayout menu='contact' subMenu='phonebook'>
+        <ScrollView style={styles.scrollViewContainer}>
+          <View style={styles.parkContainer}>
+            <View>
+              <RnText style={styles.ParksText}>{'Contacts'}</RnText>
+              <RnText style={styles.noParksDesc}>
+                {'Phonebook externe contacten'}
+              </RnText>
+            </View>
+            <TouchableOpacity style={styles.addButtonContainer}>
+              <RnText style={styles.addButton}>+</RnText>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.searchBox}>
+            <RnIcon
+              path={mdiMagnify}
+              pointerEvents='none'
+              style={styles.fieldIcon}
+              size={10}
+              color={CustomColors.DarkAsh}
+            />
+            <RnTextInput
+              disabled
+              style={styles.fieldTextInput}
+              value={contactStore.contactSearchBook}
+              onChangeText={(val: string) => {
+                contactStore.contactSearchBook = val
+              }}
+              placeholder={'Zoeken'}
+            />
+          </View>
+          <View style={styles.listView}>
+            {groups.map(group => {
+              const { key, phonebooks } = group
+              return (
+                <React.Fragment key={key}>
+                  <View style={styles.transferSeparator}>
+                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                  </View>
+                  {phonebooks.map((user, index) => {
+                    const { name } = user
+                    return (
+                      <UserItem
+                        showNewAvatar={true}
+                        icons={[]}
+                        key={index}
+                        name={name}
+                        containerStyle={styles.userItem}
+                      />
+                    )
+                  })}
+                </React.Fragment>
+              )
+            })}
+          </View>
+          {contactStore.loading ? (
             <RnText
               style={styles.loading}
-              primary
+              warning
               small
               normal
               center
-            >{intl`Load more contacts`}</RnText>
-          </RnTouchableOpacity>
-        ) : null}
-      </Layout>
+            >{intl`Loading...`}</RnText>
+          ) : contactStore.hasLoadmore ? (
+            <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
+              <RnText
+                style={styles.loading}
+                primary
+                small
+                normal
+                center
+              >{intl`Load more contacts`}</RnText>
+            </RnTouchableOpacity>
+          ) : null}
+        </ScrollView>
+      </CustomLayout>
     )
   }
 }

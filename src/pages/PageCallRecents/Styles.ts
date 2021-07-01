@@ -5,7 +5,7 @@ import CustomFonts from 'utils/CustomFonts'
 const styles = StyleSheet.create({
   noParksContainer: {
     backgroundColor: CustomColors.DodgerBlue,
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
     height: 56,
     marginTop: 16,
     justifyContent: 'center',
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     color: CustomColors.DarkBlue,
     fontWeight: '800',
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
   },
   noParksDesc: {
     fontSize: CustomFonts.SmallSubText,
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
     paddingVertical: 5,
     color: CustomColors.DarkBlue,
   },
@@ -35,12 +35,14 @@ const styles = StyleSheet.create({
   },
   fieldTextInput: {
     fontSize: 14,
+    lineHeight: 16,
     color: CustomColors.DarkAsh,
+    flex: 0.9,
   },
   searchBox: {
     backgroundColor: CustomColors.White,
     marginHorizontal: 27,
-    paddingVertical: 10,
+    height: 40,
     paddingHorizontal: 10,
     borderRadius: 15,
     flexDirection: 'row',
