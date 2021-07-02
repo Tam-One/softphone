@@ -18,6 +18,7 @@ const CustomFonts = {
   MediumFont: 35,
   IconFont: 20,
   FooterText: 18,
+  HeaderName: 24,
 }
 
 export default CustomFonts

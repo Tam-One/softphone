@@ -1,4 +1,4 @@
-import { mdiBriefcase, mdiCellphone, mdiHome, mdiMagnify } from '@mdi/js'
+import { mdiMagnify } from '@mdi/js'
 import pbx from 'api/pbx'
 import UserItem from 'components/ContactUserItem'
 import CustomLayout from 'components/CustomLayout'
@@ -9,13 +9,10 @@ import { observer } from 'mobx-react'
 import styles from 'pages/PageContactPhonebook/Styles'
 import React from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
-import { getAuthStore } from 'stores/authStore'
-import callStore from 'stores/callStore'
 import contactStore, { Phonebook2 } from 'stores/contactStore'
 import intl, { intlDebug } from 'stores/intl'
 import Nav from 'stores/Nav'
 import RnAlert from 'stores/RnAlert'
-import RnPicker from 'stores/RnPicker'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
 import CustomColors from 'utils/CustomColors'
 
@@ -34,12 +31,12 @@ class PageContactPhonebook extends React.Component {
   update = (id: string) => {
     const contact = contactStore.getPhonebook(id)
     if (contact?.loaded) {
-      Nav().goToPagePhonebookUpdate({
+      Nav().goToPageViewContact({
         contact: contact,
       })
     } else {
       this.loadContactDetail(id, (ct: Phonebook2) => {
-        Nav().goToPagePhonebookUpdate({
+        Nav().goToPageViewContact({
           contact: ct,
         })
       })
@@ -67,80 +64,6 @@ class PageContactPhonebook extends React.Component {
       })
   }
 
-  callRequest = (number: string, u: Phonebook2) => {
-    if (number !== '') {
-      callStore.startCall(number.replace(/\s+/g, ''))
-    } else {
-      this.update(u.id)
-      RnAlert.error({
-        message: intlDebug`This contact doesn't have any phone number`,
-      })
-    }
-  }
-
-  onIcon0 = (u: Phonebook2) => {
-    if (!u) {
-      return
-    }
-    if (u.loaded) {
-      this._onIcon0(u)
-      return
-    }
-    this.loadContactDetail(u.id, () => {
-      this._onIcon0(u)
-    })
-  }
-  _onIcon0 = (u: Phonebook2) => {
-    if (!u) {
-      return
-    }
-
-    if (!u.homeNumber && !u.workNumber && !u.cellNumber) {
-      this.callRequest('', u)
-      return
-    }
-
-    const numbers: {
-      key: string
-      value: string
-      icon: string
-    }[] = []
-    if (u.workNumber !== '') {
-      numbers.push({
-        key: 'workNumber',
-        value: u.workNumber,
-        icon: mdiBriefcase,
-      })
-    }
-    if (u.cellNumber !== '') {
-      numbers.push({
-        key: 'cellNumber',
-        value: u.cellNumber,
-        icon: mdiCellphone,
-      })
-    }
-    if (u.homeNumber !== '') {
-      numbers.push({
-        key: 'homeNumber',
-        value: u.homeNumber,
-        icon: mdiHome,
-      })
-    }
-
-    if (numbers.length === 1) {
-      this.callRequest(numbers[0].value, u)
-      return
-    }
-    RnPicker.open({
-      options: numbers.map(i => ({
-        key: i.value,
-        label: i.value,
-        icon: i.icon,
-      })),
-      onSelect: (e: string) => this.callRequest(e, u),
-    })
-  }
-
   isMatchUser = user => {
     const { name } = user
     const { contactSearchBook } = contactStore
@@ -149,9 +72,6 @@ class PageContactPhonebook extends React.Component {
 
   render() {
     let phonebooks = contactStore.phoneBooks
-    if (!getAuthStore().currentProfile.displaySharedContacts) {
-      phonebooks = phonebooks.filter(i => i.shared !== true)
-    }
     phonebooks = phonebooks.filter(this.isMatchUser)
 
     const map = {} as { [k: string]: Phonebook2[] }
@@ -184,7 +104,12 @@ class PageContactPhonebook extends React.Component {
                 {'Phonebook externe contacten'}
               </RnText>
             </View>
-            <TouchableOpacity style={styles.addButtonContainer}>
+            <TouchableOpacity
+              style={styles.addButtonContainer}
+              onPress={() =>
+                Nav().goToPagePhonebookUpdate({ contact: {}, newContact: true })
+              }
+            >
               <RnText style={styles.addButton}>+</RnText>
             </TouchableOpacity>
           </View>
@@ -215,15 +140,17 @@ class PageContactPhonebook extends React.Component {
                     <RnText style={styles.transferSeparatorText}>{key}</RnText>
                   </View>
                   {phonebooks.map((user, index) => {
-                    const { name } = user
+                    const { name, id } = user
                     return (
-                      <UserItem
-                        showNewAvatar={true}
-                        icons={[]}
-                        key={index}
-                        name={name}
-                        containerStyle={styles.userItem}
-                      />
+                      <TouchableOpacity onPress={() => this.update(id)}>
+                        <UserItem
+                          showNewAvatar={true}
+                          icons={[]}
+                          key={index}
+                          name={name}
+                          containerStyle={styles.userItem}
+                        />
+                      </TouchableOpacity>
                     )
                   })}
                 </React.Fragment>

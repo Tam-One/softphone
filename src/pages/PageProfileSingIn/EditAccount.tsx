@@ -1,7 +1,7 @@
 import CustomGradient from 'components/CustomGradient'
+import FormInputBox from 'components/FormInputBox'
 import PoweredBy from 'components/PoweredBy'
 import { RnText } from 'components/Rn'
-import RnTextInput from 'components/RnTextInput'
 import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
 import styles from 'pages/PageProfileSingIn/Styles'
@@ -12,24 +12,6 @@ import profileStore, { Profile } from 'stores/profileStore'
 import CustomColors from 'utils/CustomColors'
 import CustomImages from 'utils/CustomImages'
 import useStore from 'utils/useStore'
-
-const InputBox = ({ label, val, onTextChange }) => {
-  return (
-    <View style={styles.inputBox}>
-      {!!val && <RnText style={styles.inputBoxLabel}>{label}</RnText>}
-      <RnTextInput
-        disabled={true}
-        style={styles.fieldTextInput}
-        value={val}
-        onChangeText={(text: string) => {
-          onTextChange(text)
-        }}
-        placeholder={label}
-        placeholderTextColor={CustomColors.lightBlack}
-      />
-    </View>
-  )
-}
 
 const EditAccount: FC<{
   id: string
@@ -90,26 +72,26 @@ const EditAccount: FC<{
         </TouchableOpacity>
       </View>
       <View style={styles.formContainer}>
-        <InputBox
+        <FormInputBox
           label={'UserName'}
           val={get(store, 'profile.pbxUsername')}
           onTextChange={text => onTextChange('pbxUsername', text)}
-        ></InputBox>
-        <InputBox
+        />
+        <FormInputBox
           label={'Tenant'}
           val={get(store, 'profile.pbxTenant')}
           onTextChange={text => onTextChange('pbxTenant', text)}
-        ></InputBox>
-        <InputBox
+        />
+        <FormInputBox
           label={'Hostname'}
           val={get(store, 'profile.pbxHostname')}
           onTextChange={text => onTextChange('pbxHostname', text)}
-        ></InputBox>
-        <InputBox
+        />
+        <FormInputBox
           label={'Port'}
           val={get(store, 'profile.pbxPort')}
           onTextChange={text => onTextChange('pbxPort', text)}
-        ></InputBox>
+        />
       </View>
 
       <View style={styles.footerContainer}>

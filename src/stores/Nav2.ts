@@ -24,6 +24,7 @@ import PageSettingsDebug from 'pages/PageSettingDebug'
 import PageSettingsOther from 'pages/PageSettingsOther'
 import PageSettingsProfile from 'pages/PageSettingsProfile'
 import PageTransferDial from 'pages/PageTransferDial'
+import PageViewContact from 'pages/PageViewContact'
 import { getAuthStore } from 'stores/authStore'
 import { setNav } from 'stores/Nav'
 import RnStacker from 'stores/RnStacker'
@@ -34,6 +35,8 @@ const back = RnStacker.createBackTo
 export class Nav {
   goToPageProfileSignIn = go({ PageProfileSignIn }, true)
   backToPageProfileSignIn = back({ PageProfileSignIn }, true)
+  goToPageViewContact = go({ PageViewContact }, true)
+  backToPageViewContact = back({ PageViewContact }, true)
   goToEditAccount = go({ EditAccount }, true)
   backToEditAccount = back({ EditAccount }, true)
   goToPageChatRecents = go({ PageChatRecents }, true)

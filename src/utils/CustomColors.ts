@@ -31,6 +31,8 @@ const CustomColors = {
   LightDowny: '#509A9C',
   SVGBlack: '#666666',
   BlueLabel: '#2276FF',
+  ShadowGrey: '#2F344329',
+  SkyBlue: '#DCEDFF',
 }
 
 export default CustomColors

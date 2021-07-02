@@ -33,6 +33,17 @@ const styles = StyleSheet.create({
     paddingRight: 78,
     textAlign: 'center',
   },
+  headerCenter: {
+    paddingRight: 0,
+  },
+  rightButtonText: {
+    fontSize: CustomFonts.BackText,
+    color: CustomColors.ActiveBlue,
+  },
+  disabledRightButton: {
+    opacity: 0.8,
+    color: 'grey',
+  },
   subText: {
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.SmallSubText,

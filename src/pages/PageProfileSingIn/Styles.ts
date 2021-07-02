@@ -1,5 +1,4 @@
-import globalStyles from 'components/variables'
-import { Platform, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
 import CustomFonts from 'utils/CustomFonts'
 
