@@ -75,21 +75,25 @@ const KeyPad: FC<{
       <RnTouchableOpacity style={styles.wrapper} onPress={onHidePress}>
         <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
       </RnTouchableOpacity>
-      {!duringCall && (
+      {!duringCall ? (
         <CallButtons
           onPress={callVoice}
           image={CustomImages.CallAcceptedLogo}
           containerStyle={styles.callButtonContainer}
           imageStyle={styles.callButtonImage}
         />
+      ) : (
+        <></>
       )}
-      {duringCall && !!hangup && (
+      {duringCall && hangup ? (
         <CallButtons
           onPress={hangup}
           image={CustomImages.CallDeclinedLogo}
           containerStyle={styles.callButtonContainer}
           imageStyle={styles.callButtonImage}
         />
+      ) : (
+        <></>
       )}
       <RnTouchableOpacity
         style={styles.wrapper}

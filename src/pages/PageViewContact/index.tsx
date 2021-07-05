@@ -15,12 +15,14 @@ import CustomColors from 'utils/CustomColors'
 const InputBox = ({ label, val, icon = '', style = {} }) => {
   return (
     <View style={styles.inputBox}>
-      {!!icon && (
+      {icon ? (
         <View>
           <RnIcon path={icon} color={CustomColors.SVGBlack} size={18} />
         </View>
+      ) : (
+        <></>
       )}
-      {!!val ? (
+      {val ? (
         <RnText style={[styles.fieldTextInput, style]}>{val}</RnText>
       ) : (
         <RnText style={[styles.fieldTextPlaceholder]}>{label}</RnText>

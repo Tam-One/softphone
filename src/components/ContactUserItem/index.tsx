@@ -100,7 +100,7 @@ const UserItem: FC<
   return (
     <View style={[styles.outer, containerStyle && containerStyle]}>
       <View style={[styles.inner, selected && styles.innerSelected]}>
-        {!hideAvatar && (
+        {!hideAvatar ? (
           <View>
             {!showNewAvatar ? (
               <Avatar
@@ -117,24 +117,30 @@ const UserItem: FC<
               </View>
             )}
           </View>
+        ) : (
+          <></>
         )}
         <View style={[styles.text, styles.withSpace]}>
           <View style={styles.nameWithStatus}>
             <RnText black bold singleLine style={{ color: textColor }}>
               {name || partyNumber || id}
             </RnText>
-            {!!statusText && (
+            {statusText ? (
               <RnText normal singleLine small style={styles.status}>
                 {statusText}
               </RnText>
+            ) : (
+              <></>
             )}
           </View>
-          {!isRecentCall && !!lastMessage && (
+          {!isRecentCall && lastMessage ? (
             <RnText normal singleLine small>
               {lastMessage}
             </RnText>
+          ) : (
+            <></>
           )}
-          {!fromMissedCall && isRecentCall && !lastMessage && (
+          {!fromMissedCall && isRecentCall && !lastMessage ? (
             <View style={styles.detail}>
               <RnIcon
                 color={iconColor}
@@ -146,16 +152,20 @@ const UserItem: FC<
                 {created}
               </RnText>
             </View>
+          ) : (
+            <></>
           )}
         </View>
-        {!isRecentCall && !!lastMessage && isRecentChat && (
+        {!isRecentCall && lastMessage && isRecentChat ? (
           <View style={styles.lastDate}>
             <RnText normal singleLine small>
               {lastMessageDate}
             </RnText>
           </View>
+        ) : (
+          <></>
         )}
-        {!!fromMissedCall && (
+        {fromMissedCall ? (
           <RnText
             normal
             small
@@ -163,6 +173,8 @@ const UserItem: FC<
           >
             {created}
           </RnText>
+        ) : (
+          <></>
         )}
         {icons?.map((icon, index) => (
           <RnTouchableOpacity key={index} onPress={() => iconFuncs?.[index]()}>

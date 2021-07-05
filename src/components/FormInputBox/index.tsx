@@ -14,7 +14,7 @@ const FormInputBox: FC<{
   const [focus, setFocus] = useState(false)
   return (
     <View style={[styles.inputBox, focus && styles.activeView]}>
-      {!!val && (
+      {val ? (
         <RnText
           style={[
             styles.inputBoxLabel,
@@ -23,6 +23,8 @@ const FormInputBox: FC<{
         >
           {label}
         </RnText>
+      ) : (
+        <></>
       )}
       <RnTextInput
         style={[styles.fieldTextInput, !!val && { fontWeight: '600' }]}

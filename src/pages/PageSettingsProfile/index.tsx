@@ -14,10 +14,12 @@ import { getAuthStore } from '../../stores/authStore'
 const InputBox = ({ val, icon = '' }) => {
   return (
     <View style={styles.inputBox}>
-      {!!icon && (
+      {icon ? (
         <View>
           <RnIcon path={icon} color={CustomColors.GreyMedium} size={18} />
         </View>
+      ) : (
+        <></>
       )}
       <RnTextInput disabled style={styles.fieldTextInput} value={val} />
     </View>
@@ -90,12 +92,11 @@ const PageSettingsProfile = () => {
   return (
     <CustomLayout menu='settings' subMenu='profile' hideSubMenu={true}>
       <ScrollView style={styles.scrollViewContainer}>
-        {!advancedSettings && (
+        {!advancedSettings ? (
           <SettingsView
             onPress={() => setAdvancedSettings(true)}
           ></SettingsView>
-        )}
-        {advancedSettings && (
+        ) : (
           <AdvancedSettingsView
             onBackPress={() => setAdvancedSettings(false)}
           ></AdvancedSettingsView>

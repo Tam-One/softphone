@@ -33,7 +33,7 @@ const CustomHeader: FC<
   return (
     <View style={[styles.header, containerStyle]}>
       <View style={[styles.headerRow, backContainerStyle]}>
-        {!!onBack && (
+        {onBack ? (
           <RnTouchableOpacity onPress={onBack} style={styles.backBtnRow}>
             <Image
               source={CustomImages.HeaderBackButton}
@@ -43,13 +43,15 @@ const CustomHeader: FC<
               <RnText style={styles.backText}>{backText || 'Back'}</RnText>
             )}
           </RnTouchableOpacity>
+        ) : (
+          <></>
         )}
         <RnText
           style={[styles.headerText, onRightButtonPress && styles.headerCenter]}
         >
           {title}
         </RnText>
-        {!!onRightButtonPress && (
+        {onRightButtonPress ? (
           <TouchableOpacity
             onPress={onRightButtonPress}
             disabled={disableRightButton}
@@ -63,9 +65,15 @@ const CustomHeader: FC<
               {rightButtonText || 'Edit'}
             </RnText>
           </TouchableOpacity>
+        ) : (
+          <></>
         )}
       </View>
-      {!!description && <RnText style={styles.subText}>{description}</RnText>}
+      {description ? (
+        <RnText style={styles.subText}>{description}</RnText>
+      ) : (
+        <></>
+      )}
     </View>
   )
 }

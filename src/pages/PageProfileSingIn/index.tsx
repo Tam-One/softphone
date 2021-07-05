@@ -15,8 +15,8 @@ import CustomImages from 'utils/CustomImages'
 const InputBox = ({ label, val, icon = '' }) => {
   return (
     <View style={styles.inputBox}>
-      {!!val && <RnText style={styles.singInInput}>{label}</RnText>}
-      {!!icon && (
+      {val ? <RnText style={styles.singInInput}>{label}</RnText> : <></>}
+      {icon ? (
         <SvgXml
           width='20'
           height='20'
@@ -24,6 +24,8 @@ const InputBox = ({ label, val, icon = '' }) => {
           fill={CustomColors.SVGBlack}
           fillOpacity={1}
         />
+      ) : (
+        <></>
       )}
       <RnText style={styles.fieldTextInput}>{val}</RnText>
     </View>
