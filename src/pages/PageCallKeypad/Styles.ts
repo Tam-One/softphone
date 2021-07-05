@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
-    marginBottom: 40,
+    marginBottom: 1,
   },
   keyPadContainer: {
     marginTop: 15,

@@ -62,7 +62,7 @@ class MissedCalls extends React.Component {
     })
     return (
       <CustomLayout menu='call' subMenu='missed'>
-        <ScrollView style={{ marginBottom: 100 }}>
+        <ScrollView>
           <View style={styles.parkContainer}>
             <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
           </View>

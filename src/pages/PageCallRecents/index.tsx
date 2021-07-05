@@ -59,7 +59,7 @@ class PageCallRecents extends React.Component {
     const calls = this.getMatchedCalls()
     return (
       <CustomLayout menu='call' subMenu='recents'>
-        <ScrollView style={{ marginBottom: 100 }}>
+        <ScrollView>
           <View style={styles.parkContainer}>
             <RnText style={styles.ParksText}>{'Recents'}</RnText>
             <RnText style={styles.noParksDesc}>

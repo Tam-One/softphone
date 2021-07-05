@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginTop: 46,
   },
   scrollViewContainer: {
-    marginBottom: 100,
+    marginBottom: 1,
   },
 })
 

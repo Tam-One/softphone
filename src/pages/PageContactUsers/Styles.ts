@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   scrollViewContainer: {
-    marginBottom: 100,
+    marginBottom: 1,
   },
   listView: {
     marginTop: 18,

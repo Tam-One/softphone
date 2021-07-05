@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   scrollViewContainer: {
-    marginBottom: 100,
+    marginBottom: 1,
   },
   backButtonContainer: {
     paddingBottom: 10,

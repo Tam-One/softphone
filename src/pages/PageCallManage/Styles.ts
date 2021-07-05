@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     backgroundColor: CustomColors.AliceBlue,
     height: 40,
     width: '100%',
-    position: 'absolute',
+    // position: 'absolute',
     top: 0,
     zIndex: 99,
   },
