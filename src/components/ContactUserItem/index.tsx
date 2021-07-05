@@ -133,6 +133,7 @@ const UserItem: FC<
               <></>
             )}
           </View>
+
           {!isRecentCall && lastMessage ? (
             <RnText normal singleLine small>
               {lastMessage}
@@ -140,6 +141,7 @@ const UserItem: FC<
           ) : (
             <></>
           )}
+
           {!fromMissedCall && isRecentCall && !lastMessage ? (
             <View style={styles.detail}>
               <RnIcon
@@ -156,6 +158,7 @@ const UserItem: FC<
             <></>
           )}
         </View>
+
         {!isRecentCall && lastMessage && isRecentChat ? (
           <View style={styles.lastDate}>
             <RnText normal singleLine small>
