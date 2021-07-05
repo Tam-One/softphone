@@ -228,8 +228,9 @@ class PageCallManage extends React.Component<{
                 }}
               />
               {answered && this.renderCallTime()}
-              {!showKeyPad && this.renderBtns(currentCall)}
-              {showKeyPad && (
+              {!showKeyPad ? (
+                this.renderBtns(currentCall)
+              ) : (
                 <PageDtmfKeypad
                   callId={id}
                   partyName={partyName}

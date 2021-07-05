@@ -9,7 +9,7 @@ import uniq from 'lodash/uniq'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageContactUsers/Styles'
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { FlatList, ScrollView, View } from 'react-native'
 import { getAuthStore } from 'stores/authStore'
 import callStore from 'stores/callStore'
 import chatStore, { ChatMessage } from 'stores/chatStore'
@@ -154,19 +154,22 @@ class PageContactUsers extends React.Component {
                   <View style={styles.transferSeparator}>
                     <RnText style={styles.transferSeparatorText}>{key}</RnText>
                   </View>
-                  {users.map((user, index) => {
-                    const { id } = user
-                    return (
-                      <UserItem
-                        showNewAvatar={true}
-                        iconFuncs={[() => callStore.startCall(id)]}
-                        icons={[mdiPhone]}
-                        key={index}
-                        {...user}
-                        containerStyle={styles.userItem}
-                      />
-                    )
-                  })}
+                  <FlatList
+                    data={users}
+                    renderItem={({ item, index }) => {
+                      const { id } = item
+                      return (
+                        <UserItem
+                          showNewAvatar={true}
+                          iconFuncs={[() => callStore.startCall(id)]}
+                          icons={[mdiPhone]}
+                          key={index}
+                          {...item}
+                          containerStyle={styles.userItem}
+                        />
+                      )
+                    }}
+                  />
                 </React.Fragment>
               )
             })}

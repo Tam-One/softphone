@@ -32,9 +32,10 @@ const styles = StyleSheet.create({
   footerContainer: {
     flex: 1,
     paddingBottom: 50,
+    marginTop: 45,
   },
   actionBtnContainer: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-end',

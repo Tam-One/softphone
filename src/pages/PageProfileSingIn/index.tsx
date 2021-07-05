@@ -4,7 +4,7 @@ import PoweredBy from 'components/PoweredBy'
 import { RnText } from 'components/Rn'
 import styles from 'pages/PageProfileSingIn/Styles'
 import React from 'react'
-import { Image, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, TouchableOpacity, View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import { getAuthStore } from 'stores/authStore'
 import Nav from 'stores/Nav'
@@ -37,66 +37,68 @@ const PageProfileSignIn = () => {
 
   return (
     <CustomGradient>
-      <Image
-        source={CustomImages.signInBanner}
-        style={{
-          height: 235,
-          width: '100%',
-        }}
-      />
-      <TouchableOpacity
-        style={styles.editContainer}
-        onPress={() =>
-          Nav().goToEditAccount({
-            id: id,
-            updatingProfile: profileStore.profilesMap[id],
-          })
-        }
-      >
-        <RnText
+      <ScrollView style={{ paddingBottom: 100 }}>
+        <Image
+          source={CustomImages.signInBanner}
           style={{
-            fontSize: 13,
-            color: CustomColors.GreyMedium,
-            textDecorationLine: 'underline',
+            height: 235,
+            width: '100%',
           }}
+        />
+        <TouchableOpacity
+          style={styles.editContainer}
+          onPress={() =>
+            Nav().goToEditAccount({
+              id: id,
+              updatingProfile: profileStore.profilesMap[id],
+            })
+          }
         >
-          {'Edit account'}
-        </RnText>
-      </TouchableOpacity>
-      <View style={styles.formView}>
-        <InputBox
-          label={'UserName'}
-          val={pbxUsername}
-          icon={svgImages.profileIcon}
-        ></InputBox>
-        <InputBox
-          label={'Tenant'}
-          val={pbxTenant}
-          icon={svgImages.keyIcon}
-        ></InputBox>
-        <InputBox
-          label={'Hostname'}
-          val={pbxHostname}
-          icon={svgImages.webIcon}
-        ></InputBox>
-        <InputBox
-          label={'Port'}
-          val={pbxPort}
-          icon={svgImages.cableDataIcon}
-        ></InputBox>
-      </View>
-
-      <View style={styles.footerContainer}>
-        <View style={styles.actionBtnContainer}>
-          <TouchableOpacity
-            style={styles.signInButton}
-            onPress={() => getAuthStore().signIn(id)}
+          <RnText
+            style={{
+              fontSize: 13,
+              color: CustomColors.GreyMedium,
+              textDecorationLine: 'underline',
+            }}
           >
-            <RnText style={styles.signInButtonText}>{'Sign in'}</RnText>
-          </TouchableOpacity>
+            {'Edit account'}
+          </RnText>
+        </TouchableOpacity>
+        <View style={styles.formView}>
+          <InputBox
+            label={'UserName'}
+            val={pbxUsername}
+            icon={svgImages.profileIcon}
+          ></InputBox>
+          <InputBox
+            label={'Tenant'}
+            val={pbxTenant}
+            icon={svgImages.keyIcon}
+          ></InputBox>
+          <InputBox
+            label={'Hostname'}
+            val={pbxHostname}
+            icon={svgImages.webIcon}
+          ></InputBox>
+          <InputBox
+            label={'Port'}
+            val={pbxPort}
+            icon={svgImages.cableDataIcon}
+          ></InputBox>
         </View>
-        <PoweredBy containerStyle={styles.poweredByView} />
-      </View>
+
+        <View style={styles.footerContainer}>
+          <View style={styles.actionBtnContainer}>
+            <TouchableOpacity
+              style={styles.signInButton}
+              onPress={() => getAuthStore().signIn(id)}
+            >
+              <RnText style={styles.signInButtonText}>{'Sign in'}</RnText>
+            </TouchableOpacity>
+          </View>
+          <PoweredBy containerStyle={styles.poweredByView} />
+        </View>
+      </ScrollView>
     </CustomGradient>
   )
 }

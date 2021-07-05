@@ -20,8 +20,11 @@ const InputBox = ({ label, val, icon = '', style = {} }) => {
           <RnIcon path={icon} color={CustomColors.SVGBlack} size={18} />
         </View>
       )}
-      {!!val && <RnText style={[styles.fieldTextInput, style]}>{val}</RnText>}
-      {!val && <RnText style={[styles.fieldTextPlaceholder]}>{label}</RnText>}
+      {!!val ? (
+        <RnText style={[styles.fieldTextInput, style]}>{val}</RnText>
+      ) : (
+        <RnText style={[styles.fieldTextPlaceholder]}>{label}</RnText>
+      )}
     </View>
   )
 }

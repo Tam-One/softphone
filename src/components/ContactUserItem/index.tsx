@@ -102,13 +102,12 @@ const UserItem: FC<
       <View style={[styles.inner, selected && styles.innerSelected]}>
         {!hideAvatar && (
           <View>
-            {!showNewAvatar && (
+            {!showNewAvatar ? (
               <Avatar
                 source={{ uri: avatar as string }}
                 style={styles.withSpace}
               />
-            )}
-            {!!showNewAvatar && (
+            ) : (
               <View style={styles.nameAvatarContainer}>
                 <UserAvatar
                   style={styles.nameAvatar}
