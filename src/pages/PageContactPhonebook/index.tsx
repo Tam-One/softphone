@@ -8,7 +8,7 @@ import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageContactPhonebook/Styles'
 import React from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { FlatList, ScrollView, TouchableOpacity, View } from 'react-native'
 import contactStore, { Phonebook2 } from 'stores/contactStore'
 import intl, { intlDebug } from 'stores/intl'
 import Nav from 'stores/Nav'
@@ -139,20 +139,23 @@ class PageContactPhonebook extends React.Component {
                   <View style={styles.transferSeparator}>
                     <RnText style={styles.transferSeparatorText}>{key}</RnText>
                   </View>
-                  {phonebooks.map((user, index) => {
-                    const { name, id } = user
-                    return (
-                      <TouchableOpacity onPress={() => this.update(id)}>
-                        <UserItem
-                          showNewAvatar={true}
-                          icons={[]}
-                          key={index}
-                          name={name}
-                          containerStyle={styles.userItem}
-                        />
-                      </TouchableOpacity>
-                    )
-                  })}
+                  <FlatList
+                    data={phonebooks}
+                    renderItem={({ item, index }) => {
+                      const { name, id } = item
+                      return (
+                        <TouchableOpacity onPress={() => this.update(id)}>
+                          <UserItem
+                            showNewAvatar={true}
+                            icons={[]}
+                            key={index}
+                            name={name}
+                            containerStyle={styles.userItem}
+                          />
+                        </TouchableOpacity>
+                      )
+                    }}
+                  />
                 </React.Fragment>
               )
             })}

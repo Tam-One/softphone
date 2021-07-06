@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 import moment from 'moment'
 import styles from 'pages/PageCallRecents/Styles'
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { FlatList, ScrollView, View } from 'react-native'
 import { getAuthStore } from 'stores/authStore'
 import { AuthStore } from 'stores/authStore2'
 import callStore from 'stores/callStore'
@@ -67,24 +67,27 @@ class MissedCalls extends React.Component {
             <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
           </View>
           <View style={styles.recentList}>
-            {missedCalls.map((call, index) => {
-              const { partyNumber } = call
-              return (
-                <UserItem
-                  iconFuncs={[
-                    () => callStore.startVideoCall(partyNumber),
-                    () => callStore.startCall(partyNumber),
-                  ]}
-                  hideAvatar={true}
-                  icons={[mdiPhone]}
-                  isRecentCall
-                  key={index}
-                  {...this.getAvatar(partyNumber)}
-                  {...call}
-                  fromMissedCall={true}
-                />
-              )
-            })}
+            <FlatList
+              data={missedCalls}
+              renderItem={({ item, index }) => {
+                const { partyNumber } = item
+                return (
+                  <UserItem
+                    iconFuncs={[
+                      () => callStore.startVideoCall(partyNumber),
+                      () => callStore.startCall(partyNumber),
+                    ]}
+                    hideAvatar={true}
+                    icons={[mdiPhone]}
+                    isRecentCall
+                    key={index}
+                    {...this.getAvatar(partyNumber)}
+                    {...item}
+                    fromMissedCall={true}
+                  />
+                )
+              }}
+            />
           </View>
         </ScrollView>
       </CustomLayout>

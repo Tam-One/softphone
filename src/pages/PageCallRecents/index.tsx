@@ -8,7 +8,7 @@ import { observer } from 'mobx-react'
 import moment from 'moment'
 import styles from 'pages/PageCallRecents/Styles'
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { FlatList, ScrollView, View } from 'react-native'
 import { getAuthStore } from 'stores/authStore'
 import { AuthStore } from 'stores/authStore2'
 import callStore from 'stores/callStore'
@@ -95,23 +95,26 @@ class PageCallRecents extends React.Component {
             >{`Recent calls (${calls.length})`}</RnText>
           </View>
           <View style={styles.recentList}>
-            {calls.map((call, index) => {
-              const { partyNumber } = call
-              return (
-                <UserItem
-                  iconFuncs={[
-                    () => callStore.startVideoCall(partyNumber),
-                    () => callStore.startCall(partyNumber),
-                  ]}
-                  hideAvatar={true}
-                  icons={[mdiVideo, mdiPhone]}
-                  isRecentCall
-                  key={index}
-                  {...this.getAvatar(partyNumber)}
-                  {...call}
-                />
-              )
-            })}
+            <FlatList
+              data={calls}
+              renderItem={({ item, index }) => {
+                const { partyNumber } = item
+                return (
+                  <UserItem
+                    iconFuncs={[
+                      () => callStore.startVideoCall(partyNumber),
+                      () => callStore.startCall(partyNumber),
+                    ]}
+                    hideAvatar={true}
+                    icons={[mdiVideo, mdiPhone]}
+                    isRecentCall
+                    key={index}
+                    {...this.getAvatar(partyNumber)}
+                    {...item}
+                  />
+                )
+              }}
+            />
           </View>
         </ScrollView>
       </CustomLayout>
