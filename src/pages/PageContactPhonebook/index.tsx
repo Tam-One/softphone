@@ -131,16 +131,16 @@ class PageContactPhonebook extends React.Component {
           />
         </View>
         <View style={styles.listView}>
-          {groups.map(group => {
-            const { key, phonebooks } = group
-            return (
-              <React.Fragment key={key}>
-                <View style={styles.transferSeparator}>
-                  <RnText style={styles.transferSeparatorText}>{key}</RnText>
-                </View>
-                <FlatList
-                  data={phonebooks}
-                  renderItem={({ item, index }) => {
+          <FlatList
+            data={groups}
+            renderItem={({ item, index }) => {
+              const { key, phonebooks } = item
+              return (
+                <React.Fragment key={key}>
+                  <View style={styles.transferSeparator}>
+                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                  </View>
+                  {phonebooks.map((item, index) => {
                     const { name, id } = item
                     return (
                       <TouchableOpacity onPress={() => this.update(id)}>
@@ -153,11 +153,11 @@ class PageContactPhonebook extends React.Component {
                         />
                       </TouchableOpacity>
                     )
-                  }}
-                />
-              </React.Fragment>
-            )
-          })}
+                  })}
+                </React.Fragment>
+              )
+            }}
+          />
         </View>
         {contactStore.loading ? (
           <RnText

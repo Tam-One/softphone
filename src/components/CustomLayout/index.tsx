@@ -18,11 +18,13 @@ const CustomLayout: FC<
     <>
       <View style={styles.scroller}>
         <CustomGradient>
-          {!hideSubMenu && (
+          {!hideSubMenu ? (
             <>
               <SubMenu {...props} />
               <View style={styles.childStyle} />
             </>
+          ) : (
+            <> </>
           )}
           {props.children}
         </CustomGradient>

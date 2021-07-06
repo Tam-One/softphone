@@ -146,16 +146,16 @@ class PageContactUsers extends React.Component {
           />
         </View>
         <View style={styles.listView}>
-          {groups.map(group => {
-            const { key, users } = group
-            return (
-              <React.Fragment key={key}>
-                <View style={styles.transferSeparator}>
-                  <RnText style={styles.transferSeparatorText}>{key}</RnText>
-                </View>
-                <FlatList
-                  data={users}
-                  renderItem={({ item, index }) => {
+          <FlatList
+            data={groups}
+            renderItem={({ item, index }) => {
+              const { key, users } = item
+              return (
+                <React.Fragment key={key}>
+                  <View style={styles.transferSeparator}>
+                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                  </View>
+                  {users.map((item, index) => {
                     const { id } = item
                     return (
                       <UserItem
@@ -167,11 +167,11 @@ class PageContactUsers extends React.Component {
                         containerStyle={styles.userItem}
                       />
                     )
-                  }}
-                />
-              </React.Fragment>
-            )
-          })}
+                  })}
+                </React.Fragment>
+              )
+            }}
+          />
         </View>
       </CustomLayout>
     )

@@ -115,7 +115,7 @@ class PageDtmfKeypad extends React.Component<{
           value={this.text}
           hidePlaceholder={true}
         />
-        {!RnKeyboard.isKeyboardShowing && (
+        {!RnKeyboard.isKeyboardShowing ? (
           <KeyPad
             callVoice={this.callVoice}
             onPressNumber={this.onNumberPress}
@@ -124,6 +124,8 @@ class PageDtmfKeypad extends React.Component<{
             hangup={hangup}
             onHidePress={onHidePress}
           />
+        ) : (
+          <> </>
         )}
       </>
     )
