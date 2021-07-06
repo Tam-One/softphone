@@ -224,7 +224,7 @@ class PageCallManage extends React.Component<{
                 callerName={getCallerName}
                 callerNumber={partyNumber}
                 containerStyle={{
-                  marginTop: getCallerName || showKeyPad ? '15%' : '40%',
+                  marginTop: getCallerName || showKeyPad ? '15%' : '25%',
                 }}
               />
               {answered && this.renderCallTime()}

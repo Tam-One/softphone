@@ -121,60 +121,58 @@ class PageContactUsers extends React.Component {
 
     return (
       <CustomLayout menu='contact' subMenu='users'>
-        <ScrollView style={styles.scrollViewContainer}>
-          <View style={styles.parkContainer}>
-            <View>
-              <RnText style={styles.ParksText}>{'Contacten'}</RnText>
-              <RnText style={styles.noParksDesc}>{'Interne contacten'}</RnText>
-            </View>
+        <View style={styles.parkContainer}>
+          <View>
+            <RnText style={styles.ParksText}>{'Contacten'}</RnText>
+            <RnText style={styles.noParksDesc}>{'Interne contacten'}</RnText>
           </View>
-          <View style={styles.searchBox}>
-            <RnIcon
-              path={mdiMagnify}
-              pointerEvents='none'
-              style={styles.fieldIcon}
-              size={10}
-              color={CustomColors.DarkAsh}
-            />
-            <RnTextInput
-              disabled
-              style={styles.fieldTextInput}
-              value={contactStore.usersSearchTerm}
-              onChangeText={(val: string) => {
-                contactStore.usersSearchTerm = val
-              }}
-              placeholder={'Zoeken'}
-            />
-          </View>
-          <View style={styles.listView}>
-            {groups.map(group => {
-              const { key, users } = group
-              return (
-                <React.Fragment key={key}>
-                  <View style={styles.transferSeparator}>
-                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
-                  </View>
-                  <FlatList
-                    data={users}
-                    renderItem={({ item, index }) => {
-                      const { id } = item
-                      return (
-                        <UserItem
-                          showNewAvatar={true}
-                          iconFuncs={[() => callStore.startCall(id)]}
-                          icons={[mdiPhone]}
-                          key={index}
-                          {...item}
-                          containerStyle={styles.userItem}
-                        />
-                      )
-                    }}
-                  />
-                </React.Fragment>
-              )
-            })}
-          </View>
-        </ScrollView>
+        </View>
+        <View style={styles.searchBox}>
+          <RnIcon
+            path={mdiMagnify}
+            pointerEvents='none'
+            style={styles.fieldIcon}
+            size={10}
+            color={CustomColors.DarkAsh}
+          />
+          <RnTextInput
+            disabled
+            style={styles.fieldTextInput}
+            value={contactStore.usersSearchTerm}
+            onChangeText={(val: string) => {
+              contactStore.usersSearchTerm = val
+            }}
+            placeholder={'Zoeken'}
+          />
+        </View>
+        <View style={styles.listView}>
+          {groups.map(group => {
+            const { key, users } = group
+            return (
+              <React.Fragment key={key}>
+                <View style={styles.transferSeparator}>
+                  <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                </View>
+                <FlatList
+                  data={users}
+                  renderItem={({ item, index }) => {
+                    const { id } = item
+                    return (
+                      <UserItem
+                        showNewAvatar={true}
+                        iconFuncs={[() => callStore.startCall(id)]}
+                        icons={[mdiPhone]}
+                        key={index}
+                        {...item}
+                        containerStyle={styles.userItem}
+                      />
+                    )
+                  }}
+                />
+              </React.Fragment>
+            )
+          })}
+        </View>
       </CustomLayout>
     )
   }

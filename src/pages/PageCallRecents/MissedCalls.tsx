@@ -62,34 +62,32 @@ class MissedCalls extends React.Component {
     })
     return (
       <CustomLayout menu='call' subMenu='missed'>
-        <ScrollView>
-          <View style={styles.parkContainer}>
-            <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
-          </View>
-          <View style={styles.recentList}>
-            <FlatList
-              data={missedCalls}
-              renderItem={({ item, index }) => {
-                const { partyNumber } = item
-                return (
-                  <UserItem
-                    iconFuncs={[
-                      () => callStore.startVideoCall(partyNumber),
-                      () => callStore.startCall(partyNumber),
-                    ]}
-                    hideAvatar={true}
-                    icons={[mdiPhone]}
-                    isRecentCall
-                    key={index}
-                    {...this.getAvatar(partyNumber)}
-                    {...item}
-                    fromMissedCall={true}
-                  />
-                )
-              }}
-            />
-          </View>
-        </ScrollView>
+        <View style={styles.parkContainer}>
+          <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
+        </View>
+        <View style={styles.recentList}>
+          <FlatList
+            data={missedCalls}
+            renderItem={({ item, index }) => {
+              const { partyNumber } = item
+              return (
+                <UserItem
+                  iconFuncs={[
+                    () => callStore.startVideoCall(partyNumber),
+                    () => callStore.startCall(partyNumber),
+                  ]}
+                  hideAvatar={true}
+                  icons={[mdiPhone]}
+                  isRecentCall
+                  key={index}
+                  {...this.getAvatar(partyNumber)}
+                  {...item}
+                  fromMissedCall={true}
+                />
+              )
+            }}
+          />
+        </View>
       </CustomLayout>
     )
   }

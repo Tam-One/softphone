@@ -96,90 +96,88 @@ class PageContactPhonebook extends React.Component {
     })
     return (
       <CustomLayout menu='contact' subMenu='phonebook'>
-        <ScrollView style={styles.scrollViewContainer}>
-          <View style={styles.parkContainer}>
-            <View>
-              <RnText style={styles.ParksText}>{'Contacts'}</RnText>
-              <RnText style={styles.noParksDesc}>
-                {'Phonebook externe contacten'}
-              </RnText>
-            </View>
-            <TouchableOpacity
-              style={styles.addButtonContainer}
-              onPress={() =>
-                Nav().goToPagePhonebookUpdate({ contact: {}, newContact: true })
-              }
-            >
-              <RnText style={styles.addButton}>+</RnText>
-            </TouchableOpacity>
+        <View style={styles.parkContainer}>
+          <View>
+            <RnText style={styles.ParksText}>{'Contacts'}</RnText>
+            <RnText style={styles.noParksDesc}>
+              {'Phonebook externe contacten'}
+            </RnText>
           </View>
-          <View style={styles.searchBox}>
-            <RnIcon
-              path={mdiMagnify}
-              pointerEvents='none'
-              style={styles.fieldIcon}
-              size={10}
-              color={CustomColors.DarkAsh}
-            />
-            <RnTextInput
-              disabled
-              style={styles.fieldTextInput}
-              value={contactStore.contactSearchBook}
-              onChangeText={(val: string) => {
-                contactStore.contactSearchBook = val
-              }}
-              placeholder={'Zoeken'}
-            />
-          </View>
-          <View style={styles.listView}>
-            {groups.map(group => {
-              const { key, phonebooks } = group
-              return (
-                <React.Fragment key={key}>
-                  <View style={styles.transferSeparator}>
-                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
-                  </View>
-                  <FlatList
-                    data={phonebooks}
-                    renderItem={({ item, index }) => {
-                      const { name, id } = item
-                      return (
-                        <TouchableOpacity onPress={() => this.update(id)}>
-                          <UserItem
-                            showNewAvatar={true}
-                            icons={[]}
-                            key={index}
-                            name={name}
-                            containerStyle={styles.userItem}
-                          />
-                        </TouchableOpacity>
-                      )
-                    }}
-                  />
-                </React.Fragment>
-              )
-            })}
-          </View>
-          {contactStore.loading ? (
+          <TouchableOpacity
+            style={styles.addButtonContainer}
+            onPress={() =>
+              Nav().goToPagePhonebookUpdate({ contact: {}, newContact: true })
+            }
+          >
+            <RnText style={styles.addButton}>+</RnText>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.searchBox}>
+          <RnIcon
+            path={mdiMagnify}
+            pointerEvents='none'
+            style={styles.fieldIcon}
+            size={10}
+            color={CustomColors.DarkAsh}
+          />
+          <RnTextInput
+            disabled
+            style={styles.fieldTextInput}
+            value={contactStore.contactSearchBook}
+            onChangeText={(val: string) => {
+              contactStore.contactSearchBook = val
+            }}
+            placeholder={'Zoeken'}
+          />
+        </View>
+        <View style={styles.listView}>
+          {groups.map(group => {
+            const { key, phonebooks } = group
+            return (
+              <React.Fragment key={key}>
+                <View style={styles.transferSeparator}>
+                  <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                </View>
+                <FlatList
+                  data={phonebooks}
+                  renderItem={({ item, index }) => {
+                    const { name, id } = item
+                    return (
+                      <TouchableOpacity onPress={() => this.update(id)}>
+                        <UserItem
+                          showNewAvatar={true}
+                          icons={[]}
+                          key={index}
+                          name={name}
+                          containerStyle={styles.userItem}
+                        />
+                      </TouchableOpacity>
+                    )
+                  }}
+                />
+              </React.Fragment>
+            )
+          })}
+        </View>
+        {contactStore.loading ? (
+          <RnText
+            style={styles.loading}
+            warning
+            small
+            normal
+            center
+          >{intl`Loading...`}</RnText>
+        ) : contactStore.hasLoadmore ? (
+          <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
             <RnText
               style={styles.loading}
-              warning
+              primary
               small
               normal
               center
-            >{intl`Loading...`}</RnText>
-          ) : contactStore.hasLoadmore ? (
-            <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
-              <RnText
-                style={styles.loading}
-                primary
-                small
-                normal
-                center
-              >{intl`Load more contacts`}</RnText>
-            </RnTouchableOpacity>
-          ) : null}
-        </ScrollView>
+            >{intl`Load more contacts`}</RnText>
+          </RnTouchableOpacity>
+        ) : null}
       </CustomLayout>
     )
   }
