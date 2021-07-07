@@ -24,7 +24,7 @@ const CustomLayout: FC<
               <View style={styles.childStyle} />
             </>
           ) : (
-            <> </>
+            <></>
           )}
           {props.children}
         </CustomGradient>

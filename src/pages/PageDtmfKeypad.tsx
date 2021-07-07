@@ -125,7 +125,7 @@ class PageDtmfKeypad extends React.Component<{
             onHidePress={onHidePress}
           />
         ) : (
-          <> </>
+          <></>
         )}
       </>
     )
