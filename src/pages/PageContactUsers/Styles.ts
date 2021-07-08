@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   fieldTextInput: {
-    fontSize: CustomFonts.SmallIconFont,
+    fontSize: 14,
     lineHeight: 16,
     color: CustomColors.DarkAsh,
     flex: 0.9,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     height: 40,
     width: 40,
-    backgroundColor: '#007AFF',
+    backgroundColor: CustomColors.ActiveBlue,
     borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',

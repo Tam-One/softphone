@@ -32,7 +32,17 @@ const KeyPad: FC<{
   onPressNumber(key: string): void
   showKeyboard(): void
   callVoice(): void
-}> = ({ onPressNumber, showKeyboard, callVoice }) => (
+  duringCall?: boolean
+  hangup?(): void
+  onHidePress?(): void
+}> = ({
+  onPressNumber,
+  showKeyboard,
+  callVoice,
+  duringCall,
+  hangup,
+  onHidePress,
+}) => (
   <View>
     {keys.map((row, index) => (
       <View key={index} style={styles.keyPadNumber}>
@@ -62,12 +72,29 @@ const KeyPad: FC<{
     ))}
 
     <View style={[styles.keyPadNumber, styles.footerButtons]}>
-      <CallButtons
-        onPress={callVoice}
-        image={CustomImages.CallAcceptedLogo}
-        containerStyle={styles.callButtonContainer}
-        imageStyle={styles.callButtonImage}
-      />
+      <RnTouchableOpacity style={styles.wrapper} onPress={onHidePress}>
+        <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
+      </RnTouchableOpacity>
+      {!duringCall ? (
+        <CallButtons
+          onPress={callVoice}
+          image={CustomImages.CallAcceptedLogo}
+          containerStyle={styles.callButtonContainer}
+          imageStyle={styles.callButtonImage}
+        />
+      ) : (
+        <></>
+      )}
+      {duringCall && hangup ? (
+        <CallButtons
+          onPress={hangup}
+          image={CustomImages.CallDeclinedLogo}
+          containerStyle={styles.callButtonContainer}
+          imageStyle={styles.callButtonImage}
+        />
+      ) : (
+        <></>
+      )}
       <RnTouchableOpacity
         style={styles.wrapper}
         onPress={() => onPressNumber('')}

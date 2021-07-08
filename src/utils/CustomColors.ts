@@ -17,9 +17,22 @@ const CustomColors = {
   LightGreen: '#C9EEDC',
   LightBlue: '#F4FAFF',
   DarkAsh: '#858997',
+  lightBlack: '#00000099',
   MediumBlack: '#272727F0',
   ActiveBlue: '#007AFF',
   LightAsh: '#999999',
+  Red: '#C71616',
+  GreyMedium: '#939597',
+  BlueMedium: '#353A48',
+  Blue: '#000000BC',
+  DarkGreen: '#2276FF67',
+  Downy: '#74D7C2',
+  ShadowBlack: '#00000010',
+  LightDowny: '#509A9C',
+  SVGBlack: '#666666',
+  BlueLabel: '#2276FF',
+  ShadowGrey: '#2F344329',
+  SkyBlue: '#DCEDFF',
 }
 
 export default CustomColors

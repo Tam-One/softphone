@@ -1,7 +1,6 @@
 import sip from 'api/sip'
 import ShowNumber from 'components/CallDialledNumbers'
 import KeyPad from 'components/CallKeyPad'
-import Layout from 'components/Layout'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
@@ -21,6 +20,8 @@ import RnKeyboard from 'stores/RnKeyboard'
 class PageDtmfKeypad extends React.Component<{
   callId: string
   partyName: string
+  hangup(): void
+  onHidePress(): void
 }> {
   @observable text = ''
   textRef = React.createRef<TextInput>()
@@ -40,7 +41,7 @@ class PageDtmfKeypad extends React.Component<{
     const { calls } = callStore
     const { callId } = this.props
     const call = calls.find(call => call.id === callId)
-    const { pbxTenant, pbxTalkerId, partyNumber }: any = call
+    const { pbxTenant, pbxTalkerId, partyNumber }: any = call || {}
     const { currentProfile } = getAuthStore() || {}
     sip.sendDTMF({
       signal: key,
@@ -102,13 +103,9 @@ class PageDtmfKeypad extends React.Component<{
   }
 
   render() {
-    const { partyName } = this.props
+    const { partyName, hangup, onHidePress } = this.props
     return (
-      <Layout
-        description={intl`Keypad dial manually`}
-        onBack={Nav().backToPageCallManage}
-        title={partyName}
-      >
+      <>
         <ShowNumber
           refInput={this.textRef}
           selectionChange={this.onSelectionChange}
@@ -116,15 +113,21 @@ class PageDtmfKeypad extends React.Component<{
             this.text = val
           }}
           value={this.text}
+          hidePlaceholder={true}
         />
-        {!RnKeyboard.isKeyboardShowing && (
+        {!RnKeyboard.isKeyboardShowing ? (
           <KeyPad
             callVoice={this.callVoice}
             onPressNumber={this.onNumberPress}
             showKeyboard={this.showKeyboard}
+            duringCall={true}
+            hangup={hangup}
+            onHidePress={onHidePress}
           />
+        ) : (
+          <></>
         )}
-      </Layout>
+      </>
     )
   }
 }

@@ -13,7 +13,7 @@ import g from './variables'
 
 const css = StyleSheet.create({
   Footer: {
-    position: 'absolute',
+    // position: 'absolute',
     bottom: 0,
     right: 0,
   },

@@ -43,6 +43,7 @@ export type Phonebook2 = {
 class ContactStore {
   @observable usersSearchTerm = ''
   @observable callSearchRecents = ''
+  @observable contactSearchBook = ''
   @observable loading = true
   @observable hasLoadmore = false
   @observable offset = 0

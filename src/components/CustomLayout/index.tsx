@@ -10,15 +10,22 @@ const CustomLayout: FC<
     menu: string
     noScroll: boolean
     subMenu: string
+    hideSubMenu?: boolean
   }>
 > = props => {
-  const { menu } = props
+  const { menu, hideSubMenu } = props
   return (
     <>
       <View style={styles.scroller}>
         <CustomGradient>
-          <SubMenu {...props} />
-          <View style={styles.childStyle} />
+          {!hideSubMenu ? (
+            <>
+              <SubMenu {...props} />
+              <View style={styles.childStyle} />
+            </>
+          ) : (
+            <></>
+          )}
           {props.children}
         </CustomGradient>
       </View>

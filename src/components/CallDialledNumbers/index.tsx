@@ -8,7 +8,6 @@ import {
   TextInputSelectionChangeEventData,
   View,
 } from 'react-native'
-import intl from 'stores/intl'
 
 const ShowNumber: FC<{
   setTarget(val: string): void
@@ -17,23 +16,27 @@ const ShowNumber: FC<{
   ): void
   refInput: RefObject<TextInput>
   value: string
-}> = ({ setTarget, refInput, value, selectionChange }) => (
-  <View style={styles.showNumbers}>
-    <RnTextInput
-      blurOnSubmit
-      keyboardType='default'
-      multiline
-      onChangeText={setTarget}
-      onEndEditing={() => {
-        Keyboard.dismiss()
-      }}
-      onSelectionChange={selectionChange}
-      placeholder={intl`Enter your number`}
-      ref={refInput}
-      style={styles.showNumbersDisplayText}
-      value={value}
-    />
-  </View>
-)
+  hidePlaceholder?: boolean
+}> = ({ setTarget, refInput, value, selectionChange, hidePlaceholder }) => {
+  const placeHolder = !hidePlaceholder ? 'Enter your number' : ''
+  return (
+    <View style={styles.showNumbers}>
+      <RnTextInput
+        blurOnSubmit
+        keyboardType='default'
+        multiline
+        onChangeText={setTarget}
+        onEndEditing={() => {
+          Keyboard.dismiss()
+        }}
+        onSelectionChange={selectionChange}
+        placeholder={placeHolder}
+        ref={refInput}
+        style={styles.showNumbersDisplayText}
+        value={value}
+      />
+    </View>
+  )
+}
 
 export default ShowNumber

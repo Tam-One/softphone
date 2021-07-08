@@ -7,17 +7,13 @@ const styles = StyleSheet.create({
     backgroundColor: CustomColors.lightAliceBlue,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 17,
-    shadowColor: CustomColors.LightGrey,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
-    elevation: 3,
+    paddingHorizontal: 16,
   },
   buttonIcon: {
     flex: 0,
-    width: 30,
+    width: 10,
     height: 30,
+    marginRight: 10,
   },
   backBtnRow: {
     flexDirection: 'row',
@@ -34,8 +30,19 @@ const styles = StyleSheet.create({
     lineHeight: CustomFonts.CallTextLineHeight,
     fontWeight: 'bold',
     flex: 1,
-    paddingRight: 59,
+    paddingRight: 78,
     textAlign: 'center',
+  },
+  headerCenter: {
+    paddingRight: 0,
+  },
+  rightButtonText: {
+    fontSize: CustomFonts.BackText,
+    color: CustomColors.ActiveBlue,
+  },
+  disabledRightButton: {
+    opacity: 0.8,
+    color: 'grey',
   },
   subText: {
     color: CustomColors.DarkBlue,

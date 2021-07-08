@@ -3,10 +3,10 @@ import CustomColors from 'utils/CustomColors'
 
 const styles = StyleSheet.create({
   customHeaderContainer: {
-    backgroundColor: 'white',
+    backgroundColor: CustomColors.AliceBlue,
     height: 40,
     width: '100%',
-    position: 'absolute',
+    // position: 'absolute',
     top: 0,
     zIndex: 99,
   },
