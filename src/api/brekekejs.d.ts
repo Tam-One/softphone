@@ -247,7 +247,13 @@ export type Sip = {
   getSession(sessionId: string): Session
   makeCall(number: string, options: null, videoEnabled?: boolean): void
   answer(sessionId: string, options: null, videoEnabled?: boolean): void
-  setWithVideo(sessionId: string, withVideo?: boolean): void
+  setWithVideo(
+    sessionId: string,
+    withVideo?: boolean,
+    videoOptions?: any,
+    exInfo?: any,
+    endVideoCall?: boolean,
+  ): void
   setMuted(options: { main: boolean }, sessionId: string): void
 
   sendDTMF(dtmf: string, sessionId: string): void
@@ -303,6 +309,7 @@ export type SipEventMap = {
   phoneStatusChanged: PhoneStatusChangedEvent
   sessionCreated: Session
   sessionStatusChanged: Session
+  remoteUserOptionsChanged: Session
   videoClientSessionCreated: VideoSession
   videoClientSessionEnded: VideoSession
   rtcErrorOccurred: Error
@@ -330,6 +337,7 @@ export type Session = {
   remoteWithVideo: boolean
   remoteStreamObject: MediaStream
   localStreamObject: MediaStream
+  remoteVideoStreamObject: MediaStream
   incomingMessage?: {
     getHeader(h: string): string
   }
@@ -348,6 +356,7 @@ export type Session = {
   }
   remoteUserOptionsTable: null
   analyzer: null
+  endVideoCall?: boolean
 }
 export type VideoSession = {
   sessionId: string

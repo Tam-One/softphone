@@ -17,6 +17,7 @@ export default class Call {
   @observable pbxTalkerId = ''
   @observable pbxTenant = ''
   @observable callerName = ''
+  @observable endVideoCall = false
 
   @computed get getCallerName() {
     return this.callerName
@@ -62,7 +63,8 @@ export default class Call {
   @observable localVideoEnabled = false
   @observable remoteVideoEnabled = false
   enableVideo = () => sip.enableVideo(this.id)
-  disableVideo = () => sip.disableVideo(this.id)
+  disableVideo = (endVideoCall: boolean) =>
+    sip.disableVideo(this.id, endVideoCall)
 
   @observable remoteVideoStreamObject: MediaStream | null = null
   @observable localVideoStreamObject: MediaStream | null = null

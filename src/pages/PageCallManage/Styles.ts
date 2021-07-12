@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   videoActionsContainer: {
     justifyContent: 'center',
     alignContent: 'center',
+    position: 'relative',
   },
   btnsHidden: {
     opacity: 0,
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingBottom: 40,
+    paddingBottom: 50,
   },
   actionBtnContainer: {
     flex: 1,
@@ -114,6 +115,45 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
+  },
+  videoPopupContainer: {
+    flex: 1,
+    backgroundColor: CustomColors.lightBlack,
+    position: 'absolute',
+    zIndex: 999,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    paddingBottom: 60,
+  },
+  videoPopupView: {
+    width: '90%',
+    justifyContent: 'center',
+    backgroundColor: CustomColors.PopupBlack,
+    paddingVertical: 17,
+    paddingHorizontal: 17,
+  },
+  videoPopupHeading: {
+    color: CustomColors.Yellow,
+    fontSize: 14,
+    marginBottom: 40,
+  },
+  videoPopupFooter: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  videoPopupCancel: {
+    color: CustomColors.Purple,
+    fontSize: 14,
+    textTransform: 'uppercase',
+  },
+  videoPopupSwitch: {
+    color: CustomColors.Purple,
+    fontSize: 14,
+    marginLeft: 21,
+    textTransform: 'uppercase',
   },
 })
 

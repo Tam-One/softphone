@@ -125,6 +125,7 @@ export class SIP extends EventEmitter {
         withVideo,
         remoteWithVideo,
         incomingMessage,
+        endVideoCall,
       } = event
 
       if (sessionStatus === 'terminated') {
@@ -135,6 +136,48 @@ export class SIP extends EventEmitter {
         answered: sessionStatus === 'connected',
         voiceStreamObject: remoteStreamObject,
         localVideoEnabled: withVideo,
+        remoteVideoEnabled: remoteWithVideo,
+        pbxTenant: '',
+        pbxRoomId: '',
+        pbxTalkerId: '',
+        pbxUsername: '',
+        endVideoCall: endVideoCall,
+      }
+      if (incomingMessage) {
+        const pbxSessionInfo = incomingMessage.getHeader('X-PBX-Session-Info')
+        if (typeof pbxSessionInfo === 'string') {
+          const infos = pbxSessionInfo.split(';')
+          patch.pbxTenant = infos[0]
+          patch.pbxRoomId = infos[1]
+          patch.pbxTalkerId = infos[2]
+          patch.pbxUsername = infos[3]
+        }
+      }
+      this.emit('session-updated', patch)
+      return
+    })
+
+    phone.addEventListener('remoteUserOptionsChanged', event => {
+      if (!event) {
+        return
+      }
+      const {
+        sessionId,
+        sessionStatus,
+        remoteStreamObject,
+        withVideo,
+        remoteWithVideo,
+        incomingMessage,
+      } = event
+
+      if (sessionStatus === 'terminated') {
+        return this.emit('session-stopped', sessionId)
+      }
+      const patch = {
+        id: sessionId,
+        answered: sessionStatus === 'connected',
+        voiceStreamObject: remoteStreamObject,
+        localVideoEnabled: !remoteWithVideo ? false : withVideo,
         remoteVideoEnabled: remoteWithVideo,
         pbxTenant: '',
         pbxRoomId: '',
@@ -321,8 +364,8 @@ export class SIP extends EventEmitter {
   enableVideo = (sessionId: string) => {
     return this.phone.setWithVideo(sessionId, true)
   }
-  disableVideo = (sessionId: string) => {
-    return this.phone.setWithVideo(sessionId, false)
+  disableVideo = (sessionId: string, endVideoCall?: boolean) => {
+    return this.phone.setWithVideo(sessionId, false, null, null, endVideoCall)
   }
   setMuted = (muted: boolean, sessionId: string) => {
     return this.phone.setMuted({ main: muted }, sessionId)

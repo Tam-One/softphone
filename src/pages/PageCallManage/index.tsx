@@ -21,14 +21,19 @@ import Nav from 'stores/Nav'
 import CustomColors from 'utils/CustomColors'
 import CustomImages from 'utils/CustomImages'
 
+import VideoPopup from './VideoPopup'
+
 @observer
 class PageCallManage extends React.Component<{
   isFromCallBar: boolean
 }> {
   intervalID = 0
+  videoRequestTimeout
   state = {
     curTime: 0,
     showKeyPad: false,
+    showVideoPopup: '',
+    responseMessage: '',
   }
 
   startCallTimer = answeredAt => {
@@ -60,6 +65,10 @@ class PageCallManage extends React.Component<{
 
     const { isLoudSpeakerEnabled, toggleLoudSpeaker } = callStore
 
+    const onVideoPress = () => {
+      this.setState({ showVideoPopup: 'REQUEST' })
+    }
+
     const buttonList = {
       mute: (
         <CallActionButton
@@ -85,7 +94,7 @@ class PageCallManage extends React.Component<{
         <CallActionButton
           bgcolor={localVideoEnabled ? activeColor : nonActiveColor}
           name={intl`Video`}
-          onPress={localVideoEnabled ? disableVideo : enableVideo}
+          onPress={localVideoEnabled ? () => disableVideo(true) : onVideoPress}
           textcolor={localVideoEnabled ? nonActiveColor : textActiveColor}
           image={localVideoEnabled ? CustomImages.Video : CustomImages.VideoOff}
           imageStyle={styles.actionBtnImage}
@@ -188,6 +197,19 @@ class PageCallManage extends React.Component<{
     )
   }
 
+  onVideoCallSwitch = currentCall => {
+    const { enableVideo, disableVideo } = currentCall
+    enableVideo()
+    this.setState({ showVideoPopup: '' })
+    this.videoRequestTimeout = setTimeout(() => {
+      disableVideo()
+      this.setState({ responseMessage: 'No Response' })
+      setTimeout(() => {
+        this.setState({ responseMessage: '' })
+      }, 3000)
+    }, 500000)
+  }
+
   renderCall = (currentCall?: any, isVideoEnabled?: boolean) => {
     const {
       transferring,
@@ -197,8 +219,23 @@ class PageCallManage extends React.Component<{
       id,
       partyName,
       hangup,
+      enableVideo,
+      localVideoEnabled,
+      remoteVideoEnabled,
+      disableVideo,
+      remoteVideoStreamObject,
+      remoteStreamObject,
     } = currentCall
-    const { showKeyPad } = this.state
+
+    if (this.videoRequestTimeout && !localVideoEnabled) {
+      clearTimeout(this.videoRequestTimeout)
+      this.videoRequestTimeout = null
+      this.setState({ responseMessage: 'Video request declined' })
+      setTimeout(() => {
+        this.setState({ responseMessage: '' })
+      }, 3000)
+    }
+    const { showKeyPad, responseMessage } = this.state
     if (!currentCall) {
       return
     }
@@ -209,6 +246,60 @@ class PageCallManage extends React.Component<{
     } else {
       return (
         <>
+          {this.state.showVideoPopup === 'REQUEST' ? (
+            <VideoPopup
+              header={'Switch to video call?'}
+              showOk={true}
+              onOkPress={() => this.onVideoCallSwitch(currentCall)}
+              onCancel={() => this.setState({ showVideoPopup: '' })}
+            ></VideoPopup>
+          ) : (
+            <></>
+          )}
+
+          {localVideoEnabled && !remoteVideoEnabled ? (
+            <>
+              <VideoPopup
+                header={'Waiting for video call request'}
+                showOk={false}
+                onCancel={() => {
+                  clearTimeout(this.videoRequestTimeout)
+                  this.videoRequestTimeout = null
+                  disableVideo()
+                }}
+              ></VideoPopup>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {!localVideoEnabled && remoteVideoEnabled ? (
+            <>
+              <VideoPopup
+                header={'Request to switch to a video call'}
+                showOk={true}
+                onOkPress={() => {
+                  enableVideo()
+                }}
+                onCancel={() => disableVideo(true)}
+              ></VideoPopup>
+            </>
+          ) : (
+            <></>
+          )}
+
+          {responseMessage ? (
+            <>
+              <VideoPopup
+                header={responseMessage}
+                showOk={false}
+                onCancel={() => this.setState({ responseMessage: '' })}
+              ></VideoPopup>
+            </>
+          ) : (
+            <></>
+          )}
+
           <CustomHeader
             onBack={Nav().backToPageCallRecents}
             description={''}
@@ -247,6 +338,8 @@ class PageCallManage extends React.Component<{
   }
 
   renderVideoPage = (currentCall?: any) => {
+    clearTimeout(this.videoRequestTimeout)
+    this.videoRequestTimeout = null
     return (
       <View style={styles.videoPageContainer}>
         {this.renderVideo(currentCall)}

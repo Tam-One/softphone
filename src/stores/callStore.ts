@@ -146,6 +146,10 @@ export class CallStore {
       if (!cExisting.answered && cPartial.answered) {
         cPartial.answeredAt = Date.now()
       }
+      if (cPartial.endVideoCall) {
+        cPartial.localVideoEnabled = false
+        cPartial.remoteVideoEnabled = false
+      }
       Object.assign(cExisting, cPartial)
       return
     }
