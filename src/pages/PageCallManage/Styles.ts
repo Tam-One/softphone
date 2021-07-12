@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
+import CustomFonts from 'utils/CustomFonts'
 
 const styles = StyleSheet.create({
   customHeaderContainer: {
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
   },
   videoPopupHeading: {
     color: CustomColors.Yellow,
-    fontSize: 14,
+    fontSize: CustomFonts.SmallIconFont,
     marginBottom: 40,
   },
   videoPopupFooter: {
@@ -146,12 +147,12 @@ const styles = StyleSheet.create({
   },
   videoPopupCancel: {
     color: CustomColors.Purple,
-    fontSize: 14,
+    fontSize: CustomFonts.SmallIconFont,
     textTransform: 'uppercase',
   },
   videoPopupSwitch: {
     color: CustomColors.Purple,
-    fontSize: 14,
+    fontSize: CustomFonts.SmallIconFont,
     marginLeft: 21,
     textTransform: 'uppercase',
   },
