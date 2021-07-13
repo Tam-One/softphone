@@ -10,6 +10,7 @@ import EventEmitter from 'eventemitter3'
 import { Platform } from 'react-native'
 import { cancelRecentPn } from 'stores/cancelRecentPn'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
+import CustomStrings from 'utils/CustomStrings'
 
 const sipCreateMediaConstraints = (sourceId?: string) => {
   return ({
@@ -170,12 +171,12 @@ export class SIP extends EventEmitter {
         incomingMessage,
       } = event
 
-      if (sessionStatus === 'terminated') {
+      if (sessionStatus === CustomStrings.Terminated) {
         return this.emit('session-stopped', sessionId)
       }
       const patch = {
         id: sessionId,
-        answered: sessionStatus === 'connected',
+        answered: sessionStatus === CustomStrings.Connected,
         voiceStreamObject: remoteStreamObject,
         localVideoEnabled: !remoteWithVideo ? false : withVideo,
         remoteVideoEnabled: remoteWithVideo,
