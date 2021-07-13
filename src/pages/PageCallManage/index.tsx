@@ -7,7 +7,6 @@ import FieldButton from 'components/FieldButton'
 import PoweredBy from 'components/PoweredBy'
 import RnText from 'components/RnText'
 import VideoPlayer from 'components/VideoPlayer'
-import { toInteger } from 'lodash'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageCallManage/Styles'
 import PageDtmfKeypad from 'pages/PageDtmfKeypad'
@@ -20,6 +19,7 @@ import intl from 'stores/intl'
 import Nav from 'stores/Nav'
 import CustomColors from 'utils/CustomColors'
 import CustomImages from 'utils/CustomImages'
+import formatDuration from 'utils/formatDuration'
 
 import VideoPopup from './VideoPopup'
 
@@ -30,21 +30,9 @@ class PageCallManage extends React.Component<{
   intervalID = 0
   videoRequestTimeout
   state = {
-    curTime: 0,
     showKeyPad: false,
     showVideoPopup: '',
     responseMessage: '',
-  }
-
-  startCallTimer = answeredAt => {
-    clearInterval(this.intervalID)
-    this.intervalID = setInterval(() => {
-      const date = new Date()
-      const diffInMs = date.getTime() - answeredAt
-      this.setState({
-        curTime: diffInMs / 1000,
-      })
-    }, 1000)
   }
 
   getActionsButtonList = (currentCall: any) => {
@@ -157,13 +145,8 @@ class PageCallManage extends React.Component<{
 
   componentDidUpdate() {
     const { currentCall, backgroundCalls } = callStore
-    const { answered, answeredAt }: any = currentCall || {}
-    const { curTime } = this.state
     if (!currentCall && !backgroundCalls.length) {
       Nav().backToPageCallRecents()
-    }
-    if (answered && !curTime) {
-      this.startCallTimer(answeredAt)
     }
   }
 
@@ -172,14 +155,7 @@ class PageCallManage extends React.Component<{
   }
 
   renderCallTime = (isVideoEnabled?: boolean) => {
-    const timeInSec = this.state.curTime
-    const isSecs = toInteger(timeInSec % 60)
-    const secs = isSecs < 10 ? '0' + isSecs : isSecs
-    const isMins = toInteger(timeInSec / 60)
-    const mins = isMins < 10 ? '0' + isMins : isMins
-    const isHours = toInteger(timeInSec / 3600)
-    const hours = isHours ? isHours + ':' : null
-
+    const currentCall = callStore.currentCall
     return (
       <View
         style={[
@@ -189,8 +165,9 @@ class PageCallManage extends React.Component<{
       >
         <View style={styles.timerDisplayBox}>
           <RnText style={{ color: CustomColors.White }}>
-            {hours}
-            {mins}:{secs}
+            {currentCall && currentCall.duration > 0
+              ? formatDuration(currentCall.duration)
+              : '00:00'}
           </RnText>
         </View>
       </View>
