@@ -8,6 +8,7 @@ import pbx from 'api/pbx'
 import turnConfig from 'api/turnConfig'
 import EventEmitter from 'eventemitter3'
 import { Platform } from 'react-native'
+import callStore from 'stores/callStore'
 import { cancelRecentPn } from 'stores/cancelRecentPn'
 import { BackgroundTimer } from 'utils/BackgroundTimer'
 import CustomStrings from 'utils/CustomStrings'
@@ -162,6 +163,7 @@ export class SIP extends EventEmitter {
       if (!event) {
         return
       }
+      const currentCall = callStore.currentCall
       const {
         sessionId,
         sessionStatus,
@@ -178,7 +180,9 @@ export class SIP extends EventEmitter {
         id: sessionId,
         answered: sessionStatus === CustomStrings.Connected,
         voiceStreamObject: remoteStreamObject,
-        localVideoEnabled: !remoteWithVideo ? false : withVideo,
+        localVideoEnabled: !remoteWithVideo
+          ? false
+          : currentCall?.localVideoEnabled,
         remoteVideoEnabled: remoteWithVideo,
         pbxTenant: '',
         pbxRoomId: '',
@@ -211,7 +215,7 @@ export class SIP extends EventEmitter {
       this.emit('session-updated', {
         id: sessionId,
         videoSessionId: videoClientSessionId,
-        remoteVideoEnabled: true,
+        remoteVideoEnabled: session.remoteWithVideo,
         remoteVideoStreamObject: remoteStreamObject,
         localVideoStreamObject: localStreamObject,
       })
