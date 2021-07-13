@@ -33,6 +33,9 @@ const CustomColors = {
   BlueLabel: '#2276FF',
   ShadowGrey: '#2F344329',
   SkyBlue: '#DCEDFF',
+  Purple: '#BB86FC',
+  Yellow: '#FFFFFF99',
+  PopupBlack: '#121212',
 }
 
 export default CustomColors
