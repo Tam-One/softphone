@@ -27,7 +27,7 @@ const FormInputBox: FC<{
         <></>
       )}
       <RnTextInput
-        style={[styles.fieldTextInput, val ? { fontWeight: '600' } : {}]}
+        style={[styles.fieldTextInput, val ? { fontWeight: 'bold' } : {}]}
         value={val}
         onChangeText={(text: string) => {
           onTextChange(text)

@@ -72,9 +72,13 @@ const KeyPad: FC<{
     ))}
 
     <View style={[styles.keyPadNumber, styles.footerButtons]}>
-      <RnTouchableOpacity style={styles.wrapper} onPress={onHidePress}>
-        <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
-      </RnTouchableOpacity>
+      {duringCall ? (
+        <RnTouchableOpacity style={styles.wrapper} onPress={onHidePress}>
+          <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
+        </RnTouchableOpacity>
+      ) : (
+        <View style={styles.wrapper}></View>
+      )}
       {!duringCall ? (
         <CallButtons
           onPress={callVoice}

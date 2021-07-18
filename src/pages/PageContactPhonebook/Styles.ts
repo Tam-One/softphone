@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     backgroundColor: CustomColors.White,
-    marginHorizontal: 27,
+    marginHorizontal: 16,
     height: 40,
     paddingHorizontal: 10,
     borderRadius: 15,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     height: 40,
     width: 40,
-    backgroundColor: '#007AFF',
+    backgroundColor: CustomColors.ActiveBlue,
     borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   addButton: {
     fontSize: CustomFonts.NumberFont,
     lineHeight: 28,
-    paddingLeft: 3,
+    paddingLeft: 1,
     color: CustomColors.White,
     alignItems: 'center',
   },
@@ -95,9 +95,6 @@ const styles = StyleSheet.create({
   },
   listView: {
     marginTop: 18,
-  },
-  userItem: {
-    borderBottomWidth: 1,
   },
 })
 

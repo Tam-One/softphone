@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 25,
+    marginTop: 16,
     position: 'relative',
     paddingHorizontal: 12,
     borderColor: CustomColors.DarkGreen,

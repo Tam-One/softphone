@@ -132,7 +132,7 @@ class PageContactUsers extends React.Component {
             path={mdiMagnify}
             pointerEvents='none'
             style={styles.fieldIcon}
-            size={10}
+            size={17}
             color={CustomColors.DarkAsh}
           />
           <RnTextInput
@@ -142,7 +142,7 @@ class PageContactUsers extends React.Component {
             onChangeText={(val: string) => {
               contactStore.usersSearchTerm = val
             }}
-            placeholder={'Zoeken'}
+            placeholder={'Search'}
           />
         </View>
         <View style={styles.listView}>

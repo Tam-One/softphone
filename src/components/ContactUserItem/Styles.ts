@@ -10,13 +10,20 @@ const {
 
 const styles = StyleSheet.create({
   outer: {
+    marginLeft: 16,
+    paddingRight: 6,
+  },
+  bottomBorder: {
     borderBottomWidth: 1,
+    borderColor: CustomColors.DarkGrey,
+  },
+  topBorder: {
+    borderTopWidth: 1,
     borderColor: CustomColors.DarkGrey,
   },
   inner: {
     flexDirection: 'row',
-    paddingHorizontal: 17,
-    height: 63,
+    height: 60,
     alignItems: 'center',
   },
   innerSelected: {
@@ -27,7 +34,6 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    paddingLeft: 10,
     fontSize: CustomFonts.MediumText,
   },
   nameWithStatus: {
@@ -60,6 +66,7 @@ const styles = StyleSheet.create({
   nameAvatarContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingRight: 10,
   },
   nameAvatar: {
     width: 35,

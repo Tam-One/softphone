@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     marginRight: 13,
   },
   callButtonImage: {
-    width: footerImage,
-    height: footerImage,
+    width: 80,
+    height: 80,
   },
   hideWrapper: {
     alignItems: 'center',

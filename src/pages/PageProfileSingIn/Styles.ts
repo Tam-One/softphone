@@ -114,7 +114,10 @@ const styles = StyleSheet.create({
     color: CustomColors.White,
   },
   poweredByView: {
-    marginTop: 0,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 28,
   },
   singInInput: {
     position: 'absolute',

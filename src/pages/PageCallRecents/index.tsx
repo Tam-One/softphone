@@ -70,7 +70,7 @@ class PageCallRecents extends React.Component {
             path={mdiMagnify}
             pointerEvents='none'
             style={styles.fieldIcon}
-            size={10}
+            size={17}
             color={'#858997'}
           />
           <RnTextInput
@@ -80,7 +80,7 @@ class PageCallRecents extends React.Component {
             onChangeText={(val: string) => {
               contactStore.callSearchRecents = val
             }}
-            placeholder={'Zoeken'}
+            placeholder={'Search'}
           />
         </View>
         <View style={styles.noParksContainer}>
@@ -93,19 +93,16 @@ class PageCallRecents extends React.Component {
             style={styles.noParksText}
           >{`Recent calls (${calls.length})`}</RnText>
         </View>
-        <View style={styles.recentList}>
+        <View>
           <FlatList
             data={calls}
             renderItem={({ item, index }) => {
               const { partyNumber } = item
               return (
                 <UserItem
-                  iconFuncs={[
-                    () => callStore.startVideoCall(partyNumber),
-                    () => callStore.startCall(partyNumber),
-                  ]}
+                  iconFuncs={[() => callStore.startCall(partyNumber)]}
                   hideAvatar={true}
-                  icons={[mdiVideo, mdiPhone]}
+                  icons={[mdiPhone]}
                   isRecentCall
                   key={index}
                   {...this.getAvatar(partyNumber)}

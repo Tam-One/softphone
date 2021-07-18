@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingBottom: 50,
+    paddingBottom: 80,
   },
   actionBtnContainer: {
     flex: 1,

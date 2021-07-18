@@ -9,6 +9,7 @@ import RnText from 'components/RnText'
 import VideoPlayer from 'components/VideoPlayer'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageCallManage/Styles'
+import VideoPopup from 'pages/PageCallManage/VideoPopup'
 import PageDtmfKeypad from 'pages/PageDtmfKeypad'
 import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
@@ -21,8 +22,6 @@ import CustomColors from 'utils/CustomColors'
 import CustomImages from 'utils/CustomImages'
 import CustomStrings from 'utils/CustomStrings'
 import formatDuration from 'utils/formatDuration'
-
-import VideoPopup from './VideoPopup'
 
 @observer
 class PageCallManage extends React.Component<{
@@ -282,10 +281,14 @@ class PageCallManage extends React.Component<{
           )}
 
           <CustomHeader
-            onBack={Nav().backToPageCallRecents}
+            onBack={
+              showKeyPad
+                ? () => this.setState({ showKeyPad: false })
+                : Nav().backToPageCallRecents
+            }
             description={''}
             title={''}
-            hideBackText={true}
+            hideBackText={!showKeyPad}
             containerStyle={styles.customHeaderContainer}
             backContainerStyle={styles.backBtnContainer}
           ></CustomHeader>

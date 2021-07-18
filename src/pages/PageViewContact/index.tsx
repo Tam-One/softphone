@@ -3,7 +3,7 @@ import CustomHeader from 'components/CustomHeader'
 import CustomLayout from 'components/CustomLayout'
 import { RnIcon, RnText } from 'components/Rn'
 import styles from 'pages/PageViewContact/Styles'
-import React from 'react'
+import React, { FC } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
 import callStore from 'stores/callStore'
@@ -12,7 +12,13 @@ import Nav from 'stores/Nav'
 import RnPicker from 'stores/RnPicker'
 import CustomColors from 'utils/CustomColors'
 
-const InputBox = ({ label, val, icon = '', style = {} }) => {
+const InputBox: FC<{
+  label: string
+  val: string
+  icon?: string
+  style?: object
+  onPress?(): void
+}> = ({ label, val, icon, style, onPress }) => {
   return (
     <View style={styles.inputBox}>
       {icon ? (
@@ -23,7 +29,9 @@ const InputBox = ({ label, val, icon = '', style = {} }) => {
         <></>
       )}
       {val ? (
-        <RnText style={[styles.fieldTextInput, style]}>{val}</RnText>
+        <TouchableOpacity onPress={onPress} disabled={!onPress}>
+          <RnText style={[styles.fieldTextInput, style]}>{val}</RnText>
+        </TouchableOpacity>
       ) : (
         <RnText style={[styles.fieldTextPlaceholder]}>{label}</RnText>
       )}
@@ -142,24 +150,30 @@ const PageViewContact = ({ contact }) => {
 
         <View style={styles.formView}>
           <InputBox
-            label={'CellNumber'}
+            label={'Mobile number'}
             val={cellNumber}
             style={styles.cellNumberText}
+            onPress={() => callRequest(cellNumber, contact)}
           ></InputBox>
           <InputBox
-            label={'WorkNumber'}
+            label={'Work number'}
             val={workNumber}
             icon={mdiBriefcase}
+            style={styles.cellNumberText}
+            onPress={() => callRequest(workNumber, contact)}
           ></InputBox>
           <InputBox
-            label={'HomeNumber'}
+            label={'Home number'}
             val={homeNumber}
             icon={mdiHome}
+            style={styles.cellNumberText}
+            onPress={() => callRequest(homeNumber, contact)}
           ></InputBox>
           <View style={styles.secondForm}>
             <InputBox label={'Job'} val={job}></InputBox>
             <InputBox label={'Company'} val={company}></InputBox>
             <InputBox label={'Address'} val={address}></InputBox>
+            <InputBox label={'Email'} val={email}></InputBox>
           </View>
         </View>
 

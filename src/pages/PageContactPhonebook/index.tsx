@@ -1,4 +1,4 @@
-import { mdiMagnify } from '@mdi/js'
+import { mdiMagnify, mdiPlusCircle } from '@mdi/js'
 import pbx from 'api/pbx'
 import UserItem from 'components/ContactUserItem'
 import CustomLayout from 'components/CustomLayout'
@@ -117,7 +117,7 @@ class PageContactPhonebook extends React.Component {
             path={mdiMagnify}
             pointerEvents='none'
             style={styles.fieldIcon}
-            size={10}
+            size={17}
             color={CustomColors.DarkAsh}
           />
           <RnTextInput
@@ -127,7 +127,7 @@ class PageContactPhonebook extends React.Component {
             onChangeText={(val: string) => {
               contactStore.contactSearchBook = val
             }}
-            placeholder={'Zoeken'}
+            placeholder={'Search'}
           />
         </View>
         <View style={styles.listView}>
@@ -140,16 +140,19 @@ class PageContactPhonebook extends React.Component {
                   <View style={styles.transferSeparator}>
                     <RnText style={styles.transferSeparatorText}>{key}</RnText>
                   </View>
-                  {phonebooks.map((item, index) => {
+                  {phonebooks.map((item, bookIndex) => {
                     const { name, id } = item
+                    const hideBorder =
+                      bookIndex === phonebooks.length - 1 &&
+                      index !== groups.length - 1
                     return (
                       <TouchableOpacity onPress={() => this.update(id)}>
                         <UserItem
                           showNewAvatar={true}
                           icons={[]}
-                          key={index}
+                          key={bookIndex}
                           name={name}
-                          containerStyle={styles.userItem}
+                          hideBorder={hideBorder}
                         />
                       </TouchableOpacity>
                     )

@@ -1,11 +1,13 @@
+import { mdiAccountCircleOutline } from '@mdi/js'
 import styles from 'components/FooterNavigation/Styles'
 import { menus } from 'components/navigationConfig'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
+import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import CustomColors from 'utils/CustomColors'
+import CustomStrings from 'utils/CustomStrings'
 
 const Navigation: FC<{
   menu: string
@@ -22,13 +24,17 @@ const Navigation: FC<{
           style={styles.button}
         >
           <View style={styles.buttonBackground}>
-            <SvgXml
-              width='20'
-              height='20'
-              xml={icon}
-              fill={color}
-              fillOpacity={1}
-            />
+            {key === CustomStrings.Contact ? (
+              <View style={{ height: 20, width: 20 }}>
+                <RnIcon
+                  path={mdiAccountCircleOutline}
+                  color={color}
+                  size={20}
+                />
+              </View>
+            ) : (
+              <SvgXml width='20' height='20' xml={icon} fill={color} />
+            )}
             <RnText style={{ color: color }}>{label}</RnText>
           </View>
         </RnTouchableOpacity>

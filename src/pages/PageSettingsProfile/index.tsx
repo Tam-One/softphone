@@ -41,7 +41,7 @@ const SettingsView = ({ onPress }) => {
         <InputBox val={pbxUsername} icon={mdiAccount}></InputBox>
         <InputBox val={pbxPassword} icon={mdiLock}></InputBox>
       </View>
-      <View style={styles.formView}>
+      <View style={styles.tenentFormView}>
         <RnText style={styles.heading}>{'Tenant'}</RnText>
         <InputBox val={pbxTenant}></InputBox>
       </View>

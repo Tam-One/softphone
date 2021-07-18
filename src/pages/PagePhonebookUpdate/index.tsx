@@ -42,6 +42,7 @@ const PagePhonebookUpdate: FC<{
   }
 
   const saveNewContact = (phonebook: Phonebook2) => {
+    phonebook.book = 'default'
     pbx
       .setContact({ ...phonebook })
       .then(val => {
@@ -115,12 +116,6 @@ const PagePhonebookUpdate: FC<{
       ></CustomHeader>
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.formContainer}>
-          <FormInputBox
-            label={'Book'}
-            val={get(store, 'phonebook.book')}
-            onTextChange={text => onTextChange('book', text)}
-            editable={!disabled}
-          />
           <FormInputBox
             label={'First Name'}
             val={get(store, 'phonebook.firstName')}

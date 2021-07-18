@@ -78,6 +78,11 @@ const EditAccount: FC<{
           onTextChange={text => onTextChange('pbxUsername', text)}
         />
         <FormInputBox
+          label={'Password'}
+          val={get(store, 'profile.password')}
+          onTextChange={text => onTextChange('password', text)}
+        />
+        <FormInputBox
           label={'Tenant'}
           val={get(store, 'profile.pbxTenant')}
           onTextChange={text => onTextChange('pbxTenant', text)}
@@ -109,8 +114,8 @@ const EditAccount: FC<{
             <RnText style={styles.saveButton}>{'Save'}</RnText>
           </TouchableOpacity>
         </View>
-        <PoweredBy containerStyle={styles.poweredByView} />
       </View>
+      <PoweredBy containerStyle={styles.poweredByView} />
     </CustomGradient>
   )
 }

@@ -65,29 +65,31 @@ class MissedCalls extends React.Component {
         <View style={styles.parkContainer}>
           <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
         </View>
-        <View style={styles.recentList}>
-          <FlatList
-            data={missedCalls}
-            renderItem={({ item, index }) => {
-              const { partyNumber } = item
-              return (
-                <UserItem
-                  iconFuncs={[
-                    () => callStore.startVideoCall(partyNumber),
-                    () => callStore.startCall(partyNumber),
-                  ]}
-                  hideAvatar={true}
-                  icons={[mdiPhone]}
-                  isRecentCall
-                  key={index}
-                  {...this.getAvatar(partyNumber)}
-                  {...item}
-                  fromMissedCall={true}
-                />
-              )
-            }}
-          />
-        </View>
+        {missedCalls.length ? (
+          <View>
+            <FlatList
+              data={missedCalls}
+              renderItem={({ item, index }) => {
+                const { partyNumber } = item
+                return (
+                  <UserItem
+                    iconFuncs={[() => callStore.startCall(partyNumber)]}
+                    hideAvatar={true}
+                    icons={[mdiPhone]}
+                    isRecentCall
+                    key={index}
+                    index={index}
+                    {...this.getAvatar(partyNumber)}
+                    {...item}
+                    fromMissedCall={true}
+                  />
+                )
+              }}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
       </CustomLayout>
     )
   }

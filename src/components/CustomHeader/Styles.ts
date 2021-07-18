@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
-    fontWeight: 'bold',
+    fontWeight: '800',
     flex: 1,
     paddingRight: 78,
     textAlign: 'center',

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     paddingHorizontal: 10,
     letterSpacing: 0.15,
-    color: CustomColors.Black,
+    color: CustomColors.Disabled,
     fontWeight: '400',
   },
   inputBox: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 2,
+    marginBottom: 16,
     position: 'relative',
     paddingHorizontal: 12,
     borderRadius: 10,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 44,
     position: 'relative',
     paddingHorizontal: 12,
     borderRadius: 10,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.SmallSubText,
     color: CustomColors.GreyMedium,
     textTransform: 'uppercase',
-    marginBottom: 9,
+    marginBottom: 8,
   },
   logoutText: {
     color: CustomColors.Red,
@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
   },
   formView: {
     marginTop: 46,
+  },
+  tenentFormView: {
+    marginTop: 16,
   },
   advanceSettings: {
     marginTop: 46,

@@ -63,6 +63,8 @@ const UserItem: FC<
     number?: string
     containerStyle?: object
     fromMissedCall?: boolean
+    index?: number
+    hideBorder?: boolean
   }>
 > = ({
   answered,
@@ -85,9 +87,10 @@ const UserItem: FC<
   number,
   containerStyle,
   fromMissedCall,
+  index,
+  hideBorder,
 }) => {
   var userAvatarName = name
-
   if (name === number) {
     userAvatarName = userAvatarName?.split('').join(' ')
   }
@@ -96,9 +99,15 @@ const UserItem: FC<
   const iconColor = getIconColor(incoming, answered)
 
   const textColor = getTextColor(incoming, answered)
-
   return (
-    <View style={[styles.outer, containerStyle && containerStyle]}>
+    <View
+      style={[
+        styles.outer,
+        !hideBorder && styles.bottomBorder,
+        containerStyle && containerStyle,
+        index === 0 && styles.topBorder,
+      ]}
+    >
       <View style={[styles.inner, selected && styles.innerSelected]}>
         {!hideAvatar ? (
           <View>
