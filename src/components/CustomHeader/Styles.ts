@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   backText: {
     color: CustomColors.DodgerBlue,
     fontSize: CustomFonts.BackText,
+    marginLeft: 4,
   },
   headerText: {
     color: CustomColors.DarkBlue,
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     lineHeight: CustomFonts.CallTextLineHeight,
     fontWeight: '800',
     flex: 1,
-    paddingRight: 78,
+    paddingRight: 59,
     textAlign: 'center',
   },
   headerCenter: {

@@ -38,6 +38,29 @@ const styles = StyleSheet.create({
     borderColor: CustomColors.DarkGreen,
     borderWidth: 2,
   },
+  fieldError: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 3,
+    marginLeft: 7,
+  },
+  fieldErrorInner: {
+    alignSelf: 'flex-start',
+    marginVertical: 2,
+    marginHorizontal: 15,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    backgroundColor: CustomColors.ErrorRed,
+    borderRadius: 3,
+  },
+  fieldErrorIcon: {
+    position: 'absolute',
+    top: -8,
+    left: 2,
+  },
+  fieldErrorLabel: {
+    color: CustomColors.White,
+  },
 })
 
 export default styles

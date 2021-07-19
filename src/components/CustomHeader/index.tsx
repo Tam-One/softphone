@@ -1,9 +1,11 @@
+import svgImages from 'assets/svgImages'
 import styles from 'components/CustomHeader/Styles'
 import RnText from 'components/RnText'
 import RnTouchableOpacity from 'components/RnTouchableOpacity'
 import React, { FC } from 'react'
-import { Image, TouchableOpacity, View } from 'react-native'
-import CustomImages from 'utils/CustomImages'
+import { TouchableOpacity, View } from 'react-native'
+import { SvgXml } from 'react-native-svg'
+import CustomColors from 'utils/CustomColors'
 
 const CustomHeader: FC<
   Partial<{
@@ -35,10 +37,13 @@ const CustomHeader: FC<
       <View style={[styles.headerRow, backContainerStyle]}>
         {onBack ? (
           <RnTouchableOpacity onPress={onBack} style={styles.backBtnRow}>
-            <Image
-              source={CustomImages.HeaderBackButton}
-              style={styles.buttonIcon}
-            ></Image>
+            <SvgXml
+              width='17'
+              height='17'
+              xml={svgImages.backButton}
+              fill={CustomColors.BlueLabel}
+              fillOpacity={1}
+            />
             {!hideBackText && (
               <RnText style={styles.backText}>{backText || 'Back'}</RnText>
             )}
