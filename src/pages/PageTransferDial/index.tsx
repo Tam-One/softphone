@@ -33,7 +33,7 @@ class PageTransferDial extends React.Component {
   constructor(props: any) {
     super(props)
     this.state = {
-      selectedTab: 'keys',
+      selectedTab: 'contact',
     }
   }
 
