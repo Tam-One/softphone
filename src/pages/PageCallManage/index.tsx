@@ -420,8 +420,12 @@ class PageCallManage extends React.Component<{
     const { showKeyPad } = this.state
     return (
       <View style={styles.footerContainer}>
-        {!showKeyPad && this.callEndButton(currentCall)}
-        <PoweredBy containerStyle={{ marginTop: 0 }} />
+        {!showKeyPad && (
+          <>
+            {this.callEndButton(currentCall)}
+            <PoweredBy containerStyle={styles.poweredByView} />
+          </>
+        )}
       </View>
     )
   }

@@ -159,6 +159,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  poweredByView: {
+    marginTop: 0,
+  },
 })
 
 export default styles
