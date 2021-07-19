@@ -121,58 +121,62 @@ class PageContactUsers extends React.Component {
 
     return (
       <CustomLayout menu='contact' subMenu='users'>
-        <View style={styles.parkContainer}>
-          <View>
-            <RnText style={styles.ParksText}>{'Contacten'}</RnText>
-            <RnText style={styles.noParksDesc}>{'Interne contacten'}</RnText>
+        <ScrollView>
+          <View style={styles.parkContainer}>
+            <View>
+              <RnText style={styles.ParksText}>{'Contacten'}</RnText>
+              <RnText style={styles.noParksDesc}>{'Interne contacten'}</RnText>
+            </View>
           </View>
-        </View>
-        <View style={styles.searchBox}>
-          <RnIcon
-            path={mdiMagnify}
-            pointerEvents='none'
-            style={styles.fieldIcon}
-            size={17}
-            color={CustomColors.DarkAsh}
-          />
-          <RnTextInput
-            disabled
-            style={styles.fieldTextInput}
-            value={contactStore.usersSearchTerm}
-            onChangeText={(val: string) => {
-              contactStore.usersSearchTerm = val
-            }}
-            placeholder={'Search'}
-          />
-        </View>
-        <View style={styles.listView}>
-          <FlatList
-            data={groups}
-            renderItem={({ item, index }) => {
-              const { key, users } = item
-              return (
-                <React.Fragment key={key}>
-                  <View style={styles.transferSeparator}>
-                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
-                  </View>
-                  {users.map((item, index) => {
-                    const { id } = item
-                    return (
-                      <UserItem
-                        showNewAvatar={true}
-                        iconFuncs={[() => callStore.startCall(id)]}
-                        icons={[mdiPhone]}
-                        key={index}
-                        {...item}
-                        containerStyle={styles.userItem}
-                      />
-                    )
-                  })}
-                </React.Fragment>
-              )
-            }}
-          />
-        </View>
+          <View style={styles.searchBox}>
+            <RnIcon
+              path={mdiMagnify}
+              pointerEvents='none'
+              style={styles.fieldIcon}
+              size={17}
+              color={CustomColors.DarkAsh}
+            />
+            <RnTextInput
+              disabled
+              style={styles.fieldTextInput}
+              value={contactStore.usersSearchTerm}
+              onChangeText={(val: string) => {
+                contactStore.usersSearchTerm = val
+              }}
+              placeholder={'Search'}
+            />
+          </View>
+          <View style={styles.listView}>
+            <FlatList
+              data={groups}
+              renderItem={({ item, index }) => {
+                const { key, users } = item
+                return (
+                  <React.Fragment key={key}>
+                    <View style={styles.transferSeparator}>
+                      <RnText style={styles.transferSeparatorText}>
+                        {key}
+                      </RnText>
+                    </View>
+                    {users.map((item, index) => {
+                      const { id } = item
+                      return (
+                        <UserItem
+                          showNewAvatar={true}
+                          iconFuncs={[() => callStore.startCall(id)]}
+                          icons={[mdiPhone]}
+                          key={index}
+                          {...item}
+                          containerStyle={styles.userItem}
+                        />
+                      )
+                    })}
+                  </React.Fragment>
+                )
+              }}
+            />
+          </View>
+        </ScrollView>
       </CustomLayout>
     )
   }

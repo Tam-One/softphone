@@ -48,20 +48,15 @@ class PageCallParks extends React.Component<{
             </RnText>
           </>
         )}
-        <ScrollView>
-          {parks.map((park, index) => (
-            <RnTouchableOpacity
+        {parks.map((park, index) => (
+          <RnTouchableOpacity key={index} onPress={() => this.selectPark(park)}>
+            <UserItem
               key={index}
-              onPress={() => this.selectPark(park)}
-            >
-              <UserItem
-                key={index}
-                name={intl`Park ${index + 1}: ${park}`}
-                selected={selectedPark === park}
-              />
-            </RnTouchableOpacity>
-          ))}
-        </ScrollView>
+              name={intl`Park ${index + 1}: ${park}`}
+              selected={selectedPark === park}
+            />
+          </RnTouchableOpacity>
+        ))}
       </>
     )
   }
@@ -75,27 +70,30 @@ class PageCallParks extends React.Component<{
 
     return (
       <>
-        {!callParks2 && (
+        {!callParks2 ? (
           <>
             <CustomLayout menu='keys' subMenu='parks'>
-              <View style={styles.parkContainer}>
-                <RnText style={styles.ParksText}>{'Park'}</RnText>
-                <RnText style={styles.noParksDesc}>
-                  {'Recent voicemails and calls'}
-                </RnText>
-              </View>
-              {this.ParkComponent(parks, selectedPark)}
+              <ScrollView>
+                <View style={styles.parkContainer}>
+                  <RnText style={styles.ParksText}>{'Park'}</RnText>
+                  <RnText style={styles.noParksDesc}>
+                    {'Recent voicemails and calls'}
+                  </RnText>
+                </View>
+                {this.ParkComponent(parks, selectedPark)}
+              </ScrollView>
             </CustomLayout>
           </>
-        )}
-        {!!callParks2 && (
+        ) : (
           <CustomGradient>
-            <CustomHeader
-              onBack={Nav().backToPageCallManage}
-              description={'Your park numbers'}
-              title={'Park'}
-            />
-            {this.ParkComponent(parks, selectedPark)}
+            <ScrollView>
+              <CustomHeader
+                onBack={Nav().backToPageCallManage}
+                description={'Your park numbers'}
+                title={'Park'}
+              />
+              {this.ParkComponent(parks, selectedPark)}
+            </ScrollView>
           </CustomGradient>
         )}
       </>

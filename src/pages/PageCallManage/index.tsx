@@ -69,6 +69,7 @@ class PageCallManage extends React.Component<{
           textcolor={muted ? nonActiveColor : textActiveColor}
           image={muted ? CustomImages.MicrophoneOff : CustomImages.Microphone}
           imageStyle={styles.actionBtnImage}
+          hideShadow={localVideoEnabled}
         />
       ),
       hold: (
@@ -79,6 +80,7 @@ class PageCallManage extends React.Component<{
           textcolor={holding ? nonActiveColor : textActiveColor}
           image={holding ? CustomImages.Unhold : CustomImages.Pause}
           imageStyle={styles.actionBtnImage}
+          hideShadow={localVideoEnabled}
         />
       ),
       video: (
@@ -89,6 +91,7 @@ class PageCallManage extends React.Component<{
           textcolor={localVideoEnabled ? nonActiveColor : textActiveColor}
           image={localVideoEnabled ? CustomImages.Video : CustomImages.VideoOff}
           imageStyle={styles.actionBtnImage}
+          hideShadow={localVideoEnabled}
         />
       ),
       speaker: (
@@ -103,6 +106,7 @@ class PageCallManage extends React.Component<{
               : CustomImages.VolumeMedium
           }
           imageStyle={styles.actionBtnImage}
+          hideShadow={localVideoEnabled}
         />
       ),
       record: (
@@ -112,6 +116,7 @@ class PageCallManage extends React.Component<{
           onPress={toggleRecording}
           textcolor={recording ? nonActiveColor : textActiveColor}
           image={recording ? CustomImages.RecordWhite : CustomImages.Record}
+          hideShadow={localVideoEnabled}
         />
       ),
       park: (
@@ -121,6 +126,7 @@ class PageCallManage extends React.Component<{
           onPress={Nav().goToPageCallParks2}
           textcolor={textActiveColor}
           image={CustomImages.Park}
+          hideShadow={localVideoEnabled}
         />
       ),
       keys: (
@@ -130,6 +136,7 @@ class PageCallManage extends React.Component<{
           onPress={() => this.setState({ showKeyPad: true })}
           textcolor={textActiveColor}
           image={CustomImages.Keys}
+          hideShadow={localVideoEnabled}
         />
       ),
       transfer: (
@@ -139,6 +146,7 @@ class PageCallManage extends React.Component<{
           onPress={Nav().goToPageTransferDial}
           textcolor={textActiveColor}
           image={CustomImages.Transfer}
+          hideShadow={localVideoEnabled}
         />
       ),
     }
@@ -304,7 +312,9 @@ class PageCallManage extends React.Component<{
               />
               {answered && this.renderCallTime()}
               {!showKeyPad ? (
-                this.renderBtns(currentCall)
+                <View style={{ marginTop: 40 }}>
+                  {this.renderBtns(currentCall)}
+                </View>
               ) : (
                 <PageDtmfKeypad
                   callId={id}
@@ -357,23 +367,8 @@ class PageCallManage extends React.Component<{
 
     return (
       <View style={styles.btnsIsVideoEnabled}>
-        <View style={styles.videoActionsContainer}>
-          <View style={styles.btnsInnerView}>
-            {actionButtonsList['mute']}
-            {actionButtonsList['hold']}
-            {actionButtonsList['video']}
-          </View>
-          <View style={[styles.btnsInnerView, styles.btnsSpace]}>
-            {actionButtonsList['record']}
-            {Platform.OS !== 'web' && actionButtonsList['speaker']}
-            <CallButtons
-              onPress={hangup}
-              image={CustomImages.CallDeclinedLogo}
-              lable={''}
-              containerStyle={{ width: 80 }}
-            />
-          </View>
-        </View>
+        {this.callEndButton(currentCall, styles.videoCallEndButton)}
+        {this.renderBtns(currentCall)}
         {backgrounCallsLength > 0 && (
           <FieldButton
             label={intl`BACKGROUND CALLS`}
@@ -422,20 +417,24 @@ class PageCallManage extends React.Component<{
   }
 
   renderHangupBtn = (currentCall: Call) => {
-    const { hangup } = currentCall
     const { showKeyPad } = this.state
     return (
       <View style={styles.footerContainer}>
-        {!showKeyPad && (
-          <View style={styles.actionBtnContainer}>
-            <CallButtons
-              onPress={hangup}
-              image={CustomImages.CallDeclinedLogo}
-              lable={''}
-            />
-          </View>
-        )}
+        {!showKeyPad && this.callEndButton(currentCall)}
         <PoweredBy containerStyle={{ marginTop: 0 }} />
+      </View>
+    )
+  }
+
+  callEndButton = (currentCall: Call, customStyles?: object) => {
+    const { hangup } = currentCall
+    return (
+      <View style={customStyles ? customStyles : styles.actionBtnContainer}>
+        <CallButtons
+          onPress={hangup}
+          image={CustomImages.CallDeclinedLogo}
+          lable={''}
+        />
       </View>
     )
   }

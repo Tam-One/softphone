@@ -96,91 +96,96 @@ class PageContactPhonebook extends React.Component {
     })
     return (
       <CustomLayout menu='contact' subMenu='phonebook'>
-        <View style={styles.parkContainer}>
-          <View>
-            <RnText style={styles.ParksText}>{'Contacts'}</RnText>
-            <RnText style={styles.noParksDesc}>
-              {'Phonebook externe contacten'}
-            </RnText>
+        <ScrollView>
+          <View style={styles.parkContainer}>
+            <View>
+              <RnText style={styles.ParksText}>{'Contacts'}</RnText>
+              <RnText style={styles.noParksDesc}>
+                {'Phonebook externe contacten'}
+              </RnText>
+            </View>
+            <TouchableOpacity
+              style={styles.addButtonContainer}
+              onPress={() =>
+                Nav().goToPagePhonebookUpdate({ contact: {}, newContact: true })
+              }
+            >
+              <RnText style={styles.addButton}>+</RnText>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.addButtonContainer}
-            onPress={() =>
-              Nav().goToPagePhonebookUpdate({ contact: {}, newContact: true })
-            }
-          >
-            <RnText style={styles.addButton}>+</RnText>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.searchBox}>
-          <RnIcon
-            path={mdiMagnify}
-            pointerEvents='none'
-            style={styles.fieldIcon}
-            size={17}
-            color={CustomColors.DarkAsh}
-          />
-          <RnTextInput
-            disabled
-            style={styles.fieldTextInput}
-            value={contactStore.contactSearchBook}
-            onChangeText={(val: string) => {
-              contactStore.contactSearchBook = val
-            }}
-            placeholder={'Search'}
-          />
-        </View>
-        <View style={styles.listView}>
-          <FlatList
-            data={groups}
-            renderItem={({ item, index }) => {
-              const { key, phonebooks } = item
-              return (
-                <React.Fragment key={key}>
-                  <View style={styles.transferSeparator}>
-                    <RnText style={styles.transferSeparatorText}>{key}</RnText>
-                  </View>
-                  {phonebooks.map((item, bookIndex) => {
-                    const { name, id } = item
-                    const hideBorder =
-                      bookIndex === phonebooks.length - 1 &&
-                      index !== groups.length - 1
-                    return (
-                      <TouchableOpacity onPress={() => this.update(id)}>
-                        <UserItem
-                          showNewAvatar={true}
-                          icons={[]}
-                          key={bookIndex}
-                          name={name}
-                          hideBorder={hideBorder}
-                        />
-                      </TouchableOpacity>
-                    )
-                  })}
-                </React.Fragment>
-              )
-            }}
-          />
-        </View>
-        {contactStore.loading ? (
-          <RnText
-            style={styles.loading}
-            warning
-            small
-            normal
-            center
-          >{intl`Loading...`}</RnText>
-        ) : contactStore.hasLoadmore ? (
-          <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
+          <View style={styles.searchBox}>
+            <RnIcon
+              path={mdiMagnify}
+              pointerEvents='none'
+              style={styles.fieldIcon}
+              size={17}
+              color={CustomColors.DarkAsh}
+            />
+            <RnTextInput
+              disabled
+              style={styles.fieldTextInput}
+              value={contactStore.contactSearchBook}
+              onChangeText={(val: string) => {
+                contactStore.contactSearchBook = val
+              }}
+              placeholder={'Search'}
+            />
+          </View>
+          <View style={styles.listView}>
+            <FlatList
+              data={groups}
+              scrollEnabled={false}
+              renderItem={({ item, index }) => {
+                const { key, phonebooks } = item
+                return (
+                  <React.Fragment key={key}>
+                    <View style={styles.transferSeparator}>
+                      <RnText style={styles.transferSeparatorText}>
+                        {key}
+                      </RnText>
+                    </View>
+                    {phonebooks.map((item, bookIndex) => {
+                      const { name, id } = item
+                      const hideBorder =
+                        bookIndex === phonebooks.length - 1 &&
+                        index !== groups.length - 1
+                      return (
+                        <TouchableOpacity onPress={() => this.update(id)}>
+                          <UserItem
+                            showNewAvatar={true}
+                            icons={[]}
+                            key={bookIndex}
+                            name={name}
+                            hideBorder={hideBorder}
+                          />
+                        </TouchableOpacity>
+                      )
+                    })}
+                  </React.Fragment>
+                )
+              }}
+            />
+          </View>
+          {contactStore.loading ? (
             <RnText
               style={styles.loading}
-              primary
+              warning
               small
               normal
               center
-            >{intl`Load more contacts`}</RnText>
-          </RnTouchableOpacity>
-        ) : null}
+            >{intl`Loading...`}</RnText>
+          ) : contactStore.hasLoadmore ? (
+            <RnTouchableOpacity onPress={contactStore.loadMoreContacts}>
+              <RnText
+                style={styles.loading}
+                primary
+                small
+                normal
+                center
+              >{intl`Load more contacts`}</RnText>
+            </RnTouchableOpacity>
+          ) : null}
+        </ScrollView>
       </CustomLayout>
     )
   }

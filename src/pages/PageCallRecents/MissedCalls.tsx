@@ -62,34 +62,37 @@ class MissedCalls extends React.Component {
     })
     return (
       <CustomLayout menu='call' subMenu='missed'>
-        <View style={styles.parkContainer}>
-          <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
-        </View>
-        {missedCalls.length ? (
-          <View>
-            <FlatList
-              data={missedCalls}
-              renderItem={({ item, index }) => {
-                const { partyNumber } = item
-                return (
-                  <UserItem
-                    iconFuncs={[() => callStore.startCall(partyNumber)]}
-                    hideAvatar={true}
-                    icons={[mdiPhone]}
-                    isRecentCall
-                    key={index}
-                    index={index}
-                    {...this.getAvatar(partyNumber)}
-                    {...item}
-                    fromMissedCall={true}
-                  />
-                )
-              }}
-            />
+        <ScrollView>
+          <View style={styles.parkContainer}>
+            <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
           </View>
-        ) : (
-          <></>
-        )}
+          {missedCalls.length ? (
+            <View>
+              <FlatList
+                data={missedCalls}
+                scrollEnabled={false}
+                renderItem={({ item, index }) => {
+                  const { partyNumber } = item
+                  return (
+                    <UserItem
+                      iconFuncs={[() => callStore.startCall(partyNumber)]}
+                      hideAvatar={true}
+                      icons={[mdiPhone]}
+                      isRecentCall
+                      key={index}
+                      index={index}
+                      {...this.getAvatar(partyNumber)}
+                      {...item}
+                      fromMissedCall={true}
+                    />
+                  )
+                }}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
+        </ScrollView>
       </CustomLayout>
     )
   }

@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
     height: 3,
     flex: 0.1,
   },
+  footerContainer: {
+    marginBottom: 40,
+  },
 })
 
 export default styles

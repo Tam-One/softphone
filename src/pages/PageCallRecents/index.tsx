@@ -59,59 +59,62 @@ class PageCallRecents extends React.Component {
     const calls = this.getMatchedCalls()
     return (
       <CustomLayout menu='call' subMenu='recents'>
-        <View style={styles.parkContainer}>
-          <RnText style={styles.ParksText}>{'Recents'}</RnText>
-          <RnText style={styles.noParksDesc}>
-            {'Recent voicemails and calls'}
-          </RnText>
-        </View>
-        <View style={styles.searchBox}>
-          <RnIcon
-            path={mdiMagnify}
-            pointerEvents='none'
-            style={styles.fieldIcon}
-            size={17}
-            color={'#858997'}
-          />
-          <RnTextInput
-            disabled
-            style={styles.fieldTextInput}
-            value={contactStore.callSearchRecents}
-            onChangeText={(val: string) => {
-              contactStore.callSearchRecents = val
-            }}
-            placeholder={'Search'}
-          />
-        </View>
-        <View style={styles.noParksContainer}>
-          <RnText
-            style={styles.noParksText}
-          >{`Voicemails (${callStore.newVoicemailCount})`}</RnText>
-        </View>
-        <View style={styles.noParksContainer}>
-          <RnText
-            style={styles.noParksText}
-          >{`Recent calls (${calls.length})`}</RnText>
-        </View>
-        <View>
-          <FlatList
-            data={calls}
-            renderItem={({ item, index }) => {
-              const { partyNumber } = item
-              return (
-                <UserItem
-                  iconFuncs={[() => callStore.startCall(partyNumber)]}
-                  hideAvatar={true}
-                  icons={[mdiPhone]}
-                  isRecentCall
-                  key={index}
-                  {...this.getAvatar(partyNumber)}
-                  {...item}
-                />
-              )
-            }}
-          />
-        </View>
+        <ScrollView>
+          <View style={styles.parkContainer}>
+            <RnText style={styles.ParksText}>{'Recents'}</RnText>
+            <RnText style={styles.noParksDesc}>
+              {'Recent voicemails and calls'}
+            </RnText>
+          </View>
+          <View style={styles.searchBox}>
+            <RnIcon
+              path={mdiMagnify}
+              pointerEvents='none'
+              style={styles.fieldIcon}
+              size={17}
+              color={'#858997'}
+            />
+            <RnTextInput
+              disabled
+              style={styles.fieldTextInput}
+              value={contactStore.callSearchRecents}
+              onChangeText={(val: string) => {
+                contactStore.callSearchRecents = val
+              }}
+              placeholder={'Search'}
+            />
+          </View>
+          <View style={styles.noParksContainer}>
+            <RnText
+              style={styles.noParksText}
+            >{`Voicemails (${callStore.newVoicemailCount})`}</RnText>
+          </View>
+          <View style={styles.noParksContainer}>
+            <RnText
+              style={styles.noParksText}
+            >{`Recent calls (${calls.length})`}</RnText>
+          </View>
+          <View style={styles.footerContainer}>
+            <FlatList
+              data={calls}
+              scrollEnabled={false}
+              renderItem={({ item, index }) => {
+                const { partyNumber } = item
+                return (
+                  <UserItem
+                    iconFuncs={[() => callStore.startCall(partyNumber)]}
+                    hideAvatar={true}
+                    icons={[mdiPhone]}
+                    isRecentCall
+                    key={index}
+                    {...this.getAvatar(partyNumber)}
+                    {...item}
+                  />
+                )
+              }}
+            />
+          </View>
+        </ScrollView>
       </CustomLayout>
     )
   }
