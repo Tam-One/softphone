@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 25,
+    marginTop: 16,
     position: 'relative',
     paddingHorizontal: 12,
     borderColor: CustomColors.DarkGreen,
@@ -37,6 +37,29 @@ const styles = StyleSheet.create({
   activeView: {
     borderColor: CustomColors.DarkGreen,
     borderWidth: 2,
+  },
+  fieldError: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 3,
+    marginLeft: 7,
+  },
+  fieldErrorInner: {
+    alignSelf: 'flex-start',
+    marginVertical: 2,
+    marginHorizontal: 15,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    backgroundColor: CustomColors.ErrorRed,
+    borderRadius: 3,
+  },
+  fieldErrorIcon: {
+    position: 'absolute',
+    top: -8,
+    left: 2,
+  },
+  fieldErrorLabel: {
+    color: CustomColors.White,
   },
 })
 

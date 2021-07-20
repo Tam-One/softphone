@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 24,
+    alignContent: 'center',
   },
   KeyPadNumberText: {
     fontSize: CustomFonts.DialNumberFont,
@@ -33,6 +34,24 @@ const styles = StyleSheet.create({
     marginRight: 24,
     textAlign: 'center',
     marginBottom: keyMargin,
+  },
+  actionButtons: {
+    width: keyButtonSize,
+    height: keyButtonSize,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 24,
+    textAlign: 'center',
+    marginTop: 9,
+  },
+  transferButtonText: {
+    textTransform: 'uppercase',
+    color: CustomColors.DarkBlue,
+    fontSize: 13,
+    fontWeight: 'bold',
+    marginTop: 5,
+    width: 90,
+    textAlign: 'center',
   },
   keyPadSubText: {
     fontSize: CustomFonts.SmallLabel,
@@ -71,6 +90,11 @@ const styles = StyleSheet.create({
     marginRight: 24,
     marginBottom: 13,
   },
+  removeTextButton: {
+    alignItems: 'center',
+    marginBottom: 13,
+    flexDirection: 'row',
+  },
   rectangle: {
     width: 50,
     backgroundColor: CustomColors.White,
@@ -84,11 +108,13 @@ const styles = StyleSheet.create({
     marginTop: footerMargin,
   },
   callButtonContainer: {
-    marginRight: 13,
+    marginTop: 1,
+    marginBottom: 0,
+    paddingBottom: 0,
   },
   callButtonImage: {
-    width: footerImage,
-    height: footerImage,
+    width: 80,
+    height: 80,
   },
   hideWrapper: {
     alignItems: 'center',

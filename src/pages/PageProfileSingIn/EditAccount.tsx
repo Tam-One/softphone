@@ -17,6 +17,8 @@ const EditAccount: FC<{
   id: string
   updatingProfile?: Profile
 }> = ({ id, updatingProfile }) => {
+  const [fieldErrors, setFieldErrors] = useState({})
+
   const storeObj = () => ({
     observable: {
       profile: {
@@ -34,6 +36,9 @@ const EditAccount: FC<{
   const [profileObj, setProfileObj] = useState(get(store, 'profile'))
 
   const onTextChange = (key, val) => {
+    let fieldErrorsCopy = { ...fieldErrors }
+    fieldErrorsCopy[key] = false
+    setFieldErrors(fieldErrorsCopy)
     store.set('profile.' + key, val)
     const data = { ...profileObj }
     data[key] = val
@@ -41,6 +46,7 @@ const EditAccount: FC<{
   }
 
   const resetAllFields = () => {
+    setFieldErrors({})
     const data = (p: Profile) => ({
       ...profileStore.genEmptyProfile(),
       ...cloneDeep(updatingProfile),
@@ -48,6 +54,23 @@ const EditAccount: FC<{
     })
     store.set('profile', data)
     setProfileObj(get(store, 'profile'))
+  }
+
+  const onSavePress = () => {
+    const { profile } = store
+    const { pbxUsername, pbxPassword, pbxHostname, pbxPort } = profile
+    if (!pbxUsername || !pbxPassword || !pbxHostname || !pbxPort) {
+      setFieldErrors({
+        pbxUsername: !pbxUsername,
+        pbxPassword: !pbxPassword,
+        pbxHostname: !pbxHostname,
+        pbxPort: !pbxPort,
+      })
+      return
+    }
+    profile.pbxPhoneIndex = '4'
+    profileStore.upsertProfile(profile)
+    Nav().backToPageProfileSignIn()
   }
 
   return (
@@ -76,6 +99,15 @@ const EditAccount: FC<{
           label={'UserName'}
           val={get(store, 'profile.pbxUsername')}
           onTextChange={text => onTextChange('pbxUsername', text)}
+          required={true}
+          showError={fieldErrors['pbxUsername']}
+        />
+        <FormInputBox
+          label={'Password'}
+          val={get(store, 'profile.pbxPassword')}
+          onTextChange={text => onTextChange('pbxPassword', text)}
+          required={true}
+          showError={fieldErrors['pbxPassword']}
         />
         <FormInputBox
           label={'Tenant'}
@@ -86,11 +118,15 @@ const EditAccount: FC<{
           label={'Hostname'}
           val={get(store, 'profile.pbxHostname')}
           onTextChange={text => onTextChange('pbxHostname', text)}
+          required={true}
+          showError={fieldErrors['pbxHostname']}
         />
         <FormInputBox
           label={'Port'}
           val={get(store, 'profile.pbxPort')}
           onTextChange={text => onTextChange('pbxPort', text)}
+          required={true}
+          showError={fieldErrors['pbxPort']}
         />
       </View>
 
@@ -101,16 +137,13 @@ const EditAccount: FC<{
               styles.signInButton,
               { backgroundColor: CustomColors.LightDowny },
             ]}
-            onPress={() => {
-              profileStore.upsertProfile(store.profile)
-              Nav().backToPageProfileSignIn()
-            }}
+            onPress={onSavePress}
           >
             <RnText style={styles.saveButton}>{'Save'}</RnText>
           </TouchableOpacity>
         </View>
-        <PoweredBy containerStyle={styles.poweredByView} />
       </View>
+      <PoweredBy containerStyle={styles.poweredByView} />
     </CustomGradient>
   )
 }

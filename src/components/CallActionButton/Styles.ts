@@ -7,10 +7,12 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     borderRadius: 9,
     alignItems: 'center',
-    marginHorizontal: 5,
+    marginHorizontal: 9,
     width: 72,
     height: 72,
     justifyContent: 'center',
+  },
+  shadowEffect: {
     shadowColor: CustomColors.LightGrey,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,

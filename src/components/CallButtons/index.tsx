@@ -7,15 +7,25 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { SvgXml } from 'react-native-svg'
 
 const CallButtons: FC<{
   onPress(): void
-  image: ImageSourcePropType
+  image?: ImageSourcePropType
+  icon?: string
   lable?: string
   showAnimation?: boolean
   containerStyle?: object
   imageStyle?: object
-}> = ({ onPress, image, lable, showAnimation, containerStyle, imageStyle }) => {
+}> = ({
+  onPress,
+  image,
+  lable,
+  showAnimation,
+  containerStyle,
+  imageStyle,
+  icon,
+}) => {
   const [animationTrigger, setAnimationTrigger] = useState(showAnimation)
   const animationTime = 1000
 
@@ -37,14 +47,19 @@ const CallButtons: FC<{
         onPress={onPress}
         style={animationTrigger && styles.animationContainer}
       >
-        <Image
-          source={image}
-          style={[
-            styles.actionBtn,
-            imageStyle && imageStyle,
-            animationTrigger && styles.animationImage,
-          ]}
-        ></Image>
+        {image ? (
+          <Image
+            source={image}
+            style={[
+              styles.actionBtn,
+              imageStyle && imageStyle,
+              animationTrigger && styles.animationImage,
+            ]}
+          ></Image>
+        ) : (
+          <></>
+        )}
+        {icon ? <SvgXml width='55' height='55' xml={icon} /> : <></>}
       </TouchableOpacity>
       <RnText style={styles.actionBtnText}>{lable}</RnText>
     </View>

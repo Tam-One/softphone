@@ -36,6 +36,8 @@ const CustomColors = {
   Purple: '#BB86FC',
   Yellow: '#FFFFFF99',
   PopupBlack: '#121212',
+  Disabled: '#959595',
+  ErrorRed: '#DC0F39',
 }
 
 export default CustomColors

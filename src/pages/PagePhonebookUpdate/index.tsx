@@ -33,7 +33,17 @@ const PagePhonebookUpdate: FC<{
   contact: Phonebook2
   newContact?: boolean
 }> = ({ contact, newContact }) => {
+  const [fieldErrors, setFieldErrors] = useState({})
+
   const updateContact = (phonebook: Phonebook2) => {
+    if (!phonebook.firstName || !phonebook.lastName) {
+      setFieldErrors({
+        firstName: !phonebook.firstName,
+        lastName: !phonebook.lastName,
+      })
+      return
+    }
+    phonebook.book = 'default'
     pbx.setContact(phonebook).then(onSaveSuccess).catch(onSaveFailure)
     Object.assign(phonebook, {
       name: `${phonebook.firstName} ${phonebook.lastName}`,
@@ -42,6 +52,14 @@ const PagePhonebookUpdate: FC<{
   }
 
   const saveNewContact = (phonebook: Phonebook2) => {
+    if (!phonebook.firstName || !phonebook.lastName) {
+      setFieldErrors({
+        firstName: !phonebook.firstName,
+        lastName: !phonebook.lastName,
+      })
+      return
+    }
+    phonebook.book = 'default'
     pbx
       .setContact({ ...phonebook })
       .then(val => {
@@ -86,12 +104,14 @@ const PagePhonebookUpdate: FC<{
   const disabled = contact?.shared
 
   const onTextChange = (key, val) => {
+    let fieldErrorsCopy = { ...fieldErrors }
+    fieldErrorsCopy[key] = false
+    setFieldErrors(fieldErrorsCopy)
     store.set('phonebook.' + key, val)
     const data = { ...phonebookObj }
     data[key] = val
     setPhonebookObj({ ...data })
   }
-
   return (
     <CustomLayout menu='contact' subMenu='phonebook' hideSubMenu={true}>
       <CustomHeader
@@ -116,22 +136,20 @@ const PagePhonebookUpdate: FC<{
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.formContainer}>
           <FormInputBox
-            label={'Book'}
-            val={get(store, 'phonebook.book')}
-            onTextChange={text => onTextChange('book', text)}
-            editable={!disabled}
-          />
-          <FormInputBox
             label={'First Name'}
             val={get(store, 'phonebook.firstName')}
             onTextChange={text => onTextChange('firstName', text)}
             editable={!disabled}
+            required={true}
+            showError={fieldErrors['firstName']}
           />
           <FormInputBox
             label={'Last Name'}
             val={get(store, 'phonebook.lastName')}
             onTextChange={text => onTextChange('lastName', text)}
             editable={!disabled}
+            required={true}
+            showError={fieldErrors['lastName']}
           />
           <FormInputBox
             label={'Cell number'}

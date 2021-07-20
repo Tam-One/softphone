@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     backgroundColor: CustomColors.White,
-    marginHorizontal: 27,
+    marginHorizontal: 16,
     height: 40,
     paddingHorizontal: 10,
     borderRadius: 15,

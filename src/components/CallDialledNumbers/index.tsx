@@ -17,12 +17,22 @@ const ShowNumber: FC<{
   refInput: RefObject<TextInput>
   value: string
   hidePlaceholder?: boolean
-}> = ({ setTarget, refInput, value, selectionChange, hidePlaceholder }) => {
+  customStyle?: object
+}> = ({
+  setTarget,
+  refInput,
+  value,
+  selectionChange,
+  hidePlaceholder,
+  customStyle,
+}) => {
   const placeHolder = !hidePlaceholder ? 'Enter your number' : ''
   return (
     <View style={styles.showNumbers}>
       <RnTextInput
         blurOnSubmit
+        editable={false}
+        disabled={true}
         keyboardType='default'
         multiline
         onChangeText={setTarget}
@@ -32,7 +42,7 @@ const ShowNumber: FC<{
         onSelectionChange={selectionChange}
         placeholder={placeHolder}
         ref={refInput}
-        style={styles.showNumbersDisplayText}
+        style={[styles.showNumbersDisplayText, customStyle]}
         value={value}
       />
     </View>

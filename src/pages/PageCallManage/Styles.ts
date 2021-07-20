@@ -48,11 +48,10 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
   btns: {
-    top: 40, // Header compact height
     left: 0,
     right: 0,
     bottom: 0,
-    paddingBottom: 124, // Hangup button 64 + 2*30
+    paddingBottom: 25, // Hangup button 64 + 2*30
   },
   btnsIsVideoEnabled: {
     position: 'absolute',
@@ -74,8 +73,7 @@ const styles = StyleSheet.create({
   },
   btnsInnerView: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    width: '85%',
+    alignItems: 'center',
     alignSelf: 'center',
   },
   btnsSpace: {
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingBottom: 50,
+    paddingBottom: 80,
   },
   actionBtnContainer: {
     flex: 1,
@@ -155,6 +153,14 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.SmallIconFont,
     marginLeft: 21,
     textTransform: 'uppercase',
+  },
+  videoCallEndButton: {
+    marginBottom: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  poweredByView: {
+    marginTop: 0,
   },
 })
 

@@ -1,8 +1,9 @@
+import svgImages from 'assets/svgImages'
 import CallButtons from 'components/CallButtons'
 import styles from 'components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import CustomImages from 'utils/CustomImages'
 
 const keys = [
@@ -35,6 +36,8 @@ const KeyPad: FC<{
   duringCall?: boolean
   hangup?(): void
   onHidePress?(): void
+  conference?(): void
+  fromTransfer?: boolean
 }> = ({
   onPressNumber,
   showKeyboard,
@@ -42,6 +45,8 @@ const KeyPad: FC<{
   duringCall,
   hangup,
   onHidePress,
+  conference,
+  fromTransfer,
 }) => (
   <View>
     {keys.map((row, index) => (
@@ -71,39 +76,75 @@ const KeyPad: FC<{
       </View>
     ))}
 
-    <View style={[styles.keyPadNumber, styles.footerButtons]}>
-      <RnTouchableOpacity style={styles.wrapper} onPress={onHidePress}>
-        <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
-      </RnTouchableOpacity>
-      {!duringCall ? (
-        <CallButtons
-          onPress={callVoice}
-          image={CustomImages.CallAcceptedLogo}
-          containerStyle={styles.callButtonContainer}
-          imageStyle={styles.callButtonImage}
-        />
-      ) : (
-        <></>
-      )}
-      {duringCall && hangup ? (
-        <CallButtons
-          onPress={hangup}
-          image={CustomImages.CallDeclinedLogo}
-          containerStyle={styles.callButtonContainer}
-          imageStyle={styles.callButtonImage}
-        />
-      ) : (
-        <></>
-      )}
-      <RnTouchableOpacity
-        style={styles.wrapper}
-        onPress={() => onPressNumber('')}
-      >
-        <View style={styles.triangle}></View>
-        <View style={styles.rectangle}>
-          <RnText style={styles.closeButtonText}>{'X'}</RnText>
-        </View>
-      </RnTouchableOpacity>
+    <View style={styles.keyPadNumber}>
+      <View style={styles.actionButtons}>
+        {duringCall && (
+          <TouchableOpacity onPress={onHidePress}>
+            <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
+          </TouchableOpacity>
+        )}
+        {fromTransfer && conference ? (
+          <>
+            <CallButtons
+              onPress={conference}
+              icon={svgImages.conferenceButton}
+              containerStyle={{ width: 55, height: 55, marginTop: 0 }}
+              imageStyle={{ height: 55, width: 55 }}
+            />
+            <RnText style={styles.transferButtonText}>{'Conference'}</RnText>
+          </>
+        ) : (
+          <></>
+        )}
+      </View>
+      <View style={styles.actionButtons}>
+        {duringCall && hangup && !fromTransfer ? (
+          <CallButtons
+            onPress={hangup}
+            image={CustomImages.CallDeclinedLogo}
+            containerStyle={styles.callButtonContainer}
+            imageStyle={styles.callButtonImage}
+          />
+        ) : (
+          <></>
+        )}
+        {!duringCall && !fromTransfer && (
+          <CallButtons
+            onPress={callVoice}
+            image={CustomImages.CallAcceptedLogo}
+            containerStyle={styles.callButtonContainer}
+            imageStyle={styles.callButtonImage}
+          />
+        )}
+        {fromTransfer && callVoice ? (
+          <View style={{ alignItems: 'center', marginLeft: 5 }}>
+            <CallButtons
+              onPress={callVoice}
+              icon={svgImages.transferButton}
+              containerStyle={{
+                width: 55,
+                height: 55,
+                marginTop: 0,
+              }}
+              imageStyle={{ height: 55, width: 55 }}
+            />
+            <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
+          </View>
+        ) : (
+          <></>
+        )}
+      </View>
+      <View style={styles.actionButtons}>
+        <TouchableOpacity
+          style={styles.removeTextButton}
+          onPress={() => onPressNumber('')}
+        >
+          <View style={styles.triangle}></View>
+          <View style={styles.rectangle}>
+            <RnText style={styles.closeButtonText}>{'X'}</RnText>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   </View>
 )

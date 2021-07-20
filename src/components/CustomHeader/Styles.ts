@@ -23,14 +23,15 @@ const styles = StyleSheet.create({
   backText: {
     color: CustomColors.DodgerBlue,
     fontSize: CustomFonts.BackText,
+    marginLeft: 4,
   },
   headerText: {
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
-    fontWeight: 'bold',
+    fontWeight: '800',
     flex: 1,
-    paddingRight: 78,
+    paddingRight: 59,
     textAlign: 'center',
   },
   headerCenter: {

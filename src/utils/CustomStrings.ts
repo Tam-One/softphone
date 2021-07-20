@@ -9,6 +9,7 @@ const CustomStrings = {
   Cancel: 'Cancel',
   Connected: 'connected',
   Terminated: 'terminated',
+  Contact: 'contact',
 }
 
 export default CustomStrings

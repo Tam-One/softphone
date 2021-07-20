@@ -11,12 +11,26 @@ const CallActionButton: FC<{
   textcolor?: string
   image: ImageSourcePropType
   imageStyle?: ImageProps['style']
-}> = ({ disabled, onPress, bgcolor, name, textcolor, image, imageStyle }) => {
+  hideShadow?: boolean
+}> = ({
+  disabled,
+  onPress,
+  bgcolor,
+  name,
+  textcolor,
+  image,
+  imageStyle,
+  hideShadow,
+}) => {
   return (
     <RnTouchableOpacity
       disabled={disabled}
       onPress={onPress}
-      style={[styles.buttonIconBtn, { backgroundColor: bgcolor }]}
+      style={[
+        styles.buttonIconBtn,
+        { backgroundColor: bgcolor },
+        !hideShadow && styles.shadowEffect,
+      ]}
     >
       <Image source={image} style={[styles.btnLogo, imageStyle]}></Image>
       <RnText

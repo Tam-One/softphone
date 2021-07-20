@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     paddingHorizontal: 10,
     letterSpacing: 0.15,
-    color: CustomColors.Blue,
+    color: CustomColors.lightBlack,
     width: '100%',
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
   fieldTextPlaceholder: {
     fontSize: CustomFonts.MediumText,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 16,
     position: 'relative',
     paddingHorizontal: 12,
     borderColor: CustomColors.DarkGreen,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-end',
-    marginTop: 14,
+    marginTop: 16,
     paddingHorizontal: 16,
   },
   callButton: {
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 18,
     shadowColor: CustomColors.ShadowGrey,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.5,
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   formView: {
-    marginTop: 18,
+    marginTop: 24,
     marginBottom: 100,
   },
   callerName: {
@@ -76,12 +75,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   secondForm: {
-    marginTop: 20,
+    marginTop: 24,
   },
   cellNumberText: {
     color: CustomColors.DodgerBlue,
     fontSize: 18,
     lineHeight: 22,
+    fontWeight: '600',
   },
   headerAvatar: {
     backgroundColor: CustomColors.SkyBlue,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scrollViewContainer: {
-    marginBottom: 100,
+    marginBottom: 1,
   },
   backButtonContainer: {
     paddingBottom: 10,
