@@ -12,6 +12,7 @@ import { observer } from 'mobx-react'
 import styles from 'pages/PageTransferDial/Styles'
 import React from 'react'
 import {
+  FlatList,
   NativeSyntheticEvent,
   ScrollView,
   TextInput,
@@ -126,26 +127,30 @@ class PageTransferDial extends React.Component {
                 <RnText style={styles.transferSeparatorText}>{key}</RnText>
               </View>
               <View>
-                {contacts.map((contact, index) => {
-                  const { number, name } = contact
-                  return (
-                    <UserItem
-                      showNewAvatar={true}
-                      iconFuncs={[
-                        () => transferAttended(number, name),
-                        () => transferBlind(number),
-                      ]}
-                      icons={[mdiPhoneOutgoing, mdiPhone]}
-                      key={index}
-                      {...contact}
-                      number={number}
-                      containerStyle={{
-                        borderBottomWidth:
-                          index === contacts.length - 1 ? 0 : 1,
-                      }}
-                    />
-                  )
-                })}
+                <FlatList
+                  data={contacts}
+                  scrollEnabled={false}
+                  renderItem={({ item, index }) => {
+                    const { number, name } = item
+                    return (
+                      <UserItem
+                        showNewAvatar={true}
+                        iconFuncs={[
+                          () => transferAttended(number, name),
+                          () => transferBlind(number),
+                        ]}
+                        icons={[mdiPhoneOutgoing, mdiPhone]}
+                        key={index}
+                        {...item}
+                        number={number}
+                        containerStyle={{
+                          borderBottomWidth:
+                            index === contacts.length - 1 ? 0 : 1,
+                        }}
+                      />
+                    )
+                  }}
+                />
               </View>
             </React.Fragment>
           )

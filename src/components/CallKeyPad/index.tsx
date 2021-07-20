@@ -1,3 +1,4 @@
+import svgImages from 'assets/svgImages'
 import CallButtons from 'components/CallButtons'
 import styles from 'components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
@@ -86,7 +87,7 @@ const KeyPad: FC<{
           <>
             <CallButtons
               onPress={conference}
-              image={CustomImages.CallAcceptedLogo}
+              icon={svgImages.conferenceButton}
               containerStyle={{ width: 55, height: 55, marginTop: 0 }}
               imageStyle={{ height: 55, width: 55 }}
             />
@@ -116,10 +117,10 @@ const KeyPad: FC<{
           />
         )}
         {fromTransfer && callVoice ? (
-          <>
+          <View style={{ alignItems: 'center', marginLeft: 5 }}>
             <CallButtons
               onPress={callVoice}
-              image={CustomImages.CallDeclinedLogo}
+              icon={svgImages.transferButton}
               containerStyle={{
                 width: 55,
                 height: 55,
@@ -128,7 +129,7 @@ const KeyPad: FC<{
               imageStyle={{ height: 55, width: 55 }}
             />
             <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
-          </>
+          </View>
         ) : (
           <></>
         )}

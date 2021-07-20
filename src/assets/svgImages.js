@@ -28,6 +28,12 @@ const svgImages = {
 
   backButton:
     '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" opacity=".87"/><path d="M16.62 2.99c-.49-.49-1.28-.49-1.77 0L6.54 11.3c-.39.39-.39 1.02 0 1.41l8.31 8.31c.49.49 1.28.49 1.77 0s.49-1.28 0-1.77L9.38 12l7.25-7.25c.48-.48.48-1.28-.01-1.76z"/></svg>',
+
+  transferButton:
+    '<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55"> <g id="Group_3452" data-name="Group 3452" transform="translate(712.24 -12816)"> <circle id="Ellipse_493" data-name="Ellipse 493" cx="27.5" cy="27.5" r="27.5" transform="translate(-712.24 12816)" fill="#ff5252"/> <path id="phone-hangup" d="M12,9a14.911,14.911,0,0,0-4.6.72v3.1a1,1,0,0,1-.56.9,11.788,11.788,0,0,0-2.67,1.85.939.939,0,0,1-.67.29,1.017,1.017,0,0,1-.73-.3L.29,13.08a1,1,0,0,1,0-1.41,17.016,17.016,0,0,1,23.42,0,1,1,0,0,1,0,1.41l-2.48,2.48a1.017,1.017,0,0,1-.73.3.98.98,0,0,1-.68-.29,11.511,11.511,0,0,0-2.66-1.85,1,1,0,0,1-.56-.9V9.72A14.911,14.911,0,0,0,12,9Z" transform="translate(-697.24 12832)" fill="#fff"/> </g> </svg>',
+
+  conferenceButton:
+    '<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55"> <g id="Group_3451" data-name="Group 3451" transform="translate(790.24 -12785)"> <circle id="Ellipse_492" data-name="Ellipse 492" cx="27.5" cy="27.5" r="27.5" transform="translate(-790.24 12785)" fill="#35ce95"/> <path id="phone-forward" d="M20,15.5a11.36,11.36,0,0,1-3.57-.57,1,1,0,0,0-1.02.25l-2.2,2.2a15.1,15.1,0,0,1-6.59-6.59l2.2-2.2a1,1,0,0,0,.25-1.02A11.36,11.36,0,0,1,8.5,4a1,1,0,0,0-1-1H4A1,1,0,0,0,3,4,17,17,0,0,0,20,21a1,1,0,0,0,1-1V16.5a1,1,0,0,0-1-1M18,11l5-5L18,1V4H14V8h4Z" transform="translate(-775.24 12801)" fill="#fff"/> </g> </svg>',
 }
 
 export default svgImages
