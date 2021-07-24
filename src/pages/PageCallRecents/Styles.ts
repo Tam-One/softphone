@@ -21,17 +21,21 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     color: CustomColors.DarkBlue,
     fontWeight: '800',
-    paddingHorizontal: 16,
+    paddingLeft: 16,
   },
   noParksDesc: {
     fontSize: CustomFonts.SmallSubText,
-    paddingHorizontal: 16,
+    paddingLeft: 16,
     paddingVertical: 5,
     color: CustomColors.DarkBlue,
   },
   parkContainer: {
     marginTop: 27,
     marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginRight: 31,
   },
   fieldTextInput: {
     fontSize: 14,
@@ -54,8 +58,27 @@ const styles = StyleSheet.create({
     height: 3,
     flex: 0.1,
   },
+  voiceMailIcon: {
+    position: 'relative',
+  },
   footerContainer: {
     marginBottom: 40,
+  },
+  voiceMailCount: {
+    width: 23,
+    height: 23,
+    borderRadius: 13,
+    backgroundColor: CustomColors.BlueLabel,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    marginTop: 3,
+    marginLeft: 18,
+  },
+  voiceMailText: {
+    color: CustomColors.White,
+    fontSize: CustomFonts.SmallLabel,
+    lineHeight: 14,
   },
 })
 
