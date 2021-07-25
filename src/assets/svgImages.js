@@ -34,6 +34,9 @@ const svgImages = {
 
   conferenceButton:
     '<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55"> <g id="Group_3451" data-name="Group 3451" transform="translate(790.24 -12785)"> <circle id="Ellipse_492" data-name="Ellipse 492" cx="27.5" cy="27.5" r="27.5" transform="translate(-790.24 12785)" fill="#35ce95"/> <path id="phone-forward" d="M20,15.5a11.36,11.36,0,0,1-3.57-.57,1,1,0,0,0-1.02.25l-2.2,2.2a15.1,15.1,0,0,1-6.59-6.59l2.2-2.2a1,1,0,0,0,.25-1.02A11.36,11.36,0,0,1,8.5,4a1,1,0,0,0-1-1H4A1,1,0,0,0,3,4,17,17,0,0,0,20,21a1,1,0,0,0,1-1V16.5a1,1,0,0,0-1-1M18,11l5-5L18,1V4H14V8h4Z" transform="translate(-775.24 12801)" fill="#fff"/> </g> </svg>',
+
+  greenCallButton:
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19.23 15.26l-2.54-.29c-.61-.07-1.21.14-1.64.57l-1.84 1.84c-2.83-1.44-5.15-3.75-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52c-.12-1.01-.97-1.77-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07.53 8.54 7.36 15.36 15.89 15.89 1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98z"/></svg>',
 }
 
 export default svgImages

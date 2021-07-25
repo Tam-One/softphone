@@ -31,20 +31,21 @@ const ButtonIcon: FC<{
   bdcolor?: string
   name?: string
   textcolor?: string
+  containerStyle?: TouchableOpacityProps['style']
 }> = p => {
   const size = p.size || 15
   return (
-    <View style={css.ButtonIcon}>
+    <View style={[css.ButtonIcon, p.containerStyle]}>
       <RnTouchableOpacity
         disabled={p.disabled}
         onPress={p.onPress}
         style={[
           css.ButtonIcon_Btn,
-          p.style,
           { borderRadius: size * 1.5 },
           { backgroundColor: p.bgcolor },
           p.noborder && { borderWidth: 0 },
           { borderColor: p.bdcolor },
+          p.style,
         ]}
       >
         <Svg height={size} viewBox='0 0 24 24' width={size}>

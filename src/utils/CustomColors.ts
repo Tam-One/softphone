@@ -19,6 +19,7 @@ const CustomColors = {
   DarkAsh: '#858997',
   lightBlack: '#00000099',
   MediumBlack: '#272727F0',
+  DarkBlack: '#272727',
   ActiveBlue: '#007AFF',
   LightAsh: '#999999',
   Red: '#C71616',
@@ -38,6 +39,7 @@ const CustomColors = {
   PopupBlack: '#121212',
   Disabled: '#959595',
   ErrorRed: '#DC0F39',
+  callGreen: '#35cf96',
 }
 
 export default CustomColors
