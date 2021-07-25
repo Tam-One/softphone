@@ -28,7 +28,7 @@ class CallBar extends React.Component {
     const bVisible =
       RnStacker.stacks.filter(stack => stack.name === 'PageCallManage')
         .length === 0
-    const currentCall = callStore.currentCall || {}
+    const currentCall = callStore.currentCall
     const {
       incoming,
       answered,
@@ -39,7 +39,7 @@ class CallBar extends React.Component {
       muted,
       toggleMuted,
       hangup,
-    }: any = currentCall
+    }: any = currentCall || {}
     if (!bVisible || !currentCall || (incoming && !answered)) {
       return null
     }
@@ -54,7 +54,7 @@ class CallBar extends React.Component {
               width='33'
               height='33'
               xml={svgImages.greenCallButton}
-              fill={CustomColors.callGreen}
+              fill={CustomColors.CallGreen}
               fillOpacity={1}
             />
           </View>

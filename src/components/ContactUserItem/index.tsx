@@ -65,6 +65,8 @@ const UserItem: FC<
     fromMissedCall?: boolean
     index?: number
     hideBorder?: boolean
+    innerContainerStyle?: object
+    iconsColor?: string
   }>
 > = ({
   answered,
@@ -89,6 +91,8 @@ const UserItem: FC<
   fromMissedCall,
   index,
   hideBorder,
+  innerContainerStyle,
+  iconsColor,
 }) => {
   var userAvatarName = name
   if (name === number) {
@@ -108,7 +112,13 @@ const UserItem: FC<
         index === 0 && styles.topBorder,
       ]}
     >
-      <View style={[styles.inner, selected && styles.innerSelected]}>
+      <View
+        style={[
+          styles.inner,
+          selected && styles.innerSelected,
+          innerContainerStyle,
+        ]}
+      >
         {!hideAvatar ? (
           <View>
             {!showNewAvatar ? (
@@ -190,7 +200,7 @@ const UserItem: FC<
         )}
         {icons?.map((icon, index) => (
           <RnTouchableOpacity key={index} onPress={() => iconFuncs?.[index]()}>
-            <RnIcon path={icon} style={styles.buttonIcon} />
+            <RnIcon path={icon} style={styles.buttonIcon} color={iconsColor} />
           </RnTouchableOpacity>
         ))}
       </View>

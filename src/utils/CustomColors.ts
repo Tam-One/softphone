@@ -39,7 +39,9 @@ const CustomColors = {
   PopupBlack: '#121212',
   Disabled: '#959595',
   ErrorRed: '#DC0F39',
-  callGreen: '#35cf96',
+  CallGreen: '#35cf96',
+  RedOpacity: '#FF5252',
+  GreenOpacity: '#cff0ec',
 }
 
 export default CustomColors
