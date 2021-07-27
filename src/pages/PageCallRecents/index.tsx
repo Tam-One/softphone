@@ -1,4 +1,4 @@
-import { mdiMagnify, mdiPhone, mdiVideo } from '@mdi/js'
+import { mdiMagnify, mdiPhone, mdiVoicemail } from '@mdi/js'
 import UserItem from 'components/ContactUserItem'
 import CustomLayout from 'components/CustomLayout'
 import { RnIcon } from 'components/Rn'
@@ -13,6 +13,7 @@ import { getAuthStore } from 'stores/authStore'
 import { AuthStore } from 'stores/authStore2'
 import callStore from 'stores/callStore'
 import contactStore from 'stores/contactStore'
+import CustomColors from 'utils/CustomColors'
 
 @observer
 class PageCallRecents extends React.Component {
@@ -61,10 +62,29 @@ class PageCallRecents extends React.Component {
       <CustomLayout menu='call' subMenu='recents'>
         <ScrollView>
           <View style={styles.parkContainer}>
-            <RnText style={styles.ParksText}>{'Recents'}</RnText>
-            <RnText style={styles.noParksDesc}>
-              {'Recent voicemails and calls'}
-            </RnText>
+            <View>
+              <RnText style={styles.ParksText}>{'Recents'}</RnText>
+              <RnText style={styles.noParksDesc}>
+                {'Recent voicemails and calls'}
+              </RnText>
+            </View>
+
+            <View>
+              <RnIcon
+                path={mdiVoicemail}
+                pointerEvents='none'
+                style={styles.voiceMailIcon}
+                size={31}
+                color={CustomColors.DarkBlue}
+              />
+              {callStore.newVoicemailCount && (
+                <View style={styles.voiceMailCount}>
+                  <RnText style={styles.voiceMailText}>
+                    {callStore.newVoicemailCount}
+                  </RnText>
+                </View>
+              )}
+            </View>
           </View>
           <View style={styles.searchBox}>
             <RnIcon
@@ -72,7 +92,7 @@ class PageCallRecents extends React.Component {
               pointerEvents='none'
               style={styles.fieldIcon}
               size={17}
-              color={'#858997'}
+              color={CustomColors.DarkAsh}
             />
             <RnTextInput
               disabled
@@ -83,11 +103,6 @@ class PageCallRecents extends React.Component {
               }}
               placeholder={'Search'}
             />
-          </View>
-          <View style={styles.noParksContainer}>
-            <RnText
-              style={styles.noParksText}
-            >{`Voicemails (${callStore.newVoicemailCount})`}</RnText>
           </View>
           <View style={styles.noParksContainer}>
             <RnText

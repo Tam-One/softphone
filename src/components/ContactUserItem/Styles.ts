@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   innerSelected: {
-    backgroundColor: primaryFn(0.5),
+    backgroundColor: CustomColors.GreenOpacity,
   },
   withSpace: {
     marginVertical: 5,

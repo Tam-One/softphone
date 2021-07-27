@@ -19,6 +19,7 @@ const CustomFonts = {
   IconFont: 20,
   FooterText: 18,
   HeaderName: 24,
+  CallBarName: 15,
 }
 
 export default CustomFonts

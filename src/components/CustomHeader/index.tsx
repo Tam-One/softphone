@@ -36,7 +36,7 @@ const CustomHeader: FC<
     <View style={[styles.header, containerStyle]}>
       <View style={[styles.headerRow, backContainerStyle]}>
         {onBack ? (
-          <RnTouchableOpacity onPress={onBack} style={styles.backBtnRow}>
+          <TouchableOpacity onPress={onBack} style={styles.backBtnRow}>
             <SvgXml
               width='17'
               height='17'
@@ -47,7 +47,7 @@ const CustomHeader: FC<
             {!hideBackText && (
               <RnText style={styles.backText}>{backText || 'Back'}</RnText>
             )}
-          </RnTouchableOpacity>
+          </TouchableOpacity>
         ) : (
           <></>
         )}
