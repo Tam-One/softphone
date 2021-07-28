@@ -44,7 +44,10 @@ const PagePhonebookUpdate: FC<{
       return
     }
     phonebook.book = 'default'
-    pbx.setContact(phonebook).then(onSaveSuccess).catch(onSaveFailure)
+    pbx
+      .setContact(phonebook)
+      .then(() => Nav().goToPageViewContact({ contact }))
+      .catch(onSaveFailure)
     Object.assign(phonebook, {
       name: `${phonebook.firstName} ${phonebook.lastName}`,
     })
@@ -68,13 +71,10 @@ const PagePhonebookUpdate: FC<{
           name: `${phonebook.firstName} ${phonebook.lastName}`,
         })
         contactStore.upsertPhonebook(phonebook)
+        const contact = contactStore.getPhonebook(val.aid)
+        Nav().goToPageViewContact({ contact })
       })
-      .then(onSaveSuccess)
       .catch(onSaveFailure)
-  }
-
-  const onSaveSuccess = () => {
-    Nav().goToPageContactPhonebook()
   }
 
   const onSaveFailure = (err: Error) => {

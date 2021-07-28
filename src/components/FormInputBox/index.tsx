@@ -62,18 +62,20 @@ const FormInputBox: FC<{
         ) : (
           <></>
         )}
-        {icon ? (
-          <SvgXml
-            width='24'
-            height='35'
-            xml={icon}
-            fill={CustomColors.SVGBlack}
-            fillOpacity={1}
-            style={iconStyle}
-          />
-        ) : (
-          <></>
-        )}
+        <View style={{ paddingLeft: 12 }}>
+          {icon ? (
+            <SvgXml
+              width='22'
+              height='30'
+              xml={icon}
+              fill={CustomColors.SVGBlack}
+              fillOpacity={1}
+              style={iconStyle}
+            />
+          ) : (
+            <></>
+          )}
+        </View>
         <RnTextInput
           style={[styles.fieldTextInput, val ? { fontWeight: 'bold' } : {}]}
           value={val}

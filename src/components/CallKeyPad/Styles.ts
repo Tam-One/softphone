@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   KeyPadNumberText: {
     fontSize: CustomFonts.DialNumberFont,
-    fontWeight: '500',
+    fontWeight: '600',
     lineHeight: 35,
   },
   KeyPadNumberButton: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 24,
     textAlign: 'center',
-    marginBottom: keyMargin,
+    marginBottom: 13,
   },
   actionButtons: {
     width: keyButtonSize,
@@ -42,13 +42,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 24,
     textAlign: 'center',
-    marginTop: 9,
+    marginTop: 24,
   },
   transferButtonText: {
     textTransform: 'uppercase',
     color: CustomColors.DarkBlue,
     fontSize: 13,
-    fontWeight: 'bold',
     marginTop: 5,
     width: 90,
     textAlign: 'center',
@@ -58,6 +57,7 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
     letterSpacing: 2,
     fontWeight: '600',
+    lineHeight: 11,
   },
   symbolText: {
     fontSize: symbolFont,

@@ -19,6 +19,7 @@ const CustomHeader: FC<
     containerStyle?: object | {}
     backContainerStyle?: object | {}
     disableRightButton?: boolean
+    touchableView?: boolean
   }>
 > = ({
   description,
@@ -31,55 +32,63 @@ const CustomHeader: FC<
   containerStyle,
   backContainerStyle,
   disableRightButton,
+  touchableView,
 }) => {
+  const Wrapper = touchableView ? RnTouchableOpacity : View
+
   return (
-    <View style={[styles.header, containerStyle]}>
+    <Wrapper style={[styles.header, containerStyle]} onPress={onBack}>
       <View style={[styles.headerRow, backContainerStyle]}>
-        {onBack ? (
-          <TouchableOpacity onPress={onBack} style={styles.backBtnRow}>
-            <SvgXml
-              width='17'
-              height='17'
-              xml={svgImages.backButton}
-              fill={CustomColors.BlueLabel}
-              fillOpacity={1}
-            />
-            {!hideBackText && (
-              <RnText style={styles.backText}>{backText || 'Back'}</RnText>
-            )}
-          </TouchableOpacity>
-        ) : (
-          <></>
-        )}
-        <RnText
-          style={[styles.headerText, onRightButtonPress && styles.headerCenter]}
-        >
-          {title}
-        </RnText>
-        {onRightButtonPress ? (
-          <TouchableOpacity
-            onPress={onRightButtonPress}
-            disabled={disableRightButton}
-          >
-            <RnText
-              style={[
-                styles.rightButtonText,
-                disableRightButton && styles.disabledRightButton,
-              ]}
+        <View style={{ flex: 0.2 }}>
+          {onBack ? (
+            <TouchableOpacity onPress={onBack} style={styles.backBtnRow}>
+              <SvgXml
+                width='17'
+                height='17'
+                xml={svgImages.backButton}
+                fill={CustomColors.BlueLabel}
+                fillOpacity={1}
+              />
+              {!hideBackText && (
+                <RnText style={styles.backText}>{backText || 'Back'}</RnText>
+              )}
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
+        </View>
+
+        <View style={{ flex: 0.6 }}>
+          <RnText style={[styles.headerText]}>{title}</RnText>
+        </View>
+
+        <View style={{ flex: 0.2 }}>
+          {onRightButtonPress ? (
+            <TouchableOpacity
+              onPress={onRightButtonPress}
+              disabled={disableRightButton}
             >
-              {rightButtonText || 'Edit'}
-            </RnText>
-          </TouchableOpacity>
-        ) : (
-          <></>
-        )}
+              <RnText
+                style={[
+                  styles.rightButtonText,
+                  disableRightButton && styles.disabledRightButton,
+                ]}
+              >
+                {rightButtonText || 'Edit'}
+              </RnText>
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
+        </View>
       </View>
+
       {description ? (
         <RnText style={styles.subText}>{description}</RnText>
       ) : (
         <></>
       )}
-    </View>
+    </Wrapper>
   )
 }
 

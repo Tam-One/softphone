@@ -5,10 +5,11 @@ import CustomFonts from 'utils/CustomFonts'
 const styles = StyleSheet.create({
   fieldTextInput: {
     fontSize: CustomFonts.MediumText,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12.5,
     letterSpacing: 0.15,
     color: CustomColors.Blue,
     width: '100%',
+    height: 46,
   },
   inputBox: {
     backgroundColor: CustomColors.White,
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16,
     position: 'relative',
-    paddingHorizontal: 12,
+    paddingRight: 12,
     borderColor: CustomColors.DarkGreen,
     borderRadius: 10,
     height: 46,

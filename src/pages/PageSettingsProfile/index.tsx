@@ -21,7 +21,12 @@ const InputBox = ({ val, icon = '' }) => {
       ) : (
         <></>
       )}
-      <RnTextInput disabled style={styles.fieldTextInput} value={val} />
+      <RnTextInput
+        disabled
+        style={styles.fieldTextInput}
+        value={val}
+        editable={false}
+      />
     </View>
   )
 }

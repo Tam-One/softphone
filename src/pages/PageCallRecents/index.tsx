@@ -77,12 +77,14 @@ class PageCallRecents extends React.Component {
                 size={31}
                 color={CustomColors.DarkBlue}
               />
-              {callStore.newVoicemailCount && (
+              {callStore.newVoicemailCount ? (
                 <View style={styles.voiceMailCount}>
                   <RnText style={styles.voiceMailText}>
                     {callStore.newVoicemailCount}
                   </RnText>
                 </View>
+              ) : (
+                <></>
               )}
             </View>
           </View>

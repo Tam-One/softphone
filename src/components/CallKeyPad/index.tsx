@@ -3,7 +3,7 @@ import CallButtons from 'components/CallButtons'
 import styles from 'components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import CustomImages from 'utils/CustomImages'
 
 const keys = [
@@ -59,17 +59,15 @@ const KeyPad: FC<{
               onPress={() => onPressNumber(key)}
               style={styles.KeyPadNumberButton}
             >
-              <RnText
+              <Text
                 style={[
                   styles.KeyPadNumberText,
                   key === '*' && styles.symbolText,
                 ]}
               >
                 {key}
-              </RnText>
-              {!!subText && (
-                <RnText style={styles.keyPadSubText}>{subText}</RnText>
-              )}
+              </Text>
+              {!!subText && <Text style={styles.keyPadSubText}>{subText}</Text>}
             </RnTouchableOpacity>
           )
         })}

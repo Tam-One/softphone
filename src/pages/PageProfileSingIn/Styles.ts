@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     marginTop: 48,
   },
   actionBtnContainer: {
-    // flex: 1,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-end',

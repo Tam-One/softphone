@@ -26,6 +26,20 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     marginLeft: 65,
   },
+  tabView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: CustomColors.lightAliceBlue,
+  },
+  activeTab: {
+    borderBottomColor: CustomColors.DodgerBlue,
+    borderBottomWidth: 2,
+  },
+  tabContainer: {
+    height: 48,
+    flex: 0.5,
+  },
 })
 
 export default styles

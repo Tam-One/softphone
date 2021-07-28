@@ -40,6 +40,45 @@ const svgImages = {
 
   lockButton:
     '<svg xmlns="http://www.w3.org/2000/svg" width="23" height="11.631" viewBox="0 0 23 11.631"> <path d="M12 17a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5a5 5 0 0 1 5 5v2h1m-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3z" fill="#626262"/></svg>',
+
+  volumeMedium:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M5,9V15H9L14,20V4L9,9M18.5,12C18.5,10.23 17.5,8.71 16,7.97V16C17.5,15.29 18.5,13.76 18.5,12Z" /></svg>',
+
+  volumeHigh:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" /></svg>',
+
+  videoOn:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M17,10.5V7A1,1 0 0,0 16,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16A1,1 0 0,0 17,17V13.5L21,17.5V6.5L17,10.5Z" /></svg>',
+
+  videoOff:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M3.27,2L2,3.27L4.73,6H4A1,1 0 0,0 3,7V17A1,1 0 0,0 4,18H16C16.2,18 16.39,17.92 16.54,17.82L19.73,21L21,19.73M21,6.5L17,10.5V7A1,1 0 0,0 16,6H9.82L21,17.18V6.5Z" /></svg>',
+
+  transfer:
+    '<svg id="swap" xmlns="http://www.w3.org/2000/svg" width="26.687" height="18.903" viewBox="0 0 26.687 18.903"> <path id="Path_3282" data-name="Path 3282" d="M9.112,21.116H30.89L28.9,23.11a1.112,1.112,0,1,0,1.572,1.572l3.892-3.892a1.112,1.112,0,0,0,0-1.572l-3.892-3.892A1.112,1.112,0,1,0,28.9,16.9l1.994,1.994H9.112a1.112,1.112,0,0,0,0,2.224Z" transform="translate(-8 -15)" fill="#2f3443"/> <path id="Path_3283" data-name="Path 3283" d="M33.575,34.892H11.8L13.79,32.9a1.112,1.112,0,1,0-1.572-1.572L8.326,35.218a1.112,1.112,0,0,0,0,1.572l3.892,3.892A1.112,1.112,0,0,0,13.79,39.11L11.8,37.116H33.575a1.112,1.112,0,0,0,0-2.224Z" transform="translate(-8 -22.105)" fill="#2f3443"/> </svg>',
+
+  record:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M19,12C19,15.86 15.86,19 12,19C8.14,19 5,15.86 5,12C5,8.14 8.14,5 12,5C15.86,5 19,8.14 19,12Z" /></svg>',
+
+  recordCircle:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z" /></svg>',
+
+  play:
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg>',
+
+  pause:
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M8 19c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2s-2 .9-2 2v10c0 1.1.9 2 2 2zm6-12v10c0 1.1.9 2 2 2s2-.9 2-2V7c0-1.1-.9-2-2-2s-2 .9-2 2z"/></svg>',
+
+  park:
+    '<svg id="Group_3322" data-name="Group 3322" xmlns="http://www.w3.org/2000/svg" width="22.801" height="22.801" viewBox="0 0 22.801 22.801"> <circle id="Ellipse_476" data-name="Ellipse 476" cx="11.401" cy="11.401" r="11.401" transform="translate(0)" fill="#323746"/> <path id="parking" d="M10.219,7.688H8.344V5.344h1.875a1.172,1.172,0,1,1,0,2.344M10.1,3H6V13.548H8.344V10.032H10.1A3.516,3.516,0,0,0,10.1,3Z" transform="translate(2.958 3.127)" fill="#f7fbff"/> </svg>',
+
+  microphoneOn:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" /></svg>',
+
+  microphoneOff:
+    '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M19,11C19,12.19 18.66,13.3 18.1,14.28L16.87,13.05C17.14,12.43 17.3,11.74 17.3,11H19M15,11.16L9,5.18V5A3,3 0 0,1 12,2A3,3 0 0,1 15,5V11L15,11.16M4.27,3L21,19.73L19.73,21L15.54,16.81C14.77,17.27 13.91,17.58 13,17.72V21H11V17.72C7.72,17.23 5,14.41 5,11H6.7C6.7,14 9.24,16.1 12,16.1C12.81,16.1 13.6,15.91 14.31,15.58L12.65,13.92L12,14A3,3 0 0,1 9,11V10.28L3,4.27L4.27,3Z" /></svg>',
+
+  keys:
+    '<svg id="Group_3323" data-name="Group 3323" xmlns="http://www.w3.org/2000/svg" width="23.752" height="23.272" viewBox="0 0 23.752 23.272"> <circle id="Ellipse_445" data-name="Ellipse 445" cx="3.038" cy="3.038" r="3.038" fill="#2f3443"/> <circle id="Ellipse_446" data-name="Ellipse 446" cx="3.038" cy="3.038" r="3.038" transform="translate(8.838)" fill="#2f3443"/> <circle id="Ellipse_447" data-name="Ellipse 447" cx="3.038" cy="3.038" r="3.038" transform="translate(17.676)" fill="#2f3443"/> <circle id="Ellipse_448" data-name="Ellipse 448" cx="3.038" cy="3.038" r="3.038" transform="translate(0 8.598)" fill="#2f3443"/> <circle id="Ellipse_449" data-name="Ellipse 449" cx="3.038" cy="3.038" r="3.038" transform="translate(8.838 8.598)" fill="#2f3443"/> <circle id="Ellipse_450" data-name="Ellipse 450" cx="3.038" cy="3.038" r="3.038" transform="translate(17.676 8.598)" fill="#2f3443"/> <circle id="Ellipse_454" data-name="Ellipse 454" cx="3.038" cy="3.038" r="3.038" transform="translate(0 17.196)" fill="#2f3443"/> <circle id="Ellipse_455" data-name="Ellipse 455" cx="3.038" cy="3.038" r="3.038" transform="translate(8.838 17.196)" fill="#2f3443"/> <circle id="Ellipse_456" data-name="Ellipse 456" cx="3.038" cy="3.038" r="3.038" transform="translate(17.676 17.196)" fill="#2f3443"/> </svg>',
 }
 
 export default svgImages

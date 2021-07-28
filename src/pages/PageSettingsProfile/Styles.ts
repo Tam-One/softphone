@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   backButtonContainer: {
-    paddingLeft: 78,
     paddingBottom: 8,
   },
   advanceSettingsBack: {
