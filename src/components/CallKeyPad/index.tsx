@@ -67,7 +67,11 @@ const KeyPad: FC<{
               >
                 {key}
               </Text>
-              {!!subText && <Text style={styles.keyPadSubText}>{subText}</Text>}
+              {subText ? (
+                <Text style={styles.keyPadSubText}>{subText}</Text>
+              ) : (
+                <></>
+              )}
             </RnTouchableOpacity>
           )
         })}
