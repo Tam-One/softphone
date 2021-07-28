@@ -5,7 +5,6 @@ import CustomFonts from 'utils/CustomFonts'
 const styles = StyleSheet.create({
   fieldTextInput: {
     fontSize: CustomFonts.MediumText,
-    lineHeight: 18,
     paddingHorizontal: 10,
     letterSpacing: 0.15,
     color: CustomColors.Blue,
