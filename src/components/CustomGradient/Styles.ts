@@ -1,13 +1,15 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   CustomGradient: {
-    zIndex: 99,
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    flex: 1,
     resizeMode: 'cover',
+    position: 'absolute',
+    flex: 1,
+    left: 0,
+    top: 0,
+    zIndex: 99,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height - 65,
   },
 })
 

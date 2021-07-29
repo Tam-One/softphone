@@ -30,12 +30,11 @@ const styles = StyleSheet.create({
     flex: 0.1,
   },
   footerContainer: {
-    flex: 1,
     paddingBottom: 50,
-    marginTop: 45,
+    marginTop: 48,
   },
   actionBtnContainer: {
-    // flex: 1,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'flex-end',
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
     marginRight: '12%',
   },
   formView: {
-    marginTop: 47,
+    marginTop: 66,
   },
 })
 

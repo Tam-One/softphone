@@ -246,20 +246,11 @@ class PageTransferDial extends React.Component {
           description={'Select target to start transfer'}
           title={'Transfer'}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
+        <View style={styles.tabView}>
           <TouchableOpacity
             style={[
-              { height: 48, flex: 0.5 },
-              selectedTab === 'contact' && {
-                borderBottomColor: CustomColors.DodgerBlue,
-                borderBottomWidth: 2,
-              },
+              styles.tabContainer,
+              selectedTab === 'contact' && styles.activeTab,
             ]}
             onPress={() => this.setState({ selectedTab: 'contact' })}
           >
@@ -275,11 +266,8 @@ class PageTransferDial extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={[
-              { height: 48, flex: 0.5 },
-              selectedTab === 'keys' && {
-                borderBottomColor: CustomColors.DodgerBlue,
-                borderBottomWidth: 2,
-              },
+              styles.tabContainer,
+              selectedTab === 'keys' && styles.activeTab,
             ]}
             onPress={() => this.setState({ selectedTab: 'keys' })}
           >

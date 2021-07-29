@@ -1,3 +1,4 @@
+import svgImages from 'assets/svgImages'
 import CallActionButton from 'components/CallActionButton'
 import CallButtons from 'components/CallButtons'
 import CallerInfo from 'components/CallerInfo'
@@ -13,7 +14,7 @@ import VideoPopup from 'pages/PageCallManage/VideoPopup'
 import PageDtmfKeypad from 'pages/PageDtmfKeypad'
 import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
-import { Platform, View } from 'react-native'
+import { Platform, TouchableOpacity, View } from 'react-native'
 import Call from 'stores/Call'
 import callStore from 'stores/callStore'
 import intl from 'stores/intl'
@@ -36,6 +37,7 @@ class PageCallManage extends React.Component<{
     showKeyPad: false,
     showVideoPopup: '',
     responseMessage: '',
+    hideVideoButtons: false,
   }
 
   getActionsButtonList = (currentCall: any) => {
@@ -67,7 +69,7 @@ class PageCallManage extends React.Component<{
           name={muted ? intl`Unmute` : intl`Mute`}
           onPress={() => toggleMuted()}
           textcolor={muted ? nonActiveColor : textActiveColor}
-          image={muted ? CustomImages.MicrophoneOff : CustomImages.Microphone}
+          image={muted ? svgImages.microphoneOff : svgImages.microphoneOn}
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
         />
@@ -78,7 +80,7 @@ class PageCallManage extends React.Component<{
           name={holding ? intl`Unhold` : intl`Hold`}
           onPress={() => toggleHold()}
           textcolor={holding ? nonActiveColor : textActiveColor}
-          image={holding ? CustomImages.Unhold : CustomImages.Pause}
+          image={holding ? svgImages.play : svgImages.pause}
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
         />
@@ -89,7 +91,7 @@ class PageCallManage extends React.Component<{
           name={intl`Video`}
           onPress={localVideoEnabled ? () => disableVideo(true) : onVideoPress}
           textcolor={localVideoEnabled ? nonActiveColor : textActiveColor}
-          image={localVideoEnabled ? CustomImages.Video : CustomImages.VideoOff}
+          image={localVideoEnabled ? svgImages.videoOn : svgImages.videoOff}
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
         />
@@ -101,9 +103,7 @@ class PageCallManage extends React.Component<{
           onPress={toggleLoudSpeaker}
           textcolor={isLoudSpeakerEnabled ? nonActiveColor : textActiveColor}
           image={
-            isLoudSpeakerEnabled
-              ? CustomImages.VolumeHigh
-              : CustomImages.VolumeMedium
+            isLoudSpeakerEnabled ? svgImages.volumeHigh : svgImages.volumeMedium
           }
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
@@ -115,7 +115,7 @@ class PageCallManage extends React.Component<{
           name={intl`Record`}
           onPress={toggleRecording}
           textcolor={recording ? nonActiveColor : textActiveColor}
-          image={recording ? CustomImages.RecordWhite : CustomImages.Record}
+          image={recording ? svgImages.recordCircle : svgImages.record}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -125,7 +125,7 @@ class PageCallManage extends React.Component<{
           name={intl`Park`}
           onPress={Nav().goToPageCallParks2}
           textcolor={textActiveColor}
-          image={CustomImages.Park}
+          image={svgImages.park}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -135,7 +135,7 @@ class PageCallManage extends React.Component<{
           name={intl`Keys`}
           onPress={() => this.setState({ showKeyPad: true })}
           textcolor={textActiveColor}
-          image={CustomImages.Keys}
+          image={svgImages.keys}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -145,7 +145,7 @@ class PageCallManage extends React.Component<{
           name={intl`Transfer`}
           onPress={Nav().goToPageTransferDial}
           textcolor={textActiveColor}
-          image={CustomImages.Transfer}
+          image={svgImages.transfer}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -299,6 +299,7 @@ class PageCallManage extends React.Component<{
             hideBackText={!showKeyPad}
             containerStyle={styles.customHeaderContainer}
             backContainerStyle={styles.backBtnContainer}
+            touchableView={true}
           ></CustomHeader>
           <View style={styles.container}>
             <CustomGradient>
@@ -338,15 +339,23 @@ class PageCallManage extends React.Component<{
       <View style={styles.videoPageContainer}>
         {this.renderVideo(currentCall)}
         {this.renderCallTime(true)}
-        {this.renderVideoActionBtns(currentCall)}
+        {!this.state.hideVideoButtons &&
+          this.renderVideoActionBtns(currentCall)}
       </View>
     )
   }
 
   renderVideo = (currentCall: Call) => {
     const { remoteVideoStreamObject, localVideoStreamObject } = currentCall
+    const { hideVideoButtons } = this.state
+
     return (
-      <View style={styles.videoContainer}>
+      <TouchableOpacity
+        style={styles.videoContainer}
+        onPress={() => {
+          this.setState({ hideVideoButtons: !hideVideoButtons })
+        }}
+      >
         <VideoPlayer
           sourceObject={remoteVideoStreamObject}
           style={styles.remoteVideo}
@@ -355,18 +364,22 @@ class PageCallManage extends React.Component<{
           sourceObject={localVideoStreamObject}
           style={styles.localVideo}
         />
-      </View>
+      </TouchableOpacity>
     )
   }
 
   renderVideoActionBtns = (currentCall: Call) => {
     const { backgroundCalls } = callStore
     const backgrounCallsLength = backgroundCalls.length
-    const actionButtonsList = this.getActionsButtonList(currentCall)
-    const { hangup } = currentCall
+    const { hideVideoButtons } = this.state
 
     return (
-      <View style={styles.btnsIsVideoEnabled}>
+      <TouchableOpacity
+        style={styles.btnsIsVideoEnabled}
+        onPress={() => {
+          this.setState({ hideVideoButtons: !hideVideoButtons })
+        }}
+      >
         {this.callEndButton(currentCall, styles.videoCallEndButton)}
         {this.renderBtns(currentCall)}
         {backgrounCallsLength > 0 && (
@@ -376,7 +389,7 @@ class PageCallManage extends React.Component<{
             value={intl`${backgrounCallsLength} other calls are in background`}
           />
         )}
-      </View>
+      </TouchableOpacity>
     )
   }
 

@@ -1,9 +1,9 @@
 import flow from 'lodash/flow'
 import { observer } from 'mobx-react'
+import VideoPopup from 'pages/PageCallManage/VideoPopup'
 import React, { ReactElement } from 'react'
-import { Animated, Dimensions, StyleSheet, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 
-import { RnText, RnTouchableOpacity } from '../components/Rn'
 import g from '../components/variables'
 import { useAnimationOnDidMount } from '../utils/animation'
 import intl from './intl'
@@ -86,12 +86,7 @@ const RnAlertR = ({
     const { message, onConfirm, onDismiss, title, ...rest } = prompt
     props = {
       title,
-      message:
-        typeof message === 'string' ? (
-          <RnText style={css.RootRnAlert_Message}>{message}</RnText>
-        ) : (
-          <View style={css.RootRnAlert_Message}>{message}</View>
-        ),
+      message,
       dismissText: intl`CANCEL`,
       confirmText: intl`REMOVE`,
       onConfirm: flow(
@@ -106,15 +101,10 @@ const RnAlertR = ({
     const { err, message, unexpectedErr, ...rest } = error
     const errMessage = unexpectedErr?.message || err?.message || err
     props = {
-      title: intl`Error`,
-      message: (
-        <>
-          <RnText style={css.RootRnAlert_Message}>
-            {unexpectedErr ? intl`An unexpected error occurred` : message}
-          </RnText>
-          {!!errMessage && <RnText small>{errMessage}</RnText>}
-        </>
-      ),
+      title: 'Error',
+      message: `${unexpectedErr ? 'An unexpected error occurred' : message}.${
+        errMessage || ''
+      }`,
       confirmText: intl`OK`,
       onConfirm: RnAlert.dismiss,
       onDismiss: RnAlert.dismiss,
@@ -125,49 +115,15 @@ const RnAlertR = ({
   }
   return (
     <View style={[StyleSheet.absoluteFill, css.RootRnAlert]}>
-      <Animated.View
-        style={[
-          StyleSheet.absoluteFill,
-          css.RootRnAlert_Backdrop,
-          { opacity: a.opacity },
-        ]}
-      >
-        <RnTouchableOpacity
-          onPress={props.onDismiss}
-          style={StyleSheet.absoluteFill}
-        />
-      </Animated.View>
-      <Animated.View
-        style={[
-          css.RootRnAlert_Modal,
-          {
-            transform: [{ translateY: a.translateY }],
-          },
-        ]}
-      >
-        <RnText subTitle>{props.title}</RnText>
-        {props.message}
-        <View style={css.RootRnAlert_Btns}>
-          {props.dismissText && (
-            <RnTouchableOpacity
-              onPress={props.onDismiss}
-              style={[css.RootRnAlert_Btn, css.RootRnAlert_Btn__cancel]}
-            >
-              <RnText small style={css.RootRnAlert_BtnTxt}>
-                {props.dismissText}
-              </RnText>
-            </RnTouchableOpacity>
-          )}
-          <RnTouchableOpacity
-            onPress={props.onConfirm}
-            style={css.RootRnAlert_Btn}
-          >
-            <RnText small style={css.RootRnAlert_BtnTxt}>
-              {props.confirmText}
-            </RnText>
-          </RnTouchableOpacity>
-        </View>
-      </Animated.View>
+      <VideoPopup
+        title={props.title.toString()}
+        showOk={true}
+        onOkPress={props.onDismiss}
+        okText={'OK'}
+        hideCancel={!props.dismissText}
+        onCancel={props.onConfirm}
+        header={props.message?.toString()}
+      ></VideoPopup>
     </View>
   )
 }

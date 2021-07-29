@@ -8,22 +8,28 @@ const VideoPopup: FC<{
   header: string
   onOkPress?(): void
   showOk: boolean
-  onCancel(): void
-}> = ({ header, onOkPress, showOk, onCancel }) => {
+  hideCancel?: boolean
+  onCancel?(): void
+  okText?: string
+  title?: string
+}> = ({ header, onOkPress, showOk, onCancel, okText, hideCancel, title }) => {
   return (
     <View style={styles.videoPopupContainer}>
       <View style={styles.videoPopupView}>
+        {title ? <RnText style={styles.title}>{title}</RnText> : <></>}
         <RnText style={styles.videoPopupHeading}>{header}</RnText>
         <View style={styles.videoPopupFooter}>
-          <TouchableOpacity onPress={onCancel}>
-            <RnText style={styles.videoPopupCancel}>
-              {CustomStrings.Cancel}
-            </RnText>
-          </TouchableOpacity>
+          {!hideCancel && (
+            <TouchableOpacity onPress={onCancel}>
+              <RnText style={styles.videoPopupCancel}>
+                {CustomStrings.Cancel}
+              </RnText>
+            </TouchableOpacity>
+          )}
           {showOk && (
             <TouchableOpacity onPress={onOkPress}>
               <RnText style={styles.videoPopupSwitch}>
-                {CustomStrings.Switch}
+                {okText || CustomStrings.Switch}
               </RnText>
             </TouchableOpacity>
           )}

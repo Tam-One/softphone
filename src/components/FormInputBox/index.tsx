@@ -4,6 +4,7 @@ import { RnIcon, RnText } from 'components/Rn'
 import RnTextInput from 'components/RnTextInput'
 import React, { FC, useEffect, useState } from 'react'
 import { View } from 'react-native'
+import { SvgXml } from 'react-native-svg'
 import CustomColors from 'utils/CustomColors'
 
 const FormInputBox: FC<{
@@ -13,7 +14,20 @@ const FormInputBox: FC<{
   editable?: boolean
   required?: boolean
   showError?: boolean
-}> = ({ label, val, onTextChange, editable = true, required, showError }) => {
+  icon?: string
+  containerStyle?: object
+  iconStyle?: object
+}> = ({
+  label,
+  val,
+  onTextChange,
+  editable = true,
+  required,
+  showError,
+  icon,
+  containerStyle,
+  iconStyle,
+}) => {
   const [focus, setFocus] = useState(false)
   const [validationError, setValidationError] = useState(showError)
 
@@ -34,7 +48,7 @@ const FormInputBox: FC<{
   }
 
   return (
-    <View>
+    <View style={containerStyle}>
       <View style={[styles.inputBox, focus && styles.activeView]}>
         {val ? (
           <RnText
@@ -48,6 +62,20 @@ const FormInputBox: FC<{
         ) : (
           <></>
         )}
+        <View style={{ paddingLeft: 12 }}>
+          {icon ? (
+            <SvgXml
+              width='22'
+              height='30'
+              xml={icon}
+              fill={CustomColors.SVGBlack}
+              fillOpacity={1}
+              style={iconStyle}
+            />
+          ) : (
+            <></>
+          )}
+        </View>
         <RnTextInput
           style={[styles.fieldTextInput, val ? { fontWeight: 'bold' } : {}]}
           value={val}

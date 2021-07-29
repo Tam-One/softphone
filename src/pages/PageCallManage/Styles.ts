@@ -7,9 +7,13 @@ const styles = StyleSheet.create({
     backgroundColor: CustomColors.AliceBlue,
     height: 40,
     width: '100%',
-    // position: 'absolute',
     top: 0,
     zIndex: 99,
+  },
+  title: {
+    color: CustomColors.White,
+    fontSize: CustomFonts.MediumText,
+    marginBottom: 13,
   },
   backBtnContainer: {
     paddingTop: 0,
@@ -62,6 +66,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     padding: 0,
     margin: 0,
+    backgroundColor: CustomColors.Transparent,
   },
   videoActionsContainer: {
     justifyContent: 'center',
