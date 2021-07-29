@@ -127,5 +127,10 @@
     "*.{html,scss,json,md}": "prettier --write"
   },
   "cracoConfig": ".cracorc.js",
-  "browserslist": "ie 10-11"
+  "browserslist": "ie 10-11",
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
+  }
 }
