@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.15,
     color: CustomColors.lightBlack,
     width: '100%',
-    fontWeight: 'bold',
+    fontFamily: 'Roboto-Bold',
   },
   fieldTextPlaceholder: {
     fontSize: CustomFonts.MediumText,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.HeaderName,
     lineHeight: CustomFonts.CallTextLineHeight,
     marginTop: 20,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
   },
   nameAvatarContainer: {
     justifyContent: 'center',
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     color: CustomColors.DodgerBlue,
     fontSize: 18,
     lineHeight: 22,
-    fontWeight: '600',
+    fontFamily: 'Nunito-SemiBold',
   },
   headerAvatar: {
     backgroundColor: CustomColors.SkyBlue,

@@ -7,8 +7,6 @@ const css = StyleSheet.create({
   RnTextInput: {
     position: 'relative',
     fontSize: v.fontSize,
-    fontWeight: v.fontWeight,
-    fontFamily: v.fontFamily,
     color: v.color,
   },
 })

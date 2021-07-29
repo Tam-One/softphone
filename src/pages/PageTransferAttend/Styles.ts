@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   },
   callerName: {
     marginTop: 7,
-    fontWeight: '400',
+    fontFamily: 'Nunito-Bold',
+    color: CustomColors.DarkBlue,
     fontSize: CustomFonts.SmallSubText,
   },
 })

@@ -9,8 +9,6 @@ const css = StyleSheet.create({
     position: 'relative',
     fontSize: v.fontSize,
     lineHeight: v.lineHeight,
-    fontWeight: v.fontWeight,
-    fontFamily: v.fontFamily,
     color: v.color,
   },
   title: {

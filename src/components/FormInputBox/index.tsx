@@ -77,7 +77,10 @@ const FormInputBox: FC<{
           )}
         </View>
         <RnTextInput
-          style={[styles.fieldTextInput, val ? { fontWeight: 'bold' } : {}]}
+          style={[
+            styles.fieldTextInput,
+            val ? { fontFamily: 'Roboto-Bold' } : {},
+          ]}
           value={val}
           onChangeText={(text: string) => {
             onTextChange(text)

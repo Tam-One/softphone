@@ -5,11 +5,11 @@ import CustomFonts from 'utils/CustomFonts'
 const styles = StyleSheet.create({
   fieldTextInput: {
     fontSize: CustomFonts.BackText,
-    lineHeight: 18,
+    lineHeight: 22,
     paddingHorizontal: 10,
     letterSpacing: 0.15,
     color: CustomColors.Disabled,
-    fontWeight: '400',
+    fontFamily: 'Nunito-SemiBold',
   },
   inputBox: {
     backgroundColor: CustomColors.White,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     letterSpacing: 0.32,
     color: CustomColors.BlueMedium,
-    fontWeight: '600',
+    fontFamily: 'Nunito-Bold',
   },
   heading: {
     marginHorizontal: 16,

@@ -13,17 +13,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
     justifyContent: 'center',
   },
-  noParksText: {
-    fontSize: CustomFonts.HeaderTitle,
-    lineHeight: 22,
-    color: CustomColors.White,
-    fontWeight: '800',
-  },
   ParksText: {
     fontSize: CustomFonts.NumberFont,
     lineHeight: 25,
     color: CustomColors.DarkBlue,
-    fontWeight: '800',
+    fontFamily: 'Roboto-Black',
   },
   noParksDesc: {
     fontSize: CustomFonts.SmallSubText,

@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.HeaderTitle,
     lineHeight: 22,
     color: CustomColors.White,
-    fontWeight: '800',
+    fontFamily: 'Roboto-Black',
   },
   ParksText: {
     fontSize: CustomFonts.NumberFont,
     lineHeight: 25,
     color: CustomColors.DarkBlue,
-    fontWeight: '800',
+    fontFamily: 'Roboto-Black',
     paddingHorizontal: 16,
   },
   noParksDesc: {
