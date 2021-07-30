@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
-    fontWeight: '800',
+    fontFamily: 'Roboto-Black',
     textAlign: 'center',
   },
   rightButtonText: {

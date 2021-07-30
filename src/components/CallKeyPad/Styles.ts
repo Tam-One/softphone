@@ -21,8 +21,9 @@ const styles = StyleSheet.create({
   },
   KeyPadNumberText: {
     fontSize: CustomFonts.DialNumberFont,
-    fontWeight: '600',
+    fontFamily: 'Roboto-Medium',
     lineHeight: 35,
+    color: CustomColors.DarkBlue,
   },
   KeyPadNumberButton: {
     width: keyButtonSize,
@@ -56,15 +57,15 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.SmallLabel,
     color: CustomColors.DarkBlue,
     letterSpacing: 2,
-    fontWeight: '600',
-    lineHeight: 11,
+    fontFamily: 'Nunito-SemiBold',
+    lineHeight: 14,
   },
   symbolText: {
     fontSize: symbolFont,
     lineHeight: isIos ? 100 : 75,
     justifyContent: 'center',
     textAlignVertical: 'center',
-    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
   },
   triangle: {
     borderLeftWidth: 18,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.HeaderTitle,
     color: CustomColors.DarkBlue,
     textDecorationLine: 'underline',
-    fontWeight: '600',
+    fontFamily: 'Roboto-Medium',
   },
 })
 

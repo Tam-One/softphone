@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkAsh,
     fontSize: CustomFonts.BackText,
     lineHeight: 23,
-    fontWeight: '500',
+    fontFamily: 'Nunito-SemiBold',
   },
   buttonActive: {
     backgroundColor: CustomColors.White,

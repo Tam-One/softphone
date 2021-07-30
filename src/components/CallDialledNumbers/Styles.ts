@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   showNumbersDisplayText: {
     fontSize: CustomFonts.CallTextLineHeight,
-    fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
     padding: 15,
     justifyContent: 'center',
     alignItems: 'center',

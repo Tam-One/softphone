@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.HeaderTitle,
     lineHeight: 22,
     color: CustomColors.White,
-    fontWeight: '800',
+    fontFamily: 'Roboto-Black',
   },
   listContainerStyle: {
     marginLeft: 0,

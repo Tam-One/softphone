@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   transferKeysPlaceholder: {
     fontSize: CustomFonts.HeaderTitle,
-    fontWeight: '500',
+    fontFamily: 'Roboto-Regular',
     padding: 15,
     textAlign: 'left',
     width: '100%',
