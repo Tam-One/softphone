@@ -20,7 +20,11 @@ const InputBox: FC<{
   onPress?(): void
 }> = ({ label, val, icon, style, onPress }) => {
   return (
-    <View style={styles.inputBox}>
+    <TouchableOpacity
+      style={styles.inputBox}
+      onPress={onPress}
+      disabled={!onPress || !val}
+    >
       {icon ? (
         <View>
           <RnIcon path={icon} color={CustomColors.SVGBlack} size={18} />
@@ -29,13 +33,13 @@ const InputBox: FC<{
         <></>
       )}
       {val ? (
-        <TouchableOpacity onPress={onPress} disabled={!onPress}>
+        <View>
           <RnText style={[styles.fieldTextInput, style]}>{val}</RnText>
-        </TouchableOpacity>
+        </View>
       ) : (
         <RnText style={[styles.fieldTextPlaceholder]}>{label}</RnText>
       )}
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -55,18 +59,18 @@ const onCallPress = (user: Phonebook2, number: string) => {
     value: string
     icon: string
   }[] = []
-  if (workNumber) {
-    numbers.push({
-      key: 'workNumber',
-      value: workNumber,
-      icon: mdiBriefcase,
-    })
-  }
   if (cellNumber) {
     numbers.push({
       key: 'cellNumber',
       value: cellNumber,
       icon: mdiCellphone,
+    })
+  }
+  if (workNumber) {
+    numbers.push({
+      key: 'workNumber',
+      value: workNumber,
+      icon: mdiBriefcase,
     })
   }
   if (homeNumber) {

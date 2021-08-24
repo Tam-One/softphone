@@ -79,6 +79,9 @@ const svgImages = {
 
   keys:
     '<svg id="Group_3323" data-name="Group 3323" xmlns="http://www.w3.org/2000/svg" width="23.752" height="23.272" viewBox="0 0 23.752 23.272"> <circle id="Ellipse_445" data-name="Ellipse 445" cx="3.038" cy="3.038" r="3.038" fill="#2f3443"/> <circle id="Ellipse_446" data-name="Ellipse 446" cx="3.038" cy="3.038" r="3.038" transform="translate(8.838)" fill="#2f3443"/> <circle id="Ellipse_447" data-name="Ellipse 447" cx="3.038" cy="3.038" r="3.038" transform="translate(17.676)" fill="#2f3443"/> <circle id="Ellipse_448" data-name="Ellipse 448" cx="3.038" cy="3.038" r="3.038" transform="translate(0 8.598)" fill="#2f3443"/> <circle id="Ellipse_449" data-name="Ellipse 449" cx="3.038" cy="3.038" r="3.038" transform="translate(8.838 8.598)" fill="#2f3443"/> <circle id="Ellipse_450" data-name="Ellipse 450" cx="3.038" cy="3.038" r="3.038" transform="translate(17.676 8.598)" fill="#2f3443"/> <circle id="Ellipse_454" data-name="Ellipse 454" cx="3.038" cy="3.038" r="3.038" transform="translate(0 17.196)" fill="#2f3443"/> <circle id="Ellipse_455" data-name="Ellipse 455" cx="3.038" cy="3.038" r="3.038" transform="translate(8.838 17.196)" fill="#2f3443"/> <circle id="Ellipse_456" data-name="Ellipse 456" cx="3.038" cy="3.038" r="3.038" transform="translate(17.676 17.196)" fill="#2f3443"/> </svg>',
+
+  rightButton:
+    '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/></svg>',
 }
 
 export default svgImages

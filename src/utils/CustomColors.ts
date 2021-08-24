@@ -42,6 +42,7 @@ const CustomColors = {
   CallGreen: '#35cf96',
   RedOpacity: '#FF5252',
   GreenOpacity: '#cff0ec',
+  KeyHighlightBlue: '#B0D0FF',
 }
 
 export default CustomColors

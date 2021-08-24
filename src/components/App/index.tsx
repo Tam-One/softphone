@@ -228,7 +228,6 @@ const App = observer(() => {
         <>
           <CallNotify />
           <CallBar />
-          <CallVideos />
           <CallVoices />
           <ChatGroupInvite />
           <UnreadChatNoti />

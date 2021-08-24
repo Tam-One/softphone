@@ -14,12 +14,14 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
     fontWeight: callerFontWeight,
+    fontFamily: 'Roboto-Medium',
   },
   userNumber: {
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.NumberFont,
     lineHeight: CustomFonts.CallTextLineHeight,
     fontWeight: callerFontWeight,
+    fontFamily: 'Roboto-Medium',
   },
   flagLogo: {
     width: 20,
@@ -32,6 +34,7 @@ const styles = StyleSheet.create({
     lineHeight: CustomFonts.CallTextLineHeight,
     margin: 7,
     fontWeight: callerFontWeight,
+    fontFamily: 'Roboto-Medium',
   },
   notifyContainer: {
     flexDirection: 'row',

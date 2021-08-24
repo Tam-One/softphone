@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 99,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 65,
+    height: Dimensions.get('window').height,
   },
 })
 

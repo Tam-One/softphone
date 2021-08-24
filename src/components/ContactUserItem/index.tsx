@@ -41,6 +41,10 @@ const getTextColor = (incoming, answered) => {
   }
 }
 
+const isNumber = num => {
+  return !isNaN(parseFloat(num)) && !isNaN(num - 0)
+}
+
 const UserItem: FC<
   Partial<{
     answered: boolean
@@ -95,7 +99,7 @@ const UserItem: FC<
   iconsColor,
 }) => {
   var userAvatarName = name
-  if (name === number) {
+  if (isNumber(name)) {
     userAvatarName = userAvatarName?.split('').join(' ')
   }
   const iconPath = getIconPath(incoming, answered)

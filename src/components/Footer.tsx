@@ -16,6 +16,7 @@ const css = StyleSheet.create({
     // position: 'absolute',
     bottom: 0,
     right: 0,
+    zIndex: 99999,
   },
   Footer__noKeyboard: {
     left: 0,

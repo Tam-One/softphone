@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     marginRight: '12%',
   },
   formView: {
-    marginTop: 66,
+    marginTop: 40,
   },
 })
 

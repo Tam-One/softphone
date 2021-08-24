@@ -39,7 +39,7 @@ const CustomHeader: FC<
   return (
     <Wrapper style={[styles.header, containerStyle]} onPress={onBack}>
       <View style={[styles.headerRow, backContainerStyle]}>
-        <View style={{ flex: 0.2 }}>
+        <View style={{ flex: 0.25 }}>
           {onBack ? (
             <TouchableOpacity onPress={onBack} style={styles.backBtnRow}>
               <SvgXml
@@ -58,7 +58,7 @@ const CustomHeader: FC<
           )}
         </View>
 
-        <View style={{ flex: 0.6 }}>
+        <View style={{ flex: 0.5, alignItems: 'center' }}>
           <RnText style={[styles.headerText]}>{title}</RnText>
         </View>
 
