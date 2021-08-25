@@ -5,6 +5,6 @@
         android:width="200dp"
         android:height="200dp"
         android:gravity="center" 
-        android:drawable="@mipmap/launch_screen"
+        android:drawable="@drawable/launch_screen"
        />
 </layer-list>
