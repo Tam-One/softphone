@@ -56,7 +56,7 @@ const KeyPad: FC<{
   fromTransfer,
 }) => {
   const onNumberPress = key => {
-    Vibration.vibrate(40)
+    Vibration.vibrate(20)
     onPressNumber(key)
   }
 
