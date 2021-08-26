@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
 import CustomFonts from 'utils/CustomFonts'
 
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   },
   listView: {
     marginTop: 18,
+    marginBottom: Platform.OS === 'ios' ? 160 : 80,
   },
 })
 

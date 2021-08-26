@@ -9,4 +9,5 @@
   <color name="black">#000000</color>
   <color name="gradient_start">#94CA71</color>
   <color name="gradient_end">#191919</color>
+  <color name="splash_black">#070707</color>
 </resources>

@@ -14,14 +14,17 @@ const styles = StyleSheet.create({
   inputBox: {
     backgroundColor: CustomColors.White,
     marginHorizontal: 16,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
     position: 'relative',
     paddingHorizontal: 12,
     borderRadius: 10,
     height: 44,
+  },
+  flexBox: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   actionButton: {
     backgroundColor: CustomColors.White,

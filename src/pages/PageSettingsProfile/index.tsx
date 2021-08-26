@@ -1,4 +1,5 @@
 import { mdiAccount, mdiGreaterThan, mdiLock } from '@mdi/js'
+import svgImages from 'assets/svgImages'
 import CustomHeader from 'components/CustomHeader'
 import CustomLayout from 'components/CustomLayout'
 import { RnIcon } from 'components/Rn'
@@ -7,13 +8,14 @@ import RnTextInput from 'components/RnTextInput'
 import styles from 'pages/PageSettingsProfile/Styles'
 import React, { useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { SvgXml } from 'react-native-svg'
 import CustomColors from 'utils/CustomColors'
 
 import { getAuthStore } from '../../stores/authStore'
 
 const InputBox = ({ val, icon = '' }) => {
   return (
-    <View style={styles.inputBox}>
+    <View style={[styles.inputBox, icon ? styles.flexBox : {}]}>
       {icon ? (
         <View>
           <RnIcon path={icon} color={CustomColors.GreyMedium} size={18} />
@@ -21,12 +23,7 @@ const InputBox = ({ val, icon = '' }) => {
       ) : (
         <></>
       )}
-      <RnTextInput
-        disabled
-        style={styles.fieldTextInput}
-        value={val}
-        editable={false}
-      />
+      <RnText style={styles.fieldTextInput}>{val}</RnText>
     </View>
   )
 }
@@ -54,10 +51,12 @@ const SettingsView = ({ onPress }) => {
       <TouchableOpacity style={styles.actionButton} onPress={onPress}>
         <RnText style={styles.actionText}>{'Advanced settings'} </RnText>
         <View>
-          <RnIcon
-            path={mdiGreaterThan}
-            color={CustomColors.DarkBlue}
-            size={18}
+          <SvgXml
+            width='25'
+            height='25'
+            xml={svgImages.rightButton}
+            fill={CustomColors.DarkBlue}
+            fillOpacity={1}
           />
         </View>
       </TouchableOpacity>

@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 24,
     textAlign: 'center',
-    marginTop: 24,
   },
   transferButtonText: {
     textTransform: 'uppercase',
@@ -112,10 +111,12 @@ const styles = StyleSheet.create({
     marginTop: 1,
     marginBottom: 0,
     paddingBottom: 0,
+    width: keyButtonSize,
+    height: keyButtonSize,
   },
   callButtonImage: {
-    width: 80,
-    height: 80,
+    width: keyButtonSize,
+    height: keyButtonSize,
   },
   hideWrapper: {
     alignItems: 'center',

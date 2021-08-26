@@ -67,7 +67,7 @@ class MissedCalls extends React.Component {
             <RnText style={styles.ParksText}>{'Missed calls'}</RnText>
           </View>
           {missedCalls.length ? (
-            <View>
+            <View style={styles.footerContainer}>
               <FlatList
                 data={missedCalls}
                 scrollEnabled={false}

@@ -3,7 +3,14 @@ import CallButtons from 'components/CallButtons'
 import styles from 'components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import {
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  Vibration,
+  View,
+} from 'react-native'
+import CustomColors from 'utils/CustomColors'
 import CustomImages from 'utils/CustomImages'
 
 const keys = [
@@ -47,108 +54,120 @@ const KeyPad: FC<{
   onHidePress,
   conference,
   fromTransfer,
-}) => (
-  <View>
-    {keys.map((row, index) => (
-      <View key={index} style={styles.keyPadNumber}>
-        {row.map(ele => {
-          const { key, subText } = ele
-          return (
-            <RnTouchableOpacity
-              key={key}
-              onPress={() => onPressNumber(key)}
-              style={styles.KeyPadNumberButton}
-            >
-              <Text
-                style={[
-                  styles.KeyPadNumberText,
-                  key === '*' && styles.symbolText,
-                ]}
-              >
-                {key}
-              </Text>
-              {subText ? (
-                <Text style={styles.keyPadSubText}>{subText}</Text>
-              ) : (
-                <></>
-              )}
-            </RnTouchableOpacity>
-          )
-        })}
-      </View>
-    ))}
+}) => {
+  const onNumberPress = key => {
+    Vibration.vibrate(20)
+    onPressNumber(key)
+  }
 
-    <View style={styles.keyPadNumber}>
-      <View style={styles.actionButtons}>
-        {duringCall && (
-          <TouchableOpacity onPress={onHidePress}>
-            <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
-          </TouchableOpacity>
-        )}
-        {fromTransfer && conference ? (
-          <>
+  return (
+    <View>
+      {keys.map((row, index) => (
+        <View key={index} style={styles.keyPadNumber}>
+          {row.map(ele => {
+            const { key, subText } = ele
+            return (
+              <TouchableHighlight
+                underlayColor={CustomColors.KeyHighlightBlue}
+                key={key}
+                onPress={() => onNumberPress(key)}
+                style={styles.KeyPadNumberButton}
+              >
+                <>
+                  <Text
+                    style={[
+                      styles.KeyPadNumberText,
+                      key === '*' && styles.symbolText,
+                    ]}
+                  >
+                    {key}
+                  </Text>
+                  {subText ? (
+                    <Text style={styles.keyPadSubText}>{subText}</Text>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              </TouchableHighlight>
+            )
+          })}
+        </View>
+      ))}
+
+      <View style={styles.keyPadNumber}>
+        <View style={styles.actionButtons}>
+          {duringCall && (
+            <TouchableOpacity onPress={onHidePress}>
+              <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
+            </TouchableOpacity>
+          )}
+          {fromTransfer && conference ? (
+            <>
+              <CallButtons
+                onPress={conference}
+                icon={svgImages.conferenceButton}
+                containerStyle={{ width: 55, height: 55, marginTop: 0 }}
+                imageStyle={{ height: 55, width: 55 }}
+              />
+              <RnText style={styles.transferButtonText}>{'Conference'}</RnText>
+            </>
+          ) : (
+            <></>
+          )}
+        </View>
+        <View style={styles.actionButtons}>
+          {duringCall && hangup && !fromTransfer ? (
             <CallButtons
-              onPress={conference}
-              icon={svgImages.conferenceButton}
-              containerStyle={{ width: 55, height: 55, marginTop: 0 }}
-              imageStyle={{ height: 55, width: 55 }}
+              onPress={hangup}
+              image={CustomImages.CallDeclinedLogo}
+              containerStyle={styles.callButtonContainer}
+              imageStyle={styles.callButtonImage}
             />
-            <RnText style={styles.transferButtonText}>{'Conference'}</RnText>
-          </>
-        ) : (
-          <></>
-        )}
-      </View>
-      <View style={styles.actionButtons}>
-        {duringCall && hangup && !fromTransfer ? (
-          <CallButtons
-            onPress={hangup}
-            image={CustomImages.CallDeclinedLogo}
-            containerStyle={styles.callButtonContainer}
-            imageStyle={styles.callButtonImage}
-          />
-        ) : (
-          <></>
-        )}
-        {!duringCall && !fromTransfer && (
-          <CallButtons
-            onPress={callVoice}
-            image={CustomImages.CallAcceptedLogo}
-            containerStyle={styles.callButtonContainer}
-            imageStyle={styles.callButtonImage}
-          />
-        )}
-        {fromTransfer && callVoice ? (
-          <View style={{ alignItems: 'center', marginLeft: 5 }}>
+          ) : (
+            <></>
+          )}
+          {!duringCall && !fromTransfer && (
             <CallButtons
               onPress={callVoice}
-              icon={svgImages.transferButton}
-              containerStyle={{
-                width: 55,
-                height: 55,
-                marginTop: 0,
-              }}
-              imageStyle={{ height: 55, width: 55 }}
+              image={CustomImages.CallAcceptedLogo}
+              containerStyle={styles.callButtonContainer}
+              imageStyle={styles.callButtonImage}
             />
-            <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
-          </View>
-        ) : (
-          <></>
-        )}
-      </View>
-      <View style={styles.actionButtons}>
-        <TouchableOpacity
-          style={styles.removeTextButton}
-          onPress={() => onPressNumber('')}
-        >
-          <View style={styles.triangle}></View>
-          <View style={styles.rectangle}>
-            <RnText style={styles.closeButtonText}>{'X'}</RnText>
-          </View>
-        </TouchableOpacity>
+          )}
+          {fromTransfer && callVoice ? (
+            <View style={{ alignItems: 'center', marginLeft: 5 }}>
+              <CallButtons
+                onPress={callVoice}
+                icon={svgImages.transferButton}
+                containerStyle={{
+                  width: 55,
+                  height: 55,
+                  marginTop: 0,
+                }}
+                imageStyle={{ height: 55, width: 55 }}
+              />
+              <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
+            </View>
+          ) : (
+            <></>
+          )}
+        </View>
+        <View style={styles.actionButtons}>
+          <TouchableOpacity
+            style={styles.removeTextButton}
+            onPress={() => onNumberPress('')}
+          >
+            <>
+              <View style={styles.triangle}></View>
+              <View style={styles.rectangle}>
+                <RnText style={styles.closeButtonText}>{'X'}</RnText>
+              </View>
+            </>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
-  </View>
-)
+  )
+}
 
 export default KeyPad
