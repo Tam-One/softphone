@@ -149,6 +149,8 @@ class PageContactUsers extends React.Component {
           <View style={styles.listView}>
             <FlatList
               data={groups}
+              scrollEnabled={false}
+              style={{ marginBottom: 80 }}
               renderItem={({ item, index }) => {
                 const { key, users } = item
                 return (

@@ -96,7 +96,7 @@ const EditAccount: FC<{
       </View>
       <View style={styles.formContainer}>
         <FormInputBox
-          label={'UserName'}
+          label={'Username'}
           val={get(store, 'profile.pbxUsername')}
           onTextChange={text => onTextChange('pbxUsername', text)}
           required={true}

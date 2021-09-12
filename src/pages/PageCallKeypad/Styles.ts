@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   },
   keyPadContainer: {
     marginTop: 15,
+    marginBottom: 20,
   },
 })
 

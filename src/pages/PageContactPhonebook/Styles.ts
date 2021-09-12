@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   },
   listView: {
     marginTop: 18,
-    marginBottom: Platform.OS === 'ios' ? 160 : 80,
   },
 })
 

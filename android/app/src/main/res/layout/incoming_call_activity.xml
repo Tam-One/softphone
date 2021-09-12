@@ -25,7 +25,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="6dp"
     android:layout_width="match_parent"
-    android:text="Brekeke Phone"
+    android:text="Qooqie Phone"
     android:textColor="@color/white"
     android:textSize="20dp"
     android:textStyle="normal"

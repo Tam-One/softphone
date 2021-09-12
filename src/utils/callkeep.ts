@@ -37,7 +37,7 @@ const _setupCallKeep = async () => {
     },
     android: {
       alertTitle: intl`Permissions required`,
-      alertDescription: intl`Brekeke Phone needs to your permission to display calls`,
+      alertDescription: intl`Qooqie Phone needs to your permission to display calls`,
       cancelButton: intl`Cancel`,
       okButton: intl`OK`,
       imageName: 'phone_account_icon',
@@ -55,7 +55,7 @@ const _setupCallKeep = async () => {
         RNCallKeep.setForegroundServiceSettings({
           channelId: 'com.brekeke.phone',
           channelName: 'Foreground service for Brekeke Phone',
-          notificationTitle: 'Brekeke Phone is running on background',
+          notificationTitle: 'Qooqie Phone is running on background',
           notificationIcon: 'ic_launcher',
         })
       }

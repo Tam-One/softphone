@@ -13,7 +13,7 @@ const CustomHeader: FC<
     backText?: string
     rightButtonText?: string
     onBack?(): void
-    onRightButtonPress?(): void
+    onRightButtonPress?(): any
     title: string
     hideBackText?: boolean
     containerStyle?: object | {}

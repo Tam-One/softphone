@@ -7,7 +7,7 @@ const CustomGradient = props => (
   <ImageBackground
     {...props}
     source={CustomImages.BackgroundBlue}
-    style={styles.CustomGradient}
+    style={[styles.CustomGradient, props.customStyle]}
   ></ImageBackground>
 )
 

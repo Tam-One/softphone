@@ -51,7 +51,7 @@ class CallNotify extends React.Component {
     this.fetchPartyName(partyName, partyNumber)
 
     return (
-      <CustomGradient>
+      <CustomGradient customStyle={{ position: 'absolute' }}>
         <View style={styles.notify}>
           <CallerInfo
             isUserCalling={isUserCalling}
@@ -63,12 +63,12 @@ class CallNotify extends React.Component {
               <CallButtons
                 onPress={hangup}
                 image={CustomImages.CallDeclinedLogo}
-                lable={'Weiger'}
+                lable={'Refuse'}
               />
               <CallButtons
                 onPress={() => answer({}, callerName)}
                 image={CustomImages.CallAcceptedLogo}
-                lable={'Accepteer'}
+                lable={'Accept'}
                 showAnimation={true}
               />
             </View>

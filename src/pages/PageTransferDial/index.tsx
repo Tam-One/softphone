@@ -119,42 +119,47 @@ class PageTransferDial extends React.Component {
   contactsComponent = (groups, transferAttended, transferBlind) => {
     return (
       <ScrollView>
-        {groups.map(group => {
-          const { key, contacts } = group
-          return (
-            <React.Fragment key={key}>
-              <View style={styles.transferSeparator}>
-                <RnText style={styles.transferSeparatorText}>{key}</RnText>
-              </View>
-              <View>
-                <FlatList
-                  data={contacts}
-                  scrollEnabled={false}
-                  renderItem={({ item, index }) => {
-                    const { number, name } = item
-                    return (
-                      <UserItem
-                        showNewAvatar={true}
-                        iconFuncs={[
-                          () => transferAttended(number, name),
-                          () => transferBlind(number),
-                        ]}
-                        icons={[mdiPhoneOutgoing, mdiPhone]}
-                        key={index}
-                        {...item}
-                        number={number}
-                        containerStyle={{
-                          borderBottomWidth:
-                            index === contacts.length - 1 ? 0 : 1,
-                        }}
-                      />
-                    )
-                  }}
-                />
-              </View>
-            </React.Fragment>
-          )
-        })}
+        <View style={{ paddingBottom: 80 }}>
+          {groups.map((group, groupIndex) => {
+            const { key, contacts } = group
+            return (
+              <React.Fragment key={key}>
+                <View style={styles.transferSeparator}>
+                  <RnText style={styles.transferSeparatorText}>{key}</RnText>
+                </View>
+                <View>
+                  <FlatList
+                    data={contacts}
+                    scrollEnabled={false}
+                    renderItem={({ item, index }) => {
+                      const { number, name } = item
+                      return (
+                        <UserItem
+                          showNewAvatar={true}
+                          iconFuncs={[
+                            () => transferAttended(number, name),
+                            () => transferBlind(number),
+                          ]}
+                          icons={[mdiPhoneOutgoing, mdiPhone]}
+                          key={index}
+                          {...item}
+                          number={number}
+                          containerStyle={{
+                            borderBottomWidth:
+                              index === contacts.length - 1 &&
+                              groupIndex !== groups.length - 1
+                                ? 0
+                                : 1,
+                          }}
+                        />
+                      )
+                    }}
+                  />
+                </View>
+              </React.Fragment>
+            )
+          })}
+        </View>
       </ScrollView>
     )
   }

@@ -135,6 +135,7 @@ class PageContactPhonebook extends React.Component {
             <FlatList
               data={groups}
               scrollEnabled={false}
+              style={{ marginBottom: 80 }}
               renderItem={({ item, index }) => {
                 const { key, phonebooks } = item
                 return (

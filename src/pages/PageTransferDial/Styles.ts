@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   },
   keyPadContainer: {
     marginTop: 15,
+    marginBottom: 30,
   },
   transferKeysPlaceholder: {
     fontSize: CustomFonts.HeaderTitle,
