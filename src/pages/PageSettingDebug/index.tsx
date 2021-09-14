@@ -62,7 +62,7 @@ class PageSettingsDebug extends Component {
               label={intl`UPDATE`}
               onCreateBtnPress={debugStore.openInStore}
               onTouchPress={debugStore.openInStore}
-              value={intl`Open Brekeke Phone on store`}
+              value={intl`Open Qooqie Phone on store`}
             />
             <RnText
               normal
@@ -77,7 +77,7 @@ class PageSettingsDebug extends Component {
                 ? intl`Checking for update...`
                 : debugStore.isUpdateAvailable
                 ? intl`A new version is available: ${debugStore.remoteVersion}`
-                : intl`Brekeke Phone is up-to-date, checked ${moment(
+                : intl`Qooqie Phone is up-to-date, checked ${moment(
                     debugStore.remoteVersionLastCheck,
                   ).fromNow()}`}
             </RnText>
@@ -89,7 +89,7 @@ class PageSettingsDebug extends Component {
               {intl`Current version: ${currentVersion}`}
             </RnText>
             <RnText normal warning small style={styles.text}>
-              {intl`You are running an in-browser version of Brekeke Phone`}
+              {intl`You are running an in-browser version of Qooqie Phone`}
             </RnText>
           </>
         )}

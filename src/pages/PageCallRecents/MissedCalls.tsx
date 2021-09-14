@@ -87,6 +87,7 @@ class MissedCalls extends React.Component {
                     />
                   )
                 }}
+                style={{ marginBottom: 80 }}
               />
             </View>
           ) : (

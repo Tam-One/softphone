@@ -13,7 +13,7 @@ import CustomColors from 'utils/CustomColors'
 
 import { getAuthStore } from '../../stores/authStore'
 
-const InputBox = ({ val, icon = '' }) => {
+const InputBox = ({ val, icon = '', style = {} }) => {
   return (
     <View style={[styles.inputBox, icon ? styles.flexBox : {}]}>
       {icon ? (
@@ -23,7 +23,7 @@ const InputBox = ({ val, icon = '' }) => {
       ) : (
         <></>
       )}
-      <RnText style={styles.fieldTextInput}>{val}</RnText>
+      <RnText style={[styles.fieldTextInput, style]}>{val}</RnText>
     </View>
   )
 }
@@ -41,7 +41,11 @@ const SettingsView = ({ onPress }) => {
       <View style={styles.formView}>
         <RnText style={styles.heading}>{'Username & password'}</RnText>
         <InputBox val={pbxUsername} icon={mdiAccount}></InputBox>
-        <InputBox val={pbxPassword} icon={mdiLock}></InputBox>
+        <InputBox
+          val={pbxPassword.replace(/./g, '*')}
+          icon={mdiLock}
+          style={{ marginTop: 10 }}
+        ></InputBox>
       </View>
       <View style={styles.tenentFormView}>
         <RnText style={styles.heading}>{'Tenant'}</RnText>

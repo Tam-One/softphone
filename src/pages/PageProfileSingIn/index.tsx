@@ -100,17 +100,17 @@ const PageProfileSignIn = () => {
 
   return (
     <CustomGradient>
-      <Image
-        source={CustomImages.signInBanner}
-        style={{
-          height: 235,
-          width: '100%',
-        }}
-      />
       <ScrollView>
+        <Image
+          source={CustomImages.signInBanner}
+          style={{
+            height: 235,
+            width: '100%',
+          }}
+        />
         <View style={styles.formView}>
           <FormInputBox
-            label={'UserName'}
+            label={'Username'}
             val={get(store, 'profile.pbxUsername')}
             onTextChange={text => onTextChange('pbxUsername', text)}
             required={true}

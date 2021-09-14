@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   footerContainer: {
-    marginBottom: Platform.OS === 'ios' ? 160 : 80,
+    marginBottom: 1,
   },
   voiceMailCount: {
     width: 23,

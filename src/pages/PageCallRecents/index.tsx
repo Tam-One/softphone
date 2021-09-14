@@ -129,6 +129,7 @@ class PageCallRecents extends React.Component {
                   />
                 )
               }}
+              style={{ marginBottom: 80 }}
             />
           </View>
         </ScrollView>

@@ -124,10 +124,13 @@ const PageViewContact = ({ contact }) => {
       <CustomHeader
         onBack={Nav().goToPageContactPhonebook}
         backText={'Contacts'}
-        onRightButtonPress={() =>
-          Nav().goToPagePhonebookUpdate({
-            contact: contact,
-          })
+        onRightButtonPress={
+          !shared
+            ? () =>
+                Nav().goToPagePhonebookUpdate({
+                  contact: contact,
+                })
+            : undefined
         }
         rightButtonText={'Edit'}
         backContainerStyle={styles.backButtonContainer}

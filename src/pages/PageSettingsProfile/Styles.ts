@@ -64,8 +64,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   logoutButton: {
-    marginTop: '28%',
-    marginBottom: 60,
+    marginTop: 60,
   },
   backButtonContainer: {
     paddingBottom: 8,
