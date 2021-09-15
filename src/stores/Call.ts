@@ -83,9 +83,15 @@ export default class Call {
   @observable recording = false
   @action toggleRecording = () => {
     this.recording = !this.recording
-    return pbx
-      .startRecordingTalker(this.pbxTenant, this.pbxTalkerId)
-      .catch(this.onToggleRecordingFailure)
+    if (this.recording) {
+      return pbx
+        .startRecordingTalker(this.pbxTenant, this.pbxTalkerId)
+        .catch(this.onToggleRecordingFailure)
+    } else {
+      return pbx
+        .stopRecordingTalker(this.pbxTenant, this.pbxTalkerId)
+        .catch(this.onToggleRecordingFailure)
+    }
   }
   @action private onToggleRecordingFailure = (err: Error) => {
     this.recording = !this.recording

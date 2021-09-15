@@ -20,6 +20,7 @@ const CustomHeader: FC<
     backContainerStyle?: object | {}
     disableRightButton?: boolean
     touchableView?: boolean
+    customBackStyle?: object | {}
   }>
 > = ({
   description,
@@ -33,6 +34,7 @@ const CustomHeader: FC<
   backContainerStyle,
   disableRightButton,
   touchableView,
+  customBackStyle,
 }) => {
   const Wrapper = touchableView ? RnTouchableOpacity : View
 
@@ -50,7 +52,9 @@ const CustomHeader: FC<
                 fillOpacity={1}
               />
               {!hideBackText && (
-                <RnText style={styles.backText}>{backText || 'Back'}</RnText>
+                <RnText style={[styles.backText, customBackStyle]}>
+                  {backText || 'Back'}
+                </RnText>
               )}
             </TouchableOpacity>
           ) : (

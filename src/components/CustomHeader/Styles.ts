@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 16,
     paddingVertical: 10,
-    width: 120,
+    width: 170,
   },
   backText: {
     color: CustomColors.DodgerBlue,
