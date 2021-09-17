@@ -248,7 +248,7 @@ class PageTransferDial extends React.Component {
       <CustomGradient>
         <CustomHeader
           onBack={Nav().backToPageCallManage}
-          description={'Select target to start transfer'}
+          description={'Select number to start transfer'}
           title={'Transfer'}
         />
         <View style={styles.tabView}>

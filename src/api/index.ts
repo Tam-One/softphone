@@ -124,8 +124,16 @@ class Api {
     if (number === '8') {
       call.partyName = 'Voicemails'
     }
-    if (!call.partyName) {
-      call.partyName = contactStore.getPBXUser(number)?.name
+    if (!call.partyName || call.partyName === call.partyNumber) {
+      call.partyName =
+        contactStore.getPBXUser(number)?.name ||
+        contactStore.getPhonebookUser(number)
+      if (!call.partyName) {
+        contactStore.getPartyName(number, res => {
+          call.partyName = res
+          this.onSIPSessionUpdated(call)
+        })
+      }
     }
     callStore.upsertCall(call)
   }

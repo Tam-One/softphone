@@ -14,7 +14,7 @@ import VideoPopup from 'pages/PageCallManage/VideoPopup'
 import PageDtmfKeypad from 'pages/PageDtmfKeypad'
 import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
-import { Platform, TouchableOpacity, View } from 'react-native'
+import { Platform, ScrollView, TouchableOpacity, View } from 'react-native'
 import Call from 'stores/Call'
 import callStore from 'stores/callStore'
 import intl from 'stores/intl'
@@ -31,6 +31,7 @@ class PageCallManage extends React.Component<{
   intervalID = 0
   waitingTimer = 3000
   requestTimer = 20000
+  recordAnimation = svgImages.recordCircleRed
 
   videoRequestTimeout
   state = {
@@ -55,6 +56,14 @@ class PageCallManage extends React.Component<{
       recording,
       toggleRecording,
     } = currentCall
+
+    if (recording) {
+      if (this.recordAnimation === svgImages.recordCircleRed) {
+        this.recordAnimation = svgImages.recordCircleMaroon
+      } else {
+        this.recordAnimation = svgImages.recordCircleRed
+      }
+    }
 
     const { isLoudSpeakerEnabled, toggleLoudSpeaker } = callStore
 
@@ -115,7 +124,7 @@ class PageCallManage extends React.Component<{
           name={intl`Record`}
           onPress={toggleRecording}
           textcolor={recording ? nonActiveColor : textActiveColor}
-          image={recording ? svgImages.recordCircle : svgImages.record}
+          image={recording ? this.recordAnimation : svgImages.record}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -215,6 +224,8 @@ class PageCallManage extends React.Component<{
       remoteStreamObject,
     } = currentCall
 
+    const callerName = getCallerName || partyName
+
     if (this.videoRequestTimeout && !localVideoEnabled) {
       clearTimeout(this.videoRequestTimeout)
       this.videoRequestTimeout = null
@@ -296,37 +307,40 @@ class PageCallManage extends React.Component<{
             }
             description={''}
             title={''}
-            hideBackText={!showKeyPad}
             containerStyle={styles.customHeaderContainer}
             backContainerStyle={styles.backBtnContainer}
             touchableView={true}
+            backText={!showKeyPad ? callerName || partyNumber : 'Back'}
+            customBackStyle={{ color: CustomColors.Black }}
           ></CustomHeader>
-          <View style={styles.container}>
-            <CustomGradient>
-              <CallerInfo
-                isUserCalling={!partyNumber?.includes('+')}
-                callerName={getCallerName}
-                callerNumber={partyNumber}
-                containerStyle={{
-                  marginTop: getCallerName || showKeyPad ? '15%' : '25%',
-                }}
-              />
-              {answered && this.renderCallTime()}
-              {!showKeyPad ? (
-                <View style={{ marginTop: 40 }}>
-                  {this.renderBtns(currentCall)}
-                </View>
-              ) : (
-                <PageDtmfKeypad
-                  callId={id}
-                  partyName={partyName}
-                  hangup={hangup}
-                  onHidePress={() => this.setState({ showKeyPad: false })}
-                ></PageDtmfKeypad>
-              )}
-              {this.renderHangupBtn(currentCall)}
-            </CustomGradient>
-          </View>
+          <ScrollView>
+            <View style={styles.container}>
+              <CustomGradient>
+                <CallerInfo
+                  isUserCalling={!partyNumber?.includes('+')}
+                  callerName={callerName}
+                  callerNumber={partyNumber}
+                  containerStyle={{
+                    marginTop: callerName || showKeyPad ? '15%' : '25%',
+                  }}
+                />
+                {answered && this.renderCallTime()}
+                {!showKeyPad ? (
+                  <View style={{ marginTop: 40 }}>
+                    {this.renderBtns(currentCall)}
+                  </View>
+                ) : (
+                  <PageDtmfKeypad
+                    callId={id}
+                    partyName={callerName}
+                    hangup={hangup}
+                    onHidePress={() => this.setState({ showKeyPad: false })}
+                  ></PageDtmfKeypad>
+                )}
+                {this.renderHangupBtn(currentCall)}
+              </CustomGradient>
+            </View>
+          </ScrollView>
         </>
       )
     }
@@ -398,6 +412,9 @@ class PageCallManage extends React.Component<{
     const backgrounCallsLength = backgroundCalls.length
     const actionButtonsList = this.getActionsButtonList(currentCall)
     const { answered, localVideoEnabled } = currentCall
+    let backgroundCallText = `other call${
+      backgrounCallsLength > 1 ? 's are' : ' is'
+    } in background`
     if (!answered) {
       return
     }
@@ -422,7 +439,7 @@ class PageCallManage extends React.Component<{
           <FieldButton
             label={intl`BACKGROUND CALLS`}
             onCreateBtnPress={Nav().goToPageBackgroundCalls}
-            value={intl`${backgrounCallsLength} other calls are in background`}
+            value={intl`${backgrounCallsLength} ${backgroundCallText}`}
           />
         )}
       </View>

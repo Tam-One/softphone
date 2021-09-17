@@ -70,22 +70,25 @@ class PageCallRecents extends React.Component {
             </View>
 
             <View>
-              <RnIcon
-                path={mdiVoicemail}
-                pointerEvents='none'
-                style={styles.voiceMailIcon}
-                size={31}
-                color={CustomColors.DarkBlue}
-              />
-              {callStore.newVoicemailCount ? (
-                <View style={styles.voiceMailCount}>
-                  <RnText style={styles.voiceMailText}>
-                    {callStore.newVoicemailCount}
-                  </RnText>
-                </View>
-              ) : (
-                <></>
-              )}
+              <View>
+                <RnIcon
+                  path={mdiVoicemail}
+                  pointerEvents='none'
+                  style={styles.voiceMailIcon}
+                  size={31}
+                  color={CustomColors.DarkBlue}
+                />
+                {callStore.newVoicemailCount ? (
+                  <View style={styles.voiceMailCount}>
+                    <RnText style={styles.voiceMailText}>
+                      {callStore.newVoicemailCount}
+                    </RnText>
+                  </View>
+                ) : (
+                  <></>
+                )}
+              </View>
+              <RnText style={styles.voiceMailLabel}>{'Voicemail'}</RnText>
             </View>
           </View>
           <View style={styles.searchBox}>

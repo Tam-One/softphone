@@ -68,17 +68,22 @@ const styles = StyleSheet.create({
     width: 23,
     height: 23,
     borderRadius: 13,
-    backgroundColor: CustomColors.BlueLabel,
+    backgroundColor: CustomColors.Black,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    marginTop: 3,
-    marginLeft: 18,
+    marginTop: -9,
+    marginLeft: 33,
   },
   voiceMailText: {
     color: CustomColors.White,
     fontSize: CustomFonts.SmallLabel,
     lineHeight: 14,
+  },
+  voiceMailLabel: {
+    color: CustomColors.DarkBlue,
+    fontSize: CustomFonts.SmallSubText,
+    lineHeight: 13,
   },
 })
 

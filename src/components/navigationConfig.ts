@@ -70,7 +70,7 @@ const genMenus = () => {
       subMenus: [
         {
           key: 'phonebook',
-          label: intl`Phonebook`,
+          label: intl`Contacts`,
           navFnKey: 'goToPageContactPhonebook',
         },
         {
@@ -79,7 +79,7 @@ const genMenus = () => {
           navFnKey: 'goToPageContactUsers',
         },
       ],
-      defaultSubMenuKey: 'users',
+      defaultSubMenuKey: 'phonebook',
     },
     {
       key: 'settings',

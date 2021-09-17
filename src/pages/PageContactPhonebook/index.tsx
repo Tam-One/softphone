@@ -101,7 +101,7 @@ class PageContactPhonebook extends React.Component {
             <View>
               <RnText style={styles.ParksText}>{'Contacts'}</RnText>
               <RnText style={styles.noParksDesc}>
-                {'Phonebook externe contacten'}
+                {'Phonebook external contacts'}
               </RnText>
             </View>
             <TouchableOpacity

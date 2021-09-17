@@ -136,7 +136,7 @@ const PagePhonebookUpdate: FC<{
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.formContainer}>
           <FormInputBox
-            label={'First Name'}
+            label={'First name'}
             val={get(store, 'phonebook.firstName')}
             onTextChange={text => onTextChange('firstName', text)}
             editable={!disabled}
@@ -144,7 +144,7 @@ const PagePhonebookUpdate: FC<{
             showError={fieldErrors['firstName']}
           />
           <FormInputBox
-            label={'Last Name'}
+            label={'Last name'}
             val={get(store, 'phonebook.lastName')}
             onTextChange={text => onTextChange('lastName', text)}
             editable={!disabled}

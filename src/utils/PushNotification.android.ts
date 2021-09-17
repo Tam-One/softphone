@@ -66,10 +66,7 @@ const PushNotification = {
       const n = await FCM.getInitialNotification()
       onNotification(n, initApp)
     } catch (err) {
-      RnAlert.error({
-        message: intlDebug`Failed to initialize push notification`,
-        err,
-      })
+      console.log(err)
     }
   },
   resetBadgeNumber: () => {

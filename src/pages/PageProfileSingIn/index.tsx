@@ -91,7 +91,7 @@ const PageProfileSignIn = () => {
     profile.pbxPhoneIndex = '4'
     profile.pbxHostname = 'spt.qooqie.com'
     profile.pbxPort = '8443'
-    profile.pushNotificationEnabled = false
+    profile.pushNotificationEnabled = true
     profile.ucEnabled = false
     profile.pbxTurnEnabled = false
     profileStore.upsertProfile(profile)

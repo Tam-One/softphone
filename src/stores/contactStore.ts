@@ -119,6 +119,17 @@ class ContactStore {
     return this._pbxUsersMap[id]
   }
 
+  getPhonebookUser = (id: string) => {
+    let selectedContact = this.phoneBooks.filter(contact => {
+      return (
+        contact.cellNumber === id ||
+        contact.workNumber === id ||
+        contact.homeNumber === id
+      )
+    })
+    return selectedContact[0]?.name
+  }
+
   getPartyName = async (id: string, callback: Function) => {
     await getContactByNumber({ search_text: id })
       .then(res => {

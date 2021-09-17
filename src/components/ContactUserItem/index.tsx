@@ -59,6 +59,7 @@ const UserItem: FC<
     lastMessage: string
     lastMessageDate: string
     name: string
+    partyName: string
     partyNumber: string
     selected: boolean
     statusText: string
@@ -85,6 +86,7 @@ const UserItem: FC<
   lastMessage,
   lastMessageDate,
   name,
+  partyName,
   partyNumber,
   selected,
   statusText,
@@ -98,10 +100,22 @@ const UserItem: FC<
   innerContainerStyle,
   iconsColor,
 }) => {
-  var userAvatarName = name
-  if (isNumber(name)) {
+  let callerName = partyName || name || ''
+  let callNumber = partyNumber || id || ''
+  var userAvatarName = callerName
+  if (isNumber(callerName)) {
     userAvatarName = userAvatarName?.split('').join(' ')
+    callerName = ''
   }
+
+  let callerDisplayText = ''
+
+  if (callerName && callNumber) {
+    callerDisplayText = `${callerName} (${callNumber})`
+  } else {
+    callerDisplayText = callerName || callNumber
+  }
+
   const iconPath = getIconPath(incoming, answered)
 
   const iconColor = getIconColor(incoming, answered)
@@ -146,7 +160,7 @@ const UserItem: FC<
         <View style={[styles.text, styles.withSpace]}>
           <View style={styles.nameWithStatus}>
             <RnText black bold singleLine style={{ color: textColor }}>
-              {name || partyNumber || id}
+              {callerDisplayText}
             </RnText>
             {statusText ? (
               <RnText normal singleLine small style={styles.status}>

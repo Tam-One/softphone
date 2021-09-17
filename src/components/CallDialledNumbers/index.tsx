@@ -26,7 +26,7 @@ const ShowNumber: FC<{
   hidePlaceholder,
   customStyle,
 }) => {
-  const placeHolder = !hidePlaceholder ? 'Enter your number' : ''
+  const placeHolder = !hidePlaceholder ? 'Enter phone number' : ''
   return (
     <View style={styles.showNumbers}>
       <RnTextInput
