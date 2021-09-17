@@ -124,8 +124,8 @@ class PageContactUsers extends React.Component {
         <ScrollView>
           <View style={styles.parkContainer}>
             <View>
-              <RnText style={styles.ParksText}>{'Contacten'}</RnText>
-              <RnText style={styles.noParksDesc}>{'Interne contacten'}</RnText>
+              <RnText style={styles.ParksText}>{'Users'}</RnText>
+              <RnText style={styles.noParksDesc}>{'Internal contacts'}</RnText>
             </View>
           </View>
           <View style={styles.searchBox}>

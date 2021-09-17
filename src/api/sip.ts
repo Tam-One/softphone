@@ -260,7 +260,7 @@ export class SIP extends EventEmitter {
 
     const jssipVersion = '3.2.15'
     const lUseragent =
-      'Brekeke Phone for ' +
+      'Qooqie Phone for ' +
       platformOs +
       ' ' +
       APP_VERSION +

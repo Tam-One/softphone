@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     flex: 0.1,
   },
   footerContainer: {
-    paddingBottom: 50,
     marginTop: 48,
   },
   actionBtnContainer: {
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 18,
     shadowColor: CustomColors.ShadowBlack,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.5,
@@ -117,6 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 28,
+    marginTop: 16,
   },
   singInInput: {
     position: 'absolute',

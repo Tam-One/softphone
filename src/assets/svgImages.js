@@ -62,6 +62,12 @@ const svgImages = {
   recordCircle:
     '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z" /></svg>',
 
+  recordCircleMaroon:
+    '<svg xmlns="http://www.w3.org/2000/svg" width="22.925" height="22.925" viewBox="0 0 22.925 22.925"> <g id="Group_3508" data-name="Group 3508" transform="translate(2731.925 -9713.075)"> <g id="Group_3507" data-name="Group 3507" transform="translate(31 -13)"> <circle id="Ellipse_501" data-name="Ellipse 501" cx="3.5" cy="3.5" r="3.5" transform="translate(-2755 9734)" fill="#3f88ff"/> <path id="Path_4444" data-name="Path 4444" d="M3.5,0A3.5,3.5,0,1,1,0,3.5,3.5,3.5,0,0,1,3.5,0Z" transform="translate(-2755 9734)" fill="#fb0057" opacity="0.529"/> </g> <path id="record-circle" d="M13.463,2A11.463,11.463,0,1,0,24.925,13.463,11.463,11.463,0,0,0,13.463,2m0,8.024a3.439,3.439,0,1,1-3.439,3.439,3.439,3.439,0,0,1,3.439-3.439Z" transform="translate(-2733.925 9711.075)" fill="#fff"/> </g> </svg>',
+
+  recordCircleRed:
+    '<svg xmlns="http://www.w3.org/2000/svg" width="22.925" height="22.925" viewBox="0 0 22.925 22.925"> <g id="Group_3506" data-name="Group 3506" transform="translate(2831 -9681.575)"> <path id="record-circle" d="M13.463,2A11.463,11.463,0,1,0,24.925,13.463,11.463,11.463,0,0,0,13.463,2m0,8.024a3.439,3.439,0,1,1-3.439,3.439,3.439,3.439,0,0,1,3.439-3.439Z" transform="translate(-2833 9679.575)" fill="#fff"/> <circle id="Ellipse_499" data-name="Ellipse 499" cx="3.5" cy="3.5" r="3.5" transform="translate(-2823 9689.5)" fill="#fb0057" opacity="0.997"/> </g> </svg>',
+
   play:
     '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg>',
 

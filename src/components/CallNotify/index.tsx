@@ -28,7 +28,7 @@ class CallNotify extends React.Component {
       return
     }
 
-    if (partyName && partyName !== partyNumber) {
+    if (partyName && partyName !== partyNumber && !callerName) {
       this.setState({ callerName: partyName, callerNumber: partyNumber })
     } else if (partyNumber && !callerName) {
       contactStore.getPartyName(partyNumber, (value: String) =>
