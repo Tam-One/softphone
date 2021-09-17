@@ -101,7 +101,7 @@ const UserItem: FC<
   iconsColor,
 }) => {
   let callerName = partyName || name || ''
-  let callNumber = partyNumber || id || ''
+  let callNumber = partyNumber || id || number || ''
   var userAvatarName = callerName
   if (isNumber(callerName)) {
     userAvatarName = userAvatarName?.split('').join(' ')

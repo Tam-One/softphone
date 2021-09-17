@@ -4,6 +4,7 @@ import styles from 'components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
 import {
+  Platform,
   Text,
   TouchableHighlight,
   TouchableOpacity,
@@ -56,7 +57,11 @@ const KeyPad: FC<{
   fromTransfer,
 }) => {
   const onNumberPress = key => {
-    Vibration.vibrate(20)
+    if (Platform.OS === 'ios') {
+      Vibration.vibrate(15)
+    } else {
+      Vibration.vibrate(20)
+    }
     onPressNumber(key)
   }
 
@@ -155,7 +160,7 @@ const KeyPad: FC<{
         <View style={styles.actionButtons}>
           <TouchableOpacity
             style={styles.removeTextButton}
-            onPress={() => onNumberPress('')}
+            onPress={() => onPressNumber('')}
           >
             <>
               <View style={styles.triangle}></View>
