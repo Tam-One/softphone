@@ -167,6 +167,17 @@ const styles = StyleSheet.create({
   poweredByView: {
     marginTop: 0,
   },
+  videoCallPopupContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    bottom: 0,
+    top: 0,
+    zIndex: 1,
+  },
 })
 
 export default styles

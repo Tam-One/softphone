@@ -11,6 +11,7 @@ import ButtonIcon from 'components/ButtonIcon'
 import styles from 'components/CallBar/Styles'
 import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
+import VideoCallRequest from 'pages/PageCallManage/VideoCallRequest'
 import React from 'react'
 import { Image, Platform, TouchableOpacity, View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
@@ -43,74 +44,82 @@ class CallBar extends React.Component {
     if (!bVisible || !currentCall || (incoming && !answered)) {
       return null
     }
-    return (
-      <View style={styles.callBar}>
-        <RnTouchableOpacity
-          onPress={() => Nav().goToPageCallManage({ isFromCallBar: true })}
-          style={styles.callBarOuter}
-        >
-          <View>
-            <SvgXml
-              width='33'
-              height='33'
-              xml={svgImages.greenCallButton}
-              fill={CustomColors.CallGreen}
-              fillOpacity={1}
-            />
-          </View>
-          <View style={styles.callBarInfo}>
-            {!!title && (
-              <RnText style={styles.notifyInfoPartyName}>{title}</RnText>
-            )}
-            <RnText style={styles.duration}>
-              {answered ? formatDuration(duration) : intl`Dialing...`}
-            </RnText>
-          </View>
 
-          <View style={styles.callBarButtonCall}>
-            <ButtonIcon
-              style={styles.actionButtons}
-              color={CustomColors.Black}
-              onPress={() => toggleHold()}
-              path={holding ? mdiPlay : mdiPause}
-              size={30}
-              containerStyle={styles.actionButtonsContainer}
-            />
-            {answered && (
-              <>
-                <ButtonIcon
-                  style={styles.actionButtons}
-                  color={CustomColors.Black}
-                  onPress={() => toggleMuted()}
-                  path={muted ? mdiMicrophoneOff : mdiMicrophone}
-                  size={30}
-                  containerStyle={styles.actionButtonsContainer}
-                />
-                {Platform.OS !== 'web' && (
+    const goToCallPage = () => {
+      Nav().goToPageCallManage({ isFromCallBar: true })
+    }
+
+    return (
+      <>
+        <View style={styles.callBar}>
+          <RnTouchableOpacity
+            onPress={goToCallPage}
+            style={styles.callBarOuter}
+          >
+            <View>
+              <SvgXml
+                width='33'
+                height='33'
+                xml={svgImages.greenCallButton}
+                fill={CustomColors.CallGreen}
+                fillOpacity={1}
+              />
+            </View>
+            <View style={styles.callBarInfo}>
+              {!!title && (
+                <RnText style={styles.notifyInfoPartyName}>{title}</RnText>
+              )}
+              <RnText style={styles.duration}>
+                {answered ? formatDuration(duration) : intl`Dialing...`}
+              </RnText>
+            </View>
+
+            <View style={styles.callBarButtonCall}>
+              <ButtonIcon
+                style={styles.actionButtons}
+                color={CustomColors.Black}
+                onPress={() => toggleHold()}
+                path={holding ? mdiPlay : mdiPause}
+                size={30}
+                containerStyle={styles.actionButtonsContainer}
+              />
+              {answered && (
+                <>
                   <ButtonIcon
                     style={styles.actionButtons}
                     color={CustomColors.Black}
-                    onPress={callStore.toggleLoudSpeaker}
-                    path={
-                      callStore.isLoudSpeakerEnabled
-                        ? mdiVolumeHigh
-                        : mdiVolumeMedium
-                    }
-                    size={27}
+                    onPress={() => toggleMuted()}
+                    path={muted ? mdiMicrophoneOff : mdiMicrophone}
+                    size={30}
                     containerStyle={styles.actionButtonsContainer}
                   />
-                )}
-              </>
-            )}
-            <TouchableOpacity onPress={hangup}>
-              <Image
-                source={CustomImages.CallDeclinedLogo}
-                style={{ width: 49, height: 49 }}
-              ></Image>
-            </TouchableOpacity>
-          </View>
-        </RnTouchableOpacity>
-      </View>
+                  {Platform.OS !== 'web' && (
+                    <ButtonIcon
+                      style={styles.actionButtons}
+                      color={CustomColors.Black}
+                      onPress={callStore.toggleLoudSpeaker}
+                      path={
+                        callStore.isLoudSpeakerEnabled
+                          ? mdiVolumeHigh
+                          : mdiVolumeMedium
+                      }
+                      size={27}
+                      containerStyle={styles.actionButtonsContainer}
+                    />
+                  )}
+                </>
+              )}
+              <TouchableOpacity onPress={hangup}>
+                <Image
+                  source={CustomImages.CallDeclinedLogo}
+                  style={{ width: 49, height: 49 }}
+                ></Image>
+              </TouchableOpacity>
+            </View>
+          </RnTouchableOpacity>
+        </View>
+        <VideoCallRequest videoCallOn={goToCallPage} />
+      </>
     )
   }
 }

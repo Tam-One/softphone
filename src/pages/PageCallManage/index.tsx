@@ -24,6 +24,8 @@ import CustomImages from 'utils/CustomImages'
 import CustomStrings from 'utils/CustomStrings'
 import formatDuration from 'utils/formatDuration'
 
+import VideoCallRequest from './VideoCallRequest'
+
 @observer
 class PageCallManage extends React.Component<{
   isFromCallBar: boolean
@@ -234,7 +236,7 @@ class PageCallManage extends React.Component<{
         this.setState({ responseMessage: '' })
       }, this.waitingTimer)
     }
-    const { showKeyPad, responseMessage } = this.state
+    const { showKeyPad, responseMessage, showVideoPopup } = this.state
     if (!currentCall) {
       return
     }
@@ -245,60 +247,10 @@ class PageCallManage extends React.Component<{
     } else {
       return (
         <>
-          {this.state.showVideoPopup === CustomStrings.Request ? (
-            <VideoPopup
-              header={CustomStrings.SwitchToVideo}
-              showOk={true}
-              onOkPress={() => this.onVideoCallSwitch(currentCall)}
-              onCancel={() => this.setState({ showVideoPopup: '' })}
-            ></VideoPopup>
-          ) : (
-            <></>
-          )}
-
-          {localVideoEnabled && !remoteVideoEnabled ? (
-            <>
-              <VideoPopup
-                header={CustomStrings.WaitingForRequest}
-                showOk={false}
-                onCancel={() => {
-                  clearTimeout(this.videoRequestTimeout)
-                  this.videoRequestTimeout = null
-                  disableVideo()
-                }}
-              ></VideoPopup>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {!localVideoEnabled && remoteVideoEnabled ? (
-            <>
-              <VideoPopup
-                header={CustomStrings.RequestToSwitchVideo}
-                showOk={true}
-                onOkPress={() => {
-                  enableVideo()
-                }}
-                onCancel={() => disableVideo(true)}
-              ></VideoPopup>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {responseMessage ? (
-            <>
-              <VideoPopup
-                header={responseMessage}
-                showOk={false}
-                onCancel={() => this.setState({ responseMessage: '' })}
-              ></VideoPopup>
-            </>
-          ) : (
-            <></>
-          )}
-
+          <VideoCallRequest
+            showVideo={showVideoPopup}
+            setShowVideo={res => this.setState({ showVideoPopup: res })}
+          ></VideoCallRequest>
           <CustomHeader
             onBack={
               showKeyPad
