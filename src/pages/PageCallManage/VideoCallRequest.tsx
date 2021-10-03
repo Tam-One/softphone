@@ -28,9 +28,6 @@ const VideoCallRequest: FC<{
   }, [showVideoPopup])
 
   const onVideoCallSwitch = currentCall => {
-    if (videoCallOn) {
-      videoCallOn()
-    }
     const { enableVideo, disableVideo } = currentCall
     enableVideo()
     setShowVideoPopup('')
@@ -68,20 +65,22 @@ const VideoCallRequest: FC<{
   }
 
   return (
-    <View style={styles.videoCallPopupContainer}>
+    <>
       {showVideoPopup === CustomStrings.Request ? (
-        <VideoPopup
-          header={CustomStrings.SwitchToVideo}
-          showOk={true}
-          onOkPress={() => onVideoCallSwitch(currentCall)}
-          onCancel={() => setShowVideoPopup('')}
-        ></VideoPopup>
+        <View style={styles.videoCallPopupContainer}>
+          <VideoPopup
+            header={CustomStrings.SwitchToVideo}
+            showOk={true}
+            onOkPress={() => onVideoCallSwitch(currentCall)}
+            onCancel={() => setShowVideoPopup('')}
+          ></VideoPopup>
+        </View>
       ) : (
         <></>
       )}
 
       {localVideoEnabled && !remoteVideoEnabled ? (
-        <>
+        <View style={styles.videoCallPopupContainer}>
           <VideoPopup
             header={CustomStrings.WaitingForRequest}
             showOk={false}
@@ -91,38 +90,41 @@ const VideoCallRequest: FC<{
               disableVideo()
             }}
           ></VideoPopup>
-        </>
+        </View>
       ) : (
         <></>
       )}
 
       {!localVideoEnabled && remoteVideoEnabled ? (
-        <>
+        <View style={styles.videoCallPopupContainer}>
           <VideoPopup
             header={CustomStrings.RequestToSwitchVideo}
             showOk={true}
             onOkPress={() => {
+              if (videoCallOn) {
+                videoCallOn()
+              }
               enableVideo()
             }}
             onCancel={() => disableVideo(true)}
           ></VideoPopup>
-        </>
+        </View>
       ) : (
         <></>
       )}
 
       {responseMessage ? (
-        <>
+        <View style={styles.videoCallPopupContainer}>
           <VideoPopup
             header={responseMessage}
             showOk={false}
             onCancel={() => setResponseMessage('')}
           ></VideoPopup>
-        </>
+        </View>
       ) : (
         <></>
       )}
-    </View>
+    </>
   )
 }
 

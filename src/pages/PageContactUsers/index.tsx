@@ -9,11 +9,12 @@ import uniq from 'lodash/uniq'
 import { observer } from 'mobx-react'
 import styles from 'pages/PageContactUsers/Styles'
 import React from 'react'
-import { FlatList, ScrollView, View } from 'react-native'
+import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native'
 import { getAuthStore } from 'stores/authStore'
 import callStore from 'stores/callStore'
 import chatStore, { ChatMessage } from 'stores/chatStore'
 import contactStore from 'stores/contactStore'
+import intl from 'stores/intl'
 import CustomColors from 'utils/CustomColors'
 import DelayFlag from 'utils/DelayFlag'
 import { filterTextOnly } from 'utils/formatChatContent'
@@ -178,6 +179,26 @@ class PageContactUsers extends React.Component {
               }}
             />
           </View>
+
+          {!groups && (
+            <View style={styles.container}>
+              <ActivityIndicator
+                animating={true}
+                color='#007AFF'
+                size={40}
+                style={styles.activityIndicator}
+              />
+            </View>
+          )}
+
+          {groups && !groups.length && (
+            <RnText
+              style={styles.loading}
+              warning
+              normal
+              center
+            >{intl`No Users Found`}</RnText>
+          )}
         </ScrollView>
       </CustomLayout>
     )

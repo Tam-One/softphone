@@ -10,6 +10,16 @@ const styles = StyleSheet.create({
   app: {
     backgroundColor: bg,
   },
+  container: {
+    flex: 1,
+    zIndex: 99,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    top: 0,
+  },
   appInner: {
     flex: 1,
   },

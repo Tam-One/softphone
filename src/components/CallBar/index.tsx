@@ -118,7 +118,7 @@ class CallBar extends React.Component {
             </View>
           </RnTouchableOpacity>
         </View>
-        <VideoCallRequest videoCallOn={goToCallPage} />
+        <VideoCallRequest videoCallOn={() => goToCallPage()} />
       </>
     )
   }

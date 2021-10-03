@@ -11,6 +11,15 @@ const styles = StyleSheet.create({
     color: CustomColors.Blue,
     width: '100%',
   },
+  container: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    top: 0,
+  },
   inputBox: {
     backgroundColor: CustomColors.White,
     marginHorizontal: 16,

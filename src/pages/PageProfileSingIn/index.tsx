@@ -95,6 +95,9 @@ const PageProfileSignIn = () => {
     profile.ucEnabled = false
     profile.pbxTurnEnabled = false
     profileStore.upsertProfile(profile)
+    const profileMap =
+      profileStore.profilesMap[profileStore.profiles[0]?.id] || {}
+    const { id } = profileMap
     getAuthStore().signIn(id)
   }
 
@@ -135,6 +138,7 @@ const PageProfileSignIn = () => {
             containerStyle={{ marginTop: 16 }}
             icon={svgImages.lockButton}
             iconStyle={{ marginBottom: 10 }}
+            secureEntry={true}
           />
         </View>
 

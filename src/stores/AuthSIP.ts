@@ -6,6 +6,7 @@ import sip from '../api/sip'
 import updatePhoneIndex from '../api/updatePhoneIndex'
 import { getAuthStore } from './authStore'
 import { intlDebug } from './intl'
+import profileStore from './profileStore'
 import RnAlert from './RnAlert'
 
 class AuthSIP {
@@ -129,16 +130,24 @@ class AuthSIP {
     if (!getAuthStore().sipShouldAuth) {
       return
     }
-    this.authWithoutCatch().catch((err: Error) => {
-      console.error('SIP PN debug: set sipState failure catch')
-      getAuthStore().sipState = 'failure'
-      getAuthStore().sipTotalFailure += 1
-      sip.disconnect()
-      RnAlert.error({
-        message: intlDebug`Failed to connect to SIP`,
-        err,
+    this.authWithoutCatch()
+      .then(() => {
+        const profileMap =
+          profileStore.profilesMap[profileStore.profiles[0]?.id] || {}
+        const { id } = profileMap
+        const profile = getAuthStore().getProfile(id)
+        getAuthStore().loginPressed = profile.id
       })
-    })
+      .catch((err: Error) => {
+        console.error('SIP PN debug: set sipState failure catch')
+        getAuthStore().sipState = 'failure'
+        getAuthStore().sipTotalFailure += 1
+        sip.disconnect()
+        getAuthStore().signOut()
+        RnAlert.error({
+          message: intlDebug`Invalid Credentials`,
+        })
+      })
   }
   private authWithCheckDebounced = debounce(this.authWithCheck, 300)
 }

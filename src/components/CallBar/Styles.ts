@@ -45,6 +45,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     marginRight: 8,
   },
+  videoCallReq: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    top: 0,
+  },
 })
 
 export default styles

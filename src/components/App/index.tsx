@@ -41,6 +41,7 @@ import RnPickerRoot from 'stores/RnPickerRoot'
 import RnStacker from 'stores/RnStacker'
 import RootStacks from 'stores/RnStackerRoot'
 import { setupCallKeep } from 'utils/callkeep'
+import CustomColors from 'utils/CustomColors'
 // @ts-ignore
 import PushNotification from 'utils/PushNotification'
 import registerOnUnhandledError from 'utils/registerOnUnhandledError'
@@ -141,7 +142,6 @@ PushNotification.register(() => {
   const authUC = new AuthUC()
 
   observe(s, 'signedInId', () => {
-    Nav().goToPageIndex()
     chatStore.clearStore()
     contactStore.clearStore()
     if (s.signedInId) {
@@ -154,6 +154,10 @@ PushNotification.register(() => {
       authSIP.dispose()
       authUC.dispose()
     }
+  })
+
+  observe(s, 'loginPressed', () => {
+    Nav().goToPageIndex()
   })
 })
 
@@ -183,6 +187,7 @@ const App = observer(() => {
     sipTotalFailure,
     ucTotalFailure,
     signedInId,
+    loginPressed,
   } = s
   let service = ''
   let isRetrying = false
@@ -224,7 +229,7 @@ const App = observer(() => {
         </AnimatedSize>
       )}
 
-      {!!signedInId && (
+      {!!signedInId && !!loginPressed && (
         <>
           <CallNotify />
           <CallBar />
@@ -233,6 +238,15 @@ const App = observer(() => {
           <UnreadChatNoti />
         </>
       )}
+
+      {signedInId && !loginPressed ? (
+        <View style={styles.container}>
+          <ActivityIndicator color={CustomColors.ActiveBlue} size={'large'} />
+        </View>
+      ) : (
+        <></>
+      )}
+
       <View style={styles.appInner}>
         <RootStacks />
         <RnPickerRoot />

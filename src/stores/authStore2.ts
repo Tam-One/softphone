@@ -118,6 +118,8 @@ export class AuthStore {
   }
 
   @observable signedInId = ''
+  @observable loginPressed = ''
+
   @computed get currentProfile() {
     return this.getProfile(this.signedInId)
   }
@@ -125,19 +127,18 @@ export class AuthStore {
     return profileStore.getProfileData(this.currentProfile)
   }
   signIn = (id: string) => {
-    const p = this.getProfile(id)
-    if (!p) {
+    const profile = this.getProfile(id)
+    if (!profile) {
       return false
     }
-    const d = profileStore.getProfileData(p)
-    if (!p.pbxPassword && !d.accessToken) {
-      Nav().goToPageProfileUpdate({ id: p.id })
+    const d = profileStore.getProfileData(profile)
+    if (!profile.pbxPassword && !d.accessToken) {
       RnAlert.error({
         message: intlDebug`The account password is empty`,
       })
       return true
     }
-    this.signedInId = p.id
+    this.signedInId = profile.id
     return true
   }
 
@@ -158,6 +159,7 @@ export class AuthStore {
   }
   @action _signOut = () => {
     this.signedInId = ''
+    this.loginPressed = ''
     this.pbxState = 'stopped'
     this.pbxTotalFailure = 0
     console.error('SIP PN debug: set sipState stopped sign out')
@@ -224,8 +226,6 @@ export class AuthStore {
       profileStore.upsertProfile(p)
       if (p.pbxPassword || d.accessToken) {
         this.signIn(p.id)
-      } else {
-        Nav().goToPageProfileUpdate({ id: p.id })
       }
       return
     }
@@ -243,8 +243,6 @@ export class AuthStore {
     profileStore.upsertProfile(newP)
     if (d.accessToken) {
       this.signIn(newP.id)
-    } else {
-      Nav().goToPageProfileUpdate({ id: newP.id })
     }
   }
 

@@ -17,6 +17,7 @@ const FormInputBox: FC<{
   icon?: string
   containerStyle?: object
   iconStyle?: object
+  secureEntry?: boolean
 }> = ({
   label,
   val,
@@ -27,6 +28,7 @@ const FormInputBox: FC<{
   icon,
   containerStyle,
   iconStyle,
+  secureEntry,
 }) => {
   const [focus, setFocus] = useState(false)
   const [validationError, setValidationError] = useState(showError)
@@ -91,6 +93,7 @@ const FormInputBox: FC<{
           onBlur={onBlur}
           editable={editable}
           selectTextOnFocus={editable}
+          secureTextEntry={secureEntry}
         />
       </View>
       {(validationError || showError) && (

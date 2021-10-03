@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 99,
   },
+  marginTop: {
+    marginTop: 40,
+  },
   title: {
     color: CustomColors.White,
     fontSize: CustomFonts.MediumText,
