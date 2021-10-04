@@ -3,10 +3,12 @@ import debounce from 'lodash/debounce'
 import uniqBy from 'lodash/uniqBy'
 import { action, computed, observable, runInAction } from 'mobx'
 import { v4 as uuid } from 'react-native-uuid'
+import profileStore from 'stores/profileStore'
 
 import { SyncPnToken } from '../api/syncPnToken'
 import { RnAsyncStorage } from '../components/Rn'
 import { arrToMap } from '../utils/toMap'
+import { getAuthStore } from './authStore'
 import { intlDebug } from './intl'
 import RnAlert from './RnAlert'
 
@@ -17,6 +19,7 @@ const profilesLoaded = new Promise(resolve => {
 
 export type Profile = {
   id: string
+  loginPressed: string
   pbxHostname: string
   pbxPort: string
   pbxTenant: string
@@ -69,6 +72,7 @@ class ProfileStore {
   profilesLoaded = () => profilesLoaded
   genEmptyProfile = (): Profile => ({
     id: uuid(),
+    loginPressed: '',
     pbxTenant: '',
     pbxUsername: '',
     pbxHostname: '',
@@ -100,6 +104,13 @@ class ProfileStore {
       if (Array.isArray(x)) {
         profiles = x
         profileData = []
+      }
+      let profile = profiles[0]
+      this.profiles = profiles
+      if (profile.loginPressed) {
+        getAuthStore().signedInId = profile.loginPressed
+        getAuthStore().loginPressed = profile.loginPressed
+        profileStore.upsertProfile(profile)
       }
       runInAction(() => {
         this.profiles = profiles
