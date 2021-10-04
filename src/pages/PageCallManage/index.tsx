@@ -24,6 +24,8 @@ import CustomImages from 'utils/CustomImages'
 import CustomStrings from 'utils/CustomStrings'
 import formatDuration from 'utils/formatDuration'
 
+import VideoCallRequest from './VideoCallRequest'
+
 @observer
 class PageCallManage extends React.Component<{
   isFromCallBar: boolean
@@ -71,6 +73,13 @@ class PageCallManage extends React.Component<{
       this.setState({ showVideoPopup: CustomStrings.Request })
     }
 
+    const onHoldPress = () => {
+      if (localVideoEnabled) {
+        disableVideo(true)
+      }
+      toggleHold()
+    }
+
     const buttonList = {
       mute: (
         <CallActionButton
@@ -87,7 +96,7 @@ class PageCallManage extends React.Component<{
         <CallActionButton
           bgcolor={holding ? activeColor : nonActiveColor}
           name={holding ? intl`Unhold` : intl`Hold`}
-          onPress={() => toggleHold()}
+          onPress={() => onHoldPress()}
           textcolor={holding ? nonActiveColor : textActiveColor}
           image={holding ? svgImages.play : svgImages.pause}
           imageStyle={styles.actionBtnImage}
@@ -223,8 +232,15 @@ class PageCallManage extends React.Component<{
       remoteVideoStreamObject,
       remoteStreamObject,
     } = currentCall
+    const { showKeyPad, responseMessage, showVideoPopup } = this.state
 
     const callerName = getCallerName || partyName
+
+    const showVideoCom =
+      showVideoPopup ||
+      localVideoEnabled ||
+      remoteVideoEnabled ||
+      responseMessage
 
     if (this.videoRequestTimeout && !localVideoEnabled) {
       clearTimeout(this.videoRequestTimeout)
@@ -234,7 +250,6 @@ class PageCallManage extends React.Component<{
         this.setState({ responseMessage: '' })
       }, this.waitingTimer)
     }
-    const { showKeyPad, responseMessage } = this.state
     if (!currentCall) {
       return
     }
@@ -245,60 +260,14 @@ class PageCallManage extends React.Component<{
     } else {
       return (
         <>
-          {this.state.showVideoPopup === CustomStrings.Request ? (
-            <VideoPopup
-              header={CustomStrings.SwitchToVideo}
-              showOk={true}
-              onOkPress={() => this.onVideoCallSwitch(currentCall)}
-              onCancel={() => this.setState({ showVideoPopup: '' })}
-            ></VideoPopup>
+          {showVideoCom ? (
+            <VideoCallRequest
+              showVideo={showVideoPopup}
+              setShowVideo={res => this.setState({ showVideoPopup: res })}
+            ></VideoCallRequest>
           ) : (
             <></>
           )}
-
-          {localVideoEnabled && !remoteVideoEnabled ? (
-            <>
-              <VideoPopup
-                header={CustomStrings.WaitingForRequest}
-                showOk={false}
-                onCancel={() => {
-                  clearTimeout(this.videoRequestTimeout)
-                  this.videoRequestTimeout = null
-                  disableVideo()
-                }}
-              ></VideoPopup>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {!localVideoEnabled && remoteVideoEnabled ? (
-            <>
-              <VideoPopup
-                header={CustomStrings.RequestToSwitchVideo}
-                showOk={true}
-                onOkPress={() => {
-                  enableVideo()
-                }}
-                onCancel={() => disableVideo(true)}
-              ></VideoPopup>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {responseMessage ? (
-            <>
-              <VideoPopup
-                header={responseMessage}
-                showOk={false}
-                onCancel={() => this.setState({ responseMessage: '' })}
-              ></VideoPopup>
-            </>
-          ) : (
-            <></>
-          )}
-
           <CustomHeader
             onBack={
               showKeyPad
@@ -313,29 +282,36 @@ class PageCallManage extends React.Component<{
             backText={!showKeyPad ? callerName || partyNumber : 'Back'}
             customBackStyle={{ color: CustomColors.Black }}
           ></CustomHeader>
+
           <ScrollView>
             <View style={styles.container}>
               <CustomGradient>
-                <CallerInfo
-                  isUserCalling={!partyNumber?.includes('+')}
-                  callerName={callerName}
-                  callerNumber={partyNumber}
-                  containerStyle={{
-                    marginTop: callerName || showKeyPad ? '15%' : '25%',
-                  }}
-                />
+                {!showKeyPad ? (
+                  <CallerInfo
+                    isUserCalling={!partyNumber?.includes('+')}
+                    callerName={callerName}
+                    callerNumber={partyNumber}
+                    containerStyle={{
+                      marginTop: callerName || showKeyPad ? '15%' : '25%',
+                    }}
+                  />
+                ) : (
+                  <View style={styles.marginTop}></View>
+                )}
                 {answered && this.renderCallTime()}
                 {!showKeyPad ? (
-                  <View style={{ marginTop: 40 }}>
+                  <View style={styles.marginTop}>
                     {this.renderBtns(currentCall)}
                   </View>
                 ) : (
-                  <PageDtmfKeypad
-                    callId={id}
-                    partyName={callerName}
-                    hangup={hangup}
-                    onHidePress={() => this.setState({ showKeyPad: false })}
-                  ></PageDtmfKeypad>
+                  <View>
+                    <PageDtmfKeypad
+                      callId={id}
+                      partyName={callerName}
+                      hangup={hangup}
+                      onHidePress={() => this.setState({ showKeyPad: false })}
+                    ></PageDtmfKeypad>
+                  </View>
                 )}
                 {this.renderHangupBtn(currentCall)}
               </CustomGradient>

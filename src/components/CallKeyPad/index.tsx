@@ -11,6 +11,7 @@ import {
   Vibration,
   View,
 } from 'react-native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import CustomColors from 'utils/CustomColors'
 import CustomImages from 'utils/CustomImages'
 
@@ -58,7 +59,11 @@ const KeyPad: FC<{
 }) => {
   const onNumberPress = key => {
     if (Platform.OS === 'ios') {
-      Vibration.vibrate(15)
+      const options = {
+        enableVibrateFallback: true,
+        ignoreAndroidSystemSettings: false,
+      }
+      ReactNativeHapticFeedback.trigger('impactHeavy', options)
     } else {
       Vibration.vibrate(20)
     }

@@ -53,11 +53,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   keyPadSubText: {
-    fontSize: CustomFonts.SmallLabel,
+    fontSize: CustomFonts.SmallFooterText,
     color: CustomColors.DarkBlue,
     letterSpacing: 2,
     fontFamily: 'Nunito-SemiBold',
     lineHeight: 14,
+    marginLeft: 5,
   },
   symbolText: {
     fontSize: symbolFont,

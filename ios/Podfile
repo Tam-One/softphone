@@ -11,6 +11,8 @@ target 'BrekekePhone' do
   )
 
   use_flipper!()
+  pod 'RNReactNativeHapticFeedback', :path => '../node_modules/react-native-haptic-feedback'
+
   post_install do |installer|
     react_native_post_install(installer)
   end

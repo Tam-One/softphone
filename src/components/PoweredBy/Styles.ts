@@ -10,13 +10,13 @@ const styles = StyleSheet.create({
   },
   poweredByText: {
     color: CustomColors.Grey,
-    fontSize: CustomFonts.SmallFooterText,
+    fontSize: CustomFonts.SmallIconFont,
+    marginTop: 2,
   },
   qooqieLogo: {
     width: 56.3,
     height: 14,
     marginLeft: 5,
-    marginTop: 2,
   },
 })
 

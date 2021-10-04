@@ -4,7 +4,21 @@ import CustomFonts from 'utils/CustomFonts'
 
 const styles = StyleSheet.create({
   loading: {
-    marginTop: 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 70,
+  },
+  activityIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80,
   },
   noParksContainer: {
     backgroundColor: CustomColors.DodgerBlue,
