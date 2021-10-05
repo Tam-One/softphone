@@ -13,16 +13,22 @@ const CallerInfo: FC<{
   callerNumber: string
   containerStyle?: TouchableOpacityProps['style']
 }> = ({ isUserCalling, callerName, callerNumber, containerStyle }) => {
+  let userAvatarName = callerName
+  if (callerName === callerNumber) {
+    userAvatarName = userAvatarName?.split('').join(' ')
+  }
   return (
     <View style={[styles.notifyInfo, containerStyle]}>
       {!!callerName && (
         <>
           <UserAvatar
             size={CustomFonts.AvatarSize}
-            name={callerName}
+            name={userAvatarName}
             bgColor={CustomColors.DodgerBlue}
           />
-          <RnText style={styles.callerName}>{callerName}</RnText>
+          {callerName !== callerNumber && (
+            <RnText style={styles.callerName}>{callerName}</RnText>
+          )}
         </>
       )}
 

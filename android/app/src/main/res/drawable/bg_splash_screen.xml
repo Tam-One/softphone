@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item android:drawable="@color/splash_black" />
    <item
-        android:width="300dp"
-        android:height="300dp"
-        android:gravity="center" 
-        android:drawable="@drawable/launch_screen"
-       />
+    android:width="200dp"
+    android:height="200dp"
+    android:gravity="center"
+    android:drawable="@drawable/launch_screen"
+  />
 </layer-list>
