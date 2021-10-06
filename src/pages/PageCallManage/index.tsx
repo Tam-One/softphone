@@ -255,7 +255,7 @@ class PageCallManage extends React.Component<{
     }
     if (currentCall && transferring) {
       return <PageTransferAttend />
-    } else if (isVideoEnabled) {
+    } else if (isVideoEnabled && !showKeyPad) {
       return this.renderVideoPage(currentCall)
     } else {
       return (

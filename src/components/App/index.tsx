@@ -157,6 +157,10 @@ PushNotification.register(() => {
   })
 
   observe(s, 'loginPressed', () => {
+    if (profileStore.profiles && profileStore.profiles[0]) {
+      profileStore.profiles[0].loginPressed = s.loginPressed
+      profileStore.saveProfilesToLocalStorage()
+    }
     Nav().goToPageIndex()
   })
 })

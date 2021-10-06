@@ -169,6 +169,8 @@ export class AuthStore {
     this.ucState = 'stopped'
     this.ucTotalFailure = 0
     this.ucLoginFromAnotherPlace = false
+    profileStore.profiles[0].loginPressed = ''
+    profileStore.saveProfilesToLocalStorage()
   }
 
   @action reconnect = () => {
