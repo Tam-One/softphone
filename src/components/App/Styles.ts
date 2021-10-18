@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   loadingFullScreen: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: CustomColors.GreenMantis, // Old color from design, not g.colors.primary
+    backgroundColor: CustomColors.Black, // Old color from design, not g.colors.primary
     alignItems: 'center',
     justifyContent: 'center',
   },

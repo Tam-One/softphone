@@ -11,8 +11,8 @@ const VideoCallRequest: FC<{
   setShowVideo?(key: any): void
   videoCallOn?(): void
 }> = ({ showVideo, setShowVideo, videoCallOn }) => {
-  const waitingTimer = 300000
-  const requestTimer = 2000000
+  const waitingTimer = 3000
+  const requestTimer = 20000
   let videoRequestTimeout
   const [showVideoPopup, setShowVideoPopup] = useState(showVideo)
   const [responseMessage, setResponseMessage] = useState('')

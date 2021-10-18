@@ -70,6 +70,19 @@ const KeyPad: FC<{
     onPressNumber(key)
   }
 
+  const handlerLongClick = () => {
+    if (Platform.OS === 'ios') {
+      const options = {
+        enableVibrateFallback: true,
+        ignoreAndroidSystemSettings: false,
+      }
+      ReactNativeHapticFeedback.trigger('impactHeavy', options)
+    } else {
+      Vibration.vibrate(20)
+    }
+    onPressNumber('-1')
+  }
+
   return (
     <View>
       {keys.map((row, index) => (
@@ -166,6 +179,7 @@ const KeyPad: FC<{
           <TouchableOpacity
             style={styles.removeTextButton}
             onPress={() => onPressNumber('')}
+            onLongPress={handlerLongClick}
           >
             <>
               <View style={styles.triangle}></View>
