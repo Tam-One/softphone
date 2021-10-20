@@ -20,9 +20,7 @@ const css = StyleSheet.create({
   },
   Footer__noKeyboard: {
     left: 0,
-    paddingBottom: getBottomSpace(),
     backgroundColor: g.bg,
-    ...g.boxShadow,
   },
   //
   // Fix bug margin auto can not be used

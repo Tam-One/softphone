@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import CustomColors from 'utils/CustomColors'
 import CustomFonts from 'utils/CustomFonts'
 
@@ -92,7 +92,9 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingBottom: 100,
+    paddingBottom: Platform.OS === 'ios' ? 150 : 80,
+    justifyContent: 'center',
+    width: '100%',
   },
   actionBtnContainer: {
     flex: 1,

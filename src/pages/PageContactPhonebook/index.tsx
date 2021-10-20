@@ -96,41 +96,41 @@ class PageContactPhonebook extends React.Component {
     })
     return (
       <CustomLayout menu='contact' subMenu='phonebook'>
+        <View style={styles.parkContainer}>
+          <View>
+            <RnText style={styles.ParksText}>{'Contacts'}</RnText>
+            <RnText style={styles.noParksDesc}>
+              {'Phonebook external contacts'}
+            </RnText>
+          </View>
+          <TouchableOpacity
+            style={styles.addButtonContainer}
+            onPress={() =>
+              Nav().goToPagePhonebookUpdate({ contact: {}, newContact: true })
+            }
+          >
+            <RnText style={styles.addButton}>+</RnText>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.searchBox}>
+          <RnIcon
+            path={mdiMagnify}
+            pointerEvents='none'
+            style={styles.fieldIcon}
+            size={17}
+            color={CustomColors.DarkAsh}
+          />
+          <RnTextInput
+            disabled
+            style={styles.fieldTextInput}
+            value={contactStore.contactSearchBook}
+            onChangeText={(val: string) => {
+              contactStore.contactSearchBook = val
+            }}
+            placeholder={'Search'}
+          />
+        </View>
         <ScrollView>
-          <View style={styles.parkContainer}>
-            <View>
-              <RnText style={styles.ParksText}>{'Contacts'}</RnText>
-              <RnText style={styles.noParksDesc}>
-                {'Phonebook external contacts'}
-              </RnText>
-            </View>
-            <TouchableOpacity
-              style={styles.addButtonContainer}
-              onPress={() =>
-                Nav().goToPagePhonebookUpdate({ contact: {}, newContact: true })
-              }
-            >
-              <RnText style={styles.addButton}>+</RnText>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.searchBox}>
-            <RnIcon
-              path={mdiMagnify}
-              pointerEvents='none'
-              style={styles.fieldIcon}
-              size={17}
-              color={CustomColors.DarkAsh}
-            />
-            <RnTextInput
-              disabled
-              style={styles.fieldTextInput}
-              value={contactStore.contactSearchBook}
-              onChangeText={(val: string) => {
-                contactStore.contactSearchBook = val
-              }}
-              placeholder={'Search'}
-            />
-          </View>
           <View style={styles.listView}>
             <FlatList
               data={groups}

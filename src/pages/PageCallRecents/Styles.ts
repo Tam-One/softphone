@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    marginTop: -9,
+    marginTop: -22,
     marginLeft: 33,
   },
   voiceMailText: {
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.SmallSubText,
     lineHeight: 13,
+    marginTop: 17,
   },
 })
 

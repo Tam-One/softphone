@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   poweredBy: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 40,
   },
   poweredByText: {

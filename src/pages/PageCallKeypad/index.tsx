@@ -41,6 +41,9 @@ class PageCallKeypad extends React.Component {
       return
     }
     callStore.startCall(this.text)
+    setTimeout(() => {
+      this.onNumberPress('-1')
+    }, 100)
   }
 
   onSelectionChange = (
@@ -69,9 +72,14 @@ class PageCallKeypad extends React.Component {
     if (isDelete && start === end && start) {
       min = min - 1
     }
-    // Update text to trigger render
-    this.text = this.text.substring(0, min) + val + this.text.substring(max)
-    //
+    if (val === '-1') {
+      min = 0
+      this.text = ''
+    } else {
+      // Update text to trigger render
+      this.text = this.text.substring(0, min) + val + this.text.substring(max)
+      //
+    }
     const textSelection = min + (isDelete ? 0 : 1)
     this.textSelection.start = textSelection
     this.textSelection.end = textSelection
