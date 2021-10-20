@@ -23,23 +23,6 @@ const onNotification = async (n0: PN, initApp: Function) => {
     if (!n) {
       return
     }
-    //
-    FCM.presentLocalNotification({
-      body: 'Click to ' + (n.isCall ? 'answer' : 'view'),
-      title: n.body,
-      sound: n.isCall ? 'incallmanager_ringtone.mp3' : undefined,
-      number: 0,
-      priority: 'high',
-      show_in_foreground: true,
-      local_notification: true,
-      wake_screen: true,
-      ongoing: false,
-      lights: true,
-      channel: 'default',
-      icon: 'ic_launcher',
-      my_custom_data: 'local_notification',
-      is_local_notification: 'local_notification',
-    })
   } catch (err) {
     console.error(err)
   }

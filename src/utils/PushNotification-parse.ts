@@ -181,7 +181,7 @@ const parse = async (raw: { [k: string]: unknown }, isLocal = false) => {
       : null
   }
   lastCallPn = n
-  if (Platform.OS === 'android') {
+  if (Platform.OS === 'android' && AppState.currentState !== 'active') {
     RNCallKeep.endAllCalls()
     RNCallKeep.displayIncomingCall(uuid().toUpperCase(), 'Brekeke Phone', n.to)
   }

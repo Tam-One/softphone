@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     backgroundColor: CustomColors.DarkBlack,
     justifyContent: 'center',
-    height: 300,
   },
   callBarOuter: {
     flexDirection: 'row',

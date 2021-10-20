@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-
+#import <Firebase.h>
 #import <PushKit/PushKit.h>
 #import <RNCPushNotificationIOS.h>
 #import <React/RCTBridge.h>
@@ -127,6 +127,10 @@ static void InitializeFlipper(UIApplication *application) {
   [RNVoipPushNotificationManager
       didReceiveIncomingPushWithPayload:payload
                                 forType:(NSString *)type];
+   UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+   if (state == UIApplicationStateBackground || state == UIApplicationStateInactive)
+   {
+
   [RNCallKeep reportNewIncomingCall:uuid
                              handle:@"Brekeke Phone"
                          handleType:@"generic"
@@ -139,6 +143,7 @@ static void InitializeFlipper(UIApplication *application) {
                         fromPushKit:YES
                             payload:NULL
               withCompletionHandler:completion];
+    }
   // --- don't need to call this if we do on the js side
   // --- already add completion in above reportNewIncomingCall
   // completion();

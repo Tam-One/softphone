@@ -34,12 +34,13 @@ class IncomingCallModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  void showCall(@Nonnull String uuid, @Nonnull String callerName, @Nonnull Boolean isVideoCall) {
+  void showCall(@Nonnull String uuid, @Nonnull String callerName, @Nonnull String callerNum, @Nonnull Boolean isVideoCall) {
     closeIncomingCallActivity(false); // Close the current PN screen if any
     Intent i = new Intent(reactContext, IncomingCallActivity.class);
     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     i.putExtra("uuid", uuid);
     i.putExtra("callerName", callerName);
+    i.putExtra("callerNum", callerNum);
     i.putExtra("isVideoCall", isVideoCall);
     reactContext.startActivity(i);
   }

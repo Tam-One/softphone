@@ -10,13 +10,14 @@ import ChatGroupInvite, { UnreadChatNoti } from 'components/ChatGroupInvite'
 import { RnStatusBar, RnText } from 'components/Rn'
 import { observe } from 'mobx'
 import { observer } from 'mobx-react'
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import {
   ActivityIndicator,
   AppState,
   BackHandler,
   Keyboard,
   Platform,
+  SafeAreaView,
   StyleSheet,
   View,
 } from 'react-native'
@@ -216,48 +217,57 @@ const App = observer(() => {
   }
 
   return (
-    <View style={[StyleSheet.absoluteFill, styles.app]}>
-      <RnStatusBar />
-      {shouldShowConnStatus && !!signedInId && (
-        <AnimatedSize
-          style={[
-            styles.appConnectionStatus,
-            isConnFailure && styles.appConnectionStatusFailure,
-          ]}
-        >
-          <View style={styles.appConnectionStatusInner}>
-            <RnText small white>
-              {connMessage}
-            </RnText>
+    <Fragment>
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: CustomColors.MediumBlack }}
+      >
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+          {Platform.OS === 'android' ? <RnStatusBar /> : null}
+          {shouldShowConnStatus && !!signedInId && (
+            <AnimatedSize
+              style={[
+                styles.appConnectionStatus,
+                isConnFailure && styles.appConnectionStatusFailure,
+              ]}
+            >
+              <View style={styles.appConnectionStatusInner}>
+                <RnText small white>
+                  {connMessage}
+                </RnText>
+              </View>
+            </AnimatedSize>
+          )}
+
+          {!!signedInId && !!loginPressed && (
+            <>
+              <CallNotify />
+              <CallBar />
+              <CallVoices />
+              <ChatGroupInvite />
+              <UnreadChatNoti />
+            </>
+          )}
+
+          {signedInId && !loginPressed ? (
+            <View style={styles.container}>
+              <ActivityIndicator
+                color={CustomColors.ActiveBlue}
+                size={'large'}
+              />
+            </View>
+          ) : (
+            <></>
+          )}
+
+          <View style={styles.appInner}>
+            <RootStacks />
+            <RnPickerRoot />
+            <RnAlertRoot />
           </View>
-        </AnimatedSize>
-      )}
-
-      {!!signedInId && !!loginPressed && (
-        <>
-          <CallNotify />
-          <CallBar />
-          <CallVoices />
-          <ChatGroupInvite />
-          <UnreadChatNoti />
-        </>
-      )}
-
-      {signedInId && !loginPressed ? (
-        <View style={styles.container}>
-          <ActivityIndicator color={CustomColors.ActiveBlue} size={'large'} />
+          {Platform.OS === 'ios' && <KeyboardSpacer />}
         </View>
-      ) : (
-        <></>
-      )}
-
-      <View style={styles.appInner}>
-        <RootStacks />
-        <RnPickerRoot />
-        <RnAlertRoot />
-      </View>
-      {Platform.OS === 'ios' && <KeyboardSpacer />}
-    </View>
+      </SafeAreaView>
+    </Fragment>
   )
 })
 
