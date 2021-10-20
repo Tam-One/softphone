@@ -35,7 +35,7 @@ const back = RnStacker.createBackTo
 export class Nav {
   goToPageProfileSignIn = go({ PageProfileSignIn }, true)
   backToPageProfileSignIn = back({ PageProfileSignIn }, true)
-  goToPageViewContact = go({ PageViewContact }, true)
+  goToPageViewContact = go({ PageViewContact })
   backToPageViewContact = back({ PageViewContact }, true)
   goToEditAccount = go({ EditAccount }, true)
   backToEditAccount = back({ EditAccount }, true)
