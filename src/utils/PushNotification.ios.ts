@@ -52,9 +52,6 @@ const onNotification = async (
 
 const getFcmToken = async () => {
   const token = await messaging().getToken()
-  console.log('token')
-  console.log(token)
-  alert(token)
   onToken(token)
   onVoipToken(token)
 }

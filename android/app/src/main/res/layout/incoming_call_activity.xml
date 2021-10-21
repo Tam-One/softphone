@@ -25,7 +25,6 @@
       android:textColor="#FFFFFF"
       android:id="@+id/btn_caller_name"
       android:textSize="26sp"
-      android:text=""
     />
         <TextView
       android:gravity="center"
