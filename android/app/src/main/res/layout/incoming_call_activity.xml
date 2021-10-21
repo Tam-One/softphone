@@ -57,7 +57,7 @@
     android:layout_width="match_parent"
     android:text="Qooqie Phone"
     android:textColor="@color/blue"
-    android:textSize="20dp"
+    android:textSize="20sp"
     android:textStyle="normal"
     android:visibility="invisible"
   />
@@ -100,7 +100,7 @@
           android:text="Refuse"
           android:textColor="#2F3443"
           android:layout_gravity="center_horizontal"
-          android:textSize="16dp"
+          android:textSize="16sp"
         />
             </LinearLayout>
             <LinearLayout
@@ -129,7 +129,7 @@
           android:text="Accept"
           android:textColor="#2F3443"
           android:layout_gravity="center_horizontal"
-          android:textSize="16dp"
+          android:textSize="16sp"
         />
             </LinearLayout>
         </LinearLayout>
