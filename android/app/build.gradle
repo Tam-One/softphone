@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
 
+apply plugin: 'com.google.gms.google-services'
+
 import com.android.build.OutputFile
 
 project.ext.react = [
@@ -22,7 +24,7 @@ android {
   }
 
   signingConfigs {
-    release {
+     release {
       storeFile file("../keystores/release.keystore")
       storePassword "my-release-keyPw"
       keyAlias "my-key-alias"
@@ -32,8 +34,8 @@ android {
 
   defaultConfig {
     applicationId "com.brekeke.phonedev"
-    versionCode 207016
-    versionName "2.7.16"
+    versionCode 209004
+    versionName "2.9.4"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     multiDexEnabled true
@@ -70,6 +72,13 @@ android {
 }
 
 dependencies {
+
+  implementation 'com.google.firebase:firebase-messaging:21.1.0'
+  
+  implementation("com.google.firebase:firebase-iid")
+  implementation platform('com.google.firebase:firebase-bom:28.4.1')
+  implementation 'com.google.firebase:firebase-analytics'
+
   implementation fileTree(dir: "libs", include: ["*.jar"])
   implementation "com.facebook.react:react-native:+"
 

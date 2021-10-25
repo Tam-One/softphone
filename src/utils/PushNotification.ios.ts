@@ -3,7 +3,9 @@ import './callkeep'
 import PushNotificationIOS, {
   PushNotification as PN,
 } from '@react-native-community/push-notification-ios'
+import messaging from '@react-native-firebase/messaging'
 import { AppState } from 'react-native'
+import FCM, { FCMEvent, Notification as FPN } from 'react-native-fcm'
 import Voip from 'react-native-voip-push-notification'
 
 import parse from './PushNotification-parse'
@@ -23,16 +25,15 @@ const onToken = (t: string) => {
 }
 
 const onNotification = async (
-  n0: PN | null,
+  n0: any | null,
   initApp: Function,
   isLocal = false,
 ) => {
-  initApp()
-  const n = parse((n0 as unknown) as { [k: string]: unknown }, isLocal)
+  const n: any = parse((n0 as unknown) as { [k: string]: unknown }, isLocal)
   if (!n) {
     return
   }
-  //
+  initApp()
   PushNotificationIOS.getApplicationIconBadgeNumber(badge => {
     badge = 1 + (Number(badge) || 0)
     if (AppState.currentState === 'active') {
@@ -49,44 +50,20 @@ const onNotification = async (
   })
 }
 
+const getFcmToken = async () => {
+  const token = await messaging().getToken()
+  onToken(token)
+  onVoipToken(token)
+}
+
+const { Notification, RefreshToken } = FCMEvent
 const PushNotification = {
   register: async (initApp: Function) => {
-    initApp()
-    //
-    Voip.addEventListener('register', onVoipToken)
-    Voip.addEventListener('notification', (n: PN) => onNotification(n, initApp))
-    Voip.addEventListener(
-      'didLoadWithEvents',
-      (e: { name: string; data: PN }[]) => {
-        if (!e?.length) {
-          return
-        }
-        e.forEach(({ name, data }) => {
-          if (name === Voip.RNVoipPushRemoteNotificationsRegisteredEvent) {
-            if (typeof data === 'string') {
-              onVoipToken(data)
-            }
-          } else if (name === Voip.RNVoipPushRemoteNotificationReceivedEvent) {
-            onNotification(data, initApp)
-          }
-        })
-      },
-    )
-    Voip.registerVoipToken()
-    //
-    PushNotificationIOS.addEventListener('register', onToken)
-    PushNotificationIOS.addEventListener('notification', (n: PN) =>
-      onNotification(n, initApp),
-    )
-    PushNotificationIOS.addEventListener('localNotification', (n: PN) =>
-      onNotification(n, initApp, true),
-    )
-    //
-    PushNotificationIOS.requestPermissions()
-    Voip.requestPermissions()
-    //
-    const n0 = await PushNotificationIOS.getInitialNotification()
-    onNotification(n0, initApp, true)
+    try {
+      initApp()
+    } catch (err) {
+      console.log(err)
+    }
   },
   getVoipToken: () => {
     return Promise.resolve(voipApnsToken)

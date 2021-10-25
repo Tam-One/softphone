@@ -9,7 +9,12 @@ const Polyfill = {
 const M = (Platform.OS === 'android' ? NativeModules : Polyfill) as {
   IncomingCall: NativeModule & {
     closeIncomingCallActivity(isAnswerPressed: boolean): void
-    showCall(uuid: string, callerName: string, withVideo?: boolean): void
+    showCall(
+      uuid: string,
+      callerName: string,
+      callerNum: string,
+      withVideo?: boolean,
+    ): void
   }
 }
 

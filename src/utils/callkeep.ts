@@ -172,9 +172,11 @@ export const setupCallKeep = async () => {
   }
   const onShowIncomingCallUi = (e: { callUUID: string }) => {
     const uuid = e.callUUID.toUpperCase()
+    const callDetails = callStore.calls.find(c => c.incoming)
     IncomingCall.showCall(
       uuid,
-      getLastCallPn()?.from || 'Loading...',
+      callDetails?.partyName || '',
+      callDetails?.partyNumber || getLastCallPn()?.from || 'Loading...',
       !!callStore.calls.find(c => c.incoming && c.remoteVideoEnabled),
     )
     callStore.onCallKeepDidDisplayIncomingCall(uuid)

@@ -83,8 +83,6 @@ public class IncomingCallActivity extends Activity {
       forceFinish();
       return true;
     }
-    TextView txtCallStatus = (TextView) findViewById(R.id.txt_call_status);
-    txtCallStatus.setText("Call is in progress\nUnlock your phone to continue");
     Button btnAnswer = (Button) findViewById(R.id.btn_answer);
     if (btnAnswer != null) {
       ViewGroup goBackBtnLayout = (ViewGroup) btnAnswer.getParent();
@@ -95,8 +93,6 @@ public class IncomingCallActivity extends Activity {
       ViewGroup triggerAlertBtnLayout = (ViewGroup) btnReject.getParent();
       triggerAlertBtnLayout.removeView(btnReject);
     }
-    Button btnUnlock = (Button) findViewById(R.id.btn_close);
-    btnUnlock.setVisibility(View.VISIBLE);
     forceStopRingtone();
     return false;
   }
@@ -130,11 +126,26 @@ public class IncomingCallActivity extends Activity {
 
     String uuid = b.getString("uuid");
     String callerName = b.getString("callerName");
+    String callerNumber = b.getString("callerNum");
+    Button btnCallerName = (Button) findViewById(R.id.btn_caller_name);
     TextView txtCallerName = (TextView) findViewById(R.id.txt_caller_name);
-    txtCallerName.setText(callerName);
+    if(callerName.trim().isEmpty() || callerName.equals(callerNumber)){
+      txtCallerName.setVisibility(View.GONE);
+      btnCallerName.setVisibility(View.GONE);
+    } else {
+      txtCallerName.setText(callerName);
+      StringBuilder initials = new StringBuilder();
+      for (String s : callerName.split(" ")) {
+        initials.append(s.charAt(0));
+      }
+      if(initials.length() < 2){
+        initials.append(callerName.charAt(1));
+      }
+      btnCallerName.setText(initials);
+    }
+    TextView txtCallerNumber = (TextView) findViewById(R.id.txt_caller_number);
+    txtCallerNumber.setText(callerNumber);
     Boolean isVideoCall = b.getBoolean("isVideoCall");
-    TextView txtCallStatus = (TextView) findViewById(R.id.txt_call_status);
-    txtCallStatus.setText("Incoming " + (isVideoCall ? "Video" : "Audio") + " Call");
 
     findViewById(R.id.btn_answer)
         .setOnClickListener(
@@ -155,14 +166,6 @@ public class IncomingCallActivity extends Activity {
               }
             });
 
-    findViewById(R.id.btn_close)
-        .setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                forceFinish();
-              }
-            });
   }
 
   @Override
