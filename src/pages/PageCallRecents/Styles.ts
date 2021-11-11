@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    marginTop: -22,
+    marginTop: -8,
     marginLeft: 33,
   },
   voiceMailText: {

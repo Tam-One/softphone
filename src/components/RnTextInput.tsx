@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react'
 import { Platform, StyleSheet, TextInput, TextInputProps } from 'react-native'
+import CustomColors from 'utils/CustomColors'
 
 import v from './variables'
 
@@ -27,6 +28,7 @@ const RnTextInput = forwardRef(
           : keyboardType) as TextInputProps['keyboardType']
       }
       style={[css.RnTextInput, style]}
+      placeholderTextColor={CustomColors.DarkAsh}
     />
   ),
 )

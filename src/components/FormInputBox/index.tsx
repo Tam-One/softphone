@@ -3,7 +3,7 @@ import styles from 'components/FormInputBox/Styles'
 import { RnIcon, RnText } from 'components/Rn'
 import RnTextInput from 'components/RnTextInput'
 import React, { FC, useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import CustomColors from 'utils/CustomColors'
 
@@ -18,6 +18,8 @@ const FormInputBox: FC<{
   containerStyle?: object
   iconStyle?: object
   secureEntry?: boolean
+  rightIcon?: string
+  rightIconOnClick?(): void
 }> = ({
   label,
   val,
@@ -29,6 +31,8 @@ const FormInputBox: FC<{
   containerStyle,
   iconStyle,
   secureEntry,
+  rightIcon,
+  rightIconOnClick,
 }) => {
   const [focus, setFocus] = useState(false)
   const [validationError, setValidationError] = useState(showError)
@@ -95,6 +99,23 @@ const FormInputBox: FC<{
           selectTextOnFocus={editable}
           secureTextEntry={secureEntry}
         />
+        {rightIcon ? (
+          <TouchableOpacity
+            style={{ position: 'absolute', right: 0, marginRight: 13 }}
+            onPress={rightIconOnClick}
+          >
+            <SvgXml
+              width='22'
+              height='30'
+              xml={rightIcon}
+              fill={CustomColors.SVGBlack}
+              fillOpacity={1}
+              style={iconStyle}
+            />
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
       </View>
       {(validationError || showError) && (
         <View style={styles.fieldError}>

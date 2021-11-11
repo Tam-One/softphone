@@ -29,7 +29,7 @@ const _setupCallKeep = async () => {
 
   await RNCallKeep.setup({
     ios: {
-      appName: 'Brekeke Phone',
+      appName: 'Qooqie Phone',
       imageName: 'callkit.png',
       // https://github.com/react-native-webrtc/react-native-callkeep/issues/193
       // https://github.com/react-native-webrtc/react-native-callkeep/issues/181
@@ -54,7 +54,7 @@ const _setupCallKeep = async () => {
       if (Platform.OS === 'android') {
         RNCallKeep.setForegroundServiceSettings({
           channelId: 'com.brekeke.phone',
-          channelName: 'Foreground service for Brekeke Phone',
+          channelName: 'Foreground service for Qooqie Phone',
           notificationTitle: 'Qooqie Phone is running on background',
           notificationIcon: 'ic_launcher',
         })
@@ -121,7 +121,7 @@ export const setupCallKeep = async () => {
       n?.from &&
       (e.localizedCallerName === 'Loading...' || e.handle === 'Loading...')
     ) {
-      RNCallKeep.updateDisplay(uuid, n.from, 'Brekeke Phone')
+      RNCallKeep.updateDisplay(uuid, n.from, 'Qooqie Phone')
     }
     // Call event handler in callStore
     callStore.onCallKeepDidDisplayIncomingCall(uuid)

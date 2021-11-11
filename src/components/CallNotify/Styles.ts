@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   notify: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   notifyContainer: {
     flex: 1,
-    marginBottom: 40,
+    marginBottom: Platform.OS === 'ios' ? 80 : 40,
   },
   backgroundImage: {
     flex: 1,

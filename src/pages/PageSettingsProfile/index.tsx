@@ -52,21 +52,8 @@ const SettingsView = ({ onPress }) => {
         <InputBox val={pbxTenant}></InputBox>
       </View>
 
-      <TouchableOpacity style={styles.actionButton} onPress={onPress}>
-        <RnText style={styles.actionText}>{'Advanced settings'} </RnText>
-        <View>
-          <SvgXml
-            width='25'
-            height='25'
-            xml={svgImages.rightButton}
-            fill={CustomColors.DarkBlue}
-            fillOpacity={1}
-          />
-        </View>
-      </TouchableOpacity>
-
       <TouchableOpacity
-        style={[styles.actionButton, styles.logoutButton]}
+        style={[styles.actionButton]}
         onPress={getAuthStore().signOut}
       >
         <RnText style={styles.logoutText}>{'Logout'} </RnText>

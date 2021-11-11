@@ -142,6 +142,38 @@ const styles = StyleSheet.create({
   formView: {
     marginTop: 40,
   },
+  dropDownContainer: {
+    borderColor: CustomColors.White,
+    marginHorizontal: 16,
+    shadowColor: CustomColors.Black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
+    marginTop: 20,
+    paddingLeft: 3,
+  },
+  serverStyle: {
+    backgroundColor: CustomColors.White,
+    marginTop: 32,
+    paddingRight: 12,
+    borderColor: CustomColors.White,
+    borderRadius: 10,
+    height: 46,
+    marginHorizontal: 16,
+  },
+  serverText: {
+    color: CustomColors.Black,
+    fontFamily: 'Roboto-Medium',
+    fontSize: 14,
+    paddingLeft: 3,
+  },
+  serverContainer: {
+    paddingRight: 28,
+  },
 })
 
 export default styles
