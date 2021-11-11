@@ -77,7 +77,7 @@ const PageProfileSignIn = () => {
     { label: 'Tam One', value: 'spt.tamone.com' },
   ]
   const testingServer = {
-    label: 'test',
+    label: 'Test',
     value: 'spt.qooqie.com',
   }
   const [servers, setServers] = useState(serverConfig)
@@ -117,7 +117,7 @@ const PageProfileSignIn = () => {
   }
 
   useEffect(() => {
-    if (get(store, 'profile.pbxTenant') === 'testing') {
+    if (get(store, 'profile.pbxTenant') === 'callback') {
       let server = serverConfig
       server.push(testingServer)
       setServers(server)
@@ -148,7 +148,7 @@ const PageProfileSignIn = () => {
             val={get(store, 'profile.pbxTenant')}
             onTextChange={text => {
               let data = serverConfig
-              if (text === 'testing') {
+              if (text === 'callback') {
                 data.push(testingServer)
               }
               setServers(data)
