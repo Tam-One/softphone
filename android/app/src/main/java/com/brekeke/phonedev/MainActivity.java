@@ -10,7 +10,7 @@ import android.os.Bundle;
 public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
-    return "BrekekePhone";
+    return "QooqiePhone";
   }
 
   @Override

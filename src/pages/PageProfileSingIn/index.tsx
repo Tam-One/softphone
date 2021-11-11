@@ -6,8 +6,9 @@ import { RnText } from 'components/Rn'
 import { cloneDeep } from 'lodash'
 import get from 'lodash/get'
 import styles from 'pages/PageProfileSingIn/Styles'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
 import { SvgXml } from 'react-native-svg'
 import { getAuthStore } from 'stores/authStore'
 import profileStore from 'stores/profileStore'
@@ -47,6 +48,8 @@ const InputBox: FC<{
 
 const PageProfileSignIn = () => {
   const [fieldErrors, setFieldErrors] = useState({})
+  const [passwordView, setPasswordView] = useState(false)
+
   const profileMap =
     profileStore.profilesMap[profileStore.profiles[0]?.id] || {}
   const { id, pbxUsername, pbxTenant, pbxHostname, pbxPort } = profileMap
@@ -66,6 +69,18 @@ const PageProfileSignIn = () => {
     ReturnType<typeof useStore>
   const store = (useStore(storeObj) as any) as M
   const [profileObj, setProfileObj] = useState(get(store, 'profile'))
+
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState('Tam One')
+  const serverConfig = [
+    { label: 'Qooqie', value: 'spt.qooqie.com' },
+    { label: 'Tam One', value: 'spt.tamone.com' },
+  ]
+  const testingServer = {
+    label: 'test',
+    value: 'spt.qooqie.com',
+  }
+  const [servers, setServers] = useState(serverConfig)
 
   const onTextChange = (key, val) => {
     let fieldErrorsCopy = { ...fieldErrors }
@@ -89,7 +104,7 @@ const PageProfileSignIn = () => {
       return
     }
     profile.pbxPhoneIndex = '4'
-    profile.pbxHostname = 'spt.qooqie.com'
+    profile.pbxHostname = value
     profile.pbxPort = '8443'
     profile.pushNotificationEnabled = true
     profile.ucEnabled = false
@@ -100,6 +115,14 @@ const PageProfileSignIn = () => {
     const { id } = profileMap
     getAuthStore().signIn(id)
   }
+
+  useEffect(() => {
+    if (get(store, 'profile.pbxTenant') === 'testing') {
+      let server = serverConfig
+      server.push(testingServer)
+      setServers(server)
+    }
+  }, [])
 
   return (
     <CustomGradient>
@@ -123,11 +146,35 @@ const PageProfileSignIn = () => {
           <FormInputBox
             label={'Tenant'}
             val={get(store, 'profile.pbxTenant')}
-            onTextChange={text => onTextChange('pbxTenant', text)}
+            onTextChange={text => {
+              let data = serverConfig
+              if (text === 'testing') {
+                data.push(testingServer)
+              }
+              setServers(data)
+              onTextChange('pbxTenant', text)
+            }}
             icon={svgImages.keyIcon}
             containerStyle={{ marginTop: 16 }}
             required={true}
             showError={fieldErrors['pbxTenant']}
+          />
+
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={servers}
+            setOpen={setOpen}
+            setValue={text => {
+              onTextChange('pbxHostname', text)
+              setValue(text)
+            }}
+            setItems={setServers}
+            style={styles.serverStyle}
+            textStyle={styles.serverText}
+            containerStyle={styles.serverContainer}
+            dropDownContainerStyle={styles.dropDownContainer}
+            dropDownDirection='BOTTOM'
           />
           <FormInputBox
             label={'Password'}
@@ -138,7 +185,9 @@ const PageProfileSignIn = () => {
             containerStyle={{ marginTop: 16 }}
             icon={svgImages.lockButton}
             iconStyle={{ marginBottom: 10 }}
-            secureEntry={true}
+            secureEntry={!passwordView}
+            rightIcon={passwordView ? svgImages.eyeOffIcon : svgImages.eyeIcon}
+            rightIconOnClick={() => setPasswordView(!passwordView)}
           />
         </View>
 

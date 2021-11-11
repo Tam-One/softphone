@@ -11,10 +11,10 @@ import callStore from 'stores/callStore'
 import { setCallStore } from 'stores/cancelRecentPn'
 
 setCallStore(callStore)
-AppRegistry.registerComponent('BrekekePhone', () => App)
+AppRegistry.registerComponent('QooqiePhone', () => App)
 
 if (Platform.OS === 'web') {
-  AppRegistry.runApplication('BrekekePhone', {
+  AppRegistry.runApplication('QooqiePhone', {
     rootTag: document.getElementById('root'),
   })
 }

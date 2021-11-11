@@ -122,31 +122,33 @@ class PageContactUsers extends React.Component {
 
     return (
       <CustomLayout menu='contact' subMenu='users'>
-        <View style={styles.parkContainer}>
-          <View>
-            <RnText style={styles.ParksText}>{'Users'}</RnText>
-            <RnText style={styles.noParksDesc}>{'Internal contacts'}</RnText>
+        <ScrollView stickyHeaderIndices={[1]}>
+          <View style={styles.parkContainer}>
+            <View>
+              <RnText style={styles.ParksText}>{'Users'}</RnText>
+              <RnText style={styles.noParksDesc}>{'Internal contacts'}</RnText>
+            </View>
           </View>
-        </View>
-        <View style={styles.searchBox}>
-          <RnIcon
-            path={mdiMagnify}
-            pointerEvents='none'
-            style={styles.fieldIcon}
-            size={17}
-            color={CustomColors.DarkAsh}
-          />
-          <RnTextInput
-            disabled
-            style={styles.fieldTextInput}
-            value={contactStore.usersSearchTerm}
-            onChangeText={(val: string) => {
-              contactStore.usersSearchTerm = val
-            }}
-            placeholder={'Search'}
-          />
-        </View>
-        <ScrollView>
+          <View>
+            <View style={styles.searchBox}>
+              <RnIcon
+                path={mdiMagnify}
+                pointerEvents='none'
+                style={styles.fieldIcon}
+                size={17}
+                color={CustomColors.DarkAsh}
+              />
+              <RnTextInput
+                disabled
+                style={styles.fieldTextInput}
+                value={contactStore.usersSearchTerm}
+                onChangeText={(val: string) => {
+                  contactStore.usersSearchTerm = val
+                }}
+                placeholder={'Search'}
+              />
+            </View>
+          </View>
           <View style={styles.listView}>
             <FlatList
               data={groups}

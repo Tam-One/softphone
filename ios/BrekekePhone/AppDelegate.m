@@ -50,7 +50,7 @@ static void InitializeFlipper(UIApplication *application) {
   [RNVoipPushNotificationManager voipRegistration];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"BrekekePhone"
+                                                   moduleName:@"QooqiePhone"
                                             initialProperties:nil];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f
                                                     green:1.0f
@@ -132,7 +132,7 @@ static void InitializeFlipper(UIApplication *application) {
    {
 
   [RNCallKeep reportNewIncomingCall:uuid
-                             handle:@"Brekeke Phone"
+                             handle:@"Qooqie Phone"
                          handleType:@"generic"
                            hasVideo:false
                 localizedCallerName:@"Loading..."

@@ -60,55 +60,57 @@ class PageCallRecents extends React.Component {
     const calls = this.getMatchedCalls()
     return (
       <CustomLayout menu='call' subMenu='recents'>
-        <View style={styles.parkContainer}>
-          <View>
-            <RnText style={styles.ParksText}>{'Recents'}</RnText>
-            <RnText style={styles.noParksDesc}>
-              {'Recent voicemails and calls'}
-            </RnText>
-          </View>
-
-          <View>
+        <ScrollView stickyHeaderIndices={[1]}>
+          <View style={styles.parkContainer}>
             <View>
-              <RnIcon
-                path={mdiVoicemail}
-                pointerEvents='none'
-                style={styles.voiceMailIcon}
-                size={31}
-                color={CustomColors.DarkBlue}
-              />
-              {callStore.newVoicemailCount ? (
-                <View style={styles.voiceMailCount}>
-                  <RnText style={styles.voiceMailText}>
-                    {callStore.newVoicemailCount}
-                  </RnText>
-                </View>
-              ) : (
-                <></>
-              )}
+              <RnText style={styles.ParksText}>{'Recents'}</RnText>
+              <RnText style={styles.noParksDesc}>
+                {'Recent voicemails and calls'}
+              </RnText>
             </View>
-            <RnText style={styles.voiceMailLabel}>{'Voicemail'}</RnText>
+
+            <View>
+              <View>
+                <RnIcon
+                  path={mdiVoicemail}
+                  pointerEvents='none'
+                  style={styles.voiceMailIcon}
+                  size={31}
+                  color={CustomColors.DarkBlue}
+                />
+                {callStore.newVoicemailCount ? (
+                  <View style={styles.voiceMailCount}>
+                    <RnText style={styles.voiceMailText}>
+                      {callStore.newVoicemailCount}
+                    </RnText>
+                  </View>
+                ) : (
+                  <></>
+                )}
+              </View>
+              <RnText style={styles.voiceMailLabel}>{'Voicemail'}</RnText>
+            </View>
           </View>
-        </View>
-        <View style={styles.searchBox}>
-          <RnIcon
-            path={mdiMagnify}
-            pointerEvents='none'
-            style={styles.fieldIcon}
-            size={17}
-            color={CustomColors.DarkAsh}
-          />
-          <RnTextInput
-            disabled
-            style={styles.fieldTextInput}
-            value={contactStore.callSearchRecents}
-            onChangeText={(val: string) => {
-              contactStore.callSearchRecents = val
-            }}
-            placeholder={'Search'}
-          />
-        </View>
-        <ScrollView>
+          <View>
+            <View style={styles.searchBox}>
+              <RnIcon
+                path={mdiMagnify}
+                pointerEvents='none'
+                style={styles.fieldIcon}
+                size={17}
+                color={CustomColors.DarkAsh}
+              />
+              <RnTextInput
+                disabled
+                style={styles.fieldTextInput}
+                value={contactStore.callSearchRecents}
+                onChangeText={(val: string) => {
+                  contactStore.callSearchRecents = val
+                }}
+                placeholder={'Search'}
+              />
+            </View>
+          </View>
           <View style={styles.noParksContainer}>
             <RnText
               style={styles.noParksText}

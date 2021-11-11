@@ -61,6 +61,8 @@ const PushNotification = {
   register: async (initApp: Function) => {
     try {
       initApp()
+      Voip.addEventListener('register', onVoipToken)
+      Voip.registerVoipToken()
     } catch (err) {
       console.log(err)
     }

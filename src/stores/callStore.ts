@@ -53,7 +53,10 @@ export class CallStore {
       // If the call is existing and not answered yet, we'll mark that call as displaying in callkeep
       // We assume that the app is being used in foreground (not quite exactly but assume)
       c.callkeepUuid = uuid
-      RNCallKeep.updateDisplay(uuid, c.partyName, 'Brekeke Phone', {
+      let displayName = c.partyName
+        ? c.partyName + ' (' + c.partyNumber + ')'
+        : c.partyNumber
+      RNCallKeep.updateDisplay(uuid, displayName, 'Qooqie Phone', {
         hasVideo: c.remoteVideoEnabled,
       })
       this.recentPn = undefined
@@ -172,7 +175,11 @@ export class CallStore {
       c.callkeepUuid = recentPnUuid
     }
     if (!recentPnAction) {
-      RNCallKeep.updateDisplay(recentPnUuid, c.partyName, 'Brekeke Phone', {
+      let displayName = c.partyName
+        ? c.partyName + ' (' + c.partyNumber + ')'
+        : c.partyNumber
+
+      RNCallKeep.updateDisplay(recentPnUuid, displayName, 'Qooqie Phone', {
         hasVideo: c.remoteVideoEnabled,
       })
       return
