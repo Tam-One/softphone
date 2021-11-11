@@ -73,8 +73,8 @@ const PageProfileSignIn = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('Tam One')
   const serverConfig = [
-    { label: 'Qooqie', value: 'spt.qooqie.com' },
-    { label: 'Tam One', value: 'spt.tamone.com' },
+    { label: 'Qooqie', value: 'sip2.qooqie.com' },
+    { label: 'Tam One', value: 'sip2.voipcentrale.nl' },
   ]
   const testingServer = {
     label: 'Test',
