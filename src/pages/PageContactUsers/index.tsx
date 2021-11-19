@@ -129,7 +129,7 @@ class PageContactUsers extends React.Component {
               <RnText style={styles.noParksDesc}>{'Internal contacts'}</RnText>
             </View>
           </View>
-          <View>
+          <View style={styles.searchBoxView}>
             <View style={styles.searchBox}>
               <RnIcon
                 path={mdiMagnify}

@@ -91,7 +91,7 @@ class PageCallRecents extends React.Component {
               <RnText style={styles.voiceMailLabel}>{'Voicemail'}</RnText>
             </View>
           </View>
-          <View>
+          <View style={styles.searchBoxView}>
             <View style={styles.searchBox}>
               <RnIcon
                 path={mdiMagnify}

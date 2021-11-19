@@ -61,6 +61,12 @@ const styles = StyleSheet.create({
   fieldErrorLabel: {
     color: CustomColors.White,
   },
+  rightIconView: {
+    position: 'absolute',
+    right: 0,
+    marginRight: 13,
+    alignItems: 'center',
+  },
 })
 
 export default styles

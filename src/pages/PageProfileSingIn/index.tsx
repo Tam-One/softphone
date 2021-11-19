@@ -7,7 +7,13 @@ import { cloneDeep } from 'lodash'
 import get from 'lodash/get'
 import styles from 'pages/PageProfileSingIn/Styles'
 import React, { FC, useEffect, useState } from 'react'
-import { Image, ScrollView, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { SvgXml } from 'react-native-svg'
 import { getAuthStore } from 'stores/authStore'
@@ -71,8 +77,15 @@ const PageProfileSignIn = () => {
   const [profileObj, setProfileObj] = useState(get(store, 'profile'))
 
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState('Tam One')
+  const [selectedServer, setSelectedServer] = useState(
+    get(store, 'profile.pbxHostname') || 'sip2.qooqie.com',
+  )
   const serverConfig = [
+    { label: 'Qooqie', value: 'sip2.qooqie.com' },
+    { label: 'Tam One', value: 'sip2.voipcentrale.nl' },
+    { label: 'Test', value: 'spt.qooqie.com' },
+  ]
+  const prodServerConfig = [
     { label: 'Qooqie', value: 'sip2.qooqie.com' },
     { label: 'Tam One', value: 'sip2.voipcentrale.nl' },
   ]
@@ -104,7 +117,7 @@ const PageProfileSignIn = () => {
       return
     }
     profile.pbxPhoneIndex = '4'
-    profile.pbxHostname = value
+    profile.pbxHostname = selectedServer
     profile.pbxPort = '8443'
     profile.pushNotificationEnabled = true
     profile.ucEnabled = false
@@ -117,9 +130,8 @@ const PageProfileSignIn = () => {
   }
 
   useEffect(() => {
-    if (get(store, 'profile.pbxTenant') === 'callback') {
-      let server = serverConfig
-      server.push(testingServer)
+    if (get(store, 'profile.pbxTenant') !== 'callback') {
+      let server = serverConfig.filter(ele => ele.value !== 'spt.qooqie.com')
       setServers(server)
     }
   }, [])
@@ -147,9 +159,11 @@ const PageProfileSignIn = () => {
             label={'Tenant'}
             val={get(store, 'profile.pbxTenant')}
             onTextChange={text => {
-              let data = serverConfig
+              let data = prodServerConfig
               if (text === 'callback') {
                 data.push(testingServer)
+              } else if (selectedServer === 'spt.qooqie.com') {
+                setSelectedServer('sip2.qooqie.com')
               }
               setServers(data)
               onTextChange('pbxTenant', text)
@@ -159,23 +173,37 @@ const PageProfileSignIn = () => {
             required={true}
             showError={fieldErrors['pbxTenant']}
           />
+          <View
+            style={[styles.serverView, Platform.OS === 'ios' && { zIndex: 99 }]}
+          >
+            <RnText
+              style={[
+                styles.inputBoxLabel,
+                open && { backgroundColor: CustomColors.White },
+              ]}
+            >
+              {'Server'}
+            </RnText>
 
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={servers}
-            setOpen={setOpen}
-            setValue={text => {
-              onTextChange('pbxHostname', text)
-              setValue(text)
-            }}
-            setItems={setServers}
-            style={styles.serverStyle}
-            textStyle={styles.serverText}
-            containerStyle={styles.serverContainer}
-            dropDownContainerStyle={styles.dropDownContainer}
-            dropDownDirection='BOTTOM'
-          />
+            <DropDownPicker
+              showTickIcon={false}
+              open={open}
+              value={selectedServer}
+              items={servers}
+              setOpen={setOpen}
+              setValue={text => {
+                onTextChange('pbxHostname', text)
+                setSelectedServer(text)
+              }}
+              setItems={setServers}
+              style={[styles.serverStyle, open && styles.activeView]}
+              textStyle={styles.serverText}
+              containerStyle={[styles.serverContainer]}
+              dropDownContainerStyle={styles.dropDownContainer}
+              dropDownDirection='BOTTOM'
+              selectedItemContainerStyle={styles.selectedItemContainer}
+            />
+          </View>
           <FormInputBox
             label={'Password'}
             val={get(store, 'profile.pbxPassword')}

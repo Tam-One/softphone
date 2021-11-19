@@ -113,7 +113,7 @@ class PageContactPhonebook extends React.Component {
               <RnText style={styles.addButton}>+</RnText>
             </TouchableOpacity>
           </View>
-          <View>
+          <View style={styles.searchBoxView}>
             <View style={styles.searchBox}>
               <RnIcon
                 path={mdiMagnify}

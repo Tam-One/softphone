@@ -107,6 +107,11 @@ const styles = StyleSheet.create({
   userItem: {
     borderBottomWidth: 1,
   },
+  searchBoxView: {
+    backgroundColor: CustomColors.GradientStart,
+    width: '100%',
+    paddingBottom: 10,
+  },
 })
 
 export default styles

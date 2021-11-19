@@ -101,7 +101,7 @@ const FormInputBox: FC<{
         />
         {rightIcon ? (
           <TouchableOpacity
-            style={{ position: 'absolute', right: 0, marginRight: 13 }}
+            style={styles.rightIconView}
             onPress={rightIconOnClick}
           >
             <SvgXml
@@ -110,7 +110,6 @@ const FormInputBox: FC<{
               xml={rightIcon}
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
-              style={iconStyle}
             />
           </TouchableOpacity>
         ) : (

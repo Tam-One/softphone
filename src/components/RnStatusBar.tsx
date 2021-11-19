@@ -1,12 +1,19 @@
 import React, { FC } from 'react'
-import { Platform, StatusBar, StyleSheet, View } from 'react-native'
+import {
+  Platform,
+  StatusBar,
+  StatusBarIOS,
+  StyleSheet,
+  View,
+} from 'react-native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
+import CustomColors from 'utils/CustomColors'
 
 import v from './variables'
 
 const css = StyleSheet.create({
   RnStatusBar: {
-    backgroundColor: v.hoverBg,
+    backgroundColor: CustomColors.StatusBarBlue,
     ...v.backdropZindex,
     ...Platform.select({
       ios: {
@@ -37,8 +44,10 @@ const RnStatusBar: FC<{ transparent?: boolean }> = props =>
         props.transparent && css.RnStatusBar__transparent,
       ]}
     >
-      <StatusBar backgroundColor={v.hoverBg} barStyle='dark-content' />
-      <View style={css.Border} />
+      <StatusBar
+        backgroundColor={CustomColors.StatusBarBlue}
+        barStyle='dark-content'
+      />
     </View>
   )
 
