@@ -43,6 +43,9 @@ const CustomColors = {
   RedOpacity: '#FF5252',
   GreenOpacity: '#cff0ec',
   KeyHighlightBlue: '#B0D0FF',
+  GradientStart: '#e6f3ff',
+  DropdownGrey: '#ebebeb',
+  StatusBarBlue: '#f8fcff',
 }
 
 export default CustomColors

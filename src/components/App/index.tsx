@@ -148,8 +148,6 @@ PushNotification.register(() => {
     if (s.signedInId) {
       s.reconnect()
       authPBX.auth()
-      authSIP.auth()
-      authUC.auth()
     } else {
       authPBX.dispose()
       authSIP.dispose()
@@ -218,55 +216,55 @@ const App = observer(() => {
 
   return (
     <Fragment>
-      <SafeAreaView
-        style={{ flex: 1, backgroundColor: CustomColors.MediumBlack }}
-      >
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
-          {Platform.OS === 'android' ? <RnStatusBar /> : null}
-          {shouldShowConnStatus && !!signedInId && (
-            <AnimatedSize
-              style={[
-                styles.appConnectionStatus,
-                isConnFailure && styles.appConnectionStatusFailure,
-              ]}
-            >
-              <View style={styles.appConnectionStatusInner}>
-                <RnText small white>
-                  {connMessage}
-                </RnText>
-              </View>
-            </AnimatedSize>
-          )}
-
-          {!!signedInId && !!loginPressed && (
-            <>
-              <CallNotify />
-              <CallBar />
-              <CallVoices />
-              <ChatGroupInvite />
-              <UnreadChatNoti />
-            </>
-          )}
-
-          {signedInId && !loginPressed ? (
-            <View style={styles.container}>
-              <ActivityIndicator
-                color={CustomColors.ActiveBlue}
-                size={'large'}
-              />
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <RnStatusBar />
+        {shouldShowConnStatus && !!signedInId && (
+          <AnimatedSize
+            style={[
+              styles.appConnectionStatus,
+              isConnFailure && styles.appConnectionStatusFailure,
+            ]}
+          >
+            <View style={styles.appConnectionStatusInner}>
+              <RnText small white>
+                {connMessage}
+              </RnText>
             </View>
-          ) : (
-            <></>
-          )}
+          </AnimatedSize>
+        )}
 
-          <View style={styles.appInner}>
-            <RootStacks />
-            <RnPickerRoot />
-            <RnAlertRoot />
+        {!!signedInId && !!loginPressed && (
+          <>
+            <CallNotify />
+            <CallBar />
+            <CallVoices />
+            <ChatGroupInvite />
+            <UnreadChatNoti />
+          </>
+        )}
+
+        {signedInId &&
+        !loginPressed &&
+        !pbxTotalFailure &&
+        !sipTotalFailure &&
+        !ucTotalFailure ? (
+          <View style={styles.container}>
+            <ActivityIndicator color={CustomColors.ActiveBlue} size={'large'} />
           </View>
-          {Platform.OS === 'ios' && <KeyboardSpacer />}
+        ) : (
+          <></>
+        )}
+
+        <View style={styles.appInner}>
+          <RootStacks />
+          <RnPickerRoot />
+          <RnAlertRoot />
         </View>
-      </SafeAreaView>
+        {Platform.OS === 'ios' && <KeyboardSpacer />}
+      </View>
+      <SafeAreaView
+        style={{ backgroundColor: CustomColors.MediumBlack }}
+      ></SafeAreaView>
     </Fragment>
   )
 })

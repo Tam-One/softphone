@@ -101,6 +101,8 @@ const styles = StyleSheet.create({
     fontSize: CustomFonts.SmallLabel,
     lineHeight: 12,
     letterSpacing: 0.4,
+    marginLeft: 18,
+    zIndex: 999999,
   },
   backButtonContainer: {
     flexDirection: 'row',
@@ -153,12 +155,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 3,
-    marginTop: 20,
-    paddingLeft: 3,
+    marginTop: 1,
+    margin: 0,
+    paddingLeft: 0,
+    borderWidth: 0,
+  },
+  activeView: {
+    borderColor: CustomColors.DarkGreen,
+    borderWidth: 2,
   },
   serverStyle: {
     backgroundColor: CustomColors.White,
-    marginTop: 32,
     paddingRight: 12,
     borderColor: CustomColors.White,
     borderRadius: 10,
@@ -173,6 +180,15 @@ const styles = StyleSheet.create({
   },
   serverContainer: {
     paddingRight: 28,
+  },
+  selectedItemContainer: {
+    backgroundColor: CustomColors.DropdownGrey,
+    width: '100%',
+    margin: 0,
+  },
+  serverView: {
+    position: 'relative',
+    marginTop: 32,
   },
 })
 

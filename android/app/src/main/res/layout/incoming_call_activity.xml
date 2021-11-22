@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:background="@drawable/bg_incoming_call_screen"
   android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
+  android:layout_height="match_parent"
   android:orientation="vertical"
   android:paddingBottom="20dp"
   tools:context="com.brekeke.phonedev.IncomingCallActivity"
@@ -14,7 +14,7 @@
     android:layout_width="match_parent"
     android:weightSum="8"
     android:orientation="vertical"
-    android:layout_marginTop="85dp"
+    android:layout_marginTop="65dp"
     android:layout_gravity="center_horizontal"
     android:gravity="center"
   >
@@ -133,16 +133,21 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-    <LinearLayout
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+  >
+        <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_alignParentBottom="true"
-    android:paddingBottom="30dp"
+    android:paddingBottom="10dp"
     android:layout_gravity="center_horizontal"
     android:orientation="horizontal"
     android:gravity="center"
   >
-        <TextView
+            <TextView
       android:layout_width="wrap_content"
       android:layout_height="50dp"
       android:layout_toLeftOf="@+id/imageView"
@@ -152,7 +157,7 @@
       android:textColor="#BCC4CC"
       android:gravity="center"
     />
-        <ImageView
+            <ImageView
       android:id="@+id/imageView"
       android:layout_width="wrap_content"
       android:layout_height="48dp"
@@ -160,5 +165,6 @@
       android:layout_gravity="center_horizontal"
       android:gravity="center"
     />
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

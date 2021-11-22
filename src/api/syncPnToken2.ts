@@ -107,10 +107,6 @@ const syncPnToken = (p: Profile, o: SyncPnTokenOption = {}) => {
       )
       return
     }
-    RnAlert.error({
-      message: intlDebug`Failed to sync Push Notification settings for ${p.pbxUsername}`,
-      err,
-    })
   })
 }
 

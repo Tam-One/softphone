@@ -57,10 +57,6 @@ class AuthUC {
     this.authWithoutCatch().catch((err: Error) => {
       getAuthStore().ucState = 'failure'
       getAuthStore().ucTotalFailure += 1
-      RnAlert.error({
-        message: intlDebug`Failed to connect to UC`,
-        err,
-      })
     })
   }
   private authWithCheckDebounced = debounce(this.authWithCheck, 300)

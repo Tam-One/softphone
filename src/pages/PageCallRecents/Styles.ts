@@ -86,6 +86,11 @@ const styles = StyleSheet.create({
     lineHeight: 13,
     marginTop: 17,
   },
+  searchBoxView: {
+    backgroundColor: CustomColors.GradientStart,
+    width: '100%',
+    paddingBottom: 10,
+  },
 })
 
 export default styles

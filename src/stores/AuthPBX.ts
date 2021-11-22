@@ -1,5 +1,6 @@
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
+import AuthSIP from 'stores/AuthSIP'
 
 import pbx from '../api/pbx'
 import { getAuthStore } from './authStore'
@@ -10,11 +11,6 @@ class AuthPBX {
   private clearObserve?: Lambda
   auth() {
     this.authWithCheck()
-    this.clearObserve = observe(
-      getAuthStore(),
-      'pbxShouldAuth',
-      this.authWithCheckDebounced,
-    )
   }
   dispose() {
     this.clearObserve?.()
@@ -32,13 +28,14 @@ class AuthPBX {
       .connect(getAuthStore().currentProfile)
       .then(() => {
         getAuthStore().pbxState = 'success'
+        const authSIP = new AuthSIP()
+        authSIP.auth()
       })
       .catch((err: Error) => {
         getAuthStore().pbxState = 'failure'
         getAuthStore().pbxTotalFailure += 1
         RnAlert.error({
-          message: intlDebug`Failed to connect to pbx`,
-          err,
+          message: intlDebug`Invalid Credentials`,
         })
       })
   }
