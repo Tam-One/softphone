@@ -1,8 +1,9 @@
-import styles from 'pages/PageCallManage/Styles'
 import React, { FC, useEffect, useState } from 'react'
 import { View } from 'react-native'
-import callStore from 'stores/callStore'
-import CustomStrings from 'utils/CustomStrings'
+
+import styles from '@/pages/PageCallManage/Styles'
+import callStore from '@/stores/callStore'
+import CustomStrings from '@/utils/CustomStrings'
 
 import VideoPopup from './VideoPopup'
 

@@ -1,12 +1,5 @@
-import uc from 'api/uc'
-import { numberOfChatsPerLoad } from 'components/chatConfig'
-import MessageList from 'components/ChatMessageList'
-import ChatInput from 'components/FooterChatInput'
-import Layout from 'components/Layout'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
-import styles from 'pages/PageChatDetail/Styles'
 import React from 'react'
 import {
   NativeScrollEvent,
@@ -17,14 +10,22 @@ import {
   View,
 } from 'react-native'
 import EmojiSelector, { Categories } from 'react-native-emoji-selector'
-import chatStore, { ChatMessage } from 'stores/chatStore'
-import contactStore from 'stores/contactStore'
-import intl, { intlDebug } from 'stores/intl'
-import Nav from 'stores/Nav'
-import RnAlert from 'stores/RnAlert'
-import pickFile from 'utils/pickFile'
-import saveBlob from 'utils/saveBlob'
-import { arrToMap } from 'utils/toMap'
+
+import uc from '@/api/uc'
+import { numberOfChatsPerLoad } from '@/components/chatConfig'
+import MessageList from '@/components/ChatMessageList'
+import ChatInput from '@/components/FooterChatInput'
+import Layout from '@/components/Layout'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import styles from '@/pages/PageChatDetail/Styles'
+import chatStore, { ChatMessage } from '@/stores/chatStore'
+import contactStore from '@/stores/contactStore'
+import intl, { intlDebug } from '@/stores/intl'
+import Nav from '@/stores/Nav'
+import RnAlert from '@/stores/RnAlert'
+import pickFile from '@/utils/pickFile'
+import saveBlob from '@/utils/saveBlob'
+import { arrToMap } from '@/utils/toMap'
 
 @observer
 class PageChatDetail extends React.Component<{

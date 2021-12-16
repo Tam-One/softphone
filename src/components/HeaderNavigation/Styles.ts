@@ -1,5 +1,6 @@
-import globalVar from 'components/variables'
 import { StyleSheet } from 'react-native'
+
+import globalVar from '@/components/variables'
 
 const {
   bg,

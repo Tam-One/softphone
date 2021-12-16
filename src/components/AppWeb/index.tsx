@@ -1,19 +1,20 @@
 // Main entry for the create-react-app web bundle
 
 import { mdiAndroid, mdiApple, mdiWeb } from '@mdi/js'
-// @ts-ignore
-import App from 'components/App/App.tsx'
-import styles from 'components/AppWeb/Styles'
-import BrekekeGradient from 'components/BrekekeGradient'
-import { RnIcon, RnImage, RnText, RnTouchableOpacity } from 'components/Rn'
 import qs from 'qs'
 import React, { ReactElement, useState } from 'react'
 import { isAndroid, isIOS } from 'react-device-detect'
 import { View } from 'react-native'
-import intl from 'stores/intl'
 import Url from 'url-parse'
-import CustomImages from 'utils/CustomImages'
-import parse from 'utils/deeplink-parse'
+
+// @ts-ignore
+import App from '@/components/App/App.tsx'
+import styles from '@/components/AppWeb/Styles'
+import BrekekeGradient from '@/components/BrekekeGradient'
+import { RnIcon, RnImage, RnText, RnTouchableOpacity } from '@/components/Rn'
+import intl from '@/stores/intl'
+import CustomImages from '@/utils/CustomImages'
+import parse from '@/utils/deeplink-parse'
 
 const globalCss = `* {
   outline: none !important;

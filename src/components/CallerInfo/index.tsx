@@ -1,11 +1,12 @@
-import styles from 'components/CallerInfo/Styles'
-import { RnText } from 'components/Rn'
 import React, { FC } from 'react'
 import { Image, TouchableOpacityProps, View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
-import CustomImages from 'utils/CustomImages'
+
+import styles from '@/components/CallerInfo/Styles'
+import { RnText } from '@/components/Rn'
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
+import CustomImages from '@/utils/CustomImages'
 
 const CallerInfo: FC<{
   isUserCalling: boolean

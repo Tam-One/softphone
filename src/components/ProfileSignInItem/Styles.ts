@@ -1,6 +1,7 @@
-import g from 'components/variables'
 import { StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
+
+import g from '@/components/variables'
+import CustomColors from '@/utils/CustomColors'
 
 const styles = StyleSheet.create({
   profileSignInItem: {

@@ -1,8 +1,9 @@
-import { getSubMenus } from 'components/navigationConfig'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
-import styles from 'components/SubMenu/Styles'
 import React, { FC } from 'react'
 import { View } from 'react-native'
+
+import { getSubMenus } from '@/components/navigationConfig'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import styles from '@/components/SubMenu/Styles'
 
 const SubMenu: FC<
   Partial<{

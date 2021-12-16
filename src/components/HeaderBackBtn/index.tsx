@@ -1,9 +1,10 @@
 import { mdiChevronLeft } from '@mdi/js'
-import styles from 'components/HeaderBackBtn/Styles'
-import { RnIcon, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
 import { Animated, StyleSheet } from 'react-native'
-import { useAnimation } from 'utils/animation'
+
+import styles from '@/components/HeaderBackBtn/Styles'
+import { RnIcon, RnTouchableOpacity } from '@/components/Rn'
+import { useAnimation } from '@/utils/animation'
 
 const BackBtn: FC<{
   compact: boolean

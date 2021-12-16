@@ -1,13 +1,14 @@
-import Field from 'components/Field'
 import flow from 'lodash/flow'
 import get from 'lodash/get'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { Platform } from 'react-native'
-import { CreatedStore } from 'utils/createStore'
-import { arrToMap, mapToMap } from 'utils/toMap'
-import useStore from 'utils/useStore'
 import Validator, { Rules } from 'validatorjs'
+
+import Field from '@/components/Field'
+import { CreatedStore } from '@/utils/createStore'
+import { arrToMap, mapToMap } from '@/utils/toMap'
+import useStore from '@/utils/useStore'
 
 const noop = () => {}
 

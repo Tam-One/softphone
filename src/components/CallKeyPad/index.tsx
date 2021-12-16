@@ -1,7 +1,3 @@
-import svgImages from 'assets/svgImages'
-import CallButtons from 'components/CallButtons'
-import styles from 'components/CallKeyPad/Styles'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
 import {
   Platform,
@@ -12,8 +8,13 @@ import {
   View,
 } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import CustomColors from 'utils/CustomColors'
-import CustomImages from 'utils/CustomImages'
+
+import svgImages from '@/assets/svgImages'
+import CallButtons from '@/components/CallButtons'
+import styles from '@/components/CallKeyPad/Styles'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import CustomColors from '@/utils/CustomColors'
+import CustomImages from '@/utils/CustomImages'
 
 const keys = [
   [

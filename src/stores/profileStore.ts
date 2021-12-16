@@ -3,7 +3,8 @@ import debounce from 'lodash/debounce'
 import uniqBy from 'lodash/uniqBy'
 import { action, computed, observable, runInAction } from 'mobx'
 import { v4 as uuid } from 'react-native-uuid'
-import profileStore from 'stores/profileStore'
+
+import profileStore from '@/stores/profileStore'
 
 import { SyncPnToken } from '../api/syncPnToken'
 import { RnAsyncStorage } from '../components/Rn'

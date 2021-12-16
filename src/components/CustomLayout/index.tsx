@@ -1,9 +1,10 @@
-import CustomGradient from 'components/CustomGradient'
-import styles from 'components/CustomLayout/Styles'
-import Footer from 'components/Footer'
-import SubMenu from 'components/SubMenu'
 import React, { FC } from 'react'
 import { View } from 'react-native'
+
+import CustomGradient from '@/components/CustomGradient'
+import styles from '@/components/CustomLayout/Styles'
+import Footer from '@/components/Footer'
+import SubMenu from '@/components/SubMenu'
 
 const CustomLayout: FC<
   Partial<{

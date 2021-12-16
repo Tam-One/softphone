@@ -1,12 +1,13 @@
-import CustomHeader from 'components/CustomHeader'
-import CustomLayout from 'components/CustomLayout'
-import FormInputBox from 'components/FormInputBox'
 import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
-import styles from 'pages/PagePhonebookUpdate/Styles'
 import React, { FC, useState } from 'react'
 import { ScrollView, View } from 'react-native'
-import useStore from 'utils/useStore'
+
+import CustomHeader from '@/components/CustomHeader'
+import CustomLayout from '@/components/CustomLayout'
+import FormInputBox from '@/components/FormInputBox'
+import styles from '@/pages/PagePhonebookUpdate/Styles'
+import useStore from '@/utils/useStore'
 
 import pbx from '../../api/pbx'
 import contactStore, { Phonebook2 } from '../../stores/contactStore'

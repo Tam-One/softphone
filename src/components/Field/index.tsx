@@ -4,15 +4,6 @@ import {
   mdiPlus,
   mdiUnfoldMoreHorizontal,
 } from '@mdi/js'
-import styles from 'components/Field/Styles'
-import {
-  RnIcon,
-  RnSwitch,
-  RnText,
-  RnTextInput,
-  RnTouchableOpacity,
-} from 'components/Rn'
-import globalVariables from 'components/variables'
 import flow from 'lodash/flow'
 import omit from 'lodash/omit'
 import { observer } from 'mobx-react'
@@ -27,9 +18,19 @@ import {
   View,
   ViewProps,
 } from 'react-native'
-import intl from 'stores/intl'
-import RnPicker from 'stores/RnPicker'
-import useStore from 'utils/useStore'
+
+import styles from '@/components/Field/Styles'
+import {
+  RnIcon,
+  RnSwitch,
+  RnText,
+  RnTextInput,
+  RnTouchableOpacity,
+} from '@/components/Rn'
+import globalVariables from '@/components/variables'
+import intl from '@/stores/intl'
+import RnPicker from '@/stores/RnPicker'
+import useStore from '@/utils/useStore'
 
 const noop = () => {}
 const {

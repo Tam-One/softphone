@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 const callerFontWeight = '600'
 const styles = StyleSheet.create({

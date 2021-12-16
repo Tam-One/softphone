@@ -1,6 +1,3 @@
-import sip from 'api/sip'
-import ShowNumber from 'components/CallDialledNumbers'
-import KeyPad from 'components/CallKeyPad'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
@@ -9,12 +6,16 @@ import {
   TextInput,
   TextInputSelectionChangeEventData,
 } from 'react-native'
-import { getAuthStore } from 'stores/authStore'
-import callStore from 'stores/callStore'
-import intl, { intlDebug } from 'stores/intl'
-import Nav from 'stores/Nav'
-import RnAlert from 'stores/RnAlert'
-import RnKeyboard from 'stores/RnKeyboard'
+
+import sip from '@/api/sip'
+import ShowNumber from '@/components/CallDialledNumbers'
+import KeyPad from '@/components/CallKeyPad'
+import { getAuthStore } from '@/stores/authStore'
+import callStore from '@/stores/callStore'
+import intl, { intlDebug } from '@/stores/intl'
+import Nav from '@/stores/Nav'
+import RnAlert from '@/stores/RnAlert'
+import RnKeyboard from '@/stores/RnKeyboard'
 
 @observer
 class PageDtmfKeypad extends React.Component<{

@@ -1,6 +1,7 @@
-import globalVariables from 'components/variables'
 import { StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
+
+import globalVariables from '@/components/variables'
+import CustomColors from '@/utils/CustomColors'
 
 const {
   bg,

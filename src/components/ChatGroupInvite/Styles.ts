@@ -1,5 +1,6 @@
-import globalVariables from 'components/variables'
 import { StyleSheet } from 'react-native'
+
+import globalVariables from '@/components/variables'
 
 const {
   borderBg,

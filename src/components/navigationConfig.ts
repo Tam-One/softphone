@@ -1,11 +1,11 @@
-import svgImages from 'assets/svgImages'
-import { getAuthStore } from 'stores/authStore'
-import intl from 'stores/intl'
-import intlStore from 'stores/intlStore'
-import Nav from 'stores/Nav'
-import profileStore from 'stores/profileStore'
-import RnAlert from 'stores/RnAlert'
-import { arrToMap } from 'utils/toMap'
+import svgImages from '@/assets/svgImages'
+import { getAuthStore } from '@/stores/authStore'
+import intl from '@/stores/intl'
+import intlStore from '@/stores/intlStore'
+import Nav from '@/stores/Nav'
+import profileStore from '@/stores/profileStore'
+import RnAlert from '@/stores/RnAlert'
+import { arrToMap } from '@/utils/toMap'
 
 interface Menu {
   key: string

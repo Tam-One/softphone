@@ -1,16 +1,17 @@
-import UserItem from 'components/ContactUserItem'
-import CustomGradient from 'components/CustomGradient'
-import CustomHeader from 'components/CustomHeader'
-import CustomLayout from 'components/CustomLayout'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
-import styles from 'pages/PageCallParks/Styles'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
-import { getAuthStore } from 'stores/authStore'
-import callStore from 'stores/callStore'
-import intl from 'stores/intl'
-import Nav from 'stores/Nav'
+
+import UserItem from '@/components/ContactUserItem'
+import CustomGradient from '@/components/CustomGradient'
+import CustomHeader from '@/components/CustomHeader'
+import CustomLayout from '@/components/CustomLayout'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import styles from '@/pages/PageCallParks/Styles'
+import { getAuthStore } from '@/stores/authStore'
+import callStore from '@/stores/callStore'
+import intl from '@/stores/intl'
+import Nav from '@/stores/Nav'
 
 @observer
 class PageCallParks extends React.Component<{

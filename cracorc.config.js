@@ -20,6 +20,7 @@ module.exports = {
       'react-native-share': nullAlias,
       'react-native-splash-screen': nullAlias,
       'react-native-background-timer': nullAlias,
+      '@': path.resolve(__dirname, 'src/'),
     },
     configure: {
       resolve: {
@@ -39,5 +40,12 @@ module.exports = {
         exclude: /node_modules/,
       }),
     ],
+  },
+  jest: {
+    configure: {
+      moduleNameMapper: {
+        '^@(.*)$': '<rootDir>/src$1',
+      },
+    },
   },
 }

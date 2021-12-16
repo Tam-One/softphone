@@ -6,19 +6,20 @@ import {
   mdiServerNetwork,
   mdiWeb,
 } from '@mdi/js'
-import Field from 'components/Field'
-import FooterActions from 'components/FooterActions'
-import styles from 'components/ProfileSignInItem/Styles'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
 import { ActivityIndicator, View } from 'react-native'
-import { getAuthStore } from 'stores/authStore'
-import intl from 'stores/intl'
-import Nav from 'stores/Nav'
-import profileStore from 'stores/profileStore'
-import RnAlert from 'stores/RnAlert'
-import CustomColors from 'utils/CustomColors'
+
+import Field from '@/components/Field'
+import FooterActions from '@/components/FooterActions'
+import styles from '@/components/ProfileSignInItem/Styles'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import { getAuthStore } from '@/stores/authStore'
+import intl from '@/stores/intl'
+import Nav from '@/stores/Nav'
+import profileStore from '@/stores/profileStore'
+import RnAlert from '@/stores/RnAlert'
+import CustomColors from '@/utils/CustomColors'
 
 const ProfileSignInItem: FC<{
   empty?: boolean

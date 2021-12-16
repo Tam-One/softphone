@@ -1,16 +1,17 @@
 import { mdiPhone } from '@mdi/js'
-import UserItem from 'components/ContactUserItem'
-import CustomLayout from 'components/CustomLayout'
-import RnText from 'components/RnText'
 import { observer } from 'mobx-react'
 import moment from 'moment'
-import styles from 'pages/PageCallRecents/Styles'
 import React from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
-import { getAuthStore } from 'stores/authStore'
-import { AuthStore } from 'stores/authStore2'
-import callStore from 'stores/callStore'
-import contactStore from 'stores/contactStore'
+
+import UserItem from '@/components/ContactUserItem'
+import CustomLayout from '@/components/CustomLayout'
+import RnText from '@/components/RnText'
+import styles from '@/pages/PageCallRecents/Styles'
+import { getAuthStore } from '@/stores/authStore'
+import { AuthStore } from '@/stores/authStore2'
+import callStore from '@/stores/callStore'
+import contactStore from '@/stores/contactStore'
 
 @observer
 class MissedCalls extends React.Component {

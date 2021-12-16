@@ -1,6 +1,7 @@
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
-import AuthSIP from 'stores/AuthSIP'
+
+import AuthSIP from '@/stores/AuthSIP'
 
 import pbx from '../api/pbx'
 import { getAuthStore } from './authStore'

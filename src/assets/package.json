@@ -1,3 +1,4 @@
 {
-  "name": "assets"
+  "name": "assets",
+  "cracoConfig": "../../cracorc.config.js"
 }

@@ -1,17 +1,18 @@
 import { mdiKeyboardBackspace } from '@mdi/js'
-import Field from 'components/Field'
-import Layout from 'components/Layout'
-import { RnText } from 'components/Rn'
-import { currentVersion } from 'components/variables'
 import filesize from 'filesize'
 import { observer } from 'mobx-react'
 import moment from 'moment'
-import styles from 'pages/PageSettingDebug/Styles'
 import React, { Component } from 'react'
 import { Platform } from 'react-native'
-import debugStore from 'stores/debugStore'
-import intl from 'stores/intl'
-import Nav from 'stores/Nav'
+
+import Field from '@/components/Field'
+import Layout from '@/components/Layout'
+import { RnText } from '@/components/Rn'
+import { currentVersion } from '@/components/variables'
+import styles from '@/pages/PageSettingDebug/Styles'
+import debugStore from '@/stores/debugStore'
+import intl from '@/stores/intl'
+import Nav from '@/stores/Nav'
 
 @observer
 class PageSettingsDebug extends Component {
