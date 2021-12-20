@@ -1,10 +1,11 @@
-import { formatDateTimeSemantic } from 'components/chatConfig'
-import styles from 'components/ChatListUsers/Styles'
-import UserItem from 'components/ContactUserItem'
-import { RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
-import chatStore from 'stores/chatStore'
+
+import { formatDateTimeSemantic } from '@/components/chatConfig'
+import styles from '@/components/ChatListUsers/Styles'
+import UserItem from '@/components/ContactUserItem'
+import { RnTouchableOpacity } from '@/components/Rn'
+import chatStore from '@/stores/chatStore'
 
 const ListUsers: FC<{
   recents: {

@@ -1,8 +1,3 @@
-import uc from 'api/uc'
-import { numberOfChatsPerLoad } from 'components/chatConfig'
-import MessageList from 'components/ChatMessageList'
-import ChatInput from 'components/FooterChatInput'
-import Layout from 'components/Layout'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react'
 import React from 'react'
@@ -12,15 +7,21 @@ import {
   Platform,
   ScrollView,
 } from 'react-native'
-import callStore from 'stores/callStore'
-import chatStore, { ChatMessage } from 'stores/chatStore'
-import contactStore from 'stores/contactStore'
-import intl, { intlDebug } from 'stores/intl'
-import Nav from 'stores/Nav'
-import RnAlert from 'stores/RnAlert'
-import pickFile from 'utils/pickFile'
-import saveBlob from 'utils/saveBlob'
-import { arrToMap } from 'utils/toMap'
+
+import uc from '@/api/uc'
+import { numberOfChatsPerLoad } from '@/components/chatConfig'
+import MessageList from '@/components/ChatMessageList'
+import ChatInput from '@/components/FooterChatInput'
+import Layout from '@/components/Layout'
+import callStore from '@/stores/callStore'
+import chatStore, { ChatMessage } from '@/stores/chatStore'
+import contactStore from '@/stores/contactStore'
+import intl, { intlDebug } from '@/stores/intl'
+import Nav from '@/stores/Nav'
+import RnAlert from '@/stores/RnAlert'
+import pickFile from '@/utils/pickFile'
+import saveBlob from '@/utils/saveBlob'
+import { arrToMap } from '@/utils/toMap'
 
 @observer
 class PageChatGroupDetail extends React.Component<{

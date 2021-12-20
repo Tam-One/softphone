@@ -1,6 +1,7 @@
 import { Platform, StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 const styles = StyleSheet.create({
   noParksContainer: {
@@ -54,8 +55,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   fieldIcon: {
-    width: 3,
-    height: 3,
+    width: 15,
+    height: 15,
     flex: 0.1,
   },
   voiceMailIcon: {

@@ -1,11 +1,12 @@
-import svgImages from 'assets/svgImages'
-import styles from 'components/CustomHeader/Styles'
-import RnText from 'components/RnText'
-import RnTouchableOpacity from 'components/RnTouchableOpacity'
 import React, { FC } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
-import CustomColors from 'utils/CustomColors'
+
+import svgImages from '@/assets/svgImages'
+import styles from '@/components/CustomHeader/Styles'
+import RnText from '@/components/RnText'
+import RnTouchableOpacity from '@/components/RnTouchableOpacity'
+import CustomColors from '@/utils/CustomColors'
 
 const CustomHeader: FC<
   Partial<{

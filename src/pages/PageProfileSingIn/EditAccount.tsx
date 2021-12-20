@@ -1,17 +1,18 @@
-import CustomGradient from 'components/CustomGradient'
-import FormInputBox from 'components/FormInputBox'
-import PoweredBy from 'components/PoweredBy'
-import { RnText } from 'components/Rn'
 import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
-import styles from 'pages/PageProfileSingIn/Styles'
 import React, { FC, useState } from 'react'
 import { Image, TouchableOpacity, View } from 'react-native'
-import Nav from 'stores/Nav'
-import profileStore, { Profile } from 'stores/profileStore'
-import CustomColors from 'utils/CustomColors'
-import CustomImages from 'utils/CustomImages'
-import useStore from 'utils/useStore'
+
+import CustomGradient from '@/components/CustomGradient'
+import FormInputBox from '@/components/FormInputBox'
+import PoweredBy from '@/components/PoweredBy'
+import { RnText } from '@/components/Rn'
+import styles from '@/pages/PageProfileSingIn/Styles'
+import Nav from '@/stores/Nav'
+import profileStore, { Profile } from '@/stores/profileStore'
+import CustomColors from '@/utils/CustomColors'
+import CustomImages from '@/utils/CustomImages'
+import useStore from '@/utils/useStore'
 
 const EditAccount: FC<{
   id: string

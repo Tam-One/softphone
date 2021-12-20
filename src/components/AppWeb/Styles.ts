@@ -1,5 +1,6 @@
-import v from 'components/variables'
 import { StyleSheet } from 'react-native'
+
+import v from '@/components/variables'
 
 const styles = StyleSheet.create({
   webApp: {

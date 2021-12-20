@@ -12,7 +12,7 @@ module.exports = {
       'react-native': 'react-native-web',
       'react-native-fast-image': 'react-native-web/dist/exports/Image',
       'react-native-linear-gradient': 'react-native-web-linear-gradient',
-      'react-native-svg': 'react-native-svg-web',
+      'react-native-svg': '@cantoo/rn-svg',
       'react-native-uuid': 'uuid',
       'react-native-callkeep': nullAlias,
       'react-native-fs': nullAlias,
@@ -20,6 +20,7 @@ module.exports = {
       'react-native-share': nullAlias,
       'react-native-splash-screen': nullAlias,
       'react-native-background-timer': nullAlias,
+      '@': path.resolve(__dirname, 'src/'),
     },
     configure: {
       resolve: {
@@ -39,5 +40,12 @@ module.exports = {
         exclude: /node_modules/,
       }),
     ],
+  },
+  jest: {
+    configure: {
+      moduleNameMapper: {
+        '^@(.*)$': '<rootDir>/src$1',
+      },
+    },
   },
 }

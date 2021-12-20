@@ -1,5 +1,3 @@
-import styles from 'components/CallDialledNumbers/Styles'
-import { RnTextInput } from 'components/Rn'
 import React, { FC, RefObject } from 'react'
 import {
   Keyboard,
@@ -8,6 +6,9 @@ import {
   TextInputSelectionChangeEventData,
   View,
 } from 'react-native'
+
+import styles from '@/components/CallDialledNumbers/Styles'
+import { RnTextInput } from '@/components/Rn'
 
 const ShowNumber: FC<{
   setTarget(val: string): void

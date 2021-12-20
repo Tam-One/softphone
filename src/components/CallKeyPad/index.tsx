@@ -1,7 +1,3 @@
-import svgImages from 'assets/svgImages'
-import CallButtons from 'components/CallButtons'
-import styles from 'components/CallKeyPad/Styles'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
 import {
   Platform,
@@ -12,8 +8,13 @@ import {
   View,
 } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import CustomColors from 'utils/CustomColors'
-import CustomImages from 'utils/CustomImages'
+
+import svgImages from '@/assets/svgImages'
+import CallButtons from '@/components/CallButtons'
+import styles from '@/components/CallKeyPad/Styles'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import CustomColors from '@/utils/CustomColors'
+import CustomImages from '@/utils/CustomImages'
 
 const keys = [
   [
@@ -129,8 +130,15 @@ const KeyPad: FC<{
               <CallButtons
                 onPress={conference}
                 icon={svgImages.conferenceButton}
-                containerStyle={{ width: 55, height: 55, marginTop: 0 }}
-                imageStyle={{ height: 55, width: 55 }}
+                containerStyle={{
+                  width: Platform.OS === 'web' ? 40 : 55,
+                  height: Platform.OS === 'web' ? 40 : 55,
+                  marginTop: 0,
+                }}
+                imageStyle={{
+                  height: 55,
+                  width: 55,
+                }}
               />
               <RnText style={styles.transferButtonText}>{'Conference'}</RnText>
             </>
@@ -163,11 +171,14 @@ const KeyPad: FC<{
                 onPress={callVoice}
                 icon={svgImages.transferButton}
                 containerStyle={{
-                  width: 55,
-                  height: 55,
+                  width: Platform.OS === 'web' ? 40 : 55,
+                  height: Platform.OS === 'web' ? 40 : 55,
                   marginTop: 0,
                 }}
-                imageStyle={{ height: 55, width: 55 }}
+                imageStyle={{
+                  height: 55,
+                  width: 55,
+                }}
               />
               <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
             </View>

@@ -1,9 +1,10 @@
-import styles from 'components/HeaderNavigation/Styles'
-import { getSubMenus } from 'components/navigationConfig'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
 import React, { FC } from 'react'
 import { View } from 'react-native'
-import chatStore from 'stores/chatStore'
+
+import styles from '@/components/HeaderNavigation/Styles'
+import { getSubMenus } from '@/components/navigationConfig'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import chatStore from '@/stores/chatStore'
 
 const Navigation: FC<{
   menu: string

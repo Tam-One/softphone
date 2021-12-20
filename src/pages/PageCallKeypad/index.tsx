@@ -1,9 +1,5 @@
-import ShowNumber from 'components/CallDialledNumbers'
-import KeyPad from 'components/CallKeyPad'
-import CustomLayout from 'components/CustomLayout'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
-import styles from 'pages/PageCallKeypad/Styles'
 import React from 'react'
 import {
   NativeSyntheticEvent,
@@ -12,10 +8,15 @@ import {
   TextInputSelectionChangeEventData,
   View,
 } from 'react-native'
-import callStore from 'stores/callStore'
-import { intlDebug } from 'stores/intl'
-import RnAlert from 'stores/RnAlert'
-import RnKeyboard from 'stores/RnKeyboard'
+
+import ShowNumber from '@/components/CallDialledNumbers'
+import KeyPad from '@/components/CallKeyPad'
+import CustomLayout from '@/components/CustomLayout'
+import styles from '@/pages/PageCallKeypad/Styles'
+import callStore from '@/stores/callStore'
+import { intlDebug } from '@/stores/intl'
+import RnAlert from '@/stores/RnAlert'
+import RnKeyboard from '@/stores/RnKeyboard'
 
 @observer
 class PageCallKeypad extends React.Component {

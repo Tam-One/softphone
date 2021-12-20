@@ -4,18 +4,19 @@ import {
   mdiPhoneHangup,
   mdiPhoneOff,
 } from '@mdi/js'
-import CustomGradient from 'components/CustomGradient'
-import CustomHeader from 'components/CustomHeader'
-import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
-import styles from 'pages/PageTransferAttend/Styles'
 import React from 'react'
 import { View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
-import callStore from 'stores/callStore'
-import intl from 'stores/intl'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+
+import CustomGradient from '@/components/CustomGradient'
+import CustomHeader from '@/components/CustomHeader'
+import { RnIcon, RnText, RnTouchableOpacity } from '@/components/Rn'
+import styles from '@/pages/PageTransferAttend/Styles'
+import callStore from '@/stores/callStore'
+import intl from '@/stores/intl'
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 @observer
 class PageTransferAttend extends React.Component {

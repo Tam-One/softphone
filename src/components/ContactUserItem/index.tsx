@@ -1,13 +1,14 @@
 import { mdiPhoneIncoming, mdiPhoneMissed, mdiPhoneOutgoing } from '@mdi/js'
-import Avatar from 'components/Avatar'
-import styles from 'components/ContactUserItem/Styles'
-import { RnIcon, RnText, RnTouchableOpacity } from 'components/Rn'
-import globalVariables from 'components/variables'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+
+import Avatar from '@/components/Avatar'
+import styles from '@/components/ContactUserItem/Styles'
+import { RnIcon, RnText, RnTouchableOpacity } from '@/components/Rn'
+import globalVariables from '@/components/variables'
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 const {
   colors: { danger, primary },

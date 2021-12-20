@@ -1,3 +1,4 @@
 {
-  "name": "utils"
+  "name": "utils",
+  "cracoConfig": "../../cracorc.config.js"
 }

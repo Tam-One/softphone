@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
-import CustomFonts from 'utils/CustomFonts'
+
+import CustomFonts from '@/utils/CustomFonts'
 
 const styles = StyleSheet.create({
   showNumbers: {

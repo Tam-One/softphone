@@ -1,6 +1,7 @@
 import { Dimensions, Platform, StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 const screenHeight = Dimensions.get('screen').height
 const keyButtonSize = screenHeight * 0.097
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     width: 90,
     textAlign: 'center',
+    overflow: 'visible',
   },
   keyPadSubText: {
     fontSize: CustomFonts.SmallFooterText,

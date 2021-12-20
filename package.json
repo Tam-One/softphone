@@ -1,6 +1,6 @@
 {
   "name": "qooqiephone",
-  "version": "2.9.4",
+  "version": "2.9.8",
   "private": true,
   "homepage": "./",
   "scripts": {
@@ -23,6 +23,7 @@
     "postinstall": "husky install"
   },
   "dependencies": {
+    "@cantoo/rn-svg": "^1.0.6",
     "@mdi/js": "5.9.55",
     "@react-native-async-storage/async-storage": "1.14.1",
     "@react-native-community/push-notification-ios": "1.8.0",
@@ -112,7 +113,8 @@
     "cross-env": "7.0.3",
     "del-cli": "3.0.1",
     "eslint": "6.x",
-    "eslint-plugin-import": "2.22.1",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-react-app": "6.2.2",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "fs-extra": "9.1.0",
@@ -131,7 +133,7 @@
     ],
     "*.{html,scss,json,md}": "prettier --write"
   },
-  "cracoConfig": ".cracorc.js",
+  "cracoConfig": "cracorc.config.js",
   "browserslist": "ie 10-11",
   "rnpm": {
     "assets": [

@@ -7,7 +7,8 @@ import {
   View,
 } from 'react-native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
-import CustomColors from 'utils/CustomColors'
+
+import CustomColors from '@/utils/CustomColors'
 
 import v from './variables'
 

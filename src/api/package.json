@@ -1,3 +1,4 @@
 {
-  "name": "api"
+  "name": "api",
+  "cracoConfig": "../../cracorc.config.js"
 }

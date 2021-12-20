@@ -1,16 +1,17 @@
 import { mdiBriefcase, mdiCellphone, mdiHome, mdiPhone } from '@mdi/js'
-import CustomHeader from 'components/CustomHeader'
-import CustomLayout from 'components/CustomLayout'
-import { RnIcon, RnText } from 'components/Rn'
-import styles from 'pages/PageViewContact/Styles'
 import React, { FC } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
-import callStore from 'stores/callStore'
-import { Phonebook2 } from 'stores/contactStore'
-import Nav from 'stores/Nav'
-import RnPicker from 'stores/RnPicker'
-import CustomColors from 'utils/CustomColors'
+
+import CustomHeader from '@/components/CustomHeader'
+import CustomLayout from '@/components/CustomLayout'
+import { RnIcon, RnText } from '@/components/Rn'
+import styles from '@/pages/PageViewContact/Styles'
+import callStore from '@/stores/callStore'
+import { Phonebook2 } from '@/stores/contactStore'
+import Nav from '@/stores/Nav'
+import RnPicker from '@/stores/RnPicker'
+import CustomColors from '@/utils/CustomColors'
 
 const InputBox: FC<{
   label: string

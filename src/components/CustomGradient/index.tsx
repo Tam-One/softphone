@@ -1,13 +1,18 @@
-import styles from 'components/CustomGradient/Styles'
 import React from 'react'
-import { ImageBackground } from 'react-native'
-import CustomImages from 'utils/CustomImages'
+import { ImageBackground, Platform } from 'react-native'
+
+import styles from '@/components/CustomGradient/Styles'
+import CustomImages from '@/utils/CustomImages'
 
 const CustomGradient = props => (
   <ImageBackground
     {...props}
     source={CustomImages.BackgroundBlue}
-    style={[styles.CustomGradient, props.customStyle]}
+    style={[
+      styles.CustomGradient,
+      props.customStyle,
+      Platform.OS !== 'web' && styles.flexbox,
+    ]}
   ></ImageBackground>
 )
 

@@ -1,14 +1,15 @@
-import styles from 'components/Header/Styles'
-import BackBtn from 'components/HeaderBackBtn'
-import CreateBtn from 'components/HeaderCreateBtn'
+import React, { FC, useState } from 'react'
+import { View } from 'react-native'
+
+import styles from '@/components/Header/Styles'
+import BackBtn from '@/components/HeaderBackBtn'
+import CreateBtn from '@/components/HeaderCreateBtn'
 import Dropdown, {
   DropdownBtn,
   HeaderDropdownItem,
-} from 'components/HeaderDropdown'
-import Navigation from 'components/HeaderNavigation'
-import Title from 'components/HeaderTitle'
-import React, { FC, useState } from 'react'
-import { View } from 'react-native'
+} from '@/components/HeaderDropdown'
+import Navigation from '@/components/HeaderNavigation'
+import Title from '@/components/HeaderTitle'
 
 const Header: FC<
   Partial<{

@@ -1,5 +1,6 @@
-import globalStyles from 'components/variables'
 import { StyleSheet } from 'react-native'
+
+import globalStyles from '@/components/variables'
 
 const styles = StyleSheet.create({
   pageChatGroupInvite: {},

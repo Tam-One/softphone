@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
+
+import CustomColors from '@/utils/CustomColors'
 
 const styles = StyleSheet.create({
   layout: {

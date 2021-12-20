@@ -11,19 +11,22 @@ const css = StyleSheet.create({
   },
 })
 
-export default observer((p: { sourceObject: MediaStream }) =>
-  p.sourceObject ? (
+export default observer(props => {
+  const { sourceObject, height, width } = props
+
+  return sourceObject ? (
     <video
+      style={{ position: 'absolute', alignSelf: 'flex-end' }}
       autoPlay
-      height='100%'
+      height={height}
       ref={video => {
         if (video) {
-          video.srcObject = p.sourceObject
+          video.srcObject = sourceObject
         }
       }}
-      width='100%'
+      width={width}
     />
   ) : (
     <ActivityIndicator style={css.loading} />
-  ),
-)
+  )
+})

@@ -1,15 +1,7 @@
 import { mdiAccount, mdiApps, mdiPhone, mdiPhoneOutgoing } from '@mdi/js'
-import ShowNumber from 'components/CallDialledNumbers'
-import KeyPad from 'components/CallKeyPad'
-import UserItem from 'components/ContactUserItem'
-import CustomGradient from 'components/CustomGradient'
-import CustomHeader from 'components/CustomHeader'
-import { RnIcon } from 'components/Rn'
-import RnText from 'components/RnText'
 import orderBy from 'lodash/orderBy'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
-import styles from 'pages/PageTransferDial/Styles'
 import React from 'react'
 import {
   FlatList,
@@ -20,11 +12,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import callStore from 'stores/callStore'
-import contactStore from 'stores/contactStore'
-import Nav from 'stores/Nav'
-import RnKeyboard from 'stores/RnKeyboard'
-import CustomColors from 'utils/CustomColors'
+
+import ShowNumber from '@/components/CallDialledNumbers'
+import KeyPad from '@/components/CallKeyPad'
+import UserItem from '@/components/ContactUserItem'
+import CustomGradient from '@/components/CustomGradient'
+import CustomHeader from '@/components/CustomHeader'
+import { RnIcon } from '@/components/Rn'
+import RnText from '@/components/RnText'
+import styles from '@/pages/PageTransferDial/Styles'
+import callStore from '@/stores/callStore'
+import contactStore from '@/stores/contactStore'
+import Nav from '@/stores/Nav'
+import RnKeyboard from '@/stores/RnKeyboard'
+import CustomColors from '@/utils/CustomColors'
 
 @observer
 class PageTransferDial extends React.Component {

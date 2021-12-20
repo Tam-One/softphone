@@ -6,22 +6,23 @@ import {
   mdiVolumeHigh,
   mdiVolumeMedium,
 } from '@mdi/js'
-import svgImages from 'assets/svgImages'
-import ButtonIcon from 'components/ButtonIcon'
-import styles from 'components/CallBar/Styles'
-import { RnText, RnTouchableOpacity } from 'components/Rn'
 import { observer } from 'mobx-react'
-import VideoCallRequest from 'pages/PageCallManage/VideoCallRequest'
 import React from 'react'
 import { Image, Platform, TouchableOpacity, View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
-import callStore from 'stores/callStore'
-import intl from 'stores/intl'
-import Nav from 'stores/Nav'
-import RnStacker from 'stores/RnStacker'
-import CustomColors from 'utils/CustomColors'
-import CustomImages from 'utils/CustomImages'
-import formatDuration from 'utils/formatDuration'
+
+import svgImages from '@/assets/svgImages'
+import ButtonIcon from '@/components/ButtonIcon'
+import styles from '@/components/CallBar/Styles'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
+import VideoCallRequest from '@/pages/PageCallManage/VideoCallRequest'
+import callStore from '@/stores/callStore'
+import intl from '@/stores/intl'
+import Nav from '@/stores/Nav'
+import RnStacker from '@/stores/RnStacker'
+import CustomColors from '@/utils/CustomColors'
+import CustomImages from '@/utils/CustomImages'
+import formatDuration from '@/utils/formatDuration'
 
 @observer
 class CallBar extends React.Component {
