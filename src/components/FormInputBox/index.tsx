@@ -1,6 +1,6 @@
 import { mdiCardsDiamond } from '@mdi/js'
 import React, { FC, useEffect, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Platform, TouchableOpacity, View } from 'react-native'
 import { Path, Svg, SvgXml, Text } from 'react-native-svg'
 
 import styles from '@/components/FormInputBox/Styles'
@@ -72,8 +72,8 @@ const FormInputBox: FC<{
         <View style={{ paddingLeft: 12 }}>
           {icon ? (
             <SvgXml
-              width='22'
-              height='30'
+              width={Platform.OS === 'web' ? '22px' : '22'}
+              height={Platform.OS === 'web' ? '30px' : '30'}
               xml={icon}
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
