@@ -297,36 +297,34 @@ class PageCallManage extends React.Component<{
           ></CustomHeader>
           <View style={styles.container}>
             <CustomGradient>
-              <ScrollView>
-                {!showKeyPad ? (
-                  <CallerInfo
-                    isUserCalling={!partyNumber?.includes('+')}
-                    callerName={callerName}
-                    callerNumber={partyNumber}
-                    containerStyle={{
-                      marginTop: callerName || showKeyPad ? '15%' : '25%',
-                    }}
-                  />
-                ) : (
-                  <View style={styles.marginTop}></View>
-                )}
-                {answered && this.renderCallTime()}
-                {!showKeyPad ? (
-                  <View style={styles.marginTop}>
-                    {this.renderBtns(currentCall)}
-                  </View>
-                ) : (
-                  <View>
-                    <PageDtmfKeypad
-                      callId={id}
-                      partyName={callerName}
-                      hangup={hangup}
-                      onHidePress={() => this.setState({ showKeyPad: false })}
-                    ></PageDtmfKeypad>
-                  </View>
-                )}
-                {this.renderHangupBtn(currentCall)}
-              </ScrollView>
+              {!showKeyPad ? (
+                <CallerInfo
+                  isUserCalling={!partyNumber?.includes('+')}
+                  callerName={callerName}
+                  callerNumber={partyNumber}
+                  containerStyle={{
+                    marginTop: callerName || showKeyPad ? '15%' : '25%',
+                  }}
+                />
+              ) : (
+                <View style={styles.marginTop}></View>
+              )}
+              {answered && this.renderCallTime()}
+              {!showKeyPad ? (
+                <View style={styles.marginTop}>
+                  {this.renderBtns(currentCall)}
+                </View>
+              ) : (
+                <View>
+                  <PageDtmfKeypad
+                    callId={id}
+                    partyName={callerName}
+                    hangup={hangup}
+                    onHidePress={() => this.setState({ showKeyPad: false })}
+                  ></PageDtmfKeypad>
+                </View>
+              )}
+              {this.renderHangupBtn(currentCall)}
             </CustomGradient>
           </View>
         </>
