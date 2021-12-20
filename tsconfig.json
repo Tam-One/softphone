@@ -9,15 +9,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": "./",
-    "paths": {
-      "utils/*": ["./src/utils/*"],
-      "pages/*": ["./src/pages/*"],
-      "components/*": ["./src/components/*"],
-      "stores/*": ["./src/stores/*"],
-      "api/*": ["./src/api/*"],
-      "assets/*": ["./src/assets/*"]
-    },
+    "baseUrl": "src",
     "noImplicitAny": false
   },
   "include": ["src"]

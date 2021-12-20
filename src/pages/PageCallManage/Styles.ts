@@ -1,6 +1,7 @@
-import { Platform, StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+import { Dimensions, Platform, StyleSheet } from 'react-native'
+
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 const styles = StyleSheet.create({
   customHeaderContainer: {
@@ -34,18 +35,23 @@ const styles = StyleSheet.create({
   },
   videoPageContainer: {
     flex: 1,
-    position: 'relative',
+    position: 'absolute',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('window').height,
+    zIndex: 9999,
   },
   videoContainer: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('window').height,
     backgroundColor: CustomColors.Transparent,
+    position: 'relative',
   },
   remoteVideo: {
-    width: '100%',
-    height: '100%',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('window').height,
     zIndex: 1,
+    flex: 1,
   },
   localVideo: {
     position: 'absolute',
@@ -53,6 +59,7 @@ const styles = StyleSheet.create({
     height: 170,
     alignSelf: 'flex-end',
     zIndex: 99,
+    flex: 1,
   },
   btns: {
     left: 0,
@@ -92,7 +99,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingBottom: Platform.OS === 'ios' ? 150 : 80,
+    paddingBottom: Dimensions.get('screen').height * 0.03,
     justifyContent: 'center',
     width: '100%',
   },
@@ -132,8 +139,8 @@ const styles = StyleSheet.create({
     zIndex: 999,
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
-    width: '100%',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('window').height,
     paddingBottom: 60,
   },
   videoPopupView: {
@@ -176,12 +183,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    height: '100%',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('window').height,
     position: 'absolute',
     bottom: 0,
     top: 0,
-    zIndex: 1,
+    zIndex: 999,
   },
 })
 

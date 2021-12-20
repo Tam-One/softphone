@@ -1,11 +1,12 @@
 import { mdiCardsDiamond } from '@mdi/js'
-import styles from 'components/FormInputBox/Styles'
-import { RnIcon, RnText } from 'components/Rn'
-import RnTextInput from 'components/RnTextInput'
 import React, { FC, useEffect, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import { SvgXml } from 'react-native-svg'
-import CustomColors from 'utils/CustomColors'
+import { Path, Svg, SvgXml, Text } from 'react-native-svg'
+
+import styles from '@/components/FormInputBox/Styles'
+import { RnIcon, RnText } from '@/components/Rn'
+import RnTextInput from '@/components/RnTextInput'
+import CustomColors from '@/utils/CustomColors'
 
 const FormInputBox: FC<{
   label: string

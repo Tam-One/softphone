@@ -1,8 +1,9 @@
 import flow from 'lodash/flow'
 import { observer } from 'mobx-react'
-import VideoPopup from 'pages/PageCallManage/VideoPopup'
 import React, { ReactElement } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
+
+import VideoPopup from '@/pages/PageCallManage/VideoPopup'
 
 import g from '../components/variables'
 import { useAnimationOnDidMount } from '../utils/animation'
@@ -14,6 +15,7 @@ const css = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    flex: 1,
   },
   RootRnAlert_Backdrop: {
     backgroundColor: g.layerBg,

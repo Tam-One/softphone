@@ -130,8 +130,15 @@ const KeyPad: FC<{
               <CallButtons
                 onPress={conference}
                 icon={svgImages.conferenceButton}
-                containerStyle={{ width: 55, height: 55, marginTop: 0 }}
-                imageStyle={{ height: 55, width: 55 }}
+                containerStyle={{
+                  width: Platform.OS === 'web' ? 40 : 55,
+                  height: Platform.OS === 'web' ? 40 : 55,
+                  marginTop: 0,
+                }}
+                imageStyle={{
+                  height: 55,
+                  width: 55,
+                }}
               />
               <RnText style={styles.transferButtonText}>{'Conference'}</RnText>
             </>
@@ -164,11 +171,14 @@ const KeyPad: FC<{
                 onPress={callVoice}
                 icon={svgImages.transferButton}
                 containerStyle={{
-                  width: 55,
-                  height: 55,
+                  width: Platform.OS === 'web' ? 40 : 55,
+                  height: Platform.OS === 'web' ? 40 : 55,
                   marginTop: 0,
                 }}
-                imageStyle={{ height: 55, width: 55 }}
+                imageStyle={{
+                  height: 55,
+                  width: 55,
+                }}
               />
               <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
             </View>

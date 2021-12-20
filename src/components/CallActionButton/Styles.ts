@@ -1,6 +1,7 @@
-import { StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+import { Platform, StyleSheet } from 'react-native'
+
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 const styles = StyleSheet.create({
   buttonIconBtn: {
@@ -8,8 +9,8 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     alignItems: 'center',
     marginHorizontal: 9,
-    width: 72,
-    height: 72,
+    width: Platform.OS === 'web' ? 65 : 72,
+    height: Platform.OS === 'web' ? 65 : 72,
     justifyContent: 'center',
   },
   shadowEffect: {

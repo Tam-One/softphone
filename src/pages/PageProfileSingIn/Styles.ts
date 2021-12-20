@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
-import CustomColors from 'utils/CustomColors'
-import CustomFonts from 'utils/CustomFonts'
+
+import CustomColors from '@/utils/CustomColors'
+import CustomFonts from '@/utils/CustomFonts'
 
 const styles = StyleSheet.create({
   fieldTextInput: {
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
   inputBoxLabel: {
     position: 'absolute',
     top: -7,
-    left: 15,
     color: CustomColors.DodgerBlue,
     fontSize: CustomFonts.SmallLabel,
     lineHeight: 12,
@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   },
   dropDownContainer: {
     borderColor: CustomColors.White,
-    marginHorizontal: 16,
     shadowColor: CustomColors.Black,
     shadowOffset: {
       width: 0,
@@ -170,7 +169,9 @@ const styles = StyleSheet.create({
     borderColor: CustomColors.White,
     borderRadius: 10,
     height: 46,
-    marginHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
   },
   serverText: {
     color: CustomColors.Black,
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
   },
   serverContainer: {
-    paddingRight: 28,
+    paddingRight: 0,
   },
   selectedItemContainer: {
     backgroundColor: CustomColors.DropdownGrey,
@@ -189,6 +190,10 @@ const styles = StyleSheet.create({
   serverView: {
     position: 'relative',
     marginTop: 32,
+    marginHorizontal: 16,
+  },
+  listItemContainer: {
+    padding: 10,
   },
 })
 

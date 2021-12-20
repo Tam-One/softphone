@@ -1,28 +1,35 @@
-import svgImages from 'assets/svgImages'
-import CallActionButton from 'components/CallActionButton'
-import CallButtons from 'components/CallButtons'
-import CallerInfo from 'components/CallerInfo'
-import CustomGradient from 'components/CustomGradient'
-import CustomHeader from 'components/CustomHeader'
-import FieldButton from 'components/FieldButton'
-import PoweredBy from 'components/PoweredBy'
-import RnText from 'components/RnText'
-import VideoPlayer from 'components/VideoPlayer'
 import { observer } from 'mobx-react'
-import styles from 'pages/PageCallManage/Styles'
-import VideoPopup from 'pages/PageCallManage/VideoPopup'
-import PageDtmfKeypad from 'pages/PageDtmfKeypad'
-import PageTransferAttend from 'pages/PageTransferAttend'
 import React from 'react'
-import { Platform, ScrollView, TouchableOpacity, View } from 'react-native'
-import Call from 'stores/Call'
-import callStore from 'stores/callStore'
-import intl from 'stores/intl'
-import Nav from 'stores/Nav'
-import CustomColors from 'utils/CustomColors'
-import CustomImages from 'utils/CustomImages'
-import CustomStrings from 'utils/CustomStrings'
-import formatDuration from 'utils/formatDuration'
+import {
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+
+import svgImages from '@/assets/svgImages'
+import CallActionButton from '@/components/CallActionButton'
+import CallButtons from '@/components/CallButtons'
+import CallerInfo from '@/components/CallerInfo'
+import CustomGradient from '@/components/CustomGradient'
+import CustomHeader from '@/components/CustomHeader'
+import FieldButton from '@/components/FieldButton'
+import PoweredBy from '@/components/PoweredBy'
+import RnText from '@/components/RnText'
+import VideoPlayer from '@/components/VideoPlayer'
+import styles from '@/pages/PageCallManage/Styles'
+import VideoPopup from '@/pages/PageCallManage/VideoPopup'
+import PageDtmfKeypad from '@/pages/PageDtmfKeypad'
+import PageTransferAttend from '@/pages/PageTransferAttend'
+import Call from '@/stores/Call'
+import callStore from '@/stores/callStore'
+import intl from '@/stores/intl'
+import Nav from '@/stores/Nav'
+import CustomColors from '@/utils/CustomColors'
+import CustomImages from '@/utils/CustomImages'
+import CustomStrings from '@/utils/CustomStrings'
+import formatDuration from '@/utils/formatDuration'
 
 import VideoCallRequest from './VideoCallRequest'
 
@@ -203,7 +210,8 @@ class PageCallManage extends React.Component<{
     )
   }
 
-  onVideoCallSwitch = currentCall => {
+  onVideoCallSwitch = () => {
+    const currentCall: any = callStore.currentCall
     const { enableVideo, disableVideo } = currentCall
     enableVideo()
     this.setState({ showVideoPopup: '' })
@@ -264,6 +272,11 @@ class PageCallManage extends React.Component<{
             <VideoCallRequest
               showVideo={showVideoPopup}
               setShowVideo={res => this.setState({ showVideoPopup: res })}
+              onVideoCallSwitch={this.onVideoCallSwitch}
+              responseMessage={responseMessage}
+              setResponseMessage={msg =>
+                this.setState({ responseMessage: msg })
+              }
             ></VideoCallRequest>
           ) : (
             <></>
@@ -283,40 +296,40 @@ class PageCallManage extends React.Component<{
             customBackStyle={{ color: CustomColors.Black }}
           ></CustomHeader>
 
-          <ScrollView>
-            <View style={styles.container}>
-              <CustomGradient>
-                {!showKeyPad ? (
-                  <CallerInfo
-                    isUserCalling={!partyNumber?.includes('+')}
-                    callerName={callerName}
-                    callerNumber={partyNumber}
-                    containerStyle={{
-                      marginTop: callerName || showKeyPad ? '15%' : '25%',
-                    }}
-                  />
-                ) : (
-                  <View style={styles.marginTop}></View>
-                )}
-                {answered && this.renderCallTime()}
-                {!showKeyPad ? (
-                  <View style={styles.marginTop}>
-                    {this.renderBtns(currentCall)}
-                  </View>
-                ) : (
-                  <View>
-                    <PageDtmfKeypad
-                      callId={id}
-                      partyName={callerName}
-                      hangup={hangup}
-                      onHidePress={() => this.setState({ showKeyPad: false })}
-                    ></PageDtmfKeypad>
-                  </View>
-                )}
-                {this.renderHangupBtn(currentCall)}
-              </CustomGradient>
-            </View>
-          </ScrollView>
+          {/* <ScrollView> */}
+          <View style={styles.container}>
+            <CustomGradient>
+              {!showKeyPad ? (
+                <CallerInfo
+                  isUserCalling={!partyNumber?.includes('+')}
+                  callerName={callerName}
+                  callerNumber={partyNumber}
+                  containerStyle={{
+                    marginTop: callerName || showKeyPad ? '15%' : '25%',
+                  }}
+                />
+              ) : (
+                <View style={styles.marginTop}></View>
+              )}
+              {answered && this.renderCallTime()}
+              {!showKeyPad ? (
+                <View style={styles.marginTop}>
+                  {this.renderBtns(currentCall)}
+                </View>
+              ) : (
+                <View>
+                  <PageDtmfKeypad
+                    callId={id}
+                    partyName={callerName}
+                    hangup={hangup}
+                    onHidePress={() => this.setState({ showKeyPad: false })}
+                  ></PageDtmfKeypad>
+                </View>
+              )}
+              {this.renderHangupBtn(currentCall)}
+            </CustomGradient>
+          </View>
+          {/* </ScrollView> */}
         </>
       )
     }
@@ -353,6 +366,8 @@ class PageCallManage extends React.Component<{
         <VideoPlayer
           sourceObject={localVideoStreamObject}
           style={styles.localVideo}
+          height={'120'}
+          width={'170'}
         />
       </TouchableOpacity>
     )

@@ -1,17 +1,18 @@
 import 'brekekejs/lib/jsonrpc'
 import 'brekekejs/lib/webrtcclient'
 
-import { APP_VERSION } from '@env'
-import { CallOptions, Sip } from 'api/brekekejs'
-import getFrontCameraSourceId from 'api/getFrontCameraSourceId'
-import pbx from 'api/pbx'
-import turnConfig from 'api/turnConfig'
 import EventEmitter from 'eventemitter3'
 import { Platform } from 'react-native'
-import callStore from 'stores/callStore'
-import { cancelRecentPn } from 'stores/cancelRecentPn'
-import { BackgroundTimer } from 'utils/BackgroundTimer'
-import CustomStrings from 'utils/CustomStrings'
+
+import { CallOptions, Sip } from '@/api/brekekejs'
+import pbx from '@/api/pbx'
+import turnConfig from '@/api/turnConfig'
+import callStore from '@/stores/callStore'
+import { cancelRecentPn } from '@/stores/cancelRecentPn'
+import { BackgroundTimer } from '@/utils/BackgroundTimer'
+import CustomStrings from '@/utils/CustomStrings'
+
+import getFrontCameraSourceId from './getFrontCameraSourceId'
 
 const sipCreateMediaConstraints = (sourceId?: string) => {
   return ({
@@ -263,7 +264,7 @@ export class SIP extends EventEmitter {
       'Qooqie Phone for ' +
       platformOs +
       ' ' +
-      APP_VERSION +
+      process.env.REACT_APP_APP_VERSION +
       '/JsSIP ' +
       jssipVersion
     //

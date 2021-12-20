@@ -1,5 +1,3 @@
-import styles from 'components/CallButtons/Styles'
-import { RnText } from 'components/Rn'
 import React, { FC, useEffect, useState } from 'react'
 import {
   Image,
@@ -8,6 +6,9 @@ import {
   View,
 } from 'react-native'
 import { SvgXml } from 'react-native-svg'
+
+import styles from '@/components/CallButtons/Styles'
+import { RnText } from '@/components/Rn'
 
 const CallButtons: FC<{
   onPress(): void

@@ -11,12 +11,21 @@ const VideoCallRequest: FC<{
   showVideo?: string
   setShowVideo?(key: any): void
   videoCallOn?(): void
-}> = ({ showVideo, setShowVideo, videoCallOn }) => {
+  onVideoCallSwitch?(): void
+  responseMessage?: string
+  setResponseMessage?(msg: string): void
+}> = ({
+  showVideo,
+  setShowVideo,
+  videoCallOn,
+  onVideoCallSwitch,
+  responseMessage,
+  setResponseMessage,
+}) => {
   const waitingTimer = 3000
   const requestTimer = 20000
   let videoRequestTimeout
   const [showVideoPopup, setShowVideoPopup] = useState(showVideo)
-  const [responseMessage, setResponseMessage] = useState('')
 
   useEffect(() => {
     setShowVideoPopup(showVideo)
@@ -27,19 +36,6 @@ const VideoCallRequest: FC<{
       setShowVideo(showVideoPopup)
     }
   }, [showVideoPopup])
-
-  const onVideoCallSwitch = currentCall => {
-    const { enableVideo, disableVideo } = currentCall
-    enableVideo()
-    setShowVideoPopup('')
-    videoRequestTimeout = setTimeout(() => {
-      disableVideo()
-      setResponseMessage(CustomStrings.NoResponse)
-      setTimeout(() => {
-        setResponseMessage('')
-      }, waitingTimer)
-    }, requestTimer)
-  }
 
   const currentCall: any = callStore.currentCall || {}
   const {
@@ -52,15 +48,6 @@ const VideoCallRequest: FC<{
     answered,
   } = currentCall
 
-  if (videoRequestTimeout && !localVideoEnabled) {
-    clearTimeout(videoRequestTimeout)
-    videoRequestTimeout = null
-    setResponseMessage(CustomStrings.RequestDeclined)
-    setTimeout(() => {
-      setResponseMessage('')
-    }, waitingTimer)
-  }
-
   if (!answered) {
     return null
   }
@@ -72,7 +59,7 @@ const VideoCallRequest: FC<{
           <VideoPopup
             header={CustomStrings.SwitchToVideo}
             showOk={true}
-            onOkPress={() => onVideoCallSwitch(currentCall)}
+            onOkPress={() => (onVideoCallSwitch ? onVideoCallSwitch() : null)}
             onCancel={() => setShowVideoPopup('')}
           ></VideoPopup>
         </View>
@@ -119,7 +106,9 @@ const VideoCallRequest: FC<{
           <VideoPopup
             header={responseMessage}
             showOk={false}
-            onCancel={() => setResponseMessage('')}
+            onCancel={() =>
+              setResponseMessage ? setResponseMessage('') : null
+            }
           ></VideoPopup>
         </View>
       ) : (

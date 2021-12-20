@@ -1,11 +1,5 @@
-import svgImages from 'assets/svgImages'
-import CustomGradient from 'components/CustomGradient'
-import FormInputBox from 'components/FormInputBox'
-import PoweredBy from 'components/PoweredBy'
-import { RnText } from 'components/Rn'
 import { cloneDeep } from 'lodash'
 import get from 'lodash/get'
-import styles from 'pages/PageProfileSingIn/Styles'
 import React, { FC, useEffect, useState } from 'react'
 import {
   Image,
@@ -16,11 +10,18 @@ import {
 } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { SvgXml } from 'react-native-svg'
-import { getAuthStore } from 'stores/authStore'
-import profileStore from 'stores/profileStore'
-import CustomColors from 'utils/CustomColors'
-import CustomImages from 'utils/CustomImages'
-import useStore from 'utils/useStore'
+
+import svgImages from '@/assets/svgImages'
+import CustomGradient from '@/components/CustomGradient'
+import FormInputBox from '@/components/FormInputBox'
+import PoweredBy from '@/components/PoweredBy'
+import { RnText } from '@/components/Rn'
+import styles from '@/pages/PageProfileSingIn/Styles'
+import { getAuthStore } from '@/stores/authStore'
+import profileStore from '@/stores/profileStore'
+import CustomColors from '@/utils/CustomColors'
+import CustomImages from '@/utils/CustomImages'
+import useStore from '@/utils/useStore'
 
 const InputBox: FC<{
   label: string
@@ -174,7 +175,10 @@ const PageProfileSignIn = () => {
             showError={fieldErrors['pbxTenant']}
           />
           <View
-            style={[styles.serverView, Platform.OS === 'ios' && { zIndex: 99 }]}
+            style={[
+              styles.serverView,
+              Platform.OS !== 'android' && { zIndex: 99 },
+            ]}
           >
             <RnText
               style={[
@@ -202,6 +206,7 @@ const PageProfileSignIn = () => {
               dropDownContainerStyle={styles.dropDownContainer}
               dropDownDirection='BOTTOM'
               selectedItemContainerStyle={styles.selectedItemContainer}
+              listItemContainerStyle={styles.listItemContainer}
             />
           </View>
           <FormInputBox

@@ -1,14 +1,15 @@
-import CallButtons from 'components/CallButtons'
-import CallerInfo from 'components/CallerInfo'
-import styles from 'components/CallNotify/Styles'
-import CustomGradient from 'components/CustomGradient'
-import PoweredBy from 'components/PoweredBy'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { View } from 'react-native'
-import callStore from 'stores/callStore'
-import contactStore from 'stores/contactStore'
-import CustomImages from 'utils/CustomImages'
+
+import CallButtons from '@/components/CallButtons'
+import CallerInfo from '@/components/CallerInfo'
+import styles from '@/components/CallNotify/Styles'
+import CustomGradient from '@/components/CustomGradient'
+import PoweredBy from '@/components/PoweredBy'
+import callStore from '@/stores/callStore'
+import contactStore from '@/stores/contactStore'
+import CustomImages from '@/utils/CustomImages'
 
 @observer
 class CallNotify extends React.Component {
@@ -51,7 +52,7 @@ class CallNotify extends React.Component {
     this.fetchPartyName(partyName, partyNumber)
 
     return (
-      <CustomGradient customStyle={{ position: 'absolute' }}>
+      <CustomGradient customStyle={{ position: 'absolute', flex: 1 }}>
         <View style={styles.notify}>
           <CallerInfo
             isUserCalling={isUserCalling}

@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     width: 90,
     textAlign: 'center',
+    overflow: 'visible',
   },
   keyPadSubText: {
     fontSize: CustomFonts.SmallFooterText,

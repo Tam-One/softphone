@@ -1,8 +1,9 @@
-import RnText from 'components/RnText'
-import styles from 'pages/PageCallManage/Styles'
 import React, { FC } from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import CustomStrings from 'utils/CustomStrings'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+
+import RnText from '@/components/RnText'
+import styles from '@/pages/PageCallManage/Styles'
+import CustomStrings from '@/utils/CustomStrings'
 
 const VideoPopup: FC<{
   header: string
@@ -14,7 +15,7 @@ const VideoPopup: FC<{
   title?: string
 }> = ({ header, onOkPress, showOk, onCancel, okText, hideCancel, title }) => {
   return (
-    <View style={styles.videoPopupContainer}>
+    <View style={[StyleSheet.absoluteFill, styles.videoPopupContainer]}>
       <View style={styles.videoPopupView}>
         {title ? <RnText style={styles.title}>{title}</RnText> : <></>}
         <RnText style={styles.videoPopupHeading}>{header}</RnText>
