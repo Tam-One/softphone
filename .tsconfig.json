@@ -1,5 +1,25 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"],
+      "utils/*": ["./src/utils/*"],
+      "pages/*": ["./src/pages/*"],
+      "components/*": ["./src/components/*"],
+      "stores/*": ["./src/stores/*"],
+      "api/*": ["./src/api/*"],
+      "assets/*": ["./src/assets/*"]
+    },
+    // "baseUrl": "src",
+    // "paths": {
+    //   "@/*": ["./*"]
+    // },
+    // "baseUrl": "Src",
+    // "paths": {
+    //   "*": [
+    //       "src/*"
+    //   ]
+    // },
     /* Basic Options */
     "target": "esnext",
     "module": "commonjs",
@@ -60,5 +80,6 @@
     /* Experimental Options */
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
-  }
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
 }
