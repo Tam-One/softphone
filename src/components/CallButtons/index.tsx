@@ -60,7 +60,7 @@ const CallButtons: FC<{
         ) : (
           <></>
         )}
-        {/* {icon ? <SvgXml width='55' height='55' xml={icon} /> : <></>} */}
+        {icon ? <SvgXml width='55' height='55' xml={icon} /> : <></>}
       </TouchableOpacity>
       <RnText style={styles.actionBtnText}>{lable}</RnText>
     </View>

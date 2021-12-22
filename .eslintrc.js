@@ -43,12 +43,6 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 0,
   },
   settings: {
-    // "import/resolver": {
-    //   "alias": {
-    //     "map": [["@", "./src"]],
-    //     "extensions": [".js"]
-    //   }
-    // },
     react: {
       version: 'latest',
     },

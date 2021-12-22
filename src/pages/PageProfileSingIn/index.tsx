@@ -37,7 +37,7 @@ const InputBox: FC<{
       disabled={!onPress}
     >
       {val ? <RnText style={styles.singInInput}>{label}</RnText> : <></>}
-      {/* {icon ? (
+      {icon ? (
         <SvgXml
           width='20'
           height='20'
@@ -47,7 +47,7 @@ const InputBox: FC<{
         />
       ) : (
         <></>
-      )} */}
+      )}
       <RnText style={styles.fieldTextInput}>{val}</RnText>
     </TouchableOpacity>
   )

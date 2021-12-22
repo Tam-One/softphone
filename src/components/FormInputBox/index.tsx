@@ -69,7 +69,7 @@ const FormInputBox: FC<{
         ) : (
           <></>
         )}
-        {/* <View style={{ paddingLeft: 12 }}>
+        <View style={{ paddingLeft: 12 }}>
           {icon ? (
             <SvgXml
               width={Platform.OS === 'web' ? '22px' : '22'}
@@ -81,8 +81,8 @@ const FormInputBox: FC<{
             />
           ) : (
             <></>
-          )} 
-        </View>*/}
+          )}
+        </View>
         <RnTextInput
           style={[
             styles.fieldTextInput,
@@ -100,7 +100,7 @@ const FormInputBox: FC<{
           selectTextOnFocus={editable}
           secureTextEntry={secureEntry}
         />
-        {/* {rightIcon ? (
+        {rightIcon ? (
           <TouchableOpacity
             style={styles.rightIconView}
             onPress={rightIconOnClick}
@@ -115,7 +115,7 @@ const FormInputBox: FC<{
           </TouchableOpacity>
         ) : (
           <></>
-        )} */}
+        )}
       </View>
       {(validationError || showError) && (
         <View style={styles.fieldError}>

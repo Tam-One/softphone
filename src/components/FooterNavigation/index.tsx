@@ -34,8 +34,7 @@ const Navigation: FC<{
                 />
               </View>
             ) : (
-              // <SvgXml width='20' height='20' xml={icon} fill={color} />
-              <></>
+              <SvgXml width='20' height='20' xml={icon} fill={color} />
             )}
             <RnText style={{ color: color }}>{label}</RnText>
           </View>
