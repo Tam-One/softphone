@@ -47,7 +47,8 @@
     "elec-build": "PUBLIC_URL=/ react-scripts build",
     "build-electron": "react-scripts build",
     "electron:build": "yarn build-electron && electron-builder build --publish never",
-    "electron:build:all": "yarn build-electron && electron-builder build --publish never -mwl"
+    "electron:build:all": "yarn build-electron && electron-builder build --publish never -mwl",
+    "electron:run": "./node_modules/.bin/electron . --enable-logging --app-dir=/path/to/app"
   },
   "dependencies": {
     "@cantoo/rn-svg": "^1.0.6",
