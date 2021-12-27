@@ -33,7 +33,7 @@ const css = StyleSheet.create({
         maxWidth: 'calc(100vw - 60px)',
       },
       default: {
-        maxWidth: Dimensions.get('screen').width - 60, // 50px of avatar and 10px of padding
+        maxWidth: Dimensions.get('window').width - 60, // 50px of avatar and 10px of padding
       },
     }),
   },
@@ -89,7 +89,7 @@ const css = StyleSheet.create({
         width: 'calc(100vw - 119px)',
       },
       default: {
-        width: Dimensions.get('screen').width - 119,
+        width: Dimensions.get('window').width - 119,
       },
     }),
   },

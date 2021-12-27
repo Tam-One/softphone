@@ -22,7 +22,7 @@ const Stack: FC<{
   isBackgroundStack: boolean
 }> = ({ Component, ...p }) => {
   const x = useAnimationOnDidMount({
-    translateX: [Dimensions.get('screen').width, 0],
+    translateX: [Dimensions.get('window').width, 0],
   })
   const OuterComponent = p.isRoot ? View : Animated.View
   return (

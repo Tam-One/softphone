@@ -68,7 +68,7 @@ const RnPickerR = (p: RnPickerOption) => {
     opacity: [0, 1],
   })
   const y = useAnimationOnDidMount({
-    translateY: [Dimensions.get('screen').height, 0],
+    translateY: [Dimensions.get('window').height, 0],
   })
   return (
     <View style={[StyleSheet.absoluteFill, css.RnPicker]}>

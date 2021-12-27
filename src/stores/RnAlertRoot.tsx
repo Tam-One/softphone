@@ -3,9 +3,8 @@ import { observer } from 'mobx-react'
 import React, { ReactElement } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 
-import VideoPopup from '@/pages/PageCallManage/VideoPopup'
-
 import g from '../components/variables'
+import VideoPopup from '../pages/PageCallManage/VideoPopup'
 import { useAnimationOnDidMount } from '../utils/animation'
 import intl from './intl'
 import RnAlert, { ErrorRnAlert2, PromptRnAlert } from './RnAlert'
@@ -74,7 +73,7 @@ const RnAlertR = ({
 }) => {
   const a = useAnimationOnDidMount({
     opacity: [0, 1],
-    translateY: [Dimensions.get('screen').height, 0],
+    translateY: [Dimensions.get('window').height, 0],
   })
   let props: {
     title: string | ReactElement

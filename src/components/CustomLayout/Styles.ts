@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native'
 
-const screenHeight = Dimensions.get('screen').height
+const screenHeight = Dimensions.get('window').height
 
 const styles = StyleSheet.create({
   scroller: {
