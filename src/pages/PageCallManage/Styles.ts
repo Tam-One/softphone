@@ -1,7 +1,7 @@
 import { Dimensions, Platform, StyleSheet } from 'react-native'
 
-import CustomColors from '@/utils/CustomColors'
-import CustomFonts from '@/utils/CustomFonts'
+import CustomColors from '../../utils/CustomColors'
+import CustomFonts from '../../utils/CustomFonts'
 
 const styles = StyleSheet.create({
   customHeaderContainer: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
     justifyContent: 'center',
     alignItems: 'center',
-    width: Dimensions.get('screen').width,
+    // width: Dimensions.get('screen').width,
     height: Dimensions.get('window').height,
     paddingBottom: 60,
   },
