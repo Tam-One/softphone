@@ -4,18 +4,18 @@ import { observer } from 'mobx-react'
 import React from 'react'
 import { FlatList, ScrollView, TouchableOpacity, View } from 'react-native'
 
-import pbx from '@/api/pbx'
-import UserItem from '@/components/ContactUserItem'
-import CustomLayout from '@/components/CustomLayout'
-import { RnIcon, RnText, RnTouchableOpacity } from '@/components/Rn'
-import RnTextInput from '@/components/RnTextInput'
-import styles from '@/pages/PageContactPhonebook/Styles'
-import contactStore, { Phonebook2 } from '@/stores/contactStore'
-import intl, { intlDebug } from '@/stores/intl'
-import Nav from '@/stores/Nav'
-import RnAlert from '@/stores/RnAlert'
-import { BackgroundTimer } from '@/utils/BackgroundTimer'
-import CustomColors from '@/utils/CustomColors'
+import pbx from '../../api/pbx'
+import UserItem from '../../components/ContactUserItem'
+import CustomLayout from '../../components/CustomLayout'
+import { RnIcon, RnText, RnTouchableOpacity } from '../../components/Rn'
+import RnTextInput from '../../components/RnTextInput'
+import styles from '../../pages/PageContactPhonebook/Styles'
+import contactStore, { Phonebook2 } from '../../stores/contactStore'
+import intl, { intlDebug } from '../../stores/intl'
+import Nav from '../../stores/Nav'
+import RnAlert from '../../stores/RnAlert'
+import { BackgroundTimer } from '../../utils/BackgroundTimer'
+import CustomColors from '../../utils/CustomColors'
 
 @observer
 class PageContactPhonebook extends React.Component {
@@ -124,7 +124,6 @@ class PageContactPhonebook extends React.Component {
                 color={CustomColors.DarkAsh}
               />
               <RnTextInput
-                disabled
                 style={styles.fieldTextInput}
                 value={contactStore.contactSearchBook}
                 onChangeText={(val: string) => {

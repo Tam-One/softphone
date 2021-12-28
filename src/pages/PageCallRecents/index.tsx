@@ -4,17 +4,17 @@ import moment from 'moment'
 import React from 'react'
 import { FlatList, ScrollView, View } from 'react-native'
 
-import UserItem from '@/components/ContactUserItem'
-import CustomLayout from '@/components/CustomLayout'
-import { RnIcon } from '@/components/Rn'
-import RnText from '@/components/RnText'
-import RnTextInput from '@/components/RnTextInput'
-import styles from '@/pages/PageCallRecents/Styles'
-import { getAuthStore } from '@/stores/authStore'
-import { AuthStore } from '@/stores/authStore2'
-import callStore from '@/stores/callStore'
-import contactStore from '@/stores/contactStore'
-import CustomColors from '@/utils/CustomColors'
+import UserItem from '../../components/ContactUserItem'
+import CustomLayout from '../../components/CustomLayout'
+import { RnIcon } from '../../components/Rn'
+import RnText from '../../components/RnText'
+import RnTextInput from '../../components/RnTextInput'
+import styles from '../../pages/PageCallRecents/Styles'
+import { getAuthStore } from '../../stores/authStore'
+import { AuthStore } from '../../stores/authStore2'
+import callStore from '../../stores/callStore'
+import contactStore from '../../stores/contactStore'
+import CustomColors from '../../utils/CustomColors'
 
 @observer
 class PageCallRecents extends React.Component {
@@ -102,7 +102,6 @@ class PageCallRecents extends React.Component {
                 color={CustomColors.DarkAsh}
               />
               <RnTextInput
-                disabled
                 style={styles.fieldTextInput}
                 value={contactStore.callSearchRecents}
                 onChangeText={(val: string) => {
