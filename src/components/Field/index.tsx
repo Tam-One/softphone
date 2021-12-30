@@ -230,7 +230,6 @@ const Field: FC<
         <View pointerEvents={($.isFocusing ? null : 'none') as any}>
           {props.inputElement || (
             <RnTextInput
-              disabled
               secureTextEntry={!!(props.secureTextEntry && props.value)}
               style={styles.fieldTextInput}
               value={

@@ -4,14 +4,15 @@ const path = require('path')
 
 const createMainWindow = () => {
   let mainWindow = new BrowserWindow({
-    width: electronScreen.getPrimaryDisplay().workArea.width * 0.3,
-    height: electronScreen.getPrimaryDisplay().workArea.height,
+    width: 350, //electronScreen.getPrimaryDisplay().workArea.width * 0.3,
+    height: 716, //electronScreen.getPrimaryDisplay().workArea.height,
     show: false,
     backgroundColor: 'white',
     webPreferences: {
       nodeIntegration: false,
       devTools: isDev,
     },
+    icon: __dirname + '/Icon/Icon.icns',
   })
   const startURL = isDev
     ? 'http://localhost:3000'

@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
   },
   appConnectionStatus: {
     backgroundColor: warning,
+    position: 'absolute',
+    zIndex: 99,
+    width: '100%',
   },
   appConnectionStatusFailure: {
     backgroundColor: danger,

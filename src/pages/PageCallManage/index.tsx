@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react'
 import React from 'react'
 import {
+  Dimensions,
   Platform,
   ScrollView,
   Text,
@@ -29,6 +30,7 @@ import Nav from '@/stores/Nav'
 import CustomColors from '@/utils/CustomColors'
 import CustomImages from '@/utils/CustomImages'
 import CustomStrings from '@/utils/CustomStrings'
+import CustomValues from '@/utils/CustomValues'
 import formatDuration from '@/utils/formatDuration'
 
 import VideoCallRequest from './VideoCallRequest'
@@ -359,6 +361,9 @@ class PageCallManage extends React.Component<{
         <VideoPlayer
           sourceObject={remoteVideoStreamObject}
           style={styles.remoteVideo}
+          height={
+            CustomValues.iosAndroid ? Dimensions.get('window').height : '716'
+          }
         />
         <VideoPlayer
           sourceObject={localVideoStreamObject}

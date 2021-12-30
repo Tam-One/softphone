@@ -3,6 +3,8 @@ import { ReactComponentLike } from 'prop-types'
 import React, { FC } from 'react'
 import { Animated, Dimensions, StyleSheet, View } from 'react-native'
 
+import CustomValues from '@/utils/CustomValues'
+
 import g from '../components/variables'
 import { useAnimationOnDidMount } from '../utils/animation'
 import RnStacker from './RnStacker'
@@ -22,7 +24,7 @@ const Stack: FC<{
   isBackgroundStack: boolean
 }> = ({ Component, ...p }) => {
   const x = useAnimationOnDidMount({
-    translateX: [Dimensions.get('window').width, 0],
+    translateX: [CustomValues.animationWidth, 0],
   })
   const OuterComponent = p.isRoot ? View : Animated.View
   return (

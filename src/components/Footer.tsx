@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react'
 import React, { FC } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Platform, StyleSheet, View } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
+
+import CustomValues from '@/utils/CustomValues'
 
 import RnKeyboard from '../stores/RnKeyboard'
 import { toLowerCaseFirstChar } from '../utils/string'
@@ -14,7 +16,7 @@ import g from './variables'
 const css = StyleSheet.create({
   Footer: {
     // position: 'absolute',
-    bottom: 0,
+    bottom: CustomValues.iosAndroid ? 0 : 65,
     right: 0,
     zIndex: 99999,
   },

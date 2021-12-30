@@ -2,6 +2,7 @@ import { Platform, StyleSheet } from 'react-native'
 
 import CustomColors from '@/utils/CustomColors'
 import CustomFonts from '@/utils/CustomFonts'
+import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   loading: {
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     color: CustomColors.White,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingBottom: CustomValues.iosAndroid ? 0 : 2,
   },
   transferSeparatorText: {
     fontSize: CustomFonts.SmallLabel,

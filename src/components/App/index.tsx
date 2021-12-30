@@ -5,7 +5,9 @@ import {
   ActivityIndicator,
   AppState,
   BackHandler,
+  Dimensions,
   Keyboard,
+  LogBox,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -43,6 +45,7 @@ import RnStacker from '@/stores/RnStacker'
 import RootStacks from '@/stores/RnStackerRoot'
 import { setupCallKeep } from '@/utils/callkeep'
 import CustomColors from '@/utils/CustomColors'
+import CustomValues from '@/utils/CustomValues'
 // @ts-ignore
 import PushNotification from '@/utils/PushNotification'
 import registerOnUnhandledError from '@/utils/registerOnUnhandledError'
@@ -171,6 +174,7 @@ const App = observer(() => {
     if (Platform.OS !== 'web') {
       SplashScreen.hide()
     }
+    LogBox.ignoreAllLogs()
   }, [])
 
   if (!profileStore.profilesLoadedObservable) {
@@ -218,7 +222,13 @@ const App = observer(() => {
 
   return (
     <Fragment>
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View
+        style={{
+          width: CustomValues.compatableWidth,
+          flex: 1,
+          backgroundColor: 'white',
+        }}
+      >
         <RnStatusBar />
         {shouldShowConnStatus && !!signedInId && (
           <AnimatedSize
