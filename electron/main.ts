@@ -32,6 +32,10 @@ const createMainWindow = () => {
   })
 }
 
+if (require('electron-squirrel-startup')) {
+  return
+}
+
 app.whenReady().then(() => {
   createMainWindow()
 
