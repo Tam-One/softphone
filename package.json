@@ -5,6 +5,8 @@
   "private": true,
   "homepage": "./",
   "main": "electron/main.ts",
+  "author": "Qooqie",
+  "description": "Qooqie application",
   "build": {
     "files": [
       "build/**/*",
