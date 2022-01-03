@@ -78,7 +78,9 @@
     "make-linux": "npx @electron-forge/cli make --platform linux",
     "make1": "npx @electron-forge/cli make",
     "start1": "electron-forge start",
-    "package1": "electron-forge package"
+    "package1": "electron-forge package",
+    "make-win": "electron-forge make  --asar=true",
+    "make-win1": "--output-path=electron/dist/dist && electron-forge make"
   },
   "dependencies": {
     "@cantoo/rn-svg": "^1.0.6",
