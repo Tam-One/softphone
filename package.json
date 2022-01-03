@@ -14,8 +14,30 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./Icon/Icon"
-      }
+        "icon": "./Icon/Icon",
+        "name": "QooqiePhone",
+        "executableName": "qooqiephone"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electro-text-reader"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "icon": "./Icon/Icon.png"
+          }
+        }
+      ]
     }
   },
   "scripts": {
@@ -50,7 +72,11 @@
     "start-forge": "electron-forge start",
     "forge-package": "electron-forge package",
     "make": "electron-forge make",
-    "make-mac": "npx @electron-forge/cli make --platform darwin"
+    "make-mac": "npx @electron-forge/cli make --platform darwin",
+    "make-linux": "npx @electron-forge/cli make --platform linux",
+    "make1": "npx @electron-forge/cli make",
+    "start1": "electron-forge start",
+    "package1": "electron-forge package"
   },
   "dependencies": {
     "@cantoo/rn-svg": "^1.0.6",
@@ -65,6 +91,7 @@
     "concurrently": "6.5.1",
     "electron-is": "3.0.0",
     "electron-is-dev": "2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
     "env-cmd": "10.1.0",
     "es6-shim": "0.35.6",
     "es7-shim": "6.0.0",
@@ -127,6 +154,10 @@
     "@babel/plugin-proposal-optional-chaining": "7.13.8",
     "@craco/craco": "5.9.0",
     "@electron-forge/cli": "^6.0.0-beta.61",
+    "@electron-forge/maker-deb": "6.0.0-beta.53",
+    "@electron-forge/maker-rpm": "6.0.0-beta.53",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.53",
+    "@electron-forge/maker-zip": "6.0.0-beta.53",
     "@prettier/plugin-xml": "0.13.1",
     "@types/circular-dependency-plugin": "5.0.5",
     "@types/circular-json": "0.4.0",
