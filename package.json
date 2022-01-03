@@ -1,5 +1,6 @@
 {
   "name": "qooqiephone",
+  "productName": "QooqiePhone",
   "version": "2.9.8",
   "private": true,
   "homepage": "./",
@@ -9,6 +10,13 @@
       "build/**/*",
       "node_modules/**/*"
     ]
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./Icon/Icon"
+      }
+    }
   },
   "scripts": {
     "web": "react-scripts start",
@@ -41,7 +49,8 @@
     "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron.js --publish never",
     "start-forge": "electron-forge start",
     "forge-package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "make-mac": "npx @electron-forge/cli make --platform darwin"
   },
   "dependencies": {
     "@cantoo/rn-svg": "^1.0.6",
@@ -117,6 +126,7 @@
     "@babel/plugin-proposal-decorators": "7.13.5",
     "@babel/plugin-proposal-optional-chaining": "7.13.8",
     "@craco/craco": "5.9.0",
+    "@electron-forge/cli": "^6.0.0-beta.61",
     "@prettier/plugin-xml": "0.13.1",
     "@types/circular-dependency-plugin": "5.0.5",
     "@types/circular-json": "0.4.0",
