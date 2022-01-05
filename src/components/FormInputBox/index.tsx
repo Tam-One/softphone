@@ -70,7 +70,7 @@ const FormInputBox: FC<{
           <></>
         )}
         <View style={{ paddingLeft: 12 }}>
-          {icon ? (
+          {/* {icon ? (
             <SvgXml
               width={Platform.OS === 'web' ? '22px' : '22'}
               height={Platform.OS === 'web' ? '30px' : '30'}
@@ -81,7 +81,7 @@ const FormInputBox: FC<{
             />
           ) : (
             <></>
-          )}
+          )} */}
         </View>
         <RnTextInput
           style={[
@@ -105,13 +105,13 @@ const FormInputBox: FC<{
             style={styles.rightIconView}
             onPress={rightIconOnClick}
           >
-            <SvgXml
+            {/* <SvgXml
               width='22'
               height='30'
               xml={rightIcon}
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
-            />
+            /> */}
           </TouchableOpacity>
         ) : (
           <></>

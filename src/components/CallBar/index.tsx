@@ -58,13 +58,13 @@ class CallBar extends React.Component {
             style={styles.callBarOuter}
           >
             <View>
-              <SvgXml
+              {/* <SvgXml
                 width='33'
                 height='33'
                 xml={svgImages.greenCallButton}
                 fill={CustomColors.CallGreen}
                 fillOpacity={1}
-              />
+              /> */}
             </View>
             <View style={styles.callBarInfo}>
               {!!title && (

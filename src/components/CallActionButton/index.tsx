@@ -35,14 +35,14 @@ const CallActionButton: FC<{
         !hideShadow && styles.shadowEffect,
       ]}
     >
-      <SvgXml
+      {/* <SvgXml
         width='25'
         height='25'
         xml={image}
         fill={textcolor || CustomColors.DarkBlue}
         fillOpacity={1}
         style={[styles.btnLogo, imageStyle]}
-      />
+      /> */}
       <RnText
         style={[
           styles.buttonIconName,

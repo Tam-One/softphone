@@ -45,13 +45,13 @@ const CustomHeader: FC<
         <View style={{ flex: 0.25 }}>
           {onBack ? (
             <TouchableOpacity onPress={onBack} style={styles.backBtnRow}>
-              <SvgXml
+              {/* <SvgXml
                 width='17'
                 height='17'
                 xml={svgImages.backButton}
                 fill={CustomColors.BlueLabel}
                 fillOpacity={1}
-              />
+              /> */}
               {!hideBackText && (
                 <RnText style={[styles.backText, customBackStyle]}>
                   {backText || 'Back'}
