@@ -15,6 +15,7 @@ import styles from '@/components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from '@/components/Rn'
 import CustomColors from '@/utils/CustomColors'
 import CustomImages from '@/utils/CustomImages'
+import { ConferenceButton, TransferButton } from '@/utils/SvgComponent'
 
 const keys = [
   [
@@ -129,7 +130,7 @@ const KeyPad: FC<{
             <>
               <CallButtons
                 onPress={conference}
-                icon={svgImages.conferenceButton}
+                Icon={ConferenceButton}
                 containerStyle={{
                   width: Platform.OS === 'web' ? 40 : 55,
                   height: Platform.OS === 'web' ? 40 : 55,
@@ -169,7 +170,7 @@ const KeyPad: FC<{
             <View style={{ alignItems: 'center', marginLeft: 5 }}>
               <CallButtons
                 onPress={callVoice}
-                icon={svgImages.transferButton}
+                Icon={TransferButton}
                 containerStyle={{
                   width: Platform.OS === 'web' ? 40 : 55,
                   height: Platform.OS === 'web' ? 40 : 55,

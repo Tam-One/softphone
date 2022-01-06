@@ -13,7 +13,7 @@ import { RnText } from '@/components/Rn'
 const CallButtons: FC<{
   onPress(): void
   image?: ImageSourcePropType
-  icon?: string
+  Icon?: any
   lable?: string
   showAnimation?: boolean
   containerStyle?: object
@@ -25,7 +25,7 @@ const CallButtons: FC<{
   showAnimation,
   containerStyle,
   imageStyle,
-  icon,
+  Icon,
 }) => {
   const [animationTrigger, setAnimationTrigger] = useState(showAnimation)
   const animationTime = 1000
@@ -60,7 +60,7 @@ const CallButtons: FC<{
         ) : (
           <></>
         )}
-        {/* {icon ? <SvgXml width='55' height='55' xml={icon} /> : <></>} */}
+        {Icon ? <Icon></Icon> : <></>}
       </TouchableOpacity>
       <RnText style={styles.actionBtnText}>{lable}</RnText>
     </View>

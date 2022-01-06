@@ -23,6 +23,7 @@ import RnStacker from '@/stores/RnStacker'
 import CustomColors from '@/utils/CustomColors'
 import CustomImages from '@/utils/CustomImages'
 import formatDuration from '@/utils/formatDuration'
+import { GreenCallButton } from '@/utils/SvgComponent'
 
 @observer
 class CallBar extends React.Component {
@@ -58,13 +59,10 @@ class CallBar extends React.Component {
             style={styles.callBarOuter}
           >
             <View>
-              {/* <SvgXml
-                width='33'
-                height='33'
-                xml={svgImages.greenCallButton}
+              <GreenCallButton
                 fill={CustomColors.CallGreen}
                 fillOpacity={1}
-              /> */}
+              ></GreenCallButton>
             </View>
             <View style={styles.callBarInfo}>
               {!!title && (

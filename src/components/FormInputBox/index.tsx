@@ -1,5 +1,5 @@
 import { mdiCardsDiamond } from '@mdi/js'
-import React, { FC, useEffect, useState } from 'react'
+import React, { Component, FC, useEffect, useState } from 'react'
 import { Platform, TouchableOpacity, View } from 'react-native'
 import { Path, Svg, SvgXml, Text } from 'react-native-svg'
 
@@ -15,11 +15,11 @@ const FormInputBox: FC<{
   editable?: boolean
   required?: boolean
   showError?: boolean
-  icon?: string
+  Icon?: any
   containerStyle?: object
   iconStyle?: object
   secureEntry?: boolean
-  rightIcon?: string
+  RightIcon?: any
   rightIconOnClick?(): void
 }> = ({
   label,
@@ -28,11 +28,11 @@ const FormInputBox: FC<{
   editable = true,
   required,
   showError,
-  icon,
+  Icon,
   containerStyle,
   iconStyle,
   secureEntry,
-  rightIcon,
+  RightIcon,
   rightIconOnClick,
 }) => {
   const [focus, setFocus] = useState(false)
@@ -70,18 +70,15 @@ const FormInputBox: FC<{
           <></>
         )}
         <View style={{ paddingLeft: 12 }}>
-          {/* {icon ? (
-            <SvgXml
-              width={Platform.OS === 'web' ? '22px' : '22'}
-              height={Platform.OS === 'web' ? '30px' : '30'}
-              xml={icon}
+          {Icon ? (
+            <Icon
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
               style={iconStyle}
-            />
+            ></Icon>
           ) : (
             <></>
-          )} */}
+          )}
         </View>
         <RnTextInput
           style={[
@@ -100,18 +97,16 @@ const FormInputBox: FC<{
           selectTextOnFocus={editable}
           secureTextEntry={secureEntry}
         />
-        {rightIcon ? (
+        {RightIcon ? (
           <TouchableOpacity
             style={styles.rightIconView}
             onPress={rightIconOnClick}
           >
-            {/* <SvgXml
-              width='22'
-              height='30'
-              xml={rightIcon}
+            <RightIcon
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
-            /> */}
+              style={iconStyle}
+            ></RightIcon>
           </TouchableOpacity>
         ) : (
           <></>

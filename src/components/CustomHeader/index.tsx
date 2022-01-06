@@ -7,6 +7,7 @@ import styles from '@/components/CustomHeader/Styles'
 import RnText from '@/components/RnText'
 import RnTouchableOpacity from '@/components/RnTouchableOpacity'
 import CustomColors from '@/utils/CustomColors'
+import { BackButton } from '@/utils/SvgComponent'
 
 const CustomHeader: FC<
   Partial<{
@@ -45,13 +46,10 @@ const CustomHeader: FC<
         <View style={{ flex: 0.25 }}>
           {onBack ? (
             <TouchableOpacity onPress={onBack} style={styles.backBtnRow}>
-              {/* <SvgXml
-                width='17'
-                height='17'
-                xml={svgImages.backButton}
+              <BackButton
                 fill={CustomColors.BlueLabel}
                 fillOpacity={1}
-              /> */}
+              ></BackButton>
               {!hideBackText && (
                 <RnText style={[styles.backText, customBackStyle]}>
                   {backText || 'Back'}

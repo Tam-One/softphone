@@ -32,6 +32,22 @@ import CustomImages from '@/utils/CustomImages'
 import CustomStrings from '@/utils/CustomStrings'
 import CustomValues from '@/utils/CustomValues'
 import formatDuration from '@/utils/formatDuration'
+import {
+  Keys,
+  MicrophoneOff,
+  MicrophoneOn,
+  Park,
+  Pause,
+  Play,
+  Record,
+  RecordCircleMaroon,
+  RecordCircleRed,
+  Transfer,
+  VideoOff,
+  VideoOn,
+  VolumeHigh,
+  VolumeMedium,
+} from '@/utils/SvgComponent'
 
 import VideoCallRequest from './VideoCallRequest'
 
@@ -42,7 +58,7 @@ class PageCallManage extends React.Component<{
   intervalID = 0
   waitingTimer = 3000
   requestTimer = 20000
-  recordAnimation = svgImages.recordCircleRed
+  recordAnimation = RecordCircleRed
 
   videoRequestTimeout
   state = {
@@ -69,10 +85,10 @@ class PageCallManage extends React.Component<{
     } = currentCall
 
     if (recording) {
-      if (this.recordAnimation === svgImages.recordCircleRed) {
-        this.recordAnimation = svgImages.recordCircleMaroon
+      if (this.recordAnimation === RecordCircleRed) {
+        this.recordAnimation = RecordCircleMaroon
       } else {
-        this.recordAnimation = svgImages.recordCircleRed
+        this.recordAnimation = RecordCircleRed
       }
     }
 
@@ -96,7 +112,7 @@ class PageCallManage extends React.Component<{
           name={muted ? intl`Unmute` : intl`Mute`}
           onPress={() => toggleMuted()}
           textcolor={muted ? nonActiveColor : textActiveColor}
-          image={muted ? svgImages.microphoneOff : svgImages.microphoneOn}
+          Icon={muted ? MicrophoneOff : MicrophoneOn}
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
         />
@@ -107,7 +123,7 @@ class PageCallManage extends React.Component<{
           name={holding ? intl`Unhold` : intl`Hold`}
           onPress={() => onHoldPress()}
           textcolor={holding ? nonActiveColor : textActiveColor}
-          image={holding ? svgImages.play : svgImages.pause}
+          Icon={holding ? Play : Pause}
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
         />
@@ -118,7 +134,7 @@ class PageCallManage extends React.Component<{
           name={intl`Video`}
           onPress={localVideoEnabled ? () => disableVideo(true) : onVideoPress}
           textcolor={localVideoEnabled ? nonActiveColor : textActiveColor}
-          image={localVideoEnabled ? svgImages.videoOn : svgImages.videoOff}
+          Icon={localVideoEnabled ? VideoOn : VideoOff}
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
         />
@@ -129,9 +145,7 @@ class PageCallManage extends React.Component<{
           name={intl`Speaker`}
           onPress={toggleLoudSpeaker}
           textcolor={isLoudSpeakerEnabled ? nonActiveColor : textActiveColor}
-          image={
-            isLoudSpeakerEnabled ? svgImages.volumeHigh : svgImages.volumeMedium
-          }
+          Icon={isLoudSpeakerEnabled ? VolumeHigh : VolumeMedium}
           imageStyle={styles.actionBtnImage}
           hideShadow={localVideoEnabled}
         />
@@ -142,7 +156,7 @@ class PageCallManage extends React.Component<{
           name={intl`Record`}
           onPress={toggleRecording}
           textcolor={recording ? nonActiveColor : textActiveColor}
-          image={recording ? this.recordAnimation : svgImages.record}
+          Icon={recording ? this.recordAnimation : Record}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -152,7 +166,7 @@ class PageCallManage extends React.Component<{
           name={intl`Park`}
           onPress={Nav().goToPageCallParks2}
           textcolor={textActiveColor}
-          image={svgImages.park}
+          Icon={Park}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -162,7 +176,7 @@ class PageCallManage extends React.Component<{
           name={intl`Keys`}
           onPress={() => this.setState({ showKeyPad: true })}
           textcolor={textActiveColor}
-          image={svgImages.keys}
+          Icon={Keys}
           hideShadow={localVideoEnabled}
         />
       ),
@@ -172,7 +186,7 @@ class PageCallManage extends React.Component<{
           name={intl`Transfer`}
           onPress={Nav().goToPageTransferDial}
           textcolor={textActiveColor}
-          image={svgImages.transfer}
+          Icon={Transfer}
           hideShadow={localVideoEnabled}
         />
       ),
