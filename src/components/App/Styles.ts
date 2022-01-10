@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 import globalVariables from '@/components/variables'
 import CustomColors from '@/utils/CustomColors'
@@ -27,8 +27,11 @@ const styles = StyleSheet.create({
   appConnectionStatus: {
     backgroundColor: warning,
     position: 'absolute',
+    flex: 1,
     zIndex: 99,
     width: '100%',
+    bottom: 0,
+    top: Platform.OS === 'ios' ? 43 : 0,
   },
   appConnectionStatusFailure: {
     backgroundColor: danger,
