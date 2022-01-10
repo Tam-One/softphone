@@ -170,6 +170,7 @@ export class AuthStore {
     this.ucTotalFailure = 0
     this.ucLoginFromAnotherPlace = false
     profileStore.profiles[0].loginPressed = ''
+    profileStore.profiles[0].pushNotificationEnabled = false
     profileStore.saveProfilesToLocalStorage()
   }
 

@@ -18,7 +18,7 @@
       "packagerConfig": {
         "icon": "./Icon/Icon",
         "name": "QooqiePhone",
-        "executableName": "qooqiephone"
+        "executableName": "Qooqie Phone"
       },
       "makers": [
         {

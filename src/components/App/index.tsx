@@ -89,7 +89,7 @@ const getAudioVideoPermission = () => {
 if (Platform.OS === 'web') {
   RnAlert.prompt({
     title: intl`Action Required`,
-    message: intl`Qooqie Phone needs your action to work well on browser. Press OK to continue`,
+    message: intl`Qooqie Phone needs your permission to access camera and microphone for calls. Press OK to accept`,
     confirmText: 'OK',
     dismissText: false,
     onConfirm: getAudioVideoPermission,
@@ -157,6 +157,15 @@ PushNotification.register(() => {
       authPBX.dispose()
       authSIP.dispose()
       authUC.dispose()
+      SyncPnToken().sync(profileStore.profiles[0], {
+        onError: () => {
+          // Revert on error?
+          // p0.pushNotificationEnabled = pn0
+          // this.profiles = profiles0
+          // this.saveProfilesToLocalStorage()
+        },
+        noUpsert: true,
+      })
     }
   })
 
