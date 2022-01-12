@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.SmallSubText,
     lineHeight: 13,
-    marginTop: 17,
   },
   searchBoxView: {
     backgroundColor: CustomColors.GradientStart,

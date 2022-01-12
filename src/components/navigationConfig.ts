@@ -5,12 +5,13 @@ import intlStore from '@/stores/intlStore'
 import Nav from '@/stores/Nav'
 import profileStore from '@/stores/profileStore'
 import RnAlert from '@/stores/RnAlert'
+import { Cog, Dialpad, History, Person } from '@/utils/SvgComponent'
 import { arrToMap } from '@/utils/toMap'
 
 interface Menu {
   key: string
   label: string
-  icon: string
+  Icon: any
   subMenus: SubMenu[]
   defaultSubMenuKey: string
   defaultSubMenu: SubMenu
@@ -30,7 +31,7 @@ const genMenus = () => {
     {
       key: 'keys',
       label: 'Keys',
-      icon: svgImages.dialpad,
+      Icon: Dialpad,
       subMenus: [
         {
           key: 'keypad',
@@ -48,7 +49,7 @@ const genMenus = () => {
     {
       key: 'call',
       label: 'Calls',
-      icon: svgImages.history,
+      Icon: History,
       subMenus: [
         {
           key: 'recents',
@@ -66,7 +67,7 @@ const genMenus = () => {
     {
       key: 'contact',
       label: 'Q-Book',
-      icon: svgImages.person,
+      Icon: Person,
       subMenus: [
         {
           key: 'phonebook',
@@ -84,7 +85,7 @@ const genMenus = () => {
     {
       key: 'settings',
       label: 'Settings',
-      icon: svgImages.cog,
+      Icon: Cog,
       subMenus: [
         {
           key: 'profile',

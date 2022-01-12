@@ -1,9 +1,9 @@
 import { Dimensions, Platform, StyleSheet } from 'react-native'
 
-import CustomColors from '@/utils/CustomColors'
-import CustomFonts from '@/utils/CustomFonts'
+import CustomColors from '../../utils/CustomColors'
+import CustomFonts from '../../utils/CustomFonts'
 
-const screenHeight = Dimensions.get('screen').height
+const screenHeight = Dimensions.get('window').height
 const keyButtonSize = screenHeight * 0.097
 const keyMargin = screenHeight * 0.02
 const footerMargin = screenHeight * 0.01

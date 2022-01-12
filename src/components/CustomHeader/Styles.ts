@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native'
 
 import CustomColors from '@/utils/CustomColors'
 import CustomFonts from '@/utils/CustomFonts'
+import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   header: {
@@ -31,7 +32,8 @@ const styles = StyleSheet.create({
   rightButtonText: {
     fontSize: CustomFonts.BackText,
     color: CustomColors.ActiveBlue,
-    paddingHorizontal: 16,
+    paddingLeft: CustomValues.iosAndroid ? 16 : 14,
+    paddingRight: CustomValues.iosAndroid ? 16 : 14,
     paddingVertical: 10,
   },
   disabledRightButton: {

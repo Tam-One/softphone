@@ -21,37 +21,14 @@ import { getAuthStore } from '@/stores/authStore'
 import profileStore from '@/stores/profileStore'
 import CustomColors from '@/utils/CustomColors'
 import CustomImages from '@/utils/CustomImages'
+import {
+  EyeIcon,
+  EyeOffIcon,
+  KeyIcon,
+  LockButton,
+  ProfileIcon,
+} from '@/utils/SvgComponent'
 import useStore from '@/utils/useStore'
-
-const InputBox: FC<{
-  label: string
-  val: string
-  icon: string
-  style?: object
-  onPress?(): void
-}> = ({ label, val, icon, style, onPress }) => {
-  return (
-    <TouchableOpacity
-      style={styles.inputBox}
-      onPress={onPress}
-      disabled={!onPress}
-    >
-      {val ? <RnText style={styles.singInInput}>{label}</RnText> : <></>}
-      {icon ? (
-        <SvgXml
-          width='20'
-          height='20'
-          xml={icon}
-          fill={CustomColors.SVGBlack}
-          fillOpacity={1}
-        />
-      ) : (
-        <></>
-      )}
-      <RnText style={styles.fieldTextInput}>{val}</RnText>
-    </TouchableOpacity>
-  )
-}
 
 const PageProfileSignIn = () => {
   const [fieldErrors, setFieldErrors] = useState({})
@@ -154,7 +131,7 @@ const PageProfileSignIn = () => {
             onTextChange={text => onTextChange('pbxUsername', text)}
             required={true}
             showError={fieldErrors['pbxUsername']}
-            icon={svgImages.profileIcon}
+            Icon={ProfileIcon}
           />
           <FormInputBox
             label={'Tenant'}
@@ -169,7 +146,7 @@ const PageProfileSignIn = () => {
               setServers(data)
               onTextChange('pbxTenant', text)
             }}
-            icon={svgImages.keyIcon}
+            Icon={KeyIcon}
             containerStyle={{ marginTop: 16 }}
             required={true}
             showError={fieldErrors['pbxTenant']}
@@ -216,10 +193,9 @@ const PageProfileSignIn = () => {
             required={true}
             showError={fieldErrors['pbxPassword']}
             containerStyle={{ marginTop: 16 }}
-            icon={svgImages.lockButton}
-            iconStyle={{ marginBottom: 10 }}
+            Icon={LockButton}
             secureEntry={!passwordView}
-            rightIcon={passwordView ? svgImages.eyeOffIcon : svgImages.eyeIcon}
+            RightIcon={passwordView ? EyeOffIcon : EyeIcon}
             rightIconOnClick={() => setPasswordView(!passwordView)}
           />
         </View>

@@ -2,6 +2,7 @@ import { Dimensions, Platform, StyleSheet } from 'react-native'
 
 import CustomColors from '@/utils/CustomColors'
 import CustomFonts from '@/utils/CustomFonts'
+import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   customHeaderContainer: {
@@ -36,19 +37,19 @@ const styles = StyleSheet.create({
   videoPageContainer: {
     flex: 1,
     position: 'absolute',
-    width: Dimensions.get('screen').width,
+    width: CustomValues.compatableWidth,
     height: Dimensions.get('window').height,
     zIndex: 9999,
   },
   videoContainer: {
     flex: 1,
-    width: Dimensions.get('screen').width,
+    width: CustomValues.compatableWidth,
     height: Dimensions.get('window').height,
     backgroundColor: CustomColors.Transparent,
     position: 'relative',
   },
   remoteVideo: {
-    width: Dimensions.get('screen').width,
+    width: CustomValues.compatableWidth,
     height: Dimensions.get('window').height,
     zIndex: 1,
     flex: 1,
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   btnsIsVideoEnabled: {
     position: 'absolute',
     flex: 1,
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 60 : 0,
     top: 0,
     alignSelf: 'center',
     justifyContent: 'flex-end',
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingBottom: Dimensions.get('screen').height * 0.03,
+    paddingBottom: Dimensions.get('window').height * 0.03,
     justifyContent: 'center',
     width: '100%',
   },
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
     justifyContent: 'center',
     alignItems: 'center',
-    width: Dimensions.get('screen').width,
+    width: CustomValues.compatableWidth,
     height: Dimensions.get('window').height,
     paddingBottom: 60,
   },
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: Dimensions.get('screen').width,
+    width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     position: 'absolute',
     bottom: 0,

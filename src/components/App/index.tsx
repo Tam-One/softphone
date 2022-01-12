@@ -5,7 +5,9 @@ import {
   ActivityIndicator,
   AppState,
   BackHandler,
+  Dimensions,
   Keyboard,
+  LogBox,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -43,6 +45,7 @@ import RnStacker from '@/stores/RnStacker'
 import RootStacks from '@/stores/RnStackerRoot'
 import { setupCallKeep } from '@/utils/callkeep'
 import CustomColors from '@/utils/CustomColors'
+import CustomValues from '@/utils/CustomValues'
 // @ts-ignore
 import PushNotification from '@/utils/PushNotification'
 import registerOnUnhandledError from '@/utils/registerOnUnhandledError'
@@ -86,7 +89,7 @@ const getAudioVideoPermission = () => {
 if (Platform.OS === 'web') {
   RnAlert.prompt({
     title: intl`Action Required`,
-    message: intl`Qooqie Phone needs your action to work well on browser. Press OK to continue`,
+    message: intl`Qooqie Phone needs your permission to access camera and microphone for calls. Press OK to accept`,
     confirmText: 'OK',
     dismissText: false,
     onConfirm: getAudioVideoPermission,
@@ -154,6 +157,15 @@ PushNotification.register(() => {
       authPBX.dispose()
       authSIP.dispose()
       authUC.dispose()
+      SyncPnToken().sync(profileStore.profiles[0], {
+        onError: () => {
+          // Revert on error?
+          // p0.pushNotificationEnabled = pn0
+          // this.profiles = profiles0
+          // this.saveProfilesToLocalStorage()
+        },
+        noUpsert: true,
+      })
     }
   })
 
@@ -171,6 +183,7 @@ const App = observer(() => {
     if (Platform.OS !== 'web') {
       SplashScreen.hide()
     }
+    LogBox.ignoreAllLogs()
   }, [])
 
   if (!profileStore.profilesLoadedObservable) {
@@ -218,7 +231,13 @@ const App = observer(() => {
 
   return (
     <Fragment>
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View
+        style={{
+          width: CustomValues.compatableWidth,
+          flex: 1,
+          backgroundColor: 'white',
+        }}
+      >
         <RnStatusBar />
         {shouldShowConnStatus && !!signedInId && (
           <AnimatedSize

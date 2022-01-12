@@ -15,7 +15,7 @@ const Navigation: FC<{
 }> = ({ menu }) => (
   <View style={styles.navigation}>
     {menus().map(ele => {
-      const { key, label, navFn, icon } = ele
+      const { key, label, navFn, Icon } = ele
       const active = key === menu
       const color = active ? CustomColors.ActiveBlue : CustomColors.LightAsh
       return (
@@ -34,7 +34,7 @@ const Navigation: FC<{
                 />
               </View>
             ) : (
-              <SvgXml width='20' height='20' xml={icon} fill={color} />
+              <Icon fill={color}></Icon>
             )}
             <RnText style={{ color: color }}>{label}</RnText>
           </View>

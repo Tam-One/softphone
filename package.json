@@ -1,8 +1,47 @@
 {
   "name": "qooqiephone",
+  "productName": "QooqiePhone",
   "version": "2.9.8",
   "private": true,
   "homepage": "./",
+  "main": "electron/main.ts",
+  "author": "Qooqie",
+  "description": "Qooqie application",
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ]
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./Icon/Icon",
+        "name": "QooqiePhone",
+        "executableName": "Qooqie Phone"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electro-text-reader"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "icon": "./Icon/Icon.png"
+          }
+        }
+      ]
+    }
+  },
   "scripts": {
     "web": "react-scripts start",
     "start": "craco start",
@@ -20,7 +59,28 @@
     "check-prettier": "prettier --ignore-path=.gitignore --list-different .",
     "check-typescript": "tsc",
     "check-type-coverage": "type-coverage --ignoreCatch --atLeast=100",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "electron:start": "concurrently \"yarn start\" \"wait-on http://localhost:3001 && electron .\"",
+    "elec-build": "PUBLIC_URL=/ react-scripts build",
+    "build-electron": "react-scripts build",
+    "electron:build": "yarn build && electron-builder build --publish never",
+    "electron:build:all": "yarn build-electron && electron-builder build --publish never -mwl",
+    "electron:run": "./node_modules/.bin/electron . --enable-logging --app-dir=/path/to/app",
+    "build:electron": "env-cmd .env.electron craco",
+    "react-build": "react-scripts build",
+    "electron-build": "electron-builder",
+    "test": "yarn react-build && yarn electron-build",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron.js --publish never",
+    "start-forge": "electron-forge start",
+    "forge-package": "electron-forge package",
+    "make": "electron-forge make",
+    "make-mac": "npx @electron-forge/cli make --platform darwin",
+    "make-linux": "npx @electron-forge/cli make --platform linux",
+    "make1": "npx @electron-forge/cli make",
+    "start1": "electron-forge start",
+    "package1": "electron-forge package",
+    "make-win": "electron-forge make  --asar=true",
+    "make-win1": "--output-path=electron/dist/dist && electron-forge make"
   },
   "dependencies": {
     "@cantoo/rn-svg": "^1.0.6",
@@ -32,6 +92,11 @@
     "brekekejs": "git://github.com/Tam-One/brekekejs.git",
     "buffer": "6.0.3",
     "circular-json": "0.5.9",
+    "concurrently": "6.5.1",
+    "electron-is": "3.0.0",
+    "electron-is-dev": "2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "env-cmd": "10.1.0",
     "es6-shim": "0.35.6",
     "es7-shim": "6.0.0",
     "eventemitter3": "4.0.7",
@@ -59,6 +124,7 @@
     "react-native-document-picker": "4.3.0",
     "react-native-dotenv": "2.5.5",
     "react-native-dropdown-picker": "^5.2.3",
+    "react-native-electron": "0.16.0",
     "react-native-emoji-selector": "0.2.0",
     "react-native-exception-handler": "2.10.9",
     "react-native-fast-image": "8.3.4",
@@ -83,14 +149,21 @@
     "react-native-webrtc": "1.75.3",
     "url-parse": "1.5.1",
     "uuid": "8.3.2",
-    "validatorjs": "3.22.1"
+    "validatorjs": "3.22.1",
+    "wait-on": "6.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.13.10",
     "@babel/plugin-proposal-decorators": "7.13.5",
     "@babel/plugin-proposal-optional-chaining": "7.13.8",
     "@craco/craco": "5.9.0",
+    "@electron-forge/cli": "^6.0.0-beta.61",
+    "@electron-forge/maker-deb": "6.0.0-beta.53",
+    "@electron-forge/maker-rpm": "6.0.0-beta.53",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.53",
+    "@electron-forge/maker-zip": "6.0.0-beta.53",
     "@prettier/plugin-xml": "0.13.1",
+    "@types/circular-dependency-plugin": "5.0.5",
     "@types/circular-json": "0.4.0",
     "@types/handlebars": "4.1.0",
     "@types/json-stable-stringify": "1.0.32",
@@ -108,10 +181,12 @@
     "@types/react-native-webrtc": "1.75.2",
     "@types/url-parse": "1.4.3",
     "@types/validatorjs": "3.15.0",
+    "@types/webpack-node-externals": "2.5.3",
     "@typescript-eslint/parser": "4.17.0",
     "circular-dependency-plugin": "5.2.2",
     "cross-env": "7.0.3",
     "del-cli": "3.0.1",
+    "electron": "16.0.5",
     "eslint": "6.x",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.25.3",
@@ -124,7 +199,8 @@
     "prettier": "2.2.1",
     "react-scripts": "3.4.4",
     "type-coverage": "2.17.0",
-    "typescript": "4.2.3"
+    "typescript": "4.2.3",
+    "webpack-node-externals": "3.0.0"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [

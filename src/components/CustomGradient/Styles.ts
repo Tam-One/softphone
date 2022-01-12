@@ -1,9 +1,11 @@
 import { Dimensions, StyleSheet } from 'react-native'
 
+import CustomValues from '@/utils/CustomValues'
+
 const styles = StyleSheet.create({
   CustomGradient: {
     zIndex: 99,
-    width: Dimensions.get('window').width,
+    width: CustomValues.compatableWidth,
     height: Dimensions.get('window').height,
   },
   flexbox: {

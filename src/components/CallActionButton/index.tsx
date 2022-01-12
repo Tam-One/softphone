@@ -12,8 +12,8 @@ const CallActionButton: FC<{
   bgcolor?: string
   name?: string
   textcolor?: string
-  image: string
-  imageStyle?: ImageProps['style']
+  Icon: any
+  imageStyle?: any
   hideShadow?: boolean
 }> = ({
   disabled,
@@ -21,7 +21,7 @@ const CallActionButton: FC<{
   bgcolor,
   name,
   textcolor,
-  image,
+  Icon,
   imageStyle,
   hideShadow,
 }) => {
@@ -35,14 +35,12 @@ const CallActionButton: FC<{
         !hideShadow && styles.shadowEffect,
       ]}
     >
-      <SvgXml
-        width='25'
-        height='25'
-        xml={image}
+      <Icon
         fill={textcolor || CustomColors.DarkBlue}
         fillOpacity={1}
-        style={[styles.btnLogo, imageStyle]}
-      />
+        style={{ ...styles.btnLogo, ...imageStyle }}
+      ></Icon>
+
       <RnText
         style={[
           styles.buttonIconName,
