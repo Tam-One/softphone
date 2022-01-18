@@ -1,6 +1,6 @@
 {
   "name": "qooqiephone",
-  "productName": "QooqiePhone",
+  "productName": "Qooqie Phone",
   "version": "2.9.8",
   "private": true,
   "homepage": "./",
@@ -17,7 +17,7 @@
     "forge": {
       "packagerConfig": {
         "icon": "./Icon/Icon",
-        "name": "QooqiePhone",
+        "name": "Qooqie Phone",
         "executableName": "Qooqie Phone"
       },
       "makers": [
