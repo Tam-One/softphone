@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 44,
-    paddingBottom: 28,
+    paddingTop: CustomValues.iosAndroid ? 10 : 30,
+    paddingBottom: 13,
     width: '100%',
   },
 })

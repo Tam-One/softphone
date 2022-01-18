@@ -23,7 +23,7 @@ import RnStacker from '@/stores/RnStacker'
 import CustomColors from '@/utils/CustomColors'
 import CustomImages from '@/utils/CustomImages'
 import formatDuration from '@/utils/formatDuration'
-import { GreenCallButton } from '@/utils/SvgComponent'
+import { DeclineButton, GreenCallButton } from '@/utils/SvgComponent'
 
 @observer
 class CallBar extends React.Component {
@@ -109,10 +109,7 @@ class CallBar extends React.Component {
                 </>
               )}
               <TouchableOpacity onPress={hangup}>
-                <Image
-                  source={CustomImages.CallDeclinedLogo}
-                  style={{ width: 49, height: 49 }}
-                ></Image>
+                <DeclineButton></DeclineButton>
               </TouchableOpacity>
             </View>
           </RnTouchableOpacity>

@@ -14,7 +14,7 @@ import v from './variables'
 
 const css = StyleSheet.create({
   RnStatusBar: {
-    backgroundColor: CustomColors.StatusBarBlue,
+    backgroundColor: CustomColors.AppBackground,
     ...v.backdropZindex,
     ...Platform.select({
       ios: {
@@ -46,7 +46,7 @@ const RnStatusBar: FC<{ transparent?: boolean }> = props =>
       ]}
     >
       <StatusBar
-        backgroundColor={CustomColors.StatusBarBlue}
+        backgroundColor={CustomColors.AppBackground}
         barStyle='dark-content'
       />
     </View>

@@ -33,6 +33,7 @@ import CustomStrings from '@/utils/CustomStrings'
 import CustomValues from '@/utils/CustomValues'
 import formatDuration from '@/utils/formatDuration'
 import {
+  DeclineButton,
   Keys,
   MicrophoneOff,
   MicrophoneOn,
@@ -71,7 +72,7 @@ class PageCallManage extends React.Component<{
   getActionsButtonList = (currentCall: any) => {
     const activeColor = CustomColors.IconActiveBlue
     const nonActiveColor = CustomColors.White
-    const textActiveColor = CustomColors.Black
+    const textActiveColor = CustomColors.DarkBlue
     const {
       muted,
       toggleMuted,
@@ -312,7 +313,7 @@ class PageCallManage extends React.Component<{
             customBackStyle={{ color: CustomColors.Black }}
           ></CustomHeader>
           <View style={styles.container}>
-            <CustomGradient>
+            <CustomGradient customStyle={styles.gradientContainer}>
               {!showKeyPad ? (
                 <CallerInfo
                   isUserCalling={!partyNumber?.includes('+')}
@@ -471,11 +472,7 @@ class PageCallManage extends React.Component<{
     const { hangup } = currentCall
     return (
       <View style={customStyles ? customStyles : styles.actionBtnContainer}>
-        <CallButtons
-          onPress={hangup}
-          image={CustomImages.CallDeclinedLogo}
-          lable={''}
-        />
+        <CallButtons onPress={hangup} lable={''} Icon={DeclineButton} />
       </View>
     )
   }

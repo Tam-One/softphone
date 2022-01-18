@@ -46,6 +46,7 @@ const CustomColors = {
   GradientStart: '#e6f3ff',
   DropdownGrey: '#ebebeb',
   StatusBarBlue: '#f8fcff',
+  AppBackground: '#EAF4FF',
 }
 
 export default CustomColors

@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    padding: 4,
+    bottom: 0,
+    top: 0,
     alignItems: 'center',
   },
   buttonBackground: {

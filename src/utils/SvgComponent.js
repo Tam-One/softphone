@@ -211,12 +211,7 @@ export const Record = props => (
 )
 
 export const RecordCircleRed = props => (
-  <Svg
-    xmlns='http://www.w3.org/2000/svg'
-    width={22.925}
-    height={22.925}
-    {...props}
-  >
+  <Svg xmlns='http://www.w3.org/2000/svg' width={23} height={23} {...props}>
     <G data-name='Group 3506' transform='translate(2831 -9681.575)'>
       <Path
         d='M-2819.537 9681.575a11.463 11.463 0 1 0 11.462 11.463 11.463 11.463 0 0 0-11.462-11.463m0 8.024a3.439 3.439 0 1 1-3.439 3.439 3.439 3.439 0 0 1 3.439-3.439Z'
@@ -236,12 +231,7 @@ export const RecordCircleRed = props => (
 )
 
 export const RecordCircleMaroon = props => (
-  <Svg
-    xmlns='http://www.w3.org/2000/svg'
-    width={22.925}
-    height={22.925}
-    {...props}
-  >
+  <Svg xmlns='http://www.w3.org/2000/svg' width={23} height={23} {...props}>
     <G data-name='Group 3508'>
       <G data-name='Group 3507' transform='translate(7.925 7.925)'>
         <Circle
@@ -270,8 +260,8 @@ export const Park = props => (
   <Svg
     data-name='Group 3322'
     xmlns='http://www.w3.org/2000/svg'
-    width={22.801}
-    height={22.801}
+    width={23}
+    height={23}
     {...props}
   >
     <Circle
@@ -279,7 +269,7 @@ export const Park = props => (
       cx={11.401}
       cy={11.401}
       r={11.401}
-      fill='#323746'
+      fill='#2F3443'
     />
     <Path
       d='M13.177 10.815h-1.875V8.471h1.875a1.172 1.172 0 1 1 0 2.344m-.119-4.688h-4.1v10.548h2.344v-3.516h1.756a3.516 3.516 0 0 0 0-7.032Z'
@@ -292,8 +282,8 @@ export const Keys = props => (
   <Svg
     data-name='Group 3323'
     xmlns='http://www.w3.org/2000/svg'
-    width={23.752}
-    height={23.272}
+    width={24}
+    height={24}
     {...props}
   >
     <Circle
@@ -387,5 +377,80 @@ export const Transfer = props => (
       d='M25.575 12.787H3.8l1.99-1.992a1.112 1.112 0 1 0-1.572-1.572l-3.892 3.89a1.112 1.112 0 0 0 0 1.572l3.892 3.892a1.112 1.112 0 0 0 1.572-1.572L3.8 15.011h21.775a1.112 1.112 0 0 0 0-2.224Z'
       fill='#2f3443'
     />
+  </Svg>
+)
+
+export const DeclineButton = props => (
+  <Svg
+    xmlns='http://www.w3.org/2000/svg'
+    style={props.style}
+    width={props?.width || 80}
+    height={props?.height || 80}
+    {...props}
+    viewBox='0 0 80 80'
+  >
+    <G data-name='Group 3022'>
+      <G data-name='Group 3021'>
+        <G data-name='Group 3'>
+          <G data-name='Group 5'>
+            <Circle
+              data-name='Ellipse 24'
+              cx={40}
+              cy={40}
+              r={40}
+              style={{
+                fill: '#ff5252',
+              }}
+            />
+            <G>
+              <Path
+                data-name='Path 1'
+                d='m31.512 25.92-6.535-4.584a1.939 1.939 0 0 0-2.6.361l-1.993 2.441a.827.827 0 0 1-1.065.2l-.363-.212a22.232 22.232 0 0 1-5.688-4.687 22.337 22.337 0 0 1-4.415-5.9l-.193-.373A.828.828 0 0 1 8.9 12.1l2.53-1.875a1.938 1.938 0 0 0 .483-2.585L7.641.9A1.93 1.93 0 0 0 5.055.253L2.24 1.855A3.915 3.915 0 0 0 .4 4.131C-.687 7.75-.082 14.056 8.961 23.536c7.194 7.541 12.632 9.651 16.4 9.74A9.671 9.671 0 0 0 27.94 33a3.911 3.911 0 0 0 2.36-1.731l1.735-2.735a1.929 1.929 0 0 0-.523-2.614Z'
+                transform='rotate(135 23.075 33.218)'
+                style={{
+                  fill: '#fff',
+                }}
+              />
+            </G>
+          </G>
+        </G>
+      </G>
+    </G>
+  </Svg>
+)
+
+export const AcceptButton = props => (
+  <Svg
+    xmlns='http://www.w3.org/2000/svg'
+    style={props.style}
+    width={props?.width || 80}
+    height={props?.height || 80}
+    {...props}
+    viewBox='0 0 80 80'
+  >
+    <G data-name='Group 3249'>
+      <G data-name='Group 5'>
+        <Circle
+          data-name='Ellipse 24'
+          cx={40}
+          cy={40}
+          r={40}
+          style={{
+            fill: '#35ce95',
+          }}
+          viewBox='0 0 35 35'
+        />
+        <G>
+          <Path
+            data-name='Path 1'
+            d='m-443.585 832.263-5.127-3.6a1.521 1.521 0 0 0-2.043.283l-1.564 1.915a.649.649 0 0 1-.836.155l-.285-.166a17.442 17.442 0 0 1-4.462-3.677 17.522 17.522 0 0 1-3.463-4.63l-.152-.292a.649.649 0 0 1 .191-.831l1.985-1.471a1.521 1.521 0 0 0 .379-2.028l-3.351-5.291a1.514 1.514 0 0 0-2.028-.507l-2.208 1.257a3.071 3.071 0 0 0-1.444 1.785c-.852 2.839-.378 7.785 6.716 15.223 5.644 5.915 9.91 7.571 12.867 7.641a7.588 7.588 0 0 0 2.022-.216 3.068 3.068 0 0 0 1.851-1.358l1.361-2.146a1.513 1.513 0 0 0-.409-2.046Z'
+            transform='translate(495.23 -784.92)'
+            style={{
+              fill: '#fff',
+            }}
+          />
+        </G>
+      </G>
+    </G>
   </Svg>
 )

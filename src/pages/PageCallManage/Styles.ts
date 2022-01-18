@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     position: 'relative',
   },
+  gradientContainer: {
+    height: Dimensions.get('window').height - 40,
+  },
   backgroundImage: {
     flex: 1,
     resizeMode: 'repeat',
@@ -178,7 +181,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   poweredByView: {
-    marginTop: 0,
+    marginTop: 3,
   },
   videoCallPopupContainer: {
     flex: 1,

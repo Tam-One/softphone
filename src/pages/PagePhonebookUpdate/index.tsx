@@ -1,3 +1,4 @@
+import { mdiBriefcase, mdiCellphone, mdiHome } from '@mdi/js'
 import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
 import React, { FC, useState } from 'react'
@@ -45,14 +46,17 @@ const PagePhonebookUpdate: FC<{
       return
     }
     phonebook.book = 'default'
-    pbx
-      .setContact(phonebook)
-      .then(() => Nav().goToPageViewContact({ contact }))
-      .catch(onSaveFailure)
     Object.assign(phonebook, {
       name: `${phonebook.firstName} ${phonebook.lastName}`,
     })
     contactStore.upsertPhonebook(phonebook)
+
+    pbx
+      .setContact(phonebook)
+      .then(() => {
+        Nav().backToPageViewContact({ contact: phonebook })
+      })
+      .catch(onSaveFailure)
   }
 
   const saveNewContact = (phonebook: Phonebook2) => {
@@ -73,7 +77,7 @@ const PagePhonebookUpdate: FC<{
         })
         contactStore.upsertPhonebook(phonebook)
         const contact = contactStore.getPhonebook(val.aid)
-        Nav().goToPageViewContact({ contact })
+        Nav().backToPageViewContact({ contact })
       })
       .catch(onSaveFailure)
   }
@@ -99,7 +103,6 @@ const PagePhonebookUpdate: FC<{
     M0['observable'] &
     ReturnType<typeof useStore>
   const store = (useStore(storeObj) as any) as M
-  console.log('asdf', get(store, 'phonebook'))
   const [phonebookObj, setPhonebookObj] = useState(get(store, 'phonebook'))
 
   const disabled = contact?.shared
@@ -118,10 +121,10 @@ const PagePhonebookUpdate: FC<{
       <CustomHeader
         onBack={() => {
           if (newContact) {
-            Nav().goToPageContactPhonebook()
+            Nav().backToPageContactPhonebook()
             return
           }
-          Nav().goToPageViewContact({ contact })
+          Nav().backToPageViewContact({ contact })
         }}
         title={newContact ? 'New' : 'Edit'}
         backContainerStyle={styles.backButtonContainer}
@@ -137,7 +140,7 @@ const PagePhonebookUpdate: FC<{
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.formContainer}>
           <FormInputBox
-            label={'First name'}
+            label={'Name'}
             val={get(store, 'phonebook.firstName')}
             onTextChange={text => onTextChange('firstName', text)}
             editable={!disabled}
@@ -145,31 +148,37 @@ const PagePhonebookUpdate: FC<{
             showError={fieldErrors['firstName']}
           />
           <FormInputBox
-            label={'Last name'}
+            label={'Lastname'}
             val={get(store, 'phonebook.lastName')}
             onTextChange={text => onTextChange('lastName', text)}
             editable={!disabled}
             required={true}
             showError={fieldErrors['lastName']}
           />
-          <FormInputBox
-            label={'Cell number'}
-            val={get(store, 'phonebook.cellNumber')}
-            onTextChange={text => onTextChange('cellNumber', text)}
-            editable={!disabled}
-          />
-          <FormInputBox
-            label={'Work number'}
-            val={get(store, 'phonebook.workNumber')}
-            onTextChange={text => onTextChange('workNumber', text)}
-            editable={!disabled}
-          />
-          <FormInputBox
-            label={'Home number'}
-            val={get(store, 'phonebook.homeNumber')}
-            onTextChange={text => onTextChange('homeNumber', text)}
-            editable={!disabled}
-          />
+          <View style={styles.contactContainer}>
+            <FormInputBox
+              label={'Cell number'}
+              val={get(store, 'phonebook.cellNumber')}
+              onTextChange={text => onTextChange('cellNumber', text)}
+              editable={!disabled}
+              mdIcon={mdiCellphone}
+            />
+            <FormInputBox
+              label={'Work number'}
+              val={get(store, 'phonebook.workNumber')}
+              onTextChange={text => onTextChange('workNumber', text)}
+              editable={!disabled}
+              mdIcon={mdiBriefcase}
+            />
+            <FormInputBox
+              label={'Home number'}
+              val={get(store, 'phonebook.homeNumber')}
+              onTextChange={text => onTextChange('homeNumber', text)}
+              editable={!disabled}
+              mdIcon={mdiHome}
+            />
+          </View>
+
           <FormInputBox
             label={'Job'}
             val={get(store, 'phonebook.job')}

@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import {
+  Dimensions,
   Platform,
   Text,
   TouchableHighlight,
@@ -15,7 +16,12 @@ import styles from '@/components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from '@/components/Rn'
 import CustomColors from '@/utils/CustomColors'
 import CustomImages from '@/utils/CustomImages'
-import { ConferenceButton, TransferButton } from '@/utils/SvgComponent'
+import {
+  AcceptButton,
+  ConferenceButton,
+  DeclineButton,
+  TransferButton,
+} from '@/utils/SvgComponent'
 
 const keys = [
   [
@@ -59,6 +65,9 @@ const KeyPad: FC<{
   conference,
   fromTransfer,
 }) => {
+  const screenHeight = Dimensions.get('window').height
+  const keyButtonSize = screenHeight * 0.097
+
   const onNumberPress = key => {
     if (Platform.OS === 'ios') {
       const options = {
@@ -140,6 +149,8 @@ const KeyPad: FC<{
                   height: 55,
                   width: 55,
                 }}
+                width={55}
+                height={55}
               />
               <RnText style={styles.transferButtonText}>{'Conference'}</RnText>
             </>
@@ -151,9 +162,11 @@ const KeyPad: FC<{
           {duringCall && hangup && !fromTransfer ? (
             <CallButtons
               onPress={hangup}
-              image={CustomImages.CallDeclinedLogo}
               containerStyle={styles.callButtonContainer}
               imageStyle={styles.callButtonImage}
+              Icon={DeclineButton}
+              width={keyButtonSize}
+              height={keyButtonSize}
             />
           ) : (
             <></>
@@ -161,9 +174,11 @@ const KeyPad: FC<{
           {!duringCall && !fromTransfer && (
             <CallButtons
               onPress={callVoice}
-              image={CustomImages.CallAcceptedLogo}
+              Icon={AcceptButton}
               containerStyle={styles.callButtonContainer}
               imageStyle={styles.callButtonImage}
+              width={keyButtonSize}
+              height={keyButtonSize}
             />
           )}
           {fromTransfer && callVoice ? (
@@ -180,6 +195,8 @@ const KeyPad: FC<{
                   height: 55,
                   width: 55,
                 }}
+                width={55}
+                height={55}
               />
               <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
             </View>

@@ -7,7 +7,8 @@ const CustomValues = {
   webWidth: 350,
   webHeight: 716,
   compatableWidth: iosAndroid ? Dimensions.get('window').width : 350,
-  animationWidth: iosAndroid ? Dimensions.get('window').width : 150,
+  animationWidth: iosAndroid ? Dimensions.get('window').width : 50,
+  callButtons: iosAndroid ? 80 : 65,
 }
 
 export default CustomValues

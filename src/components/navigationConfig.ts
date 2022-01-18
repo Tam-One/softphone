@@ -115,7 +115,7 @@ const genMenus = () => {
       }
     })
     menu.navFn = () => {
-      let key = getAuthStore().currentProfile.navSubMenus?.[index]
+      let key = getAuthStore().currentProfile?.navSubMenus?.[index]
       if (!(key in menu.subMenusMap)) {
         key = menu.defaultSubMenuKey
       }

@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginRight: 31,
+    marginRight: 16,
   },
   fieldTextInput: {
     fontSize: 14,
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
     fontSize: CustomFonts.SmallSubText,
     lineHeight: 13,
+    marginBottom: 6,
   },
   searchBoxView: {
     backgroundColor: CustomColors.GradientStart,

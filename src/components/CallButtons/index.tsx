@@ -5,10 +5,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { SvgXml } from 'react-native-svg'
 
 import styles from '@/components/CallButtons/Styles'
 import { RnText } from '@/components/Rn'
+import CustomValues from '@/utils/CustomValues'
 
 const CallButtons: FC<{
   onPress(): void
@@ -17,7 +17,9 @@ const CallButtons: FC<{
   lable?: string
   showAnimation?: boolean
   containerStyle?: object
-  imageStyle?: object
+  imageStyle?: any
+  width?: number
+  height?: number
 }> = ({
   onPress,
   image,
@@ -26,6 +28,8 @@ const CallButtons: FC<{
   containerStyle,
   imageStyle,
   Icon,
+  width,
+  height,
 }) => {
   const [animationTrigger, setAnimationTrigger] = useState(showAnimation)
   const animationTime = 1000
@@ -60,7 +64,26 @@ const CallButtons: FC<{
         ) : (
           <></>
         )}
-        {Icon ? <Icon></Icon> : <></>}
+        {Icon ? (
+          <View
+            style={[
+              { marginBottom: 10 },
+              animationTrigger && styles.animationImage,
+            ]}
+          >
+            <Icon
+              style={[
+                styles.actionBtn,
+                imageStyle && imageStyle,
+                animationTrigger && styles.animationImage,
+              ]}
+              width={width || CustomValues.callButtons}
+              height={height || CustomValues.callButtons}
+            ></Icon>
+          </View>
+        ) : (
+          <></>
+        )}
       </TouchableOpacity>
       <RnText style={styles.actionBtnText}>{lable}</RnText>
     </View>

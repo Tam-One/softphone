@@ -13,6 +13,7 @@ const createMainWindow = () => {
       devTools: isDev,
     },
     icon: __dirname + '/Icon/Icon.icns',
+    resizable: false,
   })
   const startURL = isDev
     ? 'http://localhost:3000'
