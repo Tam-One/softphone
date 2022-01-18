@@ -72,11 +72,6 @@ const CallButtons: FC<{
             ]}
           >
             <Icon
-              style={[
-                styles.actionBtn,
-                imageStyle && imageStyle,
-                animationTrigger && styles.animationImage,
-              ]}
               width={width || CustomValues.callButtons}
               height={height || CustomValues.callButtons}
             ></Icon>
