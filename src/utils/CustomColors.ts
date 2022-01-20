@@ -47,6 +47,7 @@ const CustomColors = {
   DropdownGrey: '#ebebeb',
   StatusBarBlue: '#f8fcff',
   AppBackground: '#EAF4FF',
+  SubmenuColor: '#d6eaff',
 }
 
 export default CustomColors

@@ -9,6 +9,7 @@ import {
 
 import styles from '@/components/CallDialledNumbers/Styles'
 import { RnTextInput } from '@/components/Rn'
+import CustomValues from '@/utils/CustomValues'
 
 const ShowNumber: FC<{
   setTarget(val: string): void
@@ -32,11 +33,13 @@ const ShowNumber: FC<{
     <View style={styles.showNumbers}>
       <RnTextInput
         blurOnSubmit
-        editable={false}
-        disabled={true}
+        editable={!CustomValues.iosAndroid}
+        disabled={CustomValues.iosAndroid}
         keyboardType='default'
         multiline
-        onChangeText={setTarget}
+        onChangeText={val => {
+          setTarget(val)
+        }}
         onEndEditing={() => {
           Keyboard.dismiss()
         }}

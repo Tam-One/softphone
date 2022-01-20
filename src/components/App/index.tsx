@@ -284,7 +284,7 @@ const App = observer(() => {
         {Platform.OS === 'ios' && <KeyboardSpacer />}
       </View>
       <SafeAreaView
-        style={{ backgroundColor: CustomColors.MediumBlack }}
+        style={{ backgroundColor: CustomColors.AppBackground }}
       ></SafeAreaView>
     </Fragment>
   )

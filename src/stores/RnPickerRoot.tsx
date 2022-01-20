@@ -14,6 +14,7 @@ const css = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    height: Dimensions.get('window').height,
   },
   RnPicker_Backdrop: {
     backgroundColor: g.layerBg,
