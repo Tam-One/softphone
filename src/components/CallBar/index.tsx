@@ -109,7 +109,7 @@ class CallBar extends React.Component {
                 </>
               )}
               <TouchableOpacity onPress={hangup}>
-                <DeclineButton></DeclineButton>
+                <DeclineButton width={50} height={50}></DeclineButton>
               </TouchableOpacity>
             </View>
           </RnTouchableOpacity>
