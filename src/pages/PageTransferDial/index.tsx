@@ -18,14 +18,18 @@ import KeyPad from '@/components/CallKeyPad'
 import UserItem from '@/components/ContactUserItem'
 import CustomGradient from '@/components/CustomGradient'
 import CustomHeader from '@/components/CustomHeader'
+import PoweredBy from '@/components/PoweredBy'
 import { RnIcon } from '@/components/Rn'
 import RnText from '@/components/RnText'
 import styles from '@/pages/PageTransferDial/Styles'
 import callStore from '@/stores/callStore'
 import contactStore from '@/stores/contactStore'
+import { intlDebug } from '@/stores/intl'
 import Nav from '@/stores/Nav'
+import RnAlert from '@/stores/RnAlert'
 import RnKeyboard from '@/stores/RnKeyboard'
 import CustomColors from '@/utils/CustomColors'
+import { TransferCallIcon } from '@/utils/SvgComponent'
 
 @observer
 class PageTransferDial extends React.Component {
@@ -120,7 +124,7 @@ class PageTransferDial extends React.Component {
   contactsComponent = (groups, transferAttended, transferBlind) => {
     return (
       <ScrollView>
-        <View style={{ paddingBottom: 80 }}>
+        <View style={{ paddingBottom: 40 }}>
           {groups.map((group, groupIndex) => {
             const { key, contacts } = group
             return (
@@ -137,20 +141,14 @@ class PageTransferDial extends React.Component {
                       return (
                         <UserItem
                           showNewAvatar={true}
-                          iconFuncs={[
-                            () => transferAttended(number, name),
-                            () => transferBlind(number),
-                          ]}
-                          icons={[mdiPhoneOutgoing, mdiPhone]}
+                          iconFuncs={[() => transferAttended(number, name)]}
+                          SvgIcons={[TransferCallIcon]}
                           key={index}
                           {...item}
                           number={number}
                           containerStyle={{
                             borderBottomWidth:
-                              index === contacts.length - 1 &&
-                              groupIndex !== groups.length - 1
-                                ? 0
-                                : 1,
+                              index === contacts.length - 1 ? 0 : 1,
                           }}
                         />
                       )
@@ -168,21 +166,21 @@ class PageTransferDial extends React.Component {
   keysComponent = (transferAttended, transferBlind) => {
     const onTransferPress = () => {
       if (!this.text) {
+        RnAlert.error({
+          message: intlDebug`Enter a phone number before you can press transfer conference`,
+        })
         return
       }
       transferAttended(this.text, '')
-    }
-    const onTransferBlindPress = () => {
-      if (!this.text) {
-        return
-      }
-      transferBlind(this.text)
     }
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewContainer}
       >
+        <View style={styles.transferSeparator}>
+          <RnText style={styles.transferSeparatorText}></RnText>
+        </View>
         <ShowNumber
           refInput={this.textRef}
           selectionChange={this.onSelectionChange}
@@ -195,14 +193,14 @@ class PageTransferDial extends React.Component {
         <View style={styles.keyPadContainer}>
           {!RnKeyboard.isKeyboardShowing && (
             <KeyPad
-              conference={onTransferPress}
-              callVoice={onTransferBlindPress}
+              callVoice={onTransferPress}
               onPressNumber={this.onNumberPress}
               showKeyboard={this.showKeyboard}
               fromTransfer={true}
             />
           )}
         </View>
+        <PoweredBy></PoweredBy>
       </ScrollView>
     )
   }
@@ -249,7 +247,7 @@ class PageTransferDial extends React.Component {
       <CustomGradient>
         <CustomHeader
           onBack={Nav().backToPageCallManage}
-          description={'Select number to start transfer'}
+          containerStyle={{ backgroundColor: CustomColors.AppBackground }}
           title={'Transfer'}
         />
         <View style={styles.tabView}>

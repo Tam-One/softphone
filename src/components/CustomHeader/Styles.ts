@@ -6,7 +6,7 @@ import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: CustomColors.lightAliceBlue,
+    backgroundColor: CustomColors.HeaderColor,
   },
   backBtnRow: {
     flexDirection: 'row',
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   backText: {
     color: CustomColors.DodgerBlue,
     fontSize: CustomFonts.BackText,
-    marginLeft: 4,
     overflow: 'visible',
   },
   headerText: {

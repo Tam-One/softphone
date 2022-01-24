@@ -78,7 +78,7 @@ class PageCallParks extends React.Component<{
                 <View style={styles.parkContainer}>
                   <RnText style={styles.ParksText}>{'Park'}</RnText>
                   <RnText style={styles.noParksDesc}>
-                    {'Recent voicemails and calls'}
+                    {'Your park numbers'}
                   </RnText>
                 </View>
                 {this.ParkComponent(parks, selectedPark)}

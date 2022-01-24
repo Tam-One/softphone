@@ -5,9 +5,9 @@ import CustomFonts from '@/utils/CustomFonts'
 
 const styles = StyleSheet.create({
   callBar: {
-    borderBottomWidth: 1,
-    backgroundColor: CustomColors.DarkBlack,
     justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
   },
   callBarOuter: {
     flexDirection: 'row',
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 0,
   },
   actionButtonsContainer: {
     marginHorizontal: 0,

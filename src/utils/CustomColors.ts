@@ -12,7 +12,7 @@ const CustomColors = {
   Transparent: 'transparent',
   DarkGrey: '#D3D7DB',
   Tomato: '#FF5757',
-  LightGold: '#FFC260',
+  LightGold: '#F8AF63',
   GreenMantis: '#74bf53',
   LightGreen: '#C9EEDC',
   LightBlue: '#F4FAFF',
@@ -47,7 +47,10 @@ const CustomColors = {
   DropdownGrey: '#ebebeb',
   StatusBarBlue: '#f8fcff',
   AppBackground: '#EAF4FF',
-  SubmenuColor: '#d6eaff',
+  HeaderColor: '#D6EAFF',
+  CallBarGreen: '#2f664d',
+  TransferGreen: '#34cd84',
+  CancelGrey: '#979797',
 }
 
 export default CustomColors

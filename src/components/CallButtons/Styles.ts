@@ -2,6 +2,7 @@ import { Platform, StyleSheet } from 'react-native'
 
 import CustomColors from '@/utils/CustomColors'
 import CustomFonts from '@/utils/CustomFonts'
+import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   actionBtnText: {
@@ -13,8 +14,8 @@ const styles = StyleSheet.create({
     width: 100,
   },
   actionBtn: {
-    width: Platform.OS === 'web' ? 60 : 80,
-    height: Platform.OS === 'web' ? 60 : 80,
+    width: CustomValues.iosAndroid ? 80 : 60,
+    height: CustomValues.iosAndroid ? 80 : 60,
     marginBottom: 10,
   },
   animationContainer: {

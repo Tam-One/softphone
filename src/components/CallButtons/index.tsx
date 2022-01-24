@@ -68,6 +68,7 @@ const CallButtons: FC<{
           <View
             style={[
               { marginBottom: 10 },
+              imageStyle,
               animationTrigger && styles.animationImage,
             ]}
           >

@@ -10,17 +10,14 @@ import {
 } from 'react-native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
-import svgImages from '@/assets/svgImages'
 import CallButtons from '@/components/CallButtons'
 import styles from '@/components/CallKeyPad/Styles'
 import { RnText, RnTouchableOpacity } from '@/components/Rn'
 import CustomColors from '@/utils/CustomColors'
-import CustomImages from '@/utils/CustomImages'
 import {
   AcceptButton,
-  ConferenceButton,
   DeclineButton,
-  TransferButton,
+  TransferCallIcon,
 } from '@/utils/SvgComponent'
 
 const keys = [
@@ -135,28 +132,6 @@ const KeyPad: FC<{
               <RnText style={styles.hideWrapper}>{'Hide'}</RnText>
             </TouchableOpacity>
           )}
-          {fromTransfer && conference ? (
-            <>
-              <CallButtons
-                onPress={conference}
-                Icon={ConferenceButton}
-                containerStyle={{
-                  width: Platform.OS === 'web' ? 40 : 55,
-                  height: Platform.OS === 'web' ? 40 : 55,
-                  marginTop: 0,
-                }}
-                imageStyle={{
-                  height: 55,
-                  width: 55,
-                }}
-                width={55}
-                height={55}
-              />
-              <RnText style={styles.transferButtonText}>{'Conference'}</RnText>
-            </>
-          ) : (
-            <></>
-          )}
         </View>
         <View style={styles.actionButtons}>
           {duringCall && hangup && !fromTransfer ? (
@@ -182,23 +157,17 @@ const KeyPad: FC<{
             />
           )}
           {fromTransfer && callVoice ? (
-            <View style={{ alignItems: 'center', marginLeft: 5 }}>
-              <CallButtons
-                onPress={callVoice}
-                Icon={TransferButton}
-                containerStyle={{
-                  width: Platform.OS === 'web' ? 40 : 55,
-                  height: Platform.OS === 'web' ? 40 : 55,
-                  marginTop: 0,
-                }}
-                imageStyle={{
-                  height: 55,
-                  width: 55,
-                }}
-                width={55}
-                height={55}
-              />
-              <RnText style={styles.transferButtonText}>{'Transfer'}</RnText>
+            <View
+              style={{
+                alignItems: 'center',
+              }}
+            >
+              <RnTouchableOpacity onPress={callVoice} style={[styles.btn]}>
+                <TransferCallIcon color={'white'}></TransferCallIcon>
+              </RnTouchableOpacity>
+              <RnText style={styles.transferButtonText}>
+                {'Transfer conference'}
+              </RnText>
             </View>
           ) : (
             <></>
