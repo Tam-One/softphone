@@ -8,7 +8,7 @@ import CustomLayout from '@/components/CustomLayout'
 import { RnIcon, RnText } from '@/components/Rn'
 import styles from '@/pages/PageViewContact/Styles'
 import callStore from '@/stores/callStore'
-import { Phonebook2 } from '@/stores/contactStore'
+import contactStore, { Phonebook2 } from '@/stores/contactStore'
 import Nav from '@/stores/Nav'
 import RnPicker from '@/stores/RnPicker'
 import CustomColors from '@/utils/CustomColors'
@@ -116,14 +116,16 @@ const PageViewContact = ({ contact }) => {
     loaded,
     address,
     email,
-  } = contact
+  } = contactStore.getPhonebook(contact.id)
 
   const phoneNumber = cellNumber || workNumber || homeNumber
 
   return (
     <CustomLayout menu='contact' subMenu='phonebook' hideSubMenu={true}>
       <CustomHeader
-        onBack={Nav().goToPageContactPhonebook}
+        onBack={() => {
+          Nav().backToPageContactPhonebook()
+        }}
         backText={'Contacts'}
         onRightButtonPress={
           !shared

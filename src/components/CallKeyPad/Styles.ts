@@ -1,5 +1,7 @@
 import { Dimensions, Platform, StyleSheet } from 'react-native'
 
+import CustomValues from '@/utils/CustomValues'
+
 import CustomColors from '../../utils/CustomColors'
 import CustomFonts from '../../utils/CustomFonts'
 
@@ -13,6 +15,14 @@ const isIos = Platform.OS === 'ios'
 const symbolFont = isIos ? CustomFonts.BigFont : CustomFonts.MediumFont
 
 const styles = StyleSheet.create({
+  btn: {
+    borderRadius: 40,
+    width: CustomValues.iosAndroid ? 80 : 65,
+    height: CustomValues.iosAndroid ? 80 : 65,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: CustomColors.Green,
+  },
   keyPadNumber: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -39,17 +49,14 @@ const styles = StyleSheet.create({
   },
   actionButtons: {
     width: keyButtonSize,
-    height: keyButtonSize,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 24,
     textAlign: 'center',
   },
   transferButtonText: {
-    textTransform: 'uppercase',
-    color: CustomColors.DarkBlue,
-    fontSize: 13,
-    marginTop: 5,
+    color: CustomColors.Black,
+    marginTop: 8,
     width: 90,
     textAlign: 'center',
     overflow: 'visible',
@@ -127,6 +134,21 @@ const styles = StyleSheet.create({
     color: CustomColors.DarkBlue,
     textDecorationLine: 'underline',
     fontFamily: 'Roboto-Medium',
+  },
+  transferButtonContainer: {
+    width: CustomValues.iosAndroid ? 80 : 60,
+    height: CustomValues.iosAndroid ? 80 : 60,
+    marginTop: 0,
+    backgroundColor: CustomColors.Green,
+    borderRadius: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginBottom: 5,
+    paddingTop: CustomValues.iosAndroid ? 35 : 10,
   },
 })
 

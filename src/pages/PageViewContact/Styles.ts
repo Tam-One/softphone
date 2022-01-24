@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native'
 
 import CustomColors from '@/utils/CustomColors'
 import CustomFonts from '@/utils/CustomFonts'
+import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   fieldTextInput: {
@@ -45,10 +46,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 16,
     paddingHorizontal: 16,
+    minHeight: CustomValues.iosAndroid ? 0 : 'initial',
   },
   callButton: {
+    height: 49,
     backgroundColor: CustomColors.Green,
-    paddingVertical: 17,
     width: '100%',
     borderRadius: 9,
     alignItems: 'center',

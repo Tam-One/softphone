@@ -15,8 +15,7 @@ import g from './variables'
 
 const css = StyleSheet.create({
   Footer: {
-    // position: 'absolute',
-    bottom: CustomValues.iosAndroid ? 0 : 65,
+    bottom: CustomValues.iosAndroid ? 0 : 60,
     right: 0,
     zIndex: 99999,
   },

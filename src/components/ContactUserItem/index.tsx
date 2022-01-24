@@ -73,6 +73,7 @@ const UserItem: FC<
     hideBorder?: boolean
     innerContainerStyle?: object
     iconsColor?: string
+    SvgIcons?: any[]
   }>
 > = ({
   answered,
@@ -100,6 +101,7 @@ const UserItem: FC<
   hideBorder,
   innerContainerStyle,
   iconsColor,
+  SvgIcons,
 }) => {
   let callerName = partyName || name || ''
   let callNumber = partyNumber || id || number || ''
@@ -220,6 +222,18 @@ const UserItem: FC<
         {icons?.map((icon, index) => (
           <RnTouchableOpacity key={index} onPress={() => iconFuncs?.[index]()}>
             <RnIcon path={icon} style={styles.buttonIcon} color={iconsColor} />
+          </RnTouchableOpacity>
+        ))}
+        {SvgIcons?.map((SvgIcon, index) => (
+          <RnTouchableOpacity
+            key={index}
+            onPress={() => iconFuncs?.[index]()}
+            style={{
+              paddingRight: 10,
+              marginTop: 10,
+            }}
+          >
+            <SvgIcon viewBox={'0 0 35 50'} />
           </RnTouchableOpacity>
         ))}
       </View>

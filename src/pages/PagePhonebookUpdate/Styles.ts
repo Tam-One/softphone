@@ -2,14 +2,17 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   formContainer: {
-    marginTop: 33,
-    marginBottom: 50,
+    marginTop: 16,
+    marginBottom: 80,
   },
   scrollViewContainer: {
     marginBottom: 1,
   },
   backButtonContainer: {
     paddingBottom: 10,
+  },
+  contactContainer: {
+    marginVertical: 16,
   },
 })
 

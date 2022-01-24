@@ -6,7 +6,7 @@ import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: CustomColors.lightAliceBlue,
+    backgroundColor: CustomColors.HeaderColor,
   },
   backBtnRow: {
     flexDirection: 'row',
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   backText: {
     color: CustomColors.DodgerBlue,
     fontSize: CustomFonts.BackText,
-    marginLeft: 4,
     overflow: 'visible',
   },
   headerText: {
@@ -50,8 +49,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 44,
-    paddingBottom: 28,
+    paddingTop: CustomValues.iosAndroid ? 10 : 30,
+    paddingBottom: 13,
     width: '100%',
   },
 })

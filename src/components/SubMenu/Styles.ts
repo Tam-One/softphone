@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 225,
-    backgroundColor: CustomColors.lightAliceBlue,
+    backgroundColor: CustomColors.HeaderColor,
     alignSelf: 'center',
     paddingLeft: 3,
     paddingVertical: 3,

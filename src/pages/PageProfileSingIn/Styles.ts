@@ -195,6 +195,10 @@ const styles = StyleSheet.create({
   listItemContainer: {
     padding: 10,
   },
+  errorStyles: {
+    position: 'absolute',
+    bottom: -25,
+  },
 })
 
 export default styles

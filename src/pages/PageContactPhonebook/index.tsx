@@ -149,9 +149,7 @@ class PageContactPhonebook extends React.Component {
                     </View>
                     {phonebooks.map((item, bookIndex) => {
                       const { name, id } = item
-                      const hideBorder =
-                        bookIndex === phonebooks.length - 1 &&
-                        index !== groups.length - 1
+                      const hideBorder = bookIndex === phonebooks.length - 1
                       return (
                         <TouchableOpacity onPress={() => this.update(id)}>
                           <UserItem

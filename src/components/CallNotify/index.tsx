@@ -10,6 +10,7 @@ import PoweredBy from '@/components/PoweredBy'
 import callStore from '@/stores/callStore'
 import contactStore from '@/stores/contactStore'
 import CustomImages from '@/utils/CustomImages'
+import { AcceptButton, DeclineButton } from '@/utils/SvgComponent'
 
 @observer
 class CallNotify extends React.Component {
@@ -63,12 +64,12 @@ class CallNotify extends React.Component {
             <View style={styles.notifyBtnSideBySide}>
               <CallButtons
                 onPress={hangup}
-                image={CustomImages.CallDeclinedLogo}
                 lable={'Refuse'}
+                Icon={DeclineButton}
               />
               <CallButtons
                 onPress={() => answer({}, callerName)}
-                image={CustomImages.CallAcceptedLogo}
+                Icon={AcceptButton}
                 lable={'Accept'}
                 showAnimation={true}
               />

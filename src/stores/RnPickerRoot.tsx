@@ -1,7 +1,7 @@
 import { mdiClose, mdiRadioboxBlank, mdiRadioboxMarked } from '@mdi/js'
 import { observer } from 'mobx-react'
 import React from 'react'
-import { Animated, Dimensions, StyleSheet, View } from 'react-native'
+import { Animated, Dimensions, Platform, StyleSheet, View } from 'react-native'
 
 import { RnIcon, RnText, RnTouchableOpacity } from '../components/Rn'
 import g from '../components/variables'
@@ -9,11 +9,14 @@ import { useAnimationOnDidMount } from '../utils/animation'
 import intl from './intl'
 import RnPicker, { RnPickerOption } from './RnPicker'
 
+const windowHeight = Dimensions.get('window').height
+
 const css = StyleSheet.create({
   RnPicker: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    height: Platform.OS === 'ios' ? windowHeight - 70 : windowHeight,
   },
   RnPicker_Backdrop: {
     backgroundColor: g.layerBg,

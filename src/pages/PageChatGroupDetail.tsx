@@ -121,9 +121,7 @@ class PageChatGroupDetail extends React.Component<{
   _closeToBottom = true
   onContentSizeChange = () => {
     if (this._closeToBottom) {
-      this.view?.scrollToEnd({
-        animated: !this._justMounted,
-      })
+      this.view?.scrollToEnd({ animated: !this._justMounted })
       if (this._justMounted) {
         this._justMounted = false
       }

@@ -16,11 +16,13 @@ const FormInputBox: FC<{
   required?: boolean
   showError?: boolean
   Icon?: any
+  mdIcon?: any
   containerStyle?: object
   iconStyle?: object
   secureEntry?: boolean
   RightIcon?: any
   rightIconOnClick?(): void
+  errorStyles?: any
 }> = ({
   label,
   val,
@@ -29,11 +31,13 @@ const FormInputBox: FC<{
   required,
   showError,
   Icon,
+  mdIcon,
   containerStyle,
   iconStyle,
   secureEntry,
   RightIcon,
   rightIconOnClick,
+  errorStyles,
 }) => {
   const [focus, setFocus] = useState(false)
   const [validationError, setValidationError] = useState(showError)
@@ -79,6 +83,13 @@ const FormInputBox: FC<{
           ) : (
             <></>
           )}
+          {mdIcon ? (
+            <View>
+              <RnIcon path={mdIcon} color={CustomColors.Black} size={24} />
+            </View>
+          ) : (
+            <></>
+          )}
         </View>
         <RnTextInput
           style={[
@@ -113,7 +124,7 @@ const FormInputBox: FC<{
         )}
       </View>
       {(validationError || showError) && (
-        <View style={styles.fieldError}>
+        <View style={[styles.fieldError, errorStyles]}>
           <View style={styles.fieldErrorInner}>
             <RnIcon
               color={CustomColors.ErrorRed}

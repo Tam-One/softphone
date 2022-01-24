@@ -35,6 +35,7 @@ class AuthPBX {
       .catch((err: Error) => {
         getAuthStore().pbxState = 'failure'
         getAuthStore().pbxTotalFailure += 1
+        getAuthStore().signedInId = ''
         RnAlert.error({
           message: intlDebug`Invalid Credentials`,
         })
