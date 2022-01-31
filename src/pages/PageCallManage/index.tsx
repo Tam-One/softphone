@@ -454,10 +454,34 @@ class PageCallManage extends React.Component<{
     )
   }
 
+  renderCallingBtns = (currentCall: Call) => {
+    const actionButtonsList = this.getActionsButtonList(currentCall)
+
+    return (
+      <View
+        style={{
+          marginBottom: 83,
+        }}
+      >
+        <View style={styles.btnsInnerView}>
+          {actionButtonsList['mute']}
+          {/* {actionButtonsList['video']} */}
+          {Platform.OS !== 'web' && actionButtonsList['speaker']}
+        </View>
+      </View>
+    )
+  }
+
   renderHangupBtn = (currentCall: Call) => {
     const { showKeyPad } = this.state
+    const { answered } = currentCall
     return (
-      <View style={styles.footerContainer}>
+      <View
+        style={[
+          styles.footerContainer,
+          !answered && styles.callingScreenButtons,
+        ]}
+      >
         {!showKeyPad && (
           <>
             {this.callEndButton(currentCall)}
@@ -469,9 +493,11 @@ class PageCallManage extends React.Component<{
   }
 
   callEndButton = (currentCall: Call, customStyles?: object) => {
-    const { hangup } = currentCall
+    const { hangup, answered } = currentCall
     return (
       <View style={customStyles ? customStyles : styles.actionBtnContainer}>
+        {!answered && this.renderCallingBtns(currentCall)}
+
         <CallButtons onPress={hangup} lable={''} Icon={DeclineButton} />
       </View>
     )

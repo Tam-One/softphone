@@ -163,8 +163,9 @@ class PageContactUsers extends React.Component {
                         {key}
                       </RnText>
                     </View>
-                    {users.map((item, index) => {
+                    {users.map((item, userIndex) => {
                       const { id } = item
+                      const hideBorder = userIndex === users.length - 1
                       return (
                         <UserItem
                           showNewAvatar={true}
@@ -172,7 +173,7 @@ class PageContactUsers extends React.Component {
                           icons={[mdiPhone]}
                           key={index}
                           {...item}
-                          containerStyle={styles.userItem}
+                          hideBorder={hideBorder}
                         />
                       )
                     })}

@@ -80,6 +80,14 @@ const styles = StyleSheet.create({
   partyName: {
     fontFamily: 'Roboto-Bold',
   },
+  poweredBy: {
+    flex: 1,
+    width: '100%',
+    position: 'absolute',
+    bottom: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })
 
 export default styles

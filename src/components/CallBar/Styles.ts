@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   actionButtons: {
-    backgroundColor: CustomColors.White,
     height: 49,
     width: 49,
     borderRadius: 30,

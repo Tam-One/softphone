@@ -131,6 +131,7 @@ class PageCallRecents extends React.Component {
                     key={index}
                     {...this.getAvatar(partyNumber)}
                     {...item}
+                    hideBorder={index === calls.length - 1}
                   />
                 )
               }}

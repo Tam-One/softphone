@@ -51,6 +51,7 @@ const CustomColors = {
   CallBarGreen: '#2f664d',
   TransferGreen: '#34cd84',
   CancelGrey: '#979797',
+  IconBlack: '#373C4B',
 }
 
 export default CustomColors

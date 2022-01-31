@@ -86,16 +86,7 @@ const getAudioVideoPermission = () => {
   }
 }
 
-if (Platform.OS === 'web') {
-  RnAlert.prompt({
-    title: intl`Action Required`,
-    message: intl`Qooqie Phone needs your permission to access camera and microphone for calls. Press OK to accept`,
-    confirmText: 'OK',
-    dismissText: false,
-    onConfirm: getAudioVideoPermission,
-    onDismiss: getAudioVideoPermission,
-  })
-} else if (
+if (
   AppState.currentState === 'active' &&
   !callStore.calls.length &&
   !callStore.recentPn &&

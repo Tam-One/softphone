@@ -8,6 +8,7 @@ import CustomHeader from '@/components/CustomHeader'
 import CustomLayout from '@/components/CustomLayout'
 import FormInputBox from '@/components/FormInputBox'
 import styles from '@/pages/PagePhonebookUpdate/Styles'
+import CustomColors from '@/utils/CustomColors'
 import useStore from '@/utils/useStore'
 
 import pbx from '../../api/pbx'
@@ -162,6 +163,7 @@ const PagePhonebookUpdate: FC<{
               onTextChange={text => onTextChange('cellNumber', text)}
               editable={!disabled}
               mdIcon={mdiCellphone}
+              iconColor={CustomColors.IconBlack}
             />
             <FormInputBox
               label={'Work number'}
@@ -169,6 +171,7 @@ const PagePhonebookUpdate: FC<{
               onTextChange={text => onTextChange('workNumber', text)}
               editable={!disabled}
               mdIcon={mdiBriefcase}
+              iconColor={CustomColors.IconBlack}
             />
             <FormInputBox
               label={'Home number'}
@@ -176,6 +179,7 @@ const PagePhonebookUpdate: FC<{
               onTextChange={text => onTextChange('homeNumber', text)}
               editable={!disabled}
               mdIcon={mdiHome}
+              iconColor={CustomColors.IconBlack}
             />
           </View>
 

@@ -23,6 +23,7 @@ const FormInputBox: FC<{
   RightIcon?: any
   rightIconOnClick?(): void
   errorStyles?: any
+  iconColor?: any
 }> = ({
   label,
   val,
@@ -38,6 +39,7 @@ const FormInputBox: FC<{
   RightIcon,
   rightIconOnClick,
   errorStyles,
+  iconColor,
 }) => {
   const [focus, setFocus] = useState(false)
   const [validationError, setValidationError] = useState(showError)
@@ -85,7 +87,11 @@ const FormInputBox: FC<{
           )}
           {mdIcon ? (
             <View>
-              <RnIcon path={mdIcon} color={CustomColors.Black} size={24} />
+              <RnIcon
+                path={mdIcon}
+                color={iconColor || CustomColors.Black}
+                size={24}
+              />
             </View>
           ) : (
             <></>
