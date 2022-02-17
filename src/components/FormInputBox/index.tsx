@@ -81,6 +81,7 @@ const FormInputBox: FC<{
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
               style={iconStyle}
+              tabIndex={-1}
             ></Icon>
           ) : (
             <></>
@@ -91,6 +92,7 @@ const FormInputBox: FC<{
                 path={mdIcon}
                 color={iconColor || CustomColors.Black}
                 size={24}
+                tabIndex={-1}
               />
             </View>
           ) : (
@@ -120,6 +122,7 @@ const FormInputBox: FC<{
             onPress={rightIconOnClick}
           >
             <RightIcon
+              tabIndex={-1}
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
               style={iconStyle}
@@ -136,6 +139,7 @@ const FormInputBox: FC<{
               color={CustomColors.ErrorRed}
               path={mdiCardsDiamond}
               style={styles.fieldErrorIcon}
+              tabIndex={-1}
             />
             <RnText small style={styles.fieldErrorLabel}>
               {'This field is required'}

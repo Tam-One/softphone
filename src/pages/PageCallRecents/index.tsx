@@ -19,7 +19,11 @@ import CustomColors from '../../utils/CustomColors'
 @observer
 class PageCallRecents extends React.Component {
   isMatchUser = (call: AuthStore['currentData']['recentCalls'][0]) => {
-    if (call.partyNumber.includes(contactStore.callSearchRecents)) {
+    let searchVal = contactStore?.callSearchRecents?.toLowerCase()
+    if (
+      call?.partyNumber?.includes(searchVal) ||
+      call?.partyName?.toLowerCase().search(searchVal) >= 0
+    ) {
       return call.id
     }
     return ''

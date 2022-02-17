@@ -107,10 +107,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   actionBtnContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   actionBtnImage: {
     width: 28,

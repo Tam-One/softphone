@@ -4,6 +4,7 @@ import { Lambda, observe } from 'mobx'
 import AuthSIP from '@/stores/AuthSIP'
 
 import pbx from '../api/pbx'
+import Nav from '../stores/Nav'
 import { getAuthStore } from './authStore'
 import { intlDebug } from './intl'
 import RnAlert from './RnAlert'
@@ -39,6 +40,8 @@ class AuthPBX {
         RnAlert.error({
           message: intlDebug`Invalid Credentials`,
         })
+        getAuthStore().signOut()
+        Nav().goToPageProfileSignIn()
       })
   }
   private authWithCheckDebounced = debounce(this.authWithCheck, 300)

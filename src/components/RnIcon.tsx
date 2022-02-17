@@ -18,6 +18,7 @@ const Icon: FC<
     path: string
     size?: number
     viewBox?: string
+    tabIndex?: number
   }
 > = ({ color, path, size = v.iconSize, viewBox, style, ...p }) => (
   <View {...p} style={[css.Icon, style]}>

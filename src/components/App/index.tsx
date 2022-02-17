@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react-native'
 import { observe } from 'mobx'
 import { observer } from 'mobx-react'
 import React, { Fragment, useEffect } from 'react'
@@ -175,6 +176,11 @@ const App = observer(() => {
       SplashScreen.hide()
     }
     LogBox.ignoreAllLogs()
+    Sentry.init({
+      dsn:
+        'https://048b2053107a4d3bb5f8d1bb69bc246c@o1134185.ingest.sentry.io/6181403',
+      tracesSampleRate: 1,
+    })
   }, [])
 
   if (!profileStore.profilesLoadedObservable) {
@@ -220,6 +226,11 @@ const App = observer(() => {
     connMessage = intl`UC signed in from another location`
   }
 
+  const bottomBarColor =
+    !!signedInId && !!loginPressed
+      ? CustomColors.MediumBlack
+      : CustomColors.AppBackground
+
   return (
     <Fragment>
       <View
@@ -248,7 +259,6 @@ const App = observer(() => {
         {!!signedInId && !!loginPressed && (
           <>
             <CallNotify />
-            <CallBar />
             <CallVoices />
             <ChatGroupInvite />
             <UnreadChatNoti />
@@ -275,10 +285,18 @@ const App = observer(() => {
         {Platform.OS === 'ios' && <KeyboardSpacer />}
       </View>
       <SafeAreaView
-        style={{ backgroundColor: CustomColors.AppBackground }}
+        style={{
+          backgroundColor: bottomBarColor,
+        }}
       ></SafeAreaView>
     </Fragment>
   )
 })
+var Comp
+if (CustomValues.iosAndroid) {
+  Comp = Sentry.wrap(App)
+} else {
+  Comp = App
+}
 
-export default App
+export default Comp
