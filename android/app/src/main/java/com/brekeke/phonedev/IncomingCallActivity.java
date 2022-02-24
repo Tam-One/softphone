@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
+import android.content.Intent;
 
 public class IncomingCallActivity extends Activity {
   private MediaPlayer mp;
@@ -50,6 +51,10 @@ public class IncomingCallActivity extends Activity {
   private void forceFinish() {
     closed = true;
     try {
+      Intent intent = new Intent(this, MainActivity.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      intent.putExtra("Exit me", true);
+      startActivity(intent);
       finish();
     } catch (Exception e) {
       checkAndEmitShowCall();
@@ -65,9 +70,9 @@ public class IncomingCallActivity extends Activity {
   }
 
   public Boolean closeIncomingCallActivity(Boolean isAnswerPressed) {
-    if (closed) {
-      return true;
-    }
+//    if (closed) {
+//      return true;
+//    }Finish
     closedWithAnswerPressed = isAnswerPressed;
 
     // TODO test behavior of this case
@@ -163,6 +168,10 @@ public class IncomingCallActivity extends Activity {
               public void onClick(View v) {
                 closeIncomingCallActivity(false);
                 IncomingCallModule.emit("rejectCall", uuid);
+//                Intent intent2 = new Intent(getApplicationContext(), SplashActivity.class);
+//                startActivity(intent2);
+//                finish();
+//                System.exit(0);
               }
             });
 

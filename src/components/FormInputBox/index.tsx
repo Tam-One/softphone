@@ -24,6 +24,7 @@ const FormInputBox: FC<{
   rightIconOnClick?(): void
   errorStyles?: any
   iconColor?: any
+  submitKey?: any
 }> = ({
   label,
   val,
@@ -40,6 +41,7 @@ const FormInputBox: FC<{
   rightIconOnClick,
   errorStyles,
   iconColor,
+  submitKey,
 }) => {
   const [focus, setFocus] = useState(false)
   const [validationError, setValidationError] = useState(showError)
@@ -115,6 +117,7 @@ const FormInputBox: FC<{
           editable={editable}
           selectTextOnFocus={editable}
           secureTextEntry={secureEntry}
+          onSubmitEditing={submitKey ? submitKey : () => {}}
         />
         {RightIcon ? (
           <TouchableOpacity

@@ -180,6 +180,7 @@ const App = observer(() => {
       dsn:
         'https://048b2053107a4d3bb5f8d1bb69bc246c@o1134185.ingest.sentry.io/6181403',
       tracesSampleRate: 1,
+      environment: 'development',
     })
   }, [])
 
