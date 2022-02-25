@@ -334,13 +334,6 @@ export class CallStore {
     }
   }
 
-  @action enableLoudSpeaker = () => {
-    if (Platform.OS !== 'web') {
-      this.isLoudSpeakerEnabled = true
-      IncallManager.setForceSpeakerphoneOn(true)
-    }
-  }
-
   @observable newVoicemailCount = 0
 
   // Style in CallVideosUI to save the previous video position

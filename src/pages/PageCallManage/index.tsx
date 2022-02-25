@@ -67,7 +67,6 @@ class PageCallManage extends React.Component<{
     showVideoPopup: '',
     responseMessage: '',
     hideVideoButtons: false,
-    speakedEnabled: false,
   }
 
   getActionsButtonList = (currentCall: any) => {
@@ -250,7 +249,7 @@ class PageCallManage extends React.Component<{
       answered,
       id,
       partyName,
-      hangupWithUnhold,
+      hangup,
       enableVideo,
       localVideoEnabled,
       remoteVideoEnabled,
@@ -267,12 +266,6 @@ class PageCallManage extends React.Component<{
       localVideoEnabled ||
       remoteVideoEnabled ||
       responseMessage
-
-    const { isLoudSpeakerEnabled, enableLoudSpeaker } = callStore
-
-    if (Platform.OS === 'ios' && isLoudSpeakerEnabled && answered) {
-      enableLoudSpeaker()
-    }
 
     if (this.videoRequestTimeout && !localVideoEnabled) {
       clearTimeout(this.videoRequestTimeout)
@@ -343,7 +336,7 @@ class PageCallManage extends React.Component<{
                   <PageDtmfKeypad
                     callId={id}
                     partyName={callerName}
-                    hangup={hangupWithUnhold}
+                    hangup={hangup}
                     onHidePress={() => this.setState({ showKeyPad: false })}
                   ></PageDtmfKeypad>
                 </View>
@@ -500,16 +493,12 @@ class PageCallManage extends React.Component<{
   }
 
   callEndButton = (currentCall: Call, customStyles?: object) => {
-    const { hangupWithUnhold, answered } = currentCall
+    const { hangup, answered } = currentCall
     return (
       <View style={customStyles ? customStyles : styles.actionBtnContainer}>
         {!answered && this.renderCallingBtns(currentCall)}
 
-        <CallButtons
-          onPress={hangupWithUnhold}
-          lable={''}
-          Icon={DeclineButton}
-        />
+        <CallButtons onPress={hangup} lable={''} Icon={DeclineButton} />
       </View>
     )
   }

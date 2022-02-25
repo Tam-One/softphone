@@ -12,7 +12,7 @@ const createMainWindow = () => {
       nodeIntegration: false,
       devTools: isDev,
     },
-    icon: path.join(__dirname, '/Icon/Icon.icns'),
+    icon: __dirname + '/Icon/Icon.icns',
     resizable: false,
   })
   const startURL = isDev

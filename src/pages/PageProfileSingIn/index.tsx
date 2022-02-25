@@ -133,7 +133,6 @@ const PageProfileSignIn = () => {
             showError={fieldErrors['pbxUsername']}
             Icon={ProfileIcon}
             errorStyles={styles.errorStyles}
-            submitKey={onSavePress}
           />
           <FormInputBox
             label={'Tenant'}
@@ -153,7 +152,6 @@ const PageProfileSignIn = () => {
             required={true}
             showError={fieldErrors['pbxTenant']}
             errorStyles={styles.errorStyles}
-            submitKey={onSavePress}
           />
           <View
             style={[
@@ -202,7 +200,6 @@ const PageProfileSignIn = () => {
             RightIcon={passwordView ? EyeOffIcon : EyeIcon}
             rightIconOnClick={() => setPasswordView(!passwordView)}
             errorStyles={styles.errorStyles}
-            submitKey={onSavePress}
           />
         </View>
 

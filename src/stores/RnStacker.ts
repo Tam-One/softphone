@@ -8,7 +8,6 @@ export type RnStack = {
   isRoot?: boolean
   Component: ReactComponentLike
   name: string
-  fromBack: boolean
 }
 
 export class RnStackerStore {
@@ -28,18 +27,13 @@ export class RnStackerStore {
     }),
   )
 
-  createGoTo = (
-    o: { [k: string]: ReactComponentLike },
-    isRoot = false,
-    back = false,
-  ) => {
+  createGoTo = (o: { [k: string]: ReactComponentLike }, isRoot = false) => {
     const keys = Object.keys(o)
     if (keys.length !== 1) {
       throw new Error('RnStacker.registerStack must be called with only 1 key')
     }
     const name = keys[0]
     const Component = o[name]
-    const fromBack = back
     return RnKeyboard.waitKeyboard(
       action((stack: SyntheticEvent) => {
         // Prevent multiple stacks from opening at the same time
@@ -65,7 +59,6 @@ export class RnStackerStore {
           name,
           Component,
           isRoot,
-          fromBack,
         })
         this.openStack(_stack)
       }),
@@ -77,7 +70,7 @@ export class RnStackerStore {
     if (this.stacks.length > 1) {
       RnKeyboard.waitKeyboard(this.dismiss)()
     } else {
-      this.createGoTo(o, isRoot, true)(...args)
+      this.createGoTo(o, isRoot)(...args)
     }
   }
 }

@@ -40,9 +40,7 @@
       android:name=".IncomingCallActivity"
       android:label="IncomingCallActivity"
       android:showOnLockScreen="true"
-      android:launchMode="singleTop"
       android:screenOrientation="sensorPortrait"
-      android:excludeFromRecents="true"
     />
         <!-- fcm -->
         <meta-data

@@ -5,12 +5,10 @@ apply plugin: 'com.google.gms.google-services'
 import com.android.build.OutputFile
 
 project.ext.react = [
-  entryFile: "index.js",
-  // enableHermes: true 
+  entryFile: "index.js"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 
 def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
@@ -27,22 +25,17 @@ android {
 
   signingConfigs {
      release {
-      // storeFile file("../keystores/release.keystore")
-      // storePassword "my-release-keyPw"
-      // keyAlias "my-key-alias"
-      // keyPassword "my-release-keyPw"
-
-      storeFile file('brekekekey.keystore')
-      storePassword 'xqytw246'
-      keyAlias 'brekekekey'
-      keyPassword 'xqytw246'
+      storeFile file("../keystores/release.keystore")
+      storePassword "my-release-keyPw"
+      keyAlias "my-key-alias"
+      keyPassword "my-release-keyPw"
     }
   }
 
   defaultConfig {
     applicationId "com.brekeke.phonedev"
-    versionCode 301001
-    versionName "3.1.1"
+    versionCode 209004
+    versionName "2.9.4"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     multiDexEnabled true
@@ -79,12 +72,6 @@ android {
 }
 
 dependencies {
-
-  // implementation 'com.android.support:multidex:2.0.1'
-  // implementation 'androidx.multidex:multidex:2.0.1'
-  // implementation 'com.android.support:appcompat-v7:27.0.0'
-  //   implementation 'com.android.support:design:27.0.0'
-  //   implementation 'com.android.support:support-v4:27.1.1'
 
   implementation 'com.google.firebase:firebase-messaging:21.1.0'
   

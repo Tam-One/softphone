@@ -17,9 +17,6 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this);
         super.onCreate(savedInstanceState);
-    if( getIntent().getBooleanExtra("Exit me", false)){
-      finish();
-    }
   }
 
   @Override
