@@ -51,7 +51,7 @@ export class SIP extends EventEmitter {
       ctiAutoAnswer: 1,
       eventTalk: 1,
       configuration: {
-        socketKeepAlive: 60,
+        socketKeepAlive: 10,
       },
     })
     this.phone = phone

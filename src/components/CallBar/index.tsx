@@ -70,14 +70,14 @@ class CallBar extends React.Component {
       toggleHold,
       muted,
       toggleMuted,
-      hangup,
+      hangupWithUnhold,
     }: any = currentCall || {}
     if (!bVisible || !currentCall || (incoming && !answered)) {
       return null
     }
 
     const goToCallPage = () => {
-      Nav().goToPageCallManage({ isFromCallBar: true })
+      Nav().goToPageCallManage()
     }
 
     return (
@@ -161,7 +161,7 @@ class CallBar extends React.Component {
                     )}
                   </>
                 )}
-                <TouchableOpacity onPress={hangup}>
+                <TouchableOpacity onPress={hangupWithUnhold}>
                   <DeclineButton width={50} height={50}></DeclineButton>
                 </TouchableOpacity>
               </View>

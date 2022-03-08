@@ -22,6 +22,7 @@ export class AuthStore {
 
   @observable pbxState: ConnectionState = 'stopped'
   @observable pbxTotalFailure = 0
+  @observable callConnecting = false
   @observable sipState: ConnectionState = 'stopped'
   @observable sipTotalFailure = 0
   @observable ucState: ConnectionState = 'stopped'

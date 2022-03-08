@@ -2,6 +2,7 @@ import { Platform, StyleSheet } from 'react-native'
 
 import globalVariables from '@/components/variables'
 import CustomColors from '@/utils/CustomColors'
+import CustomValues from '@/utils/CustomValues'
 
 const {
   bg,
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 99,
     width: '100%',
+    height: CustomValues.iosAndroid ? '100%' : CustomValues.webHeight,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',

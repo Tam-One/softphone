@@ -15,4 +15,5 @@
     <color name="btn_reject">#FF5252</color>
     <color name="btn_accept">#35CD8B</color>
     <color name="btn_blue">#2276ff</color>
+    <color name="app_background">#EAF4FF</color>
 </resources>

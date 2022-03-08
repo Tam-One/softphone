@@ -3,7 +3,7 @@
     <item android:drawable="@color/splash_black" />
     <item
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:drawable="@drawable/background_blue"
+    android:layout_height="fill_parent"
+    android:background="@color/app_background"
   />
 </layer-list>

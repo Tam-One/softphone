@@ -30,7 +30,8 @@ const InputBox = ({ val, icon = '', style = {} }) => {
 }
 
 const SettingsView = ({ onPress }) => {
-  const { pbxUsername, pbxPassword, pbxTenant } = getAuthStore().currentProfile
+  const { pbxUsername, pbxPassword, pbxTenant } =
+    getAuthStore().currentProfile || {}
 
   return (
     <>

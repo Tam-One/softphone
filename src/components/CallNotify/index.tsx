@@ -44,7 +44,7 @@ class CallNotify extends React.Component {
     const callStoreRecentAction = callStore.recentPn?.action
     const { callerName }: any = this.state
 
-    if (!callStoreInfo || callStoreRecentAction) {
+    if (!callStoreInfo || callStoreRecentAction || !callStoreInfo.pbxTalkerId) {
       return null
     }
     const { partyName, partyNumber, hangup, answer } = callStoreInfo

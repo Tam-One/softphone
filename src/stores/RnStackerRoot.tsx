@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import { ReactComponentLike } from 'prop-types'
 import React, { FC } from 'react'
-import { Animated, Dimensions, StyleSheet, View } from 'react-native'
+import { Animated, Dimensions, Platform, StyleSheet, View } from 'react-native'
 
 import CustomValues from '@/utils/CustomValues'
 
@@ -18,14 +18,27 @@ const css = StyleSheet.create({
   },
 })
 
+var stacksCopy
+
 const Stack: FC<{
   Component: ReactComponentLike
   isRoot?: boolean
   isBackgroundStack: boolean
+  fromBack?: boolean
 }> = ({ Component, ...p }) => {
-  const x = useAnimationOnDidMount({
-    translateX: [CustomValues.animationWidth, 0],
-  })
+  const anim = useAnimationOnDidMount(
+    {
+      translateX: p.fromBack
+        ? [CustomValues.animationExitWidth, 0]
+        : [CustomValues.animationWidth, 0],
+    },
+    p.fromBack
+      ? () => {
+          stacksCopy.pop()
+          RnStacker.stacks = [...stacksCopy]
+        }
+      : undefined,
+  )
   const OuterComponent = p.isRoot ? View : Animated.View
   return (
     <OuterComponent
@@ -33,7 +46,7 @@ const Stack: FC<{
         StyleSheet.absoluteFill,
         css.Stack,
         p.isBackgroundStack && css.Stack__hidden,
-        !p.isRoot && { transform: [x] },
+        !p.isRoot && { transform: [anim] },
       ]}
     >
       <Component {...p} />
@@ -41,19 +54,46 @@ const Stack: FC<{
   )
 }
 
-const RnStackerRoot = observer(() => (
-  <>
-    {RnStacker.stacks.map((s, i) => (
-      <Stack
-        isBackgroundStack={
-          !(i + 1 === RnStacker.stacks.length) &&
-          !(i + 2 === RnStacker.stacks.length && RnStacker.stackAnimating)
+const RnStackerRoot = observer(() => {
+  const rn = [...RnStacker.stacks]
+
+  if (
+    !stacksCopy ||
+    (stacksCopy.length <= rn.length &&
+      rn[rn.length - 1] !== stacksCopy[stacksCopy.length - 1])
+  ) {
+    stacksCopy = rn
+  }
+
+  const stackArr = stacksCopy
+
+  return (
+    <>
+      {stackArr.map((s, i) => {
+        let stack = { ...s }
+        if (
+          stacksCopy.length > RnStacker.stacks.length &&
+          i === stacksCopy.length - 1
+        ) {
+          stack.fromBack = true
         }
-        key={i}
-        {...s}
-      />
-    ))}
-  </>
-))
+        return (
+          <Stack
+            isBackgroundStack={
+              !(i + 1 === stackArr.length) &&
+              !(i + 2 === stackArr.length && RnStacker.stackAnimating) &&
+              !(
+                stacksCopy.length > RnStacker.stacks.length &&
+                i === stacksCopy.length - 2
+              )
+            }
+            key={i}
+            {...stack}
+          />
+        )
+      })}
+    </>
+  )
+})
 
 export default RnStackerRoot

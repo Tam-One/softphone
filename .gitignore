@@ -75,3 +75,5 @@ turnConfig.*
 
 # Intl output
 .babelPluginIntl.json
+
+out/

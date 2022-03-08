@@ -180,6 +180,7 @@ const App = observer(() => {
       dsn:
         'https://048b2053107a4d3bb5f8d1bb69bc246c@o1134185.ingest.sentry.io/6181403',
       tracesSampleRate: 1,
+      environment: 'development',
     })
   }, [])
 
@@ -203,6 +204,7 @@ const App = observer(() => {
     ucTotalFailure,
     signedInId,
     loginPressed,
+    callConnecting,
   } = s
   let service = ''
   let isRetrying = false
@@ -265,11 +267,12 @@ const App = observer(() => {
           </>
         )}
 
-        {signedInId &&
-        !loginPressed &&
-        !pbxTotalFailure &&
-        !sipTotalFailure &&
-        !ucTotalFailure ? (
+        {callConnecting ||
+        (signedInId &&
+          !loginPressed &&
+          !pbxTotalFailure &&
+          !sipTotalFailure &&
+          !ucTotalFailure) ? (
           <View style={styles.container}>
             <ActivityIndicator color={CustomColors.ActiveBlue} size={'large'} />
           </View>

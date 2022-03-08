@@ -50,7 +50,7 @@ public class IncomingCallActivity extends Activity {
   private void forceFinish() {
     closed = true;
     try {
-      finish();
+      finishAndRemoveTask();
     } catch (Exception e) {
       checkAndEmitShowCall();
     }
