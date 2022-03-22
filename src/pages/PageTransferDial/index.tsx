@@ -22,6 +22,7 @@ import PoweredBy from '@/components/PoweredBy'
 import { RnIcon } from '@/components/Rn'
 import RnText from '@/components/RnText'
 import styles from '@/pages/PageTransferDial/Styles'
+import { getAuthStore } from '@/stores/authStore'
 import callStore from '@/stores/callStore'
 import contactStore from '@/stores/contactStore'
 import { intlDebug } from '@/stores/intl'
@@ -174,6 +175,15 @@ class PageTransferDial extends React.Component {
       if (!this.text) {
         RnAlert.error({
           message: intlDebug`Enter a phone number before you can press transfer conference`,
+        })
+        return
+      }
+      const { pbxUsername } = getAuthStore().currentProfile || {}
+
+      if (this.text === pbxUsername) {
+        RnAlert.dismiss()
+        RnAlert.error({
+          message: intlDebug`Self transfer is not allowed`,
         })
         return
       }

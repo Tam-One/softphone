@@ -13,6 +13,7 @@ import ShowNumber from '@/components/CallDialledNumbers'
 import KeyPad from '@/components/CallKeyPad'
 import CustomLayout from '@/components/CustomLayout'
 import styles from '@/pages/PageCallKeypad/Styles'
+import { getAuthStore } from '@/stores/authStore'
 import callStore from '@/stores/callStore'
 import { intlDebug } from '@/stores/intl'
 import RnAlert from '@/stores/RnAlert'
@@ -38,6 +39,15 @@ class PageCallKeypad extends React.Component {
     if (!this.text) {
       RnAlert.error({
         message: intlDebug`No target to call`,
+      })
+      return
+    }
+    const { pbxUsername } = getAuthStore().currentProfile || {}
+
+    if (this.text === pbxUsername) {
+      RnAlert.dismiss()
+      RnAlert.error({
+        message: intlDebug`Self dial is not allowed`,
       })
       return
     }

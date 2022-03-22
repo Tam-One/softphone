@@ -1,7 +1,8 @@
+import NetInfo from '@react-native-community/netinfo'
 import * as Sentry from '@sentry/react-native'
 import { observe } from 'mobx'
 import { observer } from 'mobx-react'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   AppState,
@@ -52,16 +53,31 @@ import PushNotification from '@/utils/PushNotification'
 import registerOnUnhandledError from '@/utils/registerOnUnhandledError'
 
 import api from '../../api/index'
+import sip from '../../api/sip'
 
 // API was a component but had been rewritten to a listener
 void api
 
-AppState.addEventListener('change', () => {
-  if (AppState.currentState === 'active') {
-    getAuthStore().reconnect()
-    PushNotification.resetBadgeNumber()
-  }
-})
+var int
+
+clearInterval(int)
+
+// int = setInterval(() => {
+//   const authSIP = new AuthSIP()
+//   const authPBX = new AuthPBX()
+//   const s = sip.phone?.getPhoneStatus()
+//   console.log('phoestatt tggg', s)
+//   if (s === undefined || (s !== 'starting' && s !== 'started')) {
+//     sip.disconnect()
+//     setTimeout(() => {
+//       getAuthStore().reconnectPbx()
+//       getAuthStore().reconnectSip()
+//       authPBX.auth()
+//       authSIP.sipReconnect()
+//     }, 300)
+//   }
+// }, 2000)
+
 registerOnUnhandledError(unexpectedErr => {
   // Must wrap in window.setTimeout to make sure
   //    there's no state change when rendering
@@ -117,7 +133,8 @@ BackHandler.addEventListener('hardwareBackPress', () => {
   return false
 })
 
-let alreadyInitApp = false
+var alreadyInitApp = false
+var activelist = true
 PushNotification.register(() => {
   if (alreadyInitApp) {
     return
@@ -140,6 +157,7 @@ PushNotification.register(() => {
   const authUC = new AuthUC()
 
   observe(s, 'signedInId', () => {
+    console.log('signinnid', s)
     chatStore.clearStore()
     contactStore.clearStore()
     if (s.signedInId) {
@@ -167,10 +185,61 @@ PushNotification.register(() => {
       profileStore.saveProfilesToLocalStorage()
     }
     Nav().goToPageIndex()
+    AppState.addEventListener('change', () => {
+      const authSIP = new AuthSIP()
+      const authPBX = new AuthPBX()
+      console.log(authSIP.getObservere())
+      if (AppState.currentState === 'active') {
+        const s = sip.phone?.getPhoneStatus()
+        console.log('phoestatt', s)
+        console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
+        if (s === undefined || (s !== 'starting' && s !== 'started')) {
+          sip.disconnect()
+          setTimeout(() => {
+            getAuthStore().reconnectPbx()
+            getAuthStore().reconnectSip()
+            authPBX.auth()
+            authSIP.sipReconnect()
+          }, 300)
+        }
+        activelist = false
+        // alert('a')
+        // if (s === undefined || (s !== 'starting' && s !== 'started')) {
+        // window.location.reload()
+        // console.error(`PN debug: SIP reconnect: getPhoneStatus()=${s}`)
+        // const s = sip.phone?.getPhoneStatus()
+        // if (s && s !== 'starting' && s !== 'started') {
+        // console.error(`PN debug: SIP reconnect: getPhoneStatus()=${s}`)
+        // }
+        // if (this.sipPn.sipAuth) {
+        //   return
+        // }
+        // await pbx.client?._pal('getProductInfo').catch((err: Error) => {
+        //   if (authStore.pbxState === 'connecting') {
+        //     return
+        //   }
+        //   console.error(`PN debug: PBX reconnect: getProductInfo() error=${err}`)
+        //   this.reconnectPbx()
+        // })
+        // }
+        // getAuthStore().reconnect()
+        // PushNotification.resetBadgeNumber()
+        // window.location.reload()
+        // const s = getAuthStore()
+        // setupCallKeep()
+        // profileStore.loadProfilesFromLocalStorage().then(() => {
+        //   SyncPnToken().syncForAllAccounts()
+        // })
+        // s.handleUrlParams()
+      }
+    })
   })
+
+  activelist = false
 })
 
 const App = observer(() => {
+  const [internetConnected, setInternetConnected] = useState(true)
   useEffect(() => {
     if (Platform.OS !== 'web') {
       SplashScreen.hide()
@@ -182,6 +251,12 @@ const App = observer(() => {
       tracesSampleRate: 1,
       environment: 'development',
     })
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type)
+      console.log('Is connected?', state.isConnected)
+      setInternetConnected(!!state.isConnected)
+    })
+    return unsubscribe
   }, [])
 
   if (!profileStore.profilesLoadedObservable) {
@@ -226,6 +301,10 @@ const App = observer(() => {
   void isRetrying
   if (isConnFailure && ucConnectingOrFailure && ucLoginFromAnotherPlace) {
     connMessage = intl`UC signed in from another location`
+  }
+
+  if (!internetConnected) {
+    connMessage = intl`Please check your internet connection`
   }
 
   const bottomBarColor =

@@ -1,3 +1,4 @@
+import NetInfo from '@react-native-community/netinfo'
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
 
@@ -13,12 +14,17 @@ import RnAlert from './RnAlert'
 class AuthSIP {
   private clearObserve?: Lambda
   auth() {
+    console.log('inauth')
+    this.clearObserve?.()
     this.authWithCheck()
     this.clearObserve = observe(
       getAuthStore(),
       'sipShouldAuth',
       this.authWithCheckDebounced,
     )
+  }
+  getObservere() {
+    return this.clearObserve
   }
   dispose() {
     console.error('SIP PN debug: set sipState stopped dispose')
@@ -59,6 +65,9 @@ class AuthSIP {
 
   private authWithoutCatch = async () => {
     const s = getAuthStore()
+    console.log('authwithoutcatch', s)
+    console.log('authwithoutcatch opm', s.sipPn)
+
     s.sipState = 'connecting'
     if (s.sipPn.sipAuth) {
       console.error('SIP PN debug: AuthSIP.authPnWithoutCatch')
@@ -117,7 +126,7 @@ class AuthSIP {
         }
       : undefined
     //
-    await sip.connect({
+    var onj = {
       hostname: getAuthStore().currentProfile.pbxHostname,
       port: sipWSSPort,
       username: webPhone.id,
@@ -125,9 +134,17 @@ class AuthSIP {
       pbxTurnEnabled: getAuthStore().currentProfile.pbxTurnEnabled,
       dtmfSendMode: Number(dtmfSendMode),
       turnConfig,
-    })
+    }
+    console.log(onj, 'onk')
+    await sip.connect(onj)
   }
+
+  sipReconnect() {
+    this.authWithCheck()
+  }
+
   private authWithCheck = () => {
+    console.log(getAuthStore().sipShouldAuth, 'getAuthStore().sipShouldAuth')
     if (!getAuthStore().sipShouldAuth) {
       return
     }
@@ -145,13 +162,23 @@ class AuthSIP {
         getAuthStore().sipTotalFailure += 1
         sip.disconnect()
         getAuthStore().signOut()
-        RnAlert.error({
-          message: intlDebug`Invalid Credentials`,
+        RnAlert.dismiss()
+        NetInfo.fetch().then(state => {
+          RnAlert.error({
+            message: state.isConnected
+              ? intlDebug`Invalid Credentials`
+              : intlDebug`No Internet Connection`,
+          })
         })
         Nav().goToPageProfileSignIn()
       })
   }
-  private authWithCheckDebounced = debounce(this.authWithCheck, 300)
+  private authWithCheckDebounced = debounce(() => {
+    const s = getAuthStore()
+    console.log(s.sipState, 'klklk')
+    // if (getAuthStore().sipState != 'connecting')
+    //   this.authWithCheck()
+  }, 300)
 }
 
 export default AuthSIP

@@ -14,6 +14,7 @@ const VideoCallRequest: FC<{
   onVideoCallSwitch?(): void
   responseMessage?: string
   setResponseMessage?(msg: string): void
+  clearTimer?(): void
 }> = ({
   showVideo,
   setShowVideo,
@@ -21,6 +22,7 @@ const VideoCallRequest: FC<{
   onVideoCallSwitch,
   responseMessage,
   setResponseMessage,
+  clearTimer,
 }) => {
   const waitingTimer = 3000
   const requestTimer = 20000
@@ -76,6 +78,7 @@ const VideoCallRequest: FC<{
               clearTimeout(videoRequestTimeout)
               videoRequestTimeout = null
               disableVideo()
+              clearTimer && clearTimer()
             }}
           ></VideoPopup>
         </View>

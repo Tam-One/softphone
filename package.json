@@ -1,7 +1,7 @@
 {
   "name": "qooqiephone",
   "productName": "Qooqie Phone",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "private": true,
   "homepage": "./",
   "main": "electron/main.ts",
@@ -16,15 +16,26 @@
   "config": {
     "forge": {
       "packagerConfig": {
+        "executableName": "Qooqie Phone",
         "icon": "./Icon/Icon",
         "name": "Qooqie Phone",
-        "executableName": "Qooqie Phone"
+        "osxSign": {
+          "identity": "Developer ID Application: Qooqie N.V. (DXR59ZN3G9)",
+          "hardened-runtime": true,
+          "entitlements": "entitlements.plist",
+          "entitlements-inherit": "entitlements.plist",
+          "signature-flags": "library"
+        },
+        "osxNotarize": {
+          "appleId": "richard@qooqie.com",
+          "appleIdPassword": "xxrj-vixl-qtvx-ahza"
+        }
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "electro-text-reader"
+            "name": "Qooqie Phone"
           }
         },
         {
@@ -36,15 +47,20 @@
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-            "icon": "./Icon/Icon.png"
+            "icon": "./Icon/Icon"
           }
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
         }
       ]
     }
   },
   "scripts": {
     "web": "react-scripts start",
-    "start": "craco start",
+    "start_": "craco start",
+    "start": "electron-forge start",
     "rn": "react-native start",
     "android": "react-native run-android",
     "shake": "adb shell input keyevent 82",
@@ -70,7 +86,7 @@
     "react-build": "react-scripts build",
     "electron-build": "electron-builder",
     "test": "yarn react-build && yarn electron-build",
-    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron.js --publish never",
+    "package": "electron-forge package",
     "start-forge": "electron-forge start",
     "forge-package": "electron-forge package",
     "make": "electron-forge make",
@@ -83,9 +99,11 @@
     "make-win1": "--output-path=electron/dist/dist && electron-forge make"
   },
   "dependencies": {
-    "@cantoo/rn-svg": "^1.0.6",
+    "@cantoo/rn-svg": "^12.2.0",
+    "@estimote/react-native-proximity": "0.5.0",
     "@mdi/js": "5.9.55",
     "@react-native-async-storage/async-storage": "1.14.1",
+    "@react-native-community/netinfo": "^8.1.0",
     "@react-native-community/push-notification-ios": "1.8.0",
     "@react-native-firebase/app": "12.8.0",
     "@react-native-firebase/messaging": "12.8.0",
@@ -139,6 +157,7 @@
     "react-native-iphone-x-helper": "1.3.1",
     "react-native-keyboard-spacer": "0.4.1",
     "react-native-linear-gradient": "2.5.6",
+    "react-native-proximity": "pakt-digital/react-native-proximity#584f46494111c639655303cf7e4bae925641dc4a",
     "react-native-share": "5.1.4",
     "react-native-splash-screen": "github:brekekesoftware/react-native-splash-screen#a78ee51c0f89652a2a223ff2bc4ec10928bf2c30",
     "react-native-svg": "12.1.0",
@@ -148,7 +167,7 @@
     "react-native-voip-push-notification": "3.3.0",
     "react-native-web": "0.15.0",
     "react-native-web-linear-gradient": "1.1.1",
-    "react-native-webrtc": "1.75.3",
+    "react-native-webrtc": "^1.98.0",
     "url-parse": "1.5.1",
     "uuid": "8.3.2",
     "validatorjs": "3.22.1",
@@ -159,11 +178,11 @@
     "@babel/plugin-proposal-decorators": "7.13.5",
     "@babel/plugin-proposal-optional-chaining": "7.13.8",
     "@craco/craco": "5.9.0",
-    "@electron-forge/cli": "^6.0.0-beta.61",
-    "@electron-forge/maker-deb": "6.0.0-beta.53",
-    "@electron-forge/maker-rpm": "6.0.0-beta.53",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.53",
-    "@electron-forge/maker-zip": "6.0.0-beta.53",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@prettier/plugin-xml": "0.13.1",
     "@types/circular-dependency-plugin": "5.0.5",
     "@types/circular-json": "0.4.0",
@@ -199,7 +218,7 @@
     "lint-staged": "10.5.4",
     "metro-react-native-babel-preset": "0.65.2",
     "prettier": "2.2.1",
-    "react-scripts": "3.4.4",
+    "react-scripts": "^3.4.4",
     "type-coverage": "2.17.0",
     "typescript": "4.2.3",
     "webpack-node-externals": "3.0.0"

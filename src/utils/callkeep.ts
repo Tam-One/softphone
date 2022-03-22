@@ -12,6 +12,7 @@ import { IncomingCall, RnNativeModules } from './RnNativeModules'
 let alreadSetupCallKeep = false
 
 const _setupCallKeep = async () => {
+  console.log('_setupCallKeep')
   if (alreadSetupCallKeep) {
     return
   }
@@ -47,6 +48,8 @@ const _setupCallKeep = async () => {
     },
   })
     .then(() => {
+      console.log('RNCallKeep.setup')
+
       RNCallKeep.registerPhoneAccount()
       RNCallKeep.registerAndroidEvents()
       RNCallKeep.setAvailable(true)
@@ -73,6 +76,7 @@ const _setupCallKeep = async () => {
 }
 
 export const setupCallKeep = async () => {
+  console.log('setupCallKeep')
   if (Platform.OS === 'web') {
     return
   }
@@ -80,6 +84,7 @@ export const setupCallKeep = async () => {
   await _setupCallKeep()
 
   const onDidLoadWithEvents = (e: { name: string; data: unknown }[]) => {
+    // console.log(
     e.forEach(e => {
       handlers[e.name.replace('RNCallKeep', 'on')]?.(e.data)
     })
@@ -93,6 +98,7 @@ export const setupCallKeep = async () => {
     callStore.onCallKeepAnswerCall(uuid)
   }
   const onEndCallAction = (e: { callUUID: string }) => {
+    console.log('onEndCallAction', e)
     BackgroundTimer.setTimeout(_setupCallKeep, 0)
     // Use the custom native incoming call module for android
     if (Platform.OS === 'android') {
@@ -107,7 +113,7 @@ export const setupCallKeep = async () => {
     localizedCallerName: string
     hasVideo: string // '0' | '1'
     fromPushKit: string // '0' | '1'
-    payload: unknown // VOIP
+    payload: any // VOIP
     error: string // ios only
   }) => {
     const uuid = e.callUUID.toUpperCase()
@@ -115,14 +121,20 @@ export const setupCallKeep = async () => {
     if (Platform.OS === 'android') {
       return
     }
+
+    const { x_from, x_displayname } = e.payload
+
     // Try set the caller name from last known PN
-    const n = getLastCallPn()
-    if (
-      n?.from &&
-      (e.localizedCallerName === 'Loading...' || e.handle === 'Loading...')
-    ) {
-      RNCallKeep.updateDisplay(uuid, n.from, 'Qooqie Phone')
-    }
+    // const n = getLastCallPn()
+    // if (
+    //   n?.from &&
+    //   (e.localizedCallerName === 'Loading...' || e.handle === 'Loading...')
+    // ) {
+    RNCallKeep.updateDisplay(uuid, x_displayname, 'Qooqie Phone')
+
+    // if (callStore.calls.length === 0) {
+    //   callStore.upsertCall({ "id": "1", "incoming": true, "partyNumber": x_from, "partyName": x_displayname, "remoteVideoEnabled": false, "localVideoEnabled": false })
+    // }
     // Call event handler in callStore
     callStore.onCallKeepDidDisplayIncomingCall(uuid)
   }
@@ -214,17 +226,20 @@ export const setupCallKeep = async () => {
     RNCallKeep.addEventListener('showIncomingCallUi', onShowIncomingCallUi)
     const eventEmitter = new NativeEventEmitter(RnNativeModules.IncomingCall)
     eventEmitter.addListener('answerCall', (uuid: string) => {
+      console.log('answerCall', uuid)
       uuid = uuid.toUpperCase()
       callStore.onCallKeepAnswerCall(uuid)
       IncomingCall.closeIncomingCallActivity(true)
     })
     eventEmitter.addListener('rejectCall', (uuid: string) => {
+      console.log('rejectCall', uuid)
       uuid = uuid.toUpperCase()
       callStore.onCallKeepEndCall(uuid)
       IncomingCall.closeIncomingCallActivity()
     })
     // In case of answer call when phone locked
     eventEmitter.addListener('showCall', () => {
+      console.log('showCall')
       RNCallKeep.backToForeground()
     })
   }

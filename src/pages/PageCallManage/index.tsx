@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import Proximity from 'react-native-proximity'
 
 import svgImages from '@/assets/svgImages'
 import CallActionButton from '@/components/CallActionButton'
@@ -69,6 +70,7 @@ class PageCallManage extends React.Component<{
     responseMessage: '',
     hideVideoButtons: false,
     speakedEnabled: false,
+    proximity: false,
   }
 
   getActionsButtonList = (currentCall: any) => {
@@ -133,6 +135,7 @@ class PageCallManage extends React.Component<{
       ),
       video: (
         <CallActionButton
+          disabled={holding}
           bgcolor={localVideoEnabled ? activeColor : nonActiveColor}
           name={intl`Video`}
           onPress={localVideoEnabled ? () => disableVideo(true) : onVideoPress}
@@ -198,6 +201,10 @@ class PageCallManage extends React.Component<{
     return buttonList
   }
 
+  componentDidMount() {
+    Proximity.addListener(this._proximityListener)
+  }
+
   componentDidUpdate() {
     const { currentCall, backgroundCalls } = callStore
     if (!currentCall && !backgroundCalls.length) {
@@ -207,6 +214,7 @@ class PageCallManage extends React.Component<{
 
   componentWillUnmount() {
     clearInterval(this.intervalID)
+    Proximity.removeListener(this._proximityListener)
   }
 
   renderCallTime = (isVideoEnabled?: boolean) => {
@@ -302,6 +310,10 @@ class PageCallManage extends React.Component<{
               setResponseMessage={msg =>
                 this.setState({ responseMessage: msg })
               }
+              clearTimer={() => {
+                clearTimeout(this.videoRequestTimeout)
+                this.videoRequestTimeout = null
+              }}
             ></VideoCallRequest>
           ) : (
             <></>
@@ -521,11 +533,46 @@ class PageCallManage extends React.Component<{
     )
   }
 
+  _proximityListener = data => {
+    if (data.proximity != this.state.proximity) {
+      this.setState({
+        proximity: data.proximity,
+      })
+    }
+  }
+
   render() {
     const currentCall: any = callStore.currentCall || {}
     const { remoteVideoEnabled, localVideoEnabled } = currentCall
     const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
-    return <>{this.renderCall(currentCall, isVideoEnabled)}</>
+    console.log(Platform.OS)
+    console.log(currentCall)
+    if (isVideoEnabled) {
+      clearTimeout(this.videoRequestTimeout)
+      this.videoRequestTimeout = null
+    }
+    const { isLoudSpeakerEnabled } = callStore
+    return (
+      <>
+        {this.state.proximity && !isLoudSpeakerEnabled && (
+          <View
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 9999,
+              opacity: 0.5,
+              backgroundColor: 'black',
+            }}
+          ></View>
+        )}
+        {this.renderCall(currentCall, isVideoEnabled)}
+      </>
+    )
   }
 }
 

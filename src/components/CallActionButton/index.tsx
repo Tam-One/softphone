@@ -33,6 +33,7 @@ const CallActionButton: FC<{
         styles.buttonIconBtn,
         { backgroundColor: bgcolor },
         !hideShadow && styles.shadowEffect,
+        disabled && { backgroundColor: '#e5e5e5' },
       ]}
     >
       <Icon
