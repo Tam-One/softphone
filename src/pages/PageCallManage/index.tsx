@@ -202,7 +202,9 @@ class PageCallManage extends React.Component<{
   }
 
   componentDidMount() {
-    Proximity.addListener(this._proximityListener)
+    if (CustomValues.iosAndroid) {
+      Proximity.addListener(this._proximityListener)
+    }
   }
 
   componentDidUpdate() {
@@ -214,7 +216,9 @@ class PageCallManage extends React.Component<{
 
   componentWillUnmount() {
     clearInterval(this.intervalID)
-    Proximity.removeListener(this._proximityListener)
+    if (CustomValues.iosAndroid) {
+      Proximity.removeListener(this._proximityListener)
+    }
   }
 
   renderCallTime = (isVideoEnabled?: boolean) => {
