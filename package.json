@@ -35,7 +35,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Qooqie Phone"
+            "name": "QooqiePhone"
           }
         },
         {
