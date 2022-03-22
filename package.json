@@ -16,26 +16,15 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "executableName": "Qooqie Phone",
         "icon": "./Icon/Icon",
         "name": "Qooqie Phone",
-        "osxSign": {
-          "identity": "Developer ID Application: Qooqie N.V. (DXR59ZN3G9)",
-          "hardened-runtime": true,
-          "entitlements": "entitlements.plist",
-          "entitlements-inherit": "entitlements.plist",
-          "signature-flags": "library"
-        },
-        "osxNotarize": {
-          "appleId": "richard@qooqie.com",
-          "appleIdPassword": "xxrj-vixl-qtvx-ahza"
-        }
+        "executableName": "Qooqie Phone"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "QooqiePhone"
+            "name": "electro-text-reader"
           }
         },
         {
@@ -47,12 +36,8 @@
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-            "icon": "./Icon/Icon"
+            "icon": "./Icon/Icon.png"
           }
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
         }
       ]
     }
