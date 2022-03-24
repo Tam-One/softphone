@@ -55,6 +55,7 @@ export class AuthStore {
     )
   }
   @computed get sipConnectingOrFailure() {
+    console.log(this.sipState, 'this.sipState')
     return ['connecting', 'failure'].some(s => s === this.sipState)
   }
   @computed get ucShouldAuth() {
