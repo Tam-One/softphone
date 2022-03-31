@@ -15,6 +15,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
+import BackgroundTimer from 'react-native-background-timer'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import SplashScreen from 'react-native-splash-screen'
 
@@ -60,23 +61,14 @@ void api
 
 var int
 
-clearInterval(int)
+// BackgroundTimer.start()
+// // Do whatever you want incuding setTimeout;
+// clearInterval(int)
 
 // int = setInterval(() => {
-//   const authSIP = new AuthSIP()
-//   const authPBX = new AuthPBX()
-//   const s = sip.phone?.getPhoneStatus()
-//   console.log('phoestatt tggg', s)
-//   if (s === undefined || (s !== 'starting' && s !== 'started')) {
-//     sip.disconnect()
-//     setTimeout(() => {
-//       getAuthStore().reconnectPbx()
-//       getAuthStore().reconnectSip()
-//       authPBX.auth()
-//       authSIP.sipReconnect()
-//     }, 300)
-//   }
-// }, 2000)
+//   reconnectServer()
+// }, 1000)
+// BackgroundTimer.stop()
 
 registerOnUnhandledError(unexpectedErr => {
   // Must wrap in window.setTimeout to make sure
@@ -186,22 +178,13 @@ PushNotification.register(() => {
     }
     Nav().goToPageIndex()
     AppState.addEventListener('change', () => {
-      const authSIP = new AuthSIP()
-      const authPBX = new AuthPBX()
-      console.log(authSIP.getObservere())
       if (AppState.currentState === 'active') {
-        const s = sip.phone?.getPhoneStatus()
-        console.log('phoestatt', s)
-        console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
-        if (s === undefined || (s !== 'starting' && s !== 'started')) {
-          sip.disconnect()
-          setTimeout(() => {
-            getAuthStore().reconnectPbx()
-            getAuthStore().reconnectSip()
-            authPBX.auth()
-            authSIP.sipReconnect()
-          }, 300)
-        }
+        // const s = sip.phone?.getPhoneStatus()
+        // console.log('phoestatt', s)
+        // console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
+        // if (s === undefined || (s !== 'starting' && s !== 'started')) {
+        reconnectServer()
+        // }
         activelist = false
         // alert('a')
         // if (s === undefined || (s !== 'starting' && s !== 'started')) {
@@ -238,8 +221,40 @@ PushNotification.register(() => {
   activelist = false
 })
 
+var conn = false
+
+var internetConnection = false
+var recontime
+
+const reconnectServer = () => {
+  const s = sip.phone?.getPhoneStatus()
+  console.log('phoestatt', s)
+  console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
+  if (s === undefined || (s !== 'starting' && s !== 'started')) {
+    if (conn || !internetConnection) {
+      return
+    }
+    conn = true
+    const authSIP = new AuthSIP()
+    const authPBX = new AuthPBX()
+    sip.disconnect()
+    recontime && clearTimeout(recontime)
+    recontime = setTimeout(() => {
+      getAuthStore().reconnectPbx()
+      getAuthStore().reconnectSip()
+      authPBX.auth()
+      authSIP.sipReconnect()
+      setTimeout(() => {
+        conn = false
+      }, 3000)
+    }, 600)
+  }
+}
+
 const App = observer(() => {
   const [internetConnected, setInternetConnected] = useState(true)
+  var unsubscribe
+
   useEffect(() => {
     if (Platform.OS !== 'web') {
       SplashScreen.hide()
@@ -251,13 +266,20 @@ const App = observer(() => {
       tracesSampleRate: 1,
       environment: 'development',
     })
-    const unsubscribe = NetInfo.addEventListener(state => {
-      console.log('Connection type', state.type)
-      console.log('Is connected?', state.isConnected)
-      setInternetConnected(!!state.isConnected)
-    })
-    return unsubscribe
+    if (!unsubscribe) {
+      unsubscribe = NetInfo.addEventListener(state => interChange(state))
+    }
+    return () => unsubscribe()
   }, [])
+
+  const interChange = state => {
+    const s = getAuthStore()
+    if (s.signedInId && s.loginPressed && s.pbxState !== 'connecting') {
+      reconnectServer()
+    }
+    internetConnection = !!state.isConnected
+    setInternetConnected(!!state.isConnected)
+  }
 
   if (!profileStore.profilesLoadedObservable) {
     return (
@@ -293,7 +315,16 @@ const App = observer(() => {
     service = intl`UC`
     isRetrying = ucTotalFailure > 0
   }
-  let connMessage =
+  let connMessage = ''
+  if (
+    !internetConnected &&
+    !s.signedInId &&
+    !s.loginPressed &&
+    s.pbxState !== 'connecting'
+  ) {
+    connMessage = intl`Please check your internet connection`
+  }
+  connMessage =
     service &&
     (isConnFailure
       ? intl`${service} connection failed`
@@ -301,10 +332,6 @@ const App = observer(() => {
   void isRetrying
   if (isConnFailure && ucConnectingOrFailure && ucLoginFromAnotherPlace) {
     connMessage = intl`UC signed in from another location`
-  }
-
-  if (!internetConnected) {
-    connMessage = intl`Please check your internet connection`
   }
 
   const bottomBarColor =
@@ -322,7 +349,7 @@ const App = observer(() => {
         }}
       >
         <RnStatusBar />
-        {shouldShowConnStatus && !!signedInId && (
+        {(!!connMessage || (shouldShowConnStatus && !!signedInId)) && (
           <AnimatedSize
             style={[
               styles.appConnectionStatus,

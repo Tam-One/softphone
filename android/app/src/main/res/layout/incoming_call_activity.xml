@@ -162,7 +162,7 @@
             <ImageView
       android:id="@+id/imageView"
       android:layout_width="56dp"
-      android:layout_height="14dp"
+      android:layout_height="48dp"
       android:src="@drawable/qooqie_logo"
       android:layout_gravity="center_horizontal"
       android:gravity="center"
