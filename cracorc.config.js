@@ -13,7 +13,7 @@ module.exports = {
       'react-native-fast-image': 'react-native-web/dist/exports/Image',
       'react-native-linear-gradient': 'react-native-web-linear-gradient',
       'react-native-svg': '@cantoo/rn-svg',
-      '@sentry/react-native': '@sentry/browser',
+      // '@sentry/react-native': '@sentry/browser',
       'react-native-uuid': 'uuid',
       'react-native-callkeep': nullAlias,
       'react-native-fs': nullAlias,

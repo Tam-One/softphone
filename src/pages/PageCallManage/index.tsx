@@ -547,7 +547,7 @@ class PageCallManage extends React.Component<{
 
   render() {
     const currentCall: any = callStore.currentCall || {}
-    const { remoteVideoEnabled, localVideoEnabled } = currentCall
+    const { remoteVideoEnabled, localVideoEnabled, transferring } = currentCall
     const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
     console.log(Platform.OS)
     console.log(currentCall)
@@ -556,6 +556,15 @@ class PageCallManage extends React.Component<{
       this.videoRequestTimeout = null
     }
     const { isLoudSpeakerEnabled } = callStore
+
+    // if (transferring && this.state.showVideoPopup) {
+    //   // alert('Transferring...')
+    //   const currentCall: any = callStore.currentCall || {}
+    //   const { disableVideo } = currentCall
+    //   disableVideo()
+    //   this.setState({ showVideoPopup: '' })
+    // }
+
     return (
       <>
         {this.state.proximity && !isLoudSpeakerEnabled && (

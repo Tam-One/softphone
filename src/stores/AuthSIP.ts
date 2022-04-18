@@ -1,6 +1,8 @@
 import NetInfo from '@react-native-community/netinfo'
+import * as Sentry from '@sentry/react-native'
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
+import { Platform } from 'react-native'
 
 import pbx from '../api/pbx'
 import sip from '../api/sip'
@@ -14,6 +16,13 @@ import RnAlert from './RnAlert'
 class AuthSIP {
   private clearObserve?: Lambda
   auth() {
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init auth' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     console.log('inauth')
     this.clearObserve?.()
     this.authWithCheck()
@@ -34,6 +43,16 @@ class AuthSIP {
   }
 
   private authPnWithoutCatch = async () => {
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init authPnWithoutCatch' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     const s = getAuthStore()
     const p = s.sipPn
     if (!p || !p.sipAuth) {
@@ -61,9 +80,29 @@ class AuthSIP {
       turnConfig,
     })
     getAuthStore().sipPn = {}
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init authPnWithoutCatch sip connected' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
   }
 
   private authWithoutCatch = async () => {
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init authWithoutCatch' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     const s = getAuthStore()
     console.log('authwithoutcatch', s)
     console.log('authwithoutcatch opm', s.sipPn)
@@ -140,6 +179,16 @@ class AuthSIP {
   }
 
   sipReconnect() {
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init sipReconnect' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     this.authWithCheck()
   }
 
@@ -147,6 +196,16 @@ class AuthSIP {
     console.log(getAuthStore().sipShouldAuth, 'getAuthStore().sipShouldAuth')
     if (!getAuthStore().sipShouldAuth) {
       return
+    }
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init authWithCheck' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
     }
     this.authWithoutCatch()
       .then(() => {

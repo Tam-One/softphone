@@ -12,7 +12,7 @@ target 'BrekekePhone' do
 
   pod 'RNReactNativeHapticFeedback', :path => '../node_modules/react-native-haptic-feedback'
 
- pod 'RNSentry', :path => '../node_modules/@sentry/react-native'
+#  pod 'RNSentry', :path => '../node_modules/@sentry/react-native'
 
  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 

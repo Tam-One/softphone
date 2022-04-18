@@ -1,6 +1,8 @@
 import NetInfo from '@react-native-community/netinfo'
+import * as Sentry from '@sentry/react-native'
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
+import { Platform } from 'react-native'
 
 import AuthSIP from '@/stores/AuthSIP'
 
@@ -13,6 +15,7 @@ import RnAlert from './RnAlert'
 class AuthPBX {
   private clearObserve?: Lambda
   auth() {
+    console.log('taggy :: AuthPBX.auth')
     this.authWithCheck()
   }
   dispose() {
@@ -22,6 +25,18 @@ class AuthPBX {
   }
 
   private authWithCheck = () => {
+    // alert('taggy :: AuthPBX.authWithCheck')
+    // alert('taggy :: AuthPBX.authWithCheck ')
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init pbbx  authWithCheck' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     console.log('authwithcheckpbx', getAuthStore().pbxShouldAuth)
     if (!getAuthStore().pbxShouldAuth) {
       return
@@ -31,6 +46,16 @@ class AuthPBX {
     pbx
       .connect(getAuthStore().currentProfile)
       .then(() => {
+        if (Platform.OS === 'ios') {
+          let date = new Date()
+          Sentry.captureMessage(
+            'init pbbx  authWithCheck connect completed' +
+              date.getSeconds() +
+              ' ms ' +
+              date.getMilliseconds(),
+            Sentry.Severity.Debug,
+          )
+        }
         getAuthStore().pbxState = 'success'
         console.log('pbc then')
         const authSIP = new AuthSIP()

@@ -65,6 +65,13 @@ static void InitializeFlipper(UIApplication *application) {
 
   // https://github.com/react-native-webrtc/react-native-voip-push-notification/issues/59#issuecomment-691685841
   [RNVoipPushNotificationManager voipRegistration];
+  // [RNCallKeep setup:@{
+  //   @"appName": @"Qooqie Phone",
+  //   @"maximumCallGroups": @3,
+  //   @"maximumCallsPerCallGroup": @1,
+  //   @"supportsVideo": @NO,
+  //   @"imageName":@"callkit.png",
+  // }];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"QooqiePhone"
@@ -152,6 +159,7 @@ static void InitializeFlipper(UIApplication *application) {
   NSLog(@"akkil didReceiveIncomingPushWithPayload");
 
   NSString *uuid = [[[NSUUID UUID] UUIDString] uppercaseString];
+  // NSString *uuid = payload.dictionaryPayload[@"uuid"];
     NSLog(@"akkil uuid %@", uuid);
 
   // --- only required if we want to call `completion()` on the js side
@@ -215,8 +223,11 @@ static void InitializeFlipper(UIApplication *application) {
 
   // NSString *handle = payload.dictionaryPayload[@"callerNum"];
 
-
-  [RNCallKeep reportNewIncomingCall:uuid
+  NSTimeInterval delayInSeconds = 6.0;
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    NSLog(@"Do some work");
+    [RNCallKeep reportNewIncomingCall:uuid
                              handle:@"Qooqie Phone"
                          handleType:@"generic"
                            hasVideo:false
@@ -229,6 +240,9 @@ static void InitializeFlipper(UIApplication *application) {
                             payload:payload.dictionaryPayload
               withCompletionHandler:completion
               ];
+  });
+
+  
     }
   // --- don't need to call this if we do on the js side
   // --- already add completion in above reportNewIncomingCall

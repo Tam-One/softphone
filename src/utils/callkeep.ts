@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react-native'
 import { AppState, NativeEventEmitter, Platform } from 'react-native'
 import RNCallKeep from 'react-native-callkeep'
 
@@ -84,12 +85,38 @@ export const setupCallKeep = async () => {
   await _setupCallKeep()
 
   const onDidLoadWithEvents = (e: { name: string; data: unknown }[]) => {
-    // console.log(
     e.forEach(e => {
-      handlers[e.name.replace('RNCallKeep', 'on')]?.(e.data)
+      if (Platform.OS === 'ios') {
+        let date = new Date()
+        Sentry.captureMessage(
+          'init onDidLoadWithEvents' +
+            date.getSeconds() +
+            ' ms ' +
+            date.getMilliseconds() +
+            ' ' +
+            e.name +
+            ' ' +
+            JSON.stringify(e.data),
+          Sentry.Severity.Debug,
+        )
+      }
+      handlers[e.name.replace('RNCallKeepPerform', 'on')]?.(e.data)
     })
   }
   const onAnswerCallAction = (e: { callUUID: string }) => {
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init onAnswerCallAction' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds() +
+          ' ' +
+          e,
+        Sentry.Severity.Debug,
+      )
+    }
+
     // Use the custom native incoming call module for android
     if (Platform.OS === 'android') {
       return
@@ -98,8 +125,21 @@ export const setupCallKeep = async () => {
     callStore.onCallKeepAnswerCall(uuid)
   }
   const onEndCallAction = (e: { callUUID: string }) => {
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init onEndCallAction' +
+          e.callUUID +
+          ' ' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
+
     console.log('onEndCallAction', e)
-    BackgroundTimer.setTimeout(_setupCallKeep, 0)
+    // BackgroundTimer.setTimeout(_setupCallKeep, 0)
     // Use the custom native incoming call module for android
     if (Platform.OS === 'android') {
       return
@@ -120,6 +160,18 @@ export const setupCallKeep = async () => {
     // Use the custom native incoming call module for android
     if (Platform.OS === 'android') {
       return
+    }
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init onDidDisplayIncomingCall' +
+          e.payload +
+          ' ' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
     }
 
     const { x_from, x_displayname } = e.payload

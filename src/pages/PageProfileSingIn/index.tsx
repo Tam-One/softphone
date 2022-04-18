@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react-native'
 import { cloneDeep } from 'lodash'
 import get from 'lodash/get'
 import React, { FC, useEffect, useState } from 'react'
@@ -31,6 +32,13 @@ import {
 import useStore from '@/utils/useStore'
 
 const PageProfileSignIn = () => {
+  if (Platform.OS === 'ios') {
+    let date = new Date()
+    Sentry.captureMessage(
+      'init PageProfileSignIn' + date,
+      Sentry.Severity.Debug,
+    )
+  }
   const [fieldErrors, setFieldErrors] = useState({})
   const [passwordView, setPasswordView] = useState(false)
 

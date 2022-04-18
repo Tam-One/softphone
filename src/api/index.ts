@@ -1,4 +1,6 @@
+import * as Sentry from '@sentry/react-native'
 import { action } from 'mobx'
+import { Platform } from 'react-native'
 
 import { getAuthStore } from '../stores/authStore'
 import Call from '../stores/Call'
@@ -44,6 +46,7 @@ class Api {
 
   onPBXConnectionStarted = () => {
     waitSip(async () => {
+      console.log('taggy :: Api.onPBXConnectionStarted')
       const s = getAuthStore()
       if (!s.currentProfile) {
         return
@@ -64,6 +67,16 @@ class Api {
       }
       if (getAuthStore().isSignInByNotification) {
         return
+      }
+      if (Platform.OS === 'ios') {
+        let date = new Date()
+        Sentry.captureMessage(
+          'init onPBXConnectionStarted' +
+            date.getSeconds() +
+            ' ms ' +
+            date.getMilliseconds(),
+          Sentry.Severity.Debug,
+        )
       }
       SyncPnToken()
         .sync(getAuthStore().currentProfile)
@@ -135,9 +148,33 @@ class Api {
         })
       }
     }
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init onSIPSessionStarted' +
+          call +
+          ' ' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     callStore.upsertCall(call)
   }
   onSIPSessionUpdated = (call: Call) => {
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init onSIPSessionUpdated' +
+          call +
+          ' ' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     callStore.upsertCall(call)
   }
   onSIPSessionStopped = (id: string) => {

@@ -59,8 +59,20 @@ import sip from '../../api/sip'
 // API was a component but had been rewritten to a listener
 void api
 
-var int
+Sentry.init({
+  dsn:
+    'https://048b2053107a4d3bb5f8d1bb69bc246c@o1134185.ingest.sentry.io/6181403',
+  tracesSampleRate: 1,
+  environment: 'development',
+})
 
+if (Platform.OS === 'ios') {
+  let date = new Date()
+  Sentry.captureMessage(
+    'init app' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
+    Sentry.Severity.Debug,
+  )
+}
 // BackgroundTimer.start()
 // // Do whatever you want incuding setTimeout;
 // clearInterval(int)
@@ -131,6 +143,16 @@ PushNotification.register(() => {
   if (alreadyInitApp) {
     return
   }
+  if (Platform.OS === 'ios') {
+    let date = new Date()
+    Sentry.captureMessage(
+      'init pushnotification' +
+        date.getSeconds() +
+        ' ms ' +
+        date.getMilliseconds(),
+      Sentry.Severity.Debug,
+    )
+  }
   const s = getAuthStore()
   alreadyInitApp = true
 
@@ -153,6 +175,16 @@ PushNotification.register(() => {
     chatStore.clearStore()
     contactStore.clearStore()
     if (s.signedInId) {
+      if (Platform.OS === 'ios') {
+        let date = new Date()
+        Sentry.captureMessage(
+          'init signedInId' +
+            date.getSeconds() +
+            ' ms ' +
+            date.getMilliseconds(),
+          Sentry.Severity.Debug,
+        )
+      }
       s.reconnect()
       authPBX.auth()
     } else {
@@ -176,9 +208,29 @@ PushNotification.register(() => {
       profileStore.profiles[0].loginPressed = s.loginPressed
       profileStore.saveProfilesToLocalStorage()
     }
+    if (Platform.OS === 'ios') {
+      let date = new Date()
+      Sentry.captureMessage(
+        'init loginPressed' +
+          date.getSeconds() +
+          ' ms ' +
+          date.getMilliseconds(),
+        Sentry.Severity.Debug,
+      )
+    }
     Nav().goToPageIndex()
     AppState.addEventListener('change', () => {
       if (AppState.currentState === 'active') {
+        if (Platform.OS === 'ios') {
+          let date = new Date()
+          Sentry.captureMessage(
+            'init AppStatechange' +
+              date.getSeconds() +
+              ' ms ' +
+              date.getMilliseconds(),
+            Sentry.Severity.Debug,
+          )
+        }
         // const s = sip.phone?.getPhoneStatus()
         // console.log('phoestatt', s)
         // console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
@@ -227,6 +279,16 @@ var internetConnection = false
 var recontime
 
 const reconnectServer = () => {
+  if (Platform.OS === 'ios') {
+    let date = new Date()
+    Sentry.captureMessage(
+      'init reconnectServer' +
+        date.getSeconds() +
+        ' ms ' +
+        date.getMilliseconds(),
+      Sentry.Severity.Debug,
+    )
+  }
   const s = sip.phone?.getPhoneStatus()
   console.log('phoestatt', s)
   console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
@@ -260,12 +322,7 @@ const App = observer(() => {
       SplashScreen.hide()
     }
     LogBox.ignoreAllLogs()
-    Sentry.init({
-      dsn:
-        'https://048b2053107a4d3bb5f8d1bb69bc246c@o1134185.ingest.sentry.io/6181403',
-      tracesSampleRate: 1,
-      environment: 'development',
-    })
+
     if (!unsubscribe) {
       unsubscribe = NetInfo.addEventListener(state => interChange(state))
     }
