@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "667501459997",
+    "project_id": "qooqie-6c323",
+    "storage_bucket": "qooqie-6c323.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667501459997:android:c40a288e67830dca47a4f4",
+        "android_client_info": {
+          "package_name": "com.brekeke.phonedev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667501459997-9el365lp58mu6pkopbgn4r39h0t7ihmd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgGmbfQuAcx_j-XdlHV4H3QomWwzNwjqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667501459997-9el365lp58mu6pkopbgn4r39h0t7ihmd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

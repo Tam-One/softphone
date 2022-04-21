@@ -29,7 +29,7 @@ local.properties
 # BUCK
 buck-out/
 \.buckd/
-*.keystore
+
 
 # fastlane
 #
@@ -57,7 +57,7 @@ package-lock.json
 .env.development.local
 .env.test.local
 .env.production.local
-.env
+
 coverage
 
 # Bundle artifact
@@ -66,12 +66,7 @@ coverage
 # CocoaPods
 */Pods
 
-# Google service keys for firebase
-GoogleService-Info.plist
-google-services.json
 
-# Turn server config
-turnConfig.*
 
 # Intl output
 .babelPluginIntl.json
