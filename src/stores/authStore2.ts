@@ -130,13 +130,13 @@ export class AuthStore {
     return profileStore.getProfileData(this.currentProfile)
   }
   signIn = (id: string) => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init signIn' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init signIn' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     const profile = this.getProfile(id)
     if (!profile) {
       return false
@@ -184,43 +184,49 @@ export class AuthStore {
     profileStore.saveProfilesToLocalStorage()
   }
 
+  @action resetFailureState = () => {
+    this.pbxTotalFailure = 0
+    this.sipTotalFailure = 0
+    this.ucTotalFailure = 0
+  }
+
   @action reconnect = () => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init reconnect' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init reconnect' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     this.pbxTotalFailure = 0
     this.sipTotalFailure = 0
     this.ucTotalFailure = 0
   }
   @action reconnectPbx = () => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init reconnectPbx' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init reconnectPbx' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     this.reconnect()
     this.pbxState = 'stopped'
   }
   @action reconnectSip = () => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init reconnectSip' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init reconnectSip' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     console.error('SIP PN debug: set sipState stopped reconnect')
     this.reconnect()
     this.sipState = 'stopped'
@@ -304,16 +310,16 @@ export class AuthStore {
   )
 
   signInByNotification = async (n: ParsedPn) => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init pushnotification' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init pushnotification' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     console.error('SIP PN debug: signInByNotification')
     this.sipPn = n.sipPn
     this.reconnect()

@@ -29,6 +29,8 @@ const VideoCallRequest: FC<{
   let videoRequestTimeout
   const [showVideoPopup, setShowVideoPopup] = useState(showVideo)
 
+  const [switchComponent, setSwitchComponent] = useState(false)
+
   useEffect(() => {
     setShowVideoPopup(showVideo)
   }, [showVideo])
@@ -52,6 +54,11 @@ const VideoCallRequest: FC<{
 
   if (!answered) {
     return null
+  }
+  if (!localVideoEnabled && remoteVideoEnabled) {
+    setTimeout(() => {
+      setSwitchComponent(true)
+    }, 1000)
   }
 
   return (
@@ -86,12 +93,13 @@ const VideoCallRequest: FC<{
         <></>
       )}
 
-      {!localVideoEnabled && remoteVideoEnabled ? (
+      {switchComponent && (
         <View style={styles.videoCallPopupContainer}>
           <VideoPopup
             header={CustomStrings.RequestToSwitchVideo}
             showOk={true}
             onOkPress={() => {
+              // alert('ok')
               if (videoCallOn) {
                 videoCallOn()
               }
@@ -100,8 +108,6 @@ const VideoCallRequest: FC<{
             onCancel={() => disableVideo(true)}
           ></VideoPopup>
         </View>
-      ) : (
-        <></>
       )}
 
       {responseMessage ? (

@@ -33,9 +33,11 @@ class CallNotify extends React.Component {
     if (partyName && partyName !== partyNumber && !callerName) {
       this.setState({ callerName: partyName, callerNumber: partyNumber })
     } else if (partyNumber && !callerName) {
-      contactStore.getPartyName(partyNumber, (value: String) =>
-        this.setState({ callerName: value, callerNumber: partyNumber }),
-      )
+      setTimeout(() => {
+        contactStore.getPartyName(partyNumber, (value: String) =>
+          this.setState({ callerName: value, callerNumber: partyNumber }),
+        )
+      }, 1000)
     }
   }
 
@@ -50,6 +52,15 @@ class CallNotify extends React.Component {
     const { partyName, partyNumber, hangup, answer } = callStoreInfo
     const callerNumber = partyNumber
     const isUserCalling = !callerNumber.includes('+')
+    var test =
+      callerNumber +
+      ' a ' +
+      callerName +
+      ' b ' +
+      partyName +
+      ' c ' +
+      partyNumber
+    // alert(test)
     this.fetchPartyName(partyName, partyNumber)
 
     return (

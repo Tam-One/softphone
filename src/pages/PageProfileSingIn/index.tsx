@@ -32,13 +32,13 @@ import {
 import useStore from '@/utils/useStore'
 
 const PageProfileSignIn = () => {
-  if (Platform.OS === 'ios') {
-    let date = new Date()
-    Sentry.captureMessage(
-      'init PageProfileSignIn' + date,
-      Sentry.Severity.Debug,
-    )
-  }
+  // if (Platform.OS === 'ios') {
+  //   let date = new Date()
+  //   Sentry.captureMessage(
+  //     'init PageProfileSignIn' + date,
+  //     Sentry.Severity.Debug,
+  //   )
+  // }
   const [fieldErrors, setFieldErrors] = useState({})
   const [passwordView, setPasswordView] = useState(false)
 

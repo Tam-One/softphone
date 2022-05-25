@@ -18,16 +18,16 @@ export class PBX extends EventEmitter {
       // TODO
       return
     }
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init pbbx connect connect  completed' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init pbbx connect connect  completed' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
 
     this.pbxConfig = undefined
 
@@ -46,16 +46,16 @@ export class PBX extends EventEmitter {
       phonetype: 'webphone',
     })
     this.client = client
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init pbbx connect connect  client fetched' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init pbbx connect connect  client fetched' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
 
     client._pal = (((method: keyof Pbx, params?: object) => {
       return new Promise((resolve, reject) => {
@@ -81,16 +81,16 @@ export class PBX extends EventEmitter {
       }),
       new Promise((resolve, reject) => {
         client.login(() => {
-          if (Platform.OS === 'ios') {
-            let date = new Date()
-            Sentry.captureMessage(
-              'init pbbx connect connect  client login completed' +
-                date.getSeconds() +
-                ' ms ' +
-                date.getMilliseconds(),
-              Sentry.Severity.Debug,
-            )
-          }
+          // if (Platform.OS === 'ios') {
+          //   let date = new Date()
+          //   Sentry.captureMessage(
+          //     'init pbbx connect connect  client login completed' +
+          //       date.getSeconds() +
+          //       ' ms ' +
+          //       date.getMilliseconds(),
+          //     Sentry.Severity.Debug,
+          //   )
+          // }
 
           resolve(undefined)
         }, reject)

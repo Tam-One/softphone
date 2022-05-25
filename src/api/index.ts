@@ -68,16 +68,16 @@ class Api {
       if (getAuthStore().isSignInByNotification) {
         return
       }
-      if (Platform.OS === 'ios') {
-        let date = new Date()
-        Sentry.captureMessage(
-          'init onPBXConnectionStarted' +
-            date.getSeconds() +
-            ' ms ' +
-            date.getMilliseconds(),
-          Sentry.Severity.Debug,
-        )
-      }
+      // if (Platform.OS === 'ios') {
+      //   let date = new Date()
+      //   Sentry.captureMessage(
+      //     'init onPBXConnectionStarted' +
+      //       date.getSeconds() +
+      //       ' ms ' +
+      //       date.getMilliseconds(),
+      //     Sentry.Severity.Debug,
+      //   )
+      // }
       SyncPnToken()
         .sync(getAuthStore().currentProfile)
         .then(() => SyncPnToken().syncForAllAccounts())
@@ -148,33 +148,33 @@ class Api {
         })
       }
     }
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init onSIPSessionStarted' +
-          call +
-          ' ' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init onSIPSessionStarted' +
+    //       call +
+    //       ' ' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     callStore.upsertCall(call)
   }
   onSIPSessionUpdated = (call: Call) => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init onSIPSessionUpdated' +
-          call +
-          ' ' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init onSIPSessionUpdated' +
+    //       call +
+    //       ' ' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     callStore.upsertCall(call)
   }
   onSIPSessionStopped = (id: string) => {

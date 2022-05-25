@@ -33,16 +33,16 @@ const sipCreateMediaConstraints = (sourceId?: string) => {
 export class SIP extends EventEmitter {
   phone: Sip = null!
   init = async (loginOptions: SipLoginOption) => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init connect sip init' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init connect sip init' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     const sourceId = await getFrontCameraSourceId()
     const { dtmfSendMode } = loginOptions
     const phone = new window.Brekeke.WebrtcClient.Phone({
@@ -72,18 +72,18 @@ export class SIP extends EventEmitter {
         return
       }
       const { phoneStatus } = event
-      if (Platform.OS === 'ios') {
-        let date = new Date()
-        Sentry.captureMessage(
-          'init connectionEvent sip phoneStatusChanged' +
-            phoneStatus +
-            ' ' +
-            date.getSeconds() +
-            ' ms ' +
-            date.getMilliseconds(),
-          Sentry.Severity.Debug,
-        )
-      }
+      // if (Platform.OS === 'ios') {
+      //   let date = new Date()
+      //   Sentry.captureMessage(
+      //     'init connectionEvent sip phoneStatusChanged' +
+      //       phoneStatus +
+      //       ' ' +
+      //       date.getSeconds() +
+      //       ' ms ' +
+      //       date.getMilliseconds(),
+      //     Sentry.Severity.Debug,
+      //   )
+      // }
       if (phoneStatus === 'started') {
         return this.emit('connection-started')
       }
@@ -262,29 +262,29 @@ export class SIP extends EventEmitter {
       console.error('sip.phone.rtcErrorOccurred:', event) // TODO
     })
 
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init connect sip init completed' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init connect sip init completed' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
   }
 
   connect = async (sipLoginOption: SipLoginOption) => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init connect sip' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init connect sip' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     this.disconnect()
     await this.init(sipLoginOption)
     const platformConfig = {
@@ -344,16 +344,16 @@ export class SIP extends EventEmitter {
     console.log('oj', oj)
     this.phone.startWebRTC(oj)
 
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init connect sip startWebRTC completed' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init connect sip startWebRTC completed' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
 
     console.error('SIP PN debug: added listener on _ua')
 
@@ -381,16 +381,16 @@ export class SIP extends EventEmitter {
       },
     )
 
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init connect completed' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init connect completed' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
   }
 
   disconnect = () => {

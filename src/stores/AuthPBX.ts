@@ -27,16 +27,16 @@ class AuthPBX {
   private authWithCheck = () => {
     // alert('taggy :: AuthPBX.authWithCheck')
     // alert('taggy :: AuthPBX.authWithCheck ')
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init pbbx  authWithCheck' +
-          date.getSeconds() +
-          ' ms ' +
-          date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init pbbx  authWithCheck' +
+    //       date.getSeconds() +
+    //       ' ms ' +
+    //       date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     console.log('authwithcheckpbx', getAuthStore().pbxShouldAuth)
     if (!getAuthStore().pbxShouldAuth) {
       return
@@ -46,16 +46,16 @@ class AuthPBX {
     pbx
       .connect(getAuthStore().currentProfile)
       .then(() => {
-        if (Platform.OS === 'ios') {
-          let date = new Date()
-          Sentry.captureMessage(
-            'init pbbx  authWithCheck connect completed' +
-              date.getSeconds() +
-              ' ms ' +
-              date.getMilliseconds(),
-            Sentry.Severity.Debug,
-          )
-        }
+        // if (Platform.OS === 'ios') {
+        //   let date = new Date()
+        //   Sentry.captureMessage(
+        //     'init pbbx  authWithCheck connect completed' +
+        //       date.getSeconds() +
+        //       ' ms ' +
+        //       date.getMilliseconds(),
+        //     Sentry.Severity.Debug,
+        //   )
+        // }
         getAuthStore().pbxState = 'success'
         console.log('pbc then')
         const authSIP = new AuthSIP()

@@ -56,13 +56,13 @@ export default class Call {
   }
 
   hangup = () => {
-    if (Platform.OS === 'ios') {
-      let date = new Date()
-      Sentry.captureMessage(
-        'init hangup' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
-        Sentry.Severity.Debug,
-      )
-    }
+    // if (Platform.OS === 'ios') {
+    //   let date = new Date()
+    //   Sentry.captureMessage(
+    //     'init hangup' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
+    //     Sentry.Severity.Debug,
+    //   )
+    // }
     sip.hangupSession(this.id)
     this.store.endCallKeep(this)
   }

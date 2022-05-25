@@ -14,16 +14,16 @@ const syncPnTokenWithoutCatch = async (
   p: Profile,
   { pbx, noUpsert }: Pick<SyncPnTokenOption, 'pbx' | 'noUpsert'>,
 ) => {
-  if (Platform.OS === 'ios') {
-    let date = new Date()
-    Sentry.captureMessage(
-      'init pbbx syncPnTokenWithoutCatch' +
-        date.getSeconds() +
-        ' ms ' +
-        date.getMilliseconds(),
-      Sentry.Severity.Debug,
-    )
-  }
+  // if (Platform.OS === 'ios') {
+  //   let date = new Date()
+  //   Sentry.captureMessage(
+  //     'init pbbx syncPnTokenWithoutCatch' +
+  //       date.getSeconds() +
+  //       ' ms ' +
+  //       date.getMilliseconds(),
+  //     Sentry.Severity.Debug,
+  //   )
+  // }
   if (Platform.OS === 'web') {
     console.error('PN sync debug: invalid platform')
     return
@@ -37,16 +37,16 @@ const syncPnTokenWithoutCatch = async (
 
   pbx = pbx || new PBX()
   await pbx.connect(p)
-  if (Platform.OS === 'ios') {
-    let date = new Date()
-    Sentry.captureMessage(
-      'init pbx syncPnTokenWithoutCatch connnect completed' +
-        date.getSeconds() +
-        ' ms ' +
-        date.getMilliseconds(),
-      Sentry.Severity.Debug,
-    )
-  }
+  // if (Platform.OS === 'ios') {
+  //   let date = new Date()
+  //   Sentry.captureMessage(
+  //     'init pbx syncPnTokenWithoutCatch connnect completed' +
+  //       date.getSeconds() +
+  //       ' ms ' +
+  //       date.getMilliseconds(),
+  //     Sentry.Severity.Debug,
+  //   )
+  // }
   const webPhone = await updatePhoneIndexWithoutCatch(p, pbx)
   if (!webPhone) {
     console.error('PN sync debug: can not find webphone')
@@ -83,16 +83,16 @@ const syncPnTokenWithoutCatch = async (
     } PN for account ${p.pbxUsername}`,
   )
 
-  if (Platform.OS === 'ios') {
-    let date = new Date()
-    Sentry.captureMessage(
-      'init pbx syncPnTokenWithoutCatch fn started' +
-        date.getSeconds() +
-        ' ms ' +
-        date.getMilliseconds(),
-      Sentry.Severity.Debug,
-    )
-  }
+  // if (Platform.OS === 'ios') {
+  //   let date = new Date()
+  //   Sentry.captureMessage(
+  //     'init pbx syncPnTokenWithoutCatch fn started' +
+  //       date.getSeconds() +
+  //       ' ms ' +
+  //       date.getMilliseconds(),
+  //     Sentry.Severity.Debug,
+  //   )
+  // }
 
   if (t) {
     await fn({
@@ -108,16 +108,16 @@ const syncPnTokenWithoutCatch = async (
     })
   }
 
-  if (Platform.OS === 'ios') {
-    let date = new Date()
-    Sentry.captureMessage(
-      'init pbx syncPnTokenWithoutCatch fnn completed' +
-        date.getSeconds() +
-        ' ms ' +
-        date.getMilliseconds(),
-      Sentry.Severity.Debug,
-    )
-  }
+  // if (Platform.OS === 'ios') {
+  //   let date = new Date()
+  //   Sentry.captureMessage(
+  //     'init pbx syncPnTokenWithoutCatch fnn completed' +
+  //       date.getSeconds() +
+  //       ' ms ' +
+  //       date.getMilliseconds(),
+  //     Sentry.Severity.Debug,
+  //   )
+  // }
 
   pbx.disconnect()
 

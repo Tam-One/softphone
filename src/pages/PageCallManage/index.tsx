@@ -389,6 +389,20 @@ class PageCallManage extends React.Component<{
   renderVideo = (currentCall: Call) => {
     const { remoteVideoStreamObject, localVideoStreamObject } = currentCall
     const { hideVideoButtons } = this.state
+    if (Platform.OS === 'android') {
+      console.log(
+        remoteVideoStreamObject,
+        localVideoStreamObject,
+        'remoteVideoStreamObject',
+      )
+    }
+    if (Platform.OS === 'ios') {
+      console.log(
+        remoteVideoStreamObject,
+        localVideoStreamObject,
+        'ios remoteVideoStreamObject',
+      )
+    }
 
     return (
       <TouchableOpacity
@@ -549,8 +563,7 @@ class PageCallManage extends React.Component<{
     const currentCall: any = callStore.currentCall || {}
     const { remoteVideoEnabled, localVideoEnabled, transferring } = currentCall
     const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
-    console.log(Platform.OS)
-    console.log(currentCall)
+    console.log(Platform.OS, currentCall)
     if (isVideoEnabled) {
       clearTimeout(this.videoRequestTimeout)
       this.videoRequestTimeout = null

@@ -100,15 +100,60 @@ static void InitializeFlipper(UIApplication *application) {
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
   NSLog(@"akkil sourceURLForBridge");
 
-#if DEBUG
-  return
-      [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"
-                                                     fallbackResource:nil];
-#else
+// #if DEBUG
+//   return
+//       [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"
+//                                                      fallbackResource:nil];
+// #else
   return [[NSBundle mainBundle] URLForResource:@"main"
                                  withExtension:@"jsbundle"];
-#endif
+// #endif
 }
+
+
+
+
+// Required for the register event.
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+ [RNCPushNotificationIOS didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+// Required for the notification event. You must call the completion handler after handling the remote notification.
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+  [RNCPushNotificationIOS didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+}
+// Required for the registrationError event.
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+ [RNCPushNotificationIOS didFailToRegisterForRemoteNotificationsWithError:error];
+}
+// Required for localNotification event
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)(void))completionHandler
+{
+  [RNCPushNotificationIOS didReceiveNotificationResponse:response];
+}
+
+// - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+// {
+//   // Define UNUserNotificationCenter
+//   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//   center.delegate = self;
+
+//   return YES;
+// }
+
+//Called when a notification is delivered to a foreground app.
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+  completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge);
+}
+
+
+
 
 // Deep links
 - (BOOL)application:(UIApplication *)application
@@ -223,24 +268,24 @@ static void InitializeFlipper(UIApplication *application) {
 
   // NSString *handle = payload.dictionaryPayload[@"callerNum"];
 
-  NSTimeInterval delayInSeconds = 6.0;
-  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-    NSLog(@"Do some work");
-    [RNCallKeep reportNewIncomingCall:uuid
-                             handle:@"Qooqie Phone"
-                         handleType:@"generic"
-                           hasVideo:false
-                localizedCallerName: payload.dictionaryPayload[@"x_from"]
-                    supportsHolding:YES
-                       supportsDTMF:YES
-                   supportsGrouping:NO
-                 supportsUngrouping:NO
-                        fromPushKit:YES
-                            payload:payload.dictionaryPayload
-              withCompletionHandler:completion
-              ];
-  });
+  // NSTimeInterval delayInSeconds = 6.0;
+  // dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+  // dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+  //   NSLog(@"Do some work");
+    // [RNCallKeep reportNewIncomingCall:uuid
+    //                          handle:@"Qooqie Phone"
+    //                      handleType:@"generic"
+    //                        hasVideo:false
+    //             localizedCallerName: payload.dictionaryPayload[@"x_from"]
+    //                 supportsHolding:YES
+    //                    supportsDTMF:YES
+    //                supportsGrouping:NO
+    //              supportsUngrouping:NO
+    //                     fromPushKit:YES
+    //                         payload:payload.dictionaryPayload
+    //           withCompletionHandler:completion
+    //           ];
+  // });
 
   
     }
@@ -257,35 +302,35 @@ static void InitializeFlipper(UIApplication *application) {
   [RNCPushNotificationIOS
       didRegisterUserNotificationSettings:notificationSettings];
 }
-- (void)application:(UIApplication *)application
-    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-  NSLog(@"akkil didRegisterForRemoteNotificationsWithDeviceToken");
+// - (void)application:(UIApplication *)application
+//     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+//   NSLog(@"akkil didRegisterForRemoteNotificationsWithDeviceToken");
 
-  [RNCPushNotificationIOS
-      didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
-}
-- (void)application:(UIApplication *)application
-    didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-  NSLog(@"akkil didFailToRegisterForRemoteNotificationsWithError");
+//   [RNCPushNotificationIOS
+//       didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+// }
+// - (void)application:(UIApplication *)application
+//     didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+//   NSLog(@"akkil didFailToRegisterForRemoteNotificationsWithError");
 
-  [RNCPushNotificationIOS
-      didFailToRegisterForRemoteNotificationsWithError:error];
-}
-- (void)application:(UIApplication *)application
-    didReceiveRemoteNotification:(NSDictionary *)userInfo
-          fetchCompletionHandler:
-              (void (^)(UIBackgroundFetchResult))completionHandler {
-  NSLog(@"akkil didReceiveRemoteNotification");
+//   [RNCPushNotificationIOS
+//       didFailToRegisterForRemoteNotificationsWithError:error];
+// }
+// - (void)application:(UIApplication *)application
+//     didReceiveRemoteNotification:(NSDictionary *)userInfo
+//           fetchCompletionHandler:
+//               (void (^)(UIBackgroundFetchResult))completionHandler {
+//   NSLog(@"akkil didReceiveRemoteNotification");
 
-  [RNCPushNotificationIOS
-      didReceiveRemoteNotification:userInfo
-            fetchCompletionHandler:^void(UIBackgroundFetchResult result){
-                // Empty handler to fix `There is no completion handler with
-                // notification id` error
-            }];
-  completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert |
-                    UNAuthorizationOptionBadge);
-}
+//   [RNCPushNotificationIOS
+//       didReceiveRemoteNotification:userInfo
+//             fetchCompletionHandler:^void(UIBackgroundFetchResult result){
+//                 // Empty handler to fix `There is no completion handler with
+//                 // notification id` error
+//             }];
+//   completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert |
+//                     UNAuthorizationOptionBadge);
+// }
 - (void)application:(UIApplication *)application
     didReceiveLocalNotification:(UILocalNotification *)notification {
   NSLog(@"akkil didReceiveLocalNotification");
@@ -293,31 +338,31 @@ static void InitializeFlipper(UIApplication *application) {
   [RNCPushNotificationIOS didReceiveLocalNotification:notification];
 }
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center
-    didReceiveNotificationResponse:(UNNotificationResponse *)response
-             withCompletionHandler:(void (^)(void))completionHandler {
-  NSLog(@"akkil didReceiveNotificationResponse");
+// - (void)userNotificationCenter:(UNUserNotificationCenter *)center
+//     didReceiveNotificationResponse:(UNNotificationResponse *)response
+//              withCompletionHandler:(void (^)(void))completionHandler {
+//   NSLog(@"akkil didReceiveNotificationResponse");
 
-  [RNCPushNotificationIOS didReceiveNotificationResponse:response];
-  completionHandler();
-}
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center
-       willPresentNotification:(UNNotification *)notification
-         withCompletionHandler:
-             (void (^)(UNNotificationPresentationOptions options))
-                 completionHandler {
-  NSDictionary *userInfo = notification.request.content.userInfo;
-  [RNCPushNotificationIOS
-      didReceiveRemoteNotification:userInfo
-            fetchCompletionHandler:^void(UIBackgroundFetchResult result){
-                // Empty handler to fix `There is no completion handler with
-                // notification id` error
-            }];
-  completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert |
-                    UNAuthorizationOptionBadge);
-  NSLog(@"akkil willPresentNotification");
+//   [RNCPushNotificationIOS didReceiveNotificationResponse:response];
+//   completionHandler();
+// }
+// - (void)userNotificationCenter:(UNUserNotificationCenter *)center
+//        willPresentNotification:(UNNotification *)notification
+//          withCompletionHandler:
+//              (void (^)(UNNotificationPresentationOptions options))
+//                  completionHandler {
+//   NSDictionary *userInfo = notification.request.content.userInfo;
+//   [RNCPushNotificationIOS
+//       didReceiveRemoteNotification:userInfo
+//             fetchCompletionHandler:^void(UIBackgroundFetchResult result){
+//                 // Empty handler to fix `There is no completion handler with
+//                 // notification id` error
+//             }];
+//   completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert |
+//                     UNAuthorizationOptionBadge);
+//   NSLog(@"akkil willPresentNotification");
 
-}
+// }
 
 - (void)callObserver:(CXCallObserver *)callObserver callChanged:(CXCall *)call{
   NSLog (@"[CallObserver] event from call with UUID: %@", call.UUID);
