@@ -1,5 +1,4 @@
 import NetInfo from '@react-native-community/netinfo'
-import * as Sentry from '@sentry/react-native'
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
 import { Platform } from 'react-native'

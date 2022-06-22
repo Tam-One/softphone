@@ -190,10 +190,11 @@ class DebugStore {
     })
       .then(this.saveRemoteVersionToStorage)
       .catch((err: Error) => {
-        RnAlert.error({
-          message: intlDebug`Failed to get app version from app store`,
-          err,
-        })
+        // RnAlert.error({
+        //   message: intlDebug`Failed to get app version from app store`,
+        //   err,
+        // })
+        console.log('Failed to get app version from app store')
         this.isCheckingForUpdate = false
       })
   }

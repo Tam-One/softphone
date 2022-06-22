@@ -24,6 +24,7 @@
 // #import <CallKit/CXCallObserver.h>
 // #import <CallKit/CXCall.h>
 #import <React/RCTLog.h>
+#import <UserNotifications/UserNotifications.h>
 
 
 
@@ -55,6 +56,18 @@ static void InitializeFlipper(UIApplication *application) {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
+  
+//       UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+//       center.delegate = self;
+//       [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+// //          if(!error){
+// //              [[UIApplication sharedApplication] registerForRemoteNotifications];
+// //          }
+//       }];
+  
+
+
+
 
 //    CXCallObserver *callObserver = [[CXCallObserver alloc] init];
 //    [callObserver setDelegate:self queue:nil];
@@ -86,9 +99,9 @@ static void InitializeFlipper(UIApplication *application) {
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
-  UNUserNotificationCenter *center =
-      [UNUserNotificationCenter currentNotificationCenter];
-  center.delegate = self;
+ UNUserNotificationCenter *center =
+     [UNUserNotificationCenter currentNotificationCenter];
+ center.delegate = self;
 
   [RNSplashScreen show];
 
@@ -109,6 +122,39 @@ static void InitializeFlipper(UIApplication *application) {
                                  withExtension:@"jsbundle"];
 // #endif
 }
+
+
+// -(void)setupNotification:(PKPushPayload *)payload {
+//    NSLog(@"akkil continueUserActivity");
+//        NSLog(@"akkil pay payload %@", payload);
+
+//        NSLog(@"akkil pay payload %@", payload.dictionaryPayload);
+//         UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+//         content.title = [NSString localizedUserNotificationStringForKey:@"Qooqie Phone:" arguments:nil];
+//         content.body = [NSString localizedUserNotificationStringForKey:payload.dictionaryPayload[@"x_title"]
+//                                                              arguments:nil];
+
+//         content.sound = [UNNotificationSound defaultSound];
+
+
+//         UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger
+//                                                       triggerWithTimeInterval:5
+//                                                       repeats:NO];
+
+
+//         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:@"NOTIFICATION"
+//                                                                               content:content
+//                                                                               trigger:trigger];
+
+
+//         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+
+//         [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+//             if (!error) {
+//                 NSLog(@"success");
+//             }
+//         }];
+//     }
 
 
 
@@ -134,6 +180,19 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 didReceiveNotificationResponse:(UNNotificationResponse *)response
          withCompletionHandler:(void (^)(void))completionHandler
 {
+//      [RNCallKeep reportNewIncomingCall:uuid
+//                               handle:@"Qooqie Phone"
+//                           handleType:@"generic"
+//                             hasVideo:false
+//                  localizedCallerName: @""
+//                      supportsHolding:YES
+//                         supportsDTMF:YES
+//                     supportsGrouping:NO
+//                   supportsUngrouping:NO
+//                          fromPushKit:YES
+//                              payload:
+//                withCompletionHandler:completion
+//                ];
   [RNCPushNotificationIOS didReceiveNotificationResponse:response];
 }
 
@@ -222,8 +281,8 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
   //   return [RNCallKeep endCallWithUUID: uuid reason:YES];
   // }
 
-   if (state != UIApplicationStateActive)
-   {
+  if (state != UIApplicationStateActive)
+  {
 
  
 
@@ -272,23 +331,22 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
   // dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
   // dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
   //   NSLog(@"Do some work");
-    // [RNCallKeep reportNewIncomingCall:uuid
-    //                          handle:@"Qooqie Phone"
-    //                      handleType:@"generic"
-    //                        hasVideo:false
-    //             localizedCallerName: payload.dictionaryPayload[@"x_from"]
-    //                 supportsHolding:YES
-    //                    supportsDTMF:YES
-    //                supportsGrouping:NO
-    //              supportsUngrouping:NO
-    //                     fromPushKit:YES
-    //                         payload:payload.dictionaryPayload
-    //           withCompletionHandler:completion
-    //           ];
+    [RNCallKeep reportNewIncomingCall:uuid
+                             handle:@"Qooqie Phone"
+                         handleType:@"generic"
+                           hasVideo:false
+                localizedCallerName: payload.dictionaryPayload[@"x_from"]
+                    supportsHolding:YES
+                       supportsDTMF:YES
+                   supportsGrouping:NO
+                 supportsUngrouping:NO
+                        fromPushKit:YES
+                            payload:payload.dictionaryPayload
+              withCompletionHandler:completion
+              ];
   // });
-
   
-    }
+   }
   // --- don't need to call this if we do on the js side
   // --- already add completion in above reportNewIncomingCall
   // completion();

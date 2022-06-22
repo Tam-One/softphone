@@ -261,7 +261,7 @@ class PageChatDetail extends React.Component<{
       .catch((err: Error) => {
         RnAlert.error({
           message: intlDebug`Failed to get recent chats`,
-          err,
+          // err,
         })
       })
       .then(() => {
@@ -286,7 +286,7 @@ class PageChatDetail extends React.Component<{
       .catch((err: Error) => {
         RnAlert.error({
           message: intlDebug`Failed to get more chats`,
-          err,
+          // err,
         })
       })
       .then(() => {

@@ -1,7 +1,7 @@
 {
   "name": "qooqiephone",
   "productName": "Qooqie Phone",
-  "version": "4.1.2",
+  "version": "6.0.0",
   "private": true,
   "homepage": "./",
   "main": "electron/main.ts",
@@ -24,7 +24,8 @@
           "hardened-runtime": true,
           "entitlements": "entitlements.plist",
           "entitlements-inherit": "entitlements.plist",
-          "signature-flags": "library"
+          "signature-flags": "library",
+          "gatekeeper-assess": false
         },
         "osxNotarize": {
           "appleId": "richard@qooqie.com",
@@ -139,6 +140,7 @@
     "react-native": "0.64.0",
     "react-native-background-timer": "^2.4.1",
     "react-native-callkeep": "github:brekekesoftware/react-native-callkeep#9eff8243ba88df5c38474675eabbe75e0623458e",
+    "react-native-contacts": "^7.0.4",
     "react-native-document-picker": "4.3.0",
     "react-native-dotenv": "2.5.5",
     "react-native-dropdown-picker": "^5.2.3",

@@ -1,6 +1,11 @@
 import { mdiBriefcase, mdiCellphone, mdiHome, mdiPhone } from '@mdi/js'
-import React, { FC } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import React, { FC, useState } from 'react'
+import {
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
 
 import CustomHeader from '@/components/CustomHeader'
@@ -12,6 +17,7 @@ import contactStore, { Phonebook2 } from '@/stores/contactStore'
 import Nav from '@/stores/Nav'
 import RnPicker from '@/stores/RnPicker'
 import CustomColors from '@/utils/CustomColors'
+import CustomValues from '@/utils/CustomValues'
 
 const InputBox: FC<{
   label: string
@@ -98,7 +104,8 @@ const onCallPress = (user: Phonebook2, number: string) => {
 }
 
 const PageViewContact = ({ contact }) => {
-  console.log(JSON.stringify(contact))
+  console.log(JSON.stringify(contact), '2')
+  const isPhoneContact = contact.isPhoneContact
 
   const {
     id,
@@ -116,7 +123,7 @@ const PageViewContact = ({ contact }) => {
     loaded,
     address,
     email,
-  } = contactStore.getPhonebook(contact.id)
+  } = isPhoneContact ? contact : contactStore.getPhonebook(contact.id)
 
   const phoneNumber = cellNumber || workNumber || homeNumber
 
@@ -136,6 +143,7 @@ const PageViewContact = ({ contact }) => {
             : undefined
         }
         rightButtonText={'Edit'}
+        disableRightButton={isPhoneContact}
         backContainerStyle={styles.backButtonContainer}
       ></CustomHeader>
       <ScrollView style={styles.scrollViewContainer}>

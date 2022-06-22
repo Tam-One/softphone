@@ -24,7 +24,7 @@ const getFrontCameraSourceId = async () => {
     .catch((err: Error) => {
       RnAlert.error({
         message: intlDebug`Failed to get front camera information`,
-        err,
+        // err,
       })
       return undefined
     })

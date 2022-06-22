@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react-native'
 import { action, computed, observable } from 'mobx'
 import { Platform } from 'react-native'
 import RNCallKeep from 'react-native-callkeep'

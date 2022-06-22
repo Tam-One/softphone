@@ -26,6 +26,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <application
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
@@ -64,7 +67,9 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <receiver android:name="com.evollu.react.fcm.FIRLocalMessagingPublisher" />
+        <receiver
+      android:name="com.evollu.react.fcm.FIRLocalMessagingPublisher"
+    />
         <receiver
       android:name="com.evollu.react.fcm.FIRSystemBootEventReceiver"
       android:enabled="true"
@@ -72,8 +77,12 @@
     >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action
+          android:name="android.intent.action.QUICKBOOT_POWERON"
+        />
+                <action
+          android:name="com.htc.intent.action.QUICKBOOT_POWERON"
+        />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -97,7 +106,8 @@
         <activity
       android:name=".SplashActivity"
       android:theme="@style/SplashTheme"
-      android:label="@string/app_name">
+      android:label="@string/app_name"
+    >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

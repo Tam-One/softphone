@@ -1,7 +1,7 @@
 import 'brekekejs/lib/jsonrpc'
 import 'brekekejs/lib/pal'
 
-import * as Sentry from '@sentry/react-native'
+// import * as Sentry from '@sentry/react-native'
 import EventEmitter from 'eventemitter3'
 import { Platform } from 'react-native'
 

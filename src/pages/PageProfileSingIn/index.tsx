@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react-native'
 import { cloneDeep } from 'lodash'
 import get from 'lodash/get'
 import React, { FC, useEffect, useState } from 'react'

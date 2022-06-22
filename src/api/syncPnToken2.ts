@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/react-native'
+// import * as Sentry from '@sentry/react-native'
 import { Platform } from 'react-native'
 
 import { intlDebug } from '../stores/intl'

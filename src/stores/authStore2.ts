@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/react-native'
 import debounce from 'lodash/debounce'
 import { action, computed, observable } from 'mobx'
 import { AppState, Platform } from 'react-native'

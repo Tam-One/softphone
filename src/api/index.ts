@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/react-native'
+// import * as Sentry from '@sentry/react-native'
 import { action } from 'mobx'
 import { Platform } from 'react-native'
 

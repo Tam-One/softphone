@@ -69,37 +69,37 @@ const PushNotification = {
       initApp()
       //
       Voip.addEventListener('register', onVoipToken)
-      Voip.addEventListener('notification', (n: PN) =>
-        onNotification(n, initApp),
-      )
-      Voip.addEventListener(
-        'didLoadWithEvents',
-        (e: { name: string; data: PN }[]) => {
-          if (!e?.length) {
-            return
-          }
-          e.forEach(({ name, data }) => {
-            if (name === Voip.RNVoipPushRemoteNotificationsRegisteredEvent) {
-              if (typeof data === 'string') {
-                onVoipToken(data)
-              }
-            } else if (
-              name === Voip.RNVoipPushRemoteNotificationReceivedEvent
-            ) {
-              onNotification(data, initApp)
-            }
-          })
-        },
-      )
+      // Voip.addEventListener('notification', (n: PN) =>
+      //   onNotification(n, initApp),
+      // )
+      // Voip.addEventListener(
+      //   'didLoadWithEvents',
+      //   (e: { name: string; data: PN }[]) => {
+      //     if (!e?.length) {
+      //       return
+      //     }
+      //     e.forEach(({ name, data }) => {
+      //       if (name === Voip.RNVoipPushRemoteNotificationsRegisteredEvent) {
+      //         if (typeof data === 'string') {
+      //           onVoipToken(data)
+      //         }
+      //       } else if (
+      //         name === Voip.RNVoipPushRemoteNotificationReceivedEvent
+      //       ) {
+      //         onNotification(data, initApp)
+      //       }
+      //     })
+      //   },
+      // )
       Voip.registerVoipToken()
       //
-      PushNotificationIOS.addEventListener('register', onToken)
-      PushNotificationIOS.addEventListener('notification', (n: PN) =>
-        onNotification(n, initApp),
-      )
-      PushNotificationIOS.addEventListener('localNotification', (n: PN) =>
-        onNotification(n, initApp, true),
-      )
+      // PushNotificationIOS.addEventListener('register', onToken)
+      // PushNotificationIOS.addEventListener('notification', (n: PN) =>
+      //   onNotification(n, initApp),
+      // )
+      // PushNotificationIOS.addEventListener('localNotification', (n: PN) =>
+      //   onNotification(n, initApp, true),
+      // )
 
       //
       // const n0 = await PushNotificationIOS.getInitialNotification()
