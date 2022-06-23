@@ -1,21 +1,16 @@
-import { mdiMagnify, mdiPlusCircle } from '@mdi/js'
+import { mdiMagnify } from '@mdi/js'
 import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'
 import React from 'react'
 import {
   ActivityIndicator,
-  Alert,
   FlatList,
-  Linking,
-  PermissionsAndroid,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
 import Contacts from 'react-native-contacts'
-
-import CustomValues from '@/utils/CustomValues'
 
 import pbx from '../../api/pbx'
 import UserItem from '../../components/ContactUserItem'
@@ -44,7 +39,6 @@ class PageContactPhonebook extends React.Component {
         return
       }
       contactStore.loadContactsFirstTime()
-      // this.fetchPhoneContacts()
       BackgroundTimer.clearInterval(id)
     }, 1000)
     setTimeout(() => {
@@ -52,115 +46,12 @@ class PageContactPhonebook extends React.Component {
     }, 1)
   }
 
-  // fetchPhoneContacts = () => {
-  //   // PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
-  //   //   title: "Contacts",
-  //   //   message: "This app would like to view your contacts.",
-
-  //   // }).then(() => {
-  //   //   Contacts.getAll((err, contacts) => {
-  //   //     if (err === "denied") {
-  //   //       // error
-  //   //     } else {
-  //   //       console.log(contacts[0]);
-  //   //     }
-  //   //   });
-  //   // });
-
-  //   // Contacts.checkPermission().then(res => {
-  //   //   if (res === 'authorized') {
-  //   //     this.getContacts()
-  //   //   } else if (res === 'denied') {
-  //   //     Alert.alert('AppName', 'You have to give permission to get contacts ', [
-  //   //       {
-  //   //         text: 'Cancel',
-  //   //         onPress: () => console.log('Cancel Pressed'),
-  //   //         style: 'cancel',
-  //   //       },
-  //   //       { text: 'Allow', onPress: () => Linking.openSettings() },
-  //   //     ])
-  //   //   }
-  //   // })
-
-  //   PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
-  //     title: 'Contacts',
-  //     message: 'This app would like to view your contacts.',
-  //     buttonPositive: 'Please accept bare mortal',
-  //   }).then(() => {
-  //     Contacts.getAll()
-  //       .then(contacts => {
-  //         let phoneContacts: Phonebook2[] = []
-  //         const numberKey = ['workNumber', 'cellNumber', 'homeNumber']
-  //         contacts.forEach(contact => {
-  //           let contactObj = {} as Phonebook2
-  //           if (
-  //             !contact.displayName ||
-  //             !contact.phoneNumbers ||
-  //             !contact.phoneNumbers.length
-  //           ) {
-  //             return
-  //           }
-  //           contact.phoneNumbers.forEach((phoneNumber, index) => {
-  //             contactObj[numberKey[index]] = phoneNumber.number
-  //           })
-  //           if (contactObj.workNumber) {
-  //             contactObj = {
-  //               ...contactObj,
-  //               id: contact.recordID,
-  //               name: contact.displayName || '',
-  //               book: '',
-  //               firstName: contact.givenName,
-  //               lastName: contact.familyName,
-  //               job: contact.jobTitle,
-  //               company: contact.company || '',
-  //               address:
-  //                 contact.postalAddresses && contact.postalAddresses.length > 0
-  //                   ? contact.postalAddresses[0].street
-  //                   : '',
-  //               email:
-  //                 contact.emailAddresses && contact.emailAddresses.length > 0
-  //                   ? contact.emailAddresses[0].email
-  //                   : '',
-  //               shared: false,
-  //               loaded: true,
-  //               hidden: false,
-  //             }
-  //           }
-  //           phoneContacts.push(contactObj)
-  //         })
-  //         phoneContacts = orderBy(phoneContacts, ['name'], ['asc'])
-  //         contactStore.setPhonebook(phoneContacts)
-  //       })
-  //       .catch(e => {
-  //         console.log(e)
-  //       })
-  //   })
-
-  //   // Contacts.getAll().then(contacts => {
-  //   //   // const phoneContacts = contacts.filter(
-  //   //   //   contact => contact.phoneNumbers && contact.phoneNumbers.length > 0,
-  //   //   // )
-  //   //   // const phoneContactsMap = phoneContacts.reduce((acc, contact) => {
-  //   //   //   contact.phoneNumbers.forEach(phoneNumber => {
-  //   //   //     const phone = phoneNumber.number.replace(/\D/g, '')
-  //   //   //     if (phone.length > 0) {
-  //   //   //       acc[phone] = contact
-  //   //   //     }
-  //   //   //   })
-  //   //   //   return acc
-  //   //   // }, {})
-  //   //   // contactStore.setPhonecontacts(phoneContactsMap)
-  //   //   console.log('phoneContactsMap', contacts)
-  //   // })
-  // }
-
   getContacts = async () => {
     try {
       Contacts.getAll().then(res => {
         let arr = res.map(item => {
           return item
         })
-        console.log('AllContacts', arr)
       })
     } catch (err) {
       console.log(err)
@@ -170,7 +61,6 @@ class PageContactPhonebook extends React.Component {
   update = (id: string) => {
     const contact = contactStore.getPhonebook(id)
     if (contact?.loaded) {
-      console.log('contact', contact)
       Nav().goToPageViewContact({
         contact: contact,
       })
@@ -213,9 +103,6 @@ class PageContactPhonebook extends React.Component {
   isMatchUser = user => {
     const { name } = user
     const { contactSearchBook } = contactStore
-    if (!name) {
-      console.log(user, 'user')
-    }
     return name
       ?.toString()
       .toLowerCase()
@@ -332,41 +219,16 @@ class PageContactPhonebook extends React.Component {
 
     const contactsKeyExtractor = (item, index) => index.toString()
 
-    const onEndReached = () => {
-      // alert(this.onEndReachedCalledDuringMomentum)
-      if (
-        !this.onEndReachedCalledDuringMomentum &&
-        phoneContacts &&
-        phoneContacts.length > 0
-      ) {
-        contactStore.phoneContactsLoadMore()
-        this.onEndReachedCalledDuringMomentum = true
-      }
-    }
     const ITEM_HEIGHT = 60
     const getItemLayout = (data, index) => ({
       length: ITEM_HEIGHT,
       offset: ITEM_HEIGHT * index,
       index,
     })
-    // alert(phoneContacts.length)
 
     return (
       <CustomLayout menu='contact' subMenu='phonebook'>
-        <ScrollView
-          stickyHeaderIndices={[1]}
-          // style={{
-          //   position: 'relative',
-          //   flex: 1,
-          //   width: '100%',
-          //   // height: '100%',
-          // }}
-          // onMomentumScrollBegin={() => {
-          //   this.onEndReachedCalledDuringMomentum = false
-          // }}
-          // onMomentumScrollEnd={onEndReached}
-          // onMomentumScrollEnd={}
-        >
+        <ScrollView stickyHeaderIndices={[1]}>
           <View style={styles.parkContainer}>
             <View>
               <RnText style={styles.ParksText}>{'Contacts'}</RnText>
@@ -461,19 +323,10 @@ class PageContactPhonebook extends React.Component {
                 <FlatList
                   data={groupsContacts}
                   scrollEnabled={false}
-                  // initialNumToRender={50}
                   style={{ marginBottom: 8 }}
                   renderItem={this.contactsRenderItem}
                   keyExtractor={contactsKeyExtractor}
                   ListFooterComponent={this.renderFooter}
-                  // maxToRenderPerBatch={100}
-                  // onEndReachedThreshold={0.1}
-                  // onEndReached={contactStore.phoneContactsLoadMore}
-                  // onEndReached={onEndReached}
-                  // onEndReachedThreshold={0.1}
-                  // onMomentumScrollBegin={() => {
-                  //   this.onEndReachedCalledDuringMomentum = false
-                  // }}
                   getItemLayout={getItemLayout}
                 />
               ) : (

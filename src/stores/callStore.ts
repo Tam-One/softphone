@@ -52,57 +52,13 @@ export class CallStore {
           : !c.answered && !c.callkeepAlreadyAnswered),
     )
 
-    // if (!call) {
-    //    let rnCalls =  await RNCallKeep.getCalls()
-
-    //   //  [{
-    //   //   callUUID: "E26B14F7-2CDF-48D0-9925-532199AE7C48",
-    //   //   hasConnected: true,
-    //   //   hasEnded: false,
-    //   //   onHold: false,
-    //   //   outgoing: false,
-    //   // }]
-
-    //    call = rnCalls.find(
-    //     c =>
-    //       c.incoming &&
-    //       !c.callkeepAlreadyRejected &&
-    //       (!c.callkeepUuid || c.callkeepUuid === uuid) &&
-    //       (o?.includingAnswered
-    //         ? true
-    //         : !c.answered && !c.callkeepAlreadyAnswered),
-    //   )
-    // }
-
     return call
   }
 
   onCallKeepDidDisplayIncomingCall = (uuid: string) => {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init onCallKeepDidDisplayIncomingCall' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     // Find the current incoming call which is not callkeep
     const c = this.getIncomingCallkeep(uuid)
     if (c) {
-      // if (Platform.OS === 'ios') {
-      //   let date = new Date()
-      //   Sentry.captureMessage(
-      //     'init onCallKeepDidDisplayIncomingCall in c' +
-      //       c +
-      //       ' ' +
-      //       date.getSeconds() +
-      //       ' ms ' +
-      //       date.getMilliseconds(),
-      //     Sentry.Severity.Debug,
-      //   )
-      // }
       // If the call is existing and not answered yet, we'll mark that call as displaying in callkeep
       // We assume that the app is being used in foreground (not quite exactly but assume)
       c.callkeepUuid = uuid
@@ -152,61 +108,12 @@ export class CallStore {
     const c = this.getIncomingCallkeep(uuid, {
       includingAnswered: true,
     })
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init onCallKeepEndCall' +
-    //       uuid +
-    //       ' ' +
-    //       c +
-    //       ' ' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     if (c) {
       c.callkeepAlreadyRejected = true
       c.hangup()
       console.error('SIP PN debug: reject by onCallKeepEndCall')
     } else if (this.recentPn?.uuid === uuid) {
-      // if (Platform.OS === 'ios') {
-      //   let date = new Date()
-      //   Sentry.captureMessage(
-      //     'init onCallKeepEndCall elseif' +
-      //       this.recentPn?.uuid +
-      //       ' ' +
-      //       c +
-      //       ' ' +
-      //       date.getSeconds() +
-      //       ' ms ' +
-      //       date.getMilliseconds(),
-      //     Sentry.Severity.Debug,
-      //   )
-      // }
-      // endCallKeep(uuid)
       this.recentPn.action = 'rejected'
-      // } else {
-      //   endCallKeep(uuid)
-    } else {
-      // if (Platform.OS === 'ios') {
-      //   let date = new Date()
-      //   Sentry.captureMessage(
-      //     'init onCallKeepEndCall else' +
-      //       this.recentPn?.uuid +
-      //       ' ' +
-      //       c +
-      //       ' ' +
-      //       date.getSeconds() +
-      //       ' ms ' +
-      //       date.getMilliseconds(),
-      //     Sentry.Severity.Debug,
-      //   )
-      // }
-      // endCallKeep(uuid)
-      // } else {
-      //   endCallKeep(uuid)
     }
     if (this.prevCallKeepUuid === uuid) {
       this.prevCallKeepUuid = undefined
@@ -219,18 +126,6 @@ export class CallStore {
       Partial<Pick<Call, 'callkeepAlreadyRejected'>>,
   ) => {
     this.recentPn = undefined
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init endCallKeep' +
-    //       c?.callkeepUuid +
-    //       ' ' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     if (c?.callkeepUuid) {
       const uuid = c.callkeepUuid
       c.callkeepUuid = ''
@@ -257,18 +152,6 @@ export class CallStore {
   @action upsertCall = (
     cPartial: Pick<Call, 'id'> & Partial<Omit<Call, 'id'>>,
   ) => {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init upsertCall' +
-    //       cPartial +
-    //       ' ' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     this.recentCallActivityAt = Date.now()
     const cExisting = this.calls.find(c => c.id === cPartial.id)
     if (cExisting) {
@@ -284,7 +167,6 @@ export class CallStore {
     }
     // Construct a new call
     const c = new Call(this)
-    console.log(cPartial, 'cPartial')
     Object.assign(c, cPartial)
     this.calls = [c, ...this.calls]
     // Get and check callkeep
@@ -306,51 +188,16 @@ export class CallStore {
         ? c.partyName + ' (' + c.partyNumber + ')'
         : c.partyNumber
 
-      // if (Platform.OS === 'ios') {
-      //   let date = new Date()
-      //   Sentry.captureMessage(
-      //     'init upsertCall updatedisplay' +
-      //       displayName +
-      //       ' ' +
-      //       date.getSeconds() +
-      //       ' ms ' +
-      //       date.getMilliseconds(),
-      //     Sentry.Severity.Debug,
-      //   )
-      // }
       RNCallKeep.updateDisplay(recentPnUuid, displayName, 'Qooqie Phone', {
         hasVideo: c.remoteVideoEnabled,
       })
       return
     }
     if (recentPnAction === 'answered') {
-      // if (Platform.OS === 'ios') {
-      //   let date = new Date()
-      //   Sentry.captureMessage(
-      //     'init upsertCall updatedisplay recentPnAction answered' +
-      //       ' ' +
-      //       date.getSeconds() +
-      //       ' ms ' +
-      //       date.getMilliseconds(),
-      //     Sentry.Severity.Debug,
-      //   )
-      // }
       c.callkeepAlreadyAnswered = true
       c.answer()
       console.error('SIP PN debug: answer by recentPnAction')
     } else if (recentPnAction === 'rejected') {
-      // if (Platform.OS === 'ios') {
-      //   let date = new Date()
-      //   Sentry.captureMessage(
-      //     'init upsertCall updatedisplay recentPnAction rejected' +
-      //       ' ' +
-      //       date.getSeconds() +
-      //       ' ms ' +
-      //       date.getMilliseconds(),
-      //     Sentry.Severity.Debug,
-      //   )
-      // }
-
       c.callkeepAlreadyRejected = true
       c.hangup()
       console.error('SIP PN debug: reject by recentPnAction')
@@ -405,9 +252,6 @@ export class CallStore {
       (s !== 'starting' && s !== 'started') ||
       getAuthStore().sipConnectingOrFailure
     ) {
-      console.log('currentCall is null')
-
-      // Nav().backToPageCallRecents()
       RnAlert.dismiss()
       RnAlert.error({
         message: intlDebug`Sip connection failed, Please login again`,
@@ -427,17 +271,12 @@ export class CallStore {
 
     let reconnectCalled = false
     const startCall = async (isReconnect?: boolean) => {
-      console.log('taggy 6')
-
       if (isReconnect) {
-        console.log('taggy 7')
-
         // Do not call sip too frequencely on reconnect
         await waitTimeout(3000)
       }
       await pbx.getConfig()
       sip.createSession(number, options)
-      console.log('taggy 8')
     }
     try {
       await startCall()
@@ -445,42 +284,14 @@ export class CallStore {
       reconnectAndWaitSip(startCall)
       reconnectCalled = true
     }
-
-    console.log('taggy 9', getAuthStore().sipConnectingOrFailure)
-    // const s = sip.phone?.getPhoneStatus()
-
-    // if (s === undefined || (s !== 'starting' && s !== 'started') || getAuthStore().sipConnectingOrFailure) {
-    //   console.log('currentCall is null')
-
-    //   // Nav().backToPageCallRecents()
-    //   RnAlert.error({
-    //     message: intlDebug`Sip connection failed, Please login again1`,
-    //   })
-    //   sip.disconnect()
-    //   const authSIP = new AuthSIP()
-    //   const authPBX = new AuthPBX()
-    //   setTimeout(() => {
-    //     getAuthStore().reconnectPbx()
-    //     getAuthStore().reconnectSip()
-    //     authPBX.auth()
-    //     authSIP.sipReconnect()
-    //   }, 300)
-
-    //   return
-    // } else {
     Nav().goToPageCallManage({ propsNumber: number })
-    // }
-
     getAuthStore().callConnecting = true
-    console.log('taggy 1')
     // Auto update currentCallId
     this.currentCallId = undefined
     const prevIds = arrToMap(this.calls, 'id') as { [k: string]: boolean }
     this.clearStartCallIntervalTimer()
     this.startCallIntervalAt = Date.now()
     this.startCallIntervalId = BackgroundTimer.setInterval(() => {
-      console.log('taggy 2')
-
       const currentCallId = this.calls.map(c => c.id).find(id => !prevIds[id])
       // If after 3s and there's no call in the store
       // It's likely a connection issue occurred
@@ -489,7 +300,6 @@ export class CallStore {
         !currentCallId &&
         Date.now() - this.startCallIntervalAt > 3000
       ) {
-        console.log('taggyy 3')
         getAuthStore().callConnecting = false
         RnAlert.dismiss()
         RnAlert.error({
@@ -498,13 +308,11 @@ export class CallStore {
         Nav().backToPageCallRecents()
 
         this.clearStartCallIntervalTimer()
-        // reconnectAndWaitSip(startCall)
         return
       } else if (
         !currentCallId &&
         Date.now() - this.startCallIntervalAt > 3000
       ) {
-        console.log('taggyy 3')
         getAuthStore().callConnecting = false
         RnAlert.dismiss()
         RnAlert.error({
@@ -512,20 +320,15 @@ export class CallStore {
         })
         Nav().backToPageCallRecents()
         this.clearStartCallIntervalTimer()
-        // reconnectAndWaitSip(startCall)
         return
       }
       if (currentCallId) {
-        console.log('taggy 4')
-        // Nav().goToPageCallManage()
         getAuthStore().callConnecting = false
 
         this.currentCallId = currentCallId
       }
       // Add a guard of 10s to clear the interval
       if (currentCallId || Date.now() - this.startCallIntervalAt > 10000) {
-        console.log('taggy 5')
-
         this.clearStartCallIntervalTimer()
       }
     }, 500)
@@ -671,65 +474,19 @@ const setAutoEndCallKeepTimer = () => {
   }, 1000)
 }
 const endCallKeep = (uuid: string) => {
-  // if (Platform.OS === 'ios') {
-  //   let date = new Date()
-  //   Sentry.captureMessage(
-  //     'init const endCallKeep' +
-  //       callStore.calls.length +
-  //       ' ' +
-  //       callStore.recentPn +
-  //       ' ' +
-  //       callStore.recentPn?.at +
-  //       ' ' +
-  //       date.getSeconds() +
-  //       ' ms ' +
-  //       date.getMilliseconds(),
-  //     Sentry.Severity.Debug,
-  //   )
-  // }
   delete callkeepMap[uuid]
   const n = Date.now()
   if (
     !callStore.calls.length &&
     (!callStore.recentPn || n - callStore.recentPn.at > 20000)
   ) {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init const endCallKeep in if' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     RNCallKeep.endAllCalls()
     // RNCallKeep.rejectCall(uuid)
     callStore.recentPn = undefined
   } else {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init const endCallKeep in else' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     RNCallKeep.rejectCall(uuid)
     RNCallKeep.endCall(uuid)
   }
-  // if (Platform.OS === 'ios') {
-  //   let date = new Date()
-  //   Sentry.captureMessage(
-  //     'init const endCallKeep in endinng' +
-  //       date.getSeconds() +
-  //       ' ms ' +
-  //       date.getMilliseconds(),
-  //     Sentry.Severity.Debug,
-  //   )
-  // }
   RNCallKeep.reportEndCallWithUUID(
     uuid,
     CONSTANTS.END_CALL_REASONS.REMOTE_ENDED,

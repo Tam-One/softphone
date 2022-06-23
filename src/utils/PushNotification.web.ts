@@ -32,9 +32,7 @@ const PushNotification = {
     }
   },
   resetBadgeNumber: () => {
-    reconnectAndWaitSip(() => {
-      console.log('taggy rest')
-    })
+    reconnectAndWaitSip(() => {})
     // Polyfill
   },
 }

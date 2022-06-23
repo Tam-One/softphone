@@ -1,4 +1,4 @@
-import { mdiAccount, mdiApps, mdiPhone, mdiPhoneOutgoing } from '@mdi/js'
+import { mdiAccount, mdiApps } from '@mdi/js'
 import orderBy from 'lodash/orderBy'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'

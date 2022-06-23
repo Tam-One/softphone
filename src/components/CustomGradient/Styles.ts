@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   CustomGradient: {
     zIndex: 99,
     width: CustomValues.compatableWidth,
-    height: Dimensions.get('window').height - 0,
+    height: Dimensions.get('window').height,
     backgroundColor: CustomColors.AppBackground,
   },
   flexbox: {

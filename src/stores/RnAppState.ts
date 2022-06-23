@@ -1,6 +1,5 @@
-import PushNotificationIOS from '@react-native-community/push-notification-ios'
 import { action, observable } from 'mobx'
-import { AppState, Platform } from 'react-native'
+import { AppState } from 'react-native'
 
 export class RnAppState {
   @observable currentState = AppState.currentState
@@ -9,9 +8,6 @@ export class RnAppState {
       'change',
       action(() => {
         this.currentState = AppState.currentState
-        // if (Platform.OS === 'ios') {
-        //   PushNotificationIOS.removeAllDeliveredNotifications()
-        // }
       }),
     )
   }

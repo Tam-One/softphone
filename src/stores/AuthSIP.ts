@@ -1,8 +1,6 @@
 import NetInfo from '@react-native-community/netinfo'
-// import * as Sentry from '@sentry/react-native'
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
-import { Platform } from 'react-native'
 
 import pbx from '../api/pbx'
 import sip from '../api/sip'
@@ -16,14 +14,6 @@ import RnAlert from './RnAlert'
 class AuthSIP {
   private clearObserve?: Lambda
   auth() {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init auth' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
-    console.log('inauth')
     this.clearObserve?.()
     this.authWithCheck()
     this.clearObserve = observe(
@@ -43,16 +33,6 @@ class AuthSIP {
   }
 
   private authPnWithoutCatch = async () => {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init authPnWithoutCatch' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     const s = getAuthStore()
     const p = s.sipPn
     if (!p || !p.sipAuth) {
@@ -80,33 +60,10 @@ class AuthSIP {
       turnConfig,
     })
     getAuthStore().sipPn = {}
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init authPnWithoutCatch sip connected' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
   }
 
   private authWithoutCatch = async () => {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init authWithoutCatch' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     const s = getAuthStore()
-    console.log('authwithoutcatch', s)
-    console.log('authwithoutcatch opm', s.sipPn)
-
     s.sipState = 'connecting'
     if (s.sipPn.sipAuth) {
       console.error('SIP PN debug: AuthSIP.authPnWithoutCatch')
@@ -114,19 +71,16 @@ class AuthSIP {
       return
     }
     console.error('SIP PN debug: AuthSIP.authWithoutCatch')
-    //
     const pbxConfig = await pbx.getConfig()
     if (!pbxConfig) {
       console.error('Invalid PBX config')
       return
     }
-    //
     const sipWSSPort = pbxConfig['sip.wss.port']
     if (!sipWSSPort) {
       console.error('Invalid SIP WSS port')
       return
     }
-    //
     getAuthStore().userExtensionProperties =
       getAuthStore().userExtensionProperties ||
       (await pbx.getUserForSelf(
@@ -138,21 +92,17 @@ class AuthSIP {
       console.error('Invalid PBX user config')
       return
     }
-    //
     const language = pbxUserConfig.language
     void language
-    //
     const webPhone = (await updatePhoneIndex()) as { id: string }
     if (!webPhone) {
       return
     }
-    //
     const sipAccessToken = await pbx.createSIPAccessToken(webPhone.id)
     if (!sipAccessToken) {
       console.error('Invalid SIP access token')
       return
     }
-    //
     const dtmfSendMode = pbxConfig['webrtcclient.dtmfSendMode']
     const turnServer = pbxConfig['webphone.turn.server']
     const turnUser = pbxConfig['webphone.turn.username']
@@ -174,39 +124,17 @@ class AuthSIP {
       dtmfSendMode: Number(dtmfSendMode),
       turnConfig,
     }
-    console.log(onj, 'onk')
     await sip.connect(onj)
   }
 
   sipReconnect() {
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init sipReconnect' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     this.authWithCheck()
   }
 
   private authWithCheck = () => {
-    console.log(getAuthStore().sipShouldAuth, 'getAuthStore().sipShouldAuth')
     if (!getAuthStore().sipShouldAuth) {
       return
     }
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init authWithCheck' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     this.authWithoutCatch()
       .then(() => {
         const profileMap =
@@ -234,9 +162,6 @@ class AuthSIP {
   }
   private authWithCheckDebounced = debounce(() => {
     const s = getAuthStore()
-    console.log(s.sipState, 'klklk')
-    // if (getAuthStore().sipState != 'connecting')
-    //   this.authWithCheck()
   }, 300)
 }
 

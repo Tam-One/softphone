@@ -49,12 +49,10 @@ class PageCallRecents extends React.Component {
 
       return (
         typeof created === 'string' &&
-        // HH:mm - MMM D
         (createdLength === 13 || createdLength === 14)
       )
     })
     const today = moment().format('MMM D')
-    // {"id":"589b497c-530b-44d8-aef7-38a2dd9b9342","incoming":false,"answered":false,"partyNumber":"100","duration":0,"created":"12:12 - Jun 21"}
     return filteredCalls.map(call => ({
       ...call,
       created: (call.created + '').replace(` - ${today}`, ''),

@@ -115,7 +115,6 @@ class ContactStore {
   getContacts = () => {
     Contacts.getAll()
       .then(contacts => {
-        console.log(contacts)
         let phoneContacts: Phonebook2[] = []
         const numberKey = ['cellNumber', 'workNumber', 'homeNumber']
         contacts.forEach(contact => {
@@ -142,7 +141,6 @@ class ContactStore {
             contactObj[numberKey[index]] = phoneNumber.number
           })
           if (contactObj.cellNumber) {
-            console.log(contact, 'contact123')
             contactObj = {
               ...contactObj,
               id: contact.recordID,
@@ -178,7 +176,6 @@ class ContactStore {
           ['asc'],
         )
         // this.setPhonebook(phoneContacts)
-        console.log(phoneContacts, 'phoneContacts')
         this.setPhonecontacts(phoneContacts)
       })
       .catch(e => {
@@ -316,12 +313,6 @@ class ContactStore {
   }
 
   @action phoneContactsLoadMore = () => {
-    // console.log('phoneContactsLoadMore', this.phoneContactsOffset)
-    // console.log('phoneContactsLoadMore', this.phoneContacts.length)
-    console.log(this.limitedPhoneContacts.length)
-    console.log(this.phoneContactsOffset)
-    console.log(this.phoneContactsLimit)
-
     this.phoneContactsOffset += this.phoneContactsLimit
     this.limitedPhoneContacts = [
       ...this.limitedPhoneContacts,
@@ -330,7 +321,6 @@ class ContactStore {
         this.phoneContactsOffset + this.phoneContactsLimit,
       ),
     ]
-    console.log(this.limitedPhoneContacts.length)
   }
 
   getPhonebook = (id: string) => {

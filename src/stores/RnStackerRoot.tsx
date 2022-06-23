@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import { ReactComponentLike } from 'prop-types'
 import React, { FC } from 'react'
-import { Animated, Dimensions, Platform, StyleSheet, View } from 'react-native'
+import { Animated, StyleSheet, View } from 'react-native'
 
 import CustomValues from '@/utils/CustomValues'
 

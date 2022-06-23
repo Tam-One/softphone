@@ -1,16 +1,8 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import {
-  Dimensions,
-  Platform,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Dimensions, Platform, TouchableOpacity, View } from 'react-native'
 import Proximity from 'react-native-proximity'
 
-import svgImages from '@/assets/svgImages'
 import CallActionButton from '@/components/CallActionButton'
 import CallButtons from '@/components/CallButtons'
 import CallerInfo from '@/components/CallerInfo'
@@ -21,7 +13,6 @@ import PoweredBy from '@/components/PoweredBy'
 import RnText from '@/components/RnText'
 import VideoPlayer from '@/components/VideoPlayer'
 import styles from '@/pages/PageCallManage/Styles'
-import VideoPopup from '@/pages/PageCallManage/VideoPopup'
 import PageDtmfKeypad from '@/pages/PageDtmfKeypad'
 import PageTransferAttend from '@/pages/PageTransferAttend'
 import Call from '@/stores/Call'
@@ -29,7 +20,6 @@ import callStore from '@/stores/callStore'
 import intl from '@/stores/intl'
 import Nav from '@/stores/Nav'
 import CustomColors from '@/utils/CustomColors'
-import CustomImages from '@/utils/CustomImages'
 import CustomStrings from '@/utils/CustomStrings'
 import CustomValues from '@/utils/CustomValues'
 import formatDuration from '@/utils/formatDuration'
@@ -389,21 +379,6 @@ class PageCallManage extends React.Component<{
   renderVideo = (currentCall: Call) => {
     const { remoteVideoStreamObject, localVideoStreamObject } = currentCall
     const { hideVideoButtons } = this.state
-    if (Platform.OS === 'android') {
-      console.log(
-        remoteVideoStreamObject,
-        localVideoStreamObject,
-        'remoteVideoStreamObject',
-      )
-    }
-    if (Platform.OS === 'ios') {
-      console.log(
-        remoteVideoStreamObject,
-        localVideoStreamObject,
-        'ios remoteVideoStreamObject',
-      )
-    }
-
     return (
       <TouchableOpacity
         style={styles.videoContainer}
@@ -563,20 +538,11 @@ class PageCallManage extends React.Component<{
     const currentCall: any = callStore.currentCall || {}
     const { remoteVideoEnabled, localVideoEnabled, transferring } = currentCall
     const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
-    console.log(Platform.OS, currentCall)
     if (isVideoEnabled) {
       clearTimeout(this.videoRequestTimeout)
       this.videoRequestTimeout = null
     }
     const { isLoudSpeakerEnabled } = callStore
-
-    // if (transferring && this.state.showVideoPopup) {
-    //   // alert('Transferring...')
-    //   const currentCall: any = callStore.currentCall || {}
-    //   const { disableVideo } = currentCall
-    //   disableVideo()
-    //   this.setState({ showVideoPopup: '' })
-    // }
 
     return (
       <>

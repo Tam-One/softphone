@@ -1,9 +1,7 @@
 import 'brekekejs/lib/jsonrpc'
 import 'brekekejs/lib/pal'
 
-// import * as Sentry from '@sentry/react-native'
 import EventEmitter from 'eventemitter3'
-import { Platform } from 'react-native'
 
 import profileStore, { Profile } from '../stores/profileStore'
 import { Pbx, PbxGetProductInfoRes } from './brekekejs'
@@ -18,16 +16,6 @@ export class PBX extends EventEmitter {
       // TODO
       return
     }
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init pbbx connect connect  completed' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
 
     this.pbxConfig = undefined
 
@@ -46,16 +34,6 @@ export class PBX extends EventEmitter {
       phonetype: 'webphone',
     })
     this.client = client
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init pbbx connect connect  client fetched' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
 
     client._pal = (((method: keyof Pbx, params?: object) => {
       return new Promise((resolve, reject) => {
@@ -81,17 +59,6 @@ export class PBX extends EventEmitter {
       }),
       new Promise((resolve, reject) => {
         client.login(() => {
-          // if (Platform.OS === 'ios') {
-          //   let date = new Date()
-          //   Sentry.captureMessage(
-          //     'init pbbx connect connect  client login completed' +
-          //       date.getSeconds() +
-          //       ' ms ' +
-          //       date.getMilliseconds(),
-          //     Sentry.Severity.Debug,
-          //   )
-          // }
-
           resolve(undefined)
         }, reject)
       }),
@@ -117,8 +84,6 @@ export class PBX extends EventEmitter {
       return
     }
 
-    // {"room_id":"282000000230","talker_id":"1416","time":1587451427817,"park":"777","status":"on"}
-    // {"time":1587451575120,"park":"777","status":"off"}
     client.notify_park = e => {
       // TODO
       if (e?.status === 'on') {

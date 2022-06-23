@@ -99,7 +99,6 @@ const VideoCallRequest: FC<{
             header={CustomStrings.RequestToSwitchVideo}
             showOk={true}
             onOkPress={() => {
-              // alert('ok')
               if (videoCallOn) {
                 videoCallOn()
               }

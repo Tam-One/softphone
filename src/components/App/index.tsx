@@ -68,22 +68,6 @@ Sentry.init({
   enableNative: false,
 })
 
-// if (Platform.OS === 'ios') {
-//   let date = new Date()
-//   Sentry.captureMessage(
-//     'init app' + date.getSeconds() + ' ms ' + date.getMilliseconds(),
-//     Sentry.Severity.Debug,
-//   )
-// }
-// BackgroundTimer.start()
-// // Do whatever you want incuding setTimeout;
-// clearInterval(int)
-
-// int = setInterval(() => {
-//   reconnectServer()
-// }, 1000)
-// BackgroundTimer.stop()
-
 registerOnUnhandledError(unexpectedErr => {
   // Must wrap in window.setTimeout to make sure
   //    there's no state change when rendering
@@ -142,20 +126,9 @@ BackHandler.addEventListener('hardwareBackPress', () => {
 var alreadyInitApp = false
 var activelist = true
 PushNotification.register(() => {
-  // alert('register')
   if (alreadyInitApp) {
     return
   }
-  // if (Platform.OS === 'ios') {
-  //   let date = new Date()
-  //   Sentry.captureMessage(
-  //     'init pushnotification' +
-  //       date.getSeconds() +
-  //       ' ms ' +
-  //       date.getMilliseconds(),
-  //     Sentry.Severity.Debug,
-  //   )
-  // }
   const s = getAuthStore()
   alreadyInitApp = true
 
@@ -174,20 +147,9 @@ PushNotification.register(() => {
   const authUC = new AuthUC()
 
   observe(s, 'signedInId', () => {
-    console.log('signinnid', s)
     chatStore.clearStore()
     contactStore.clearStore()
     if (s.signedInId) {
-      // if (Platform.OS === 'ios') {
-      //   let date = new Date()
-      //   Sentry.captureMessage(
-      //     'init signedInId' +
-      //       date.getSeconds() +
-      //       ' ms ' +
-      //       date.getMilliseconds(),
-      //     Sentry.Severity.Debug,
-      //   )
-      // }
       s.reconnect()
       authPBX.auth()
     } else {
@@ -211,64 +173,11 @@ PushNotification.register(() => {
       profileStore.profiles[0].loginPressed = s.loginPressed
       profileStore.saveProfilesToLocalStorage()
     }
-    // if (Platform.OS === 'ios') {
-    //   let date = new Date()
-    //   Sentry.captureMessage(
-    //     'init loginPressed' +
-    //       date.getSeconds() +
-    //       ' ms ' +
-    //       date.getMilliseconds(),
-    //     Sentry.Severity.Debug,
-    //   )
-    // }
     Nav().goToPageIndex()
     AppState.addEventListener('change', () => {
       if (AppState.currentState === 'active') {
-        // if (Platform.OS === 'ios') {
-        //   let date = new Date()
-        //   Sentry.captureMessage(
-        //     'init AppStatechange' +
-        //       date.getSeconds() +
-        //       ' ms ' +
-        //       date.getMilliseconds(),
-        //     Sentry.Severity.Debug,
-        //   )
-        // }
-        // const s = sip.phone?.getPhoneStatus()
-        // console.log('phoestatt', s)
-        // console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
-        // if (s === undefined || (s !== 'starting' && s !== 'started')) {
         reconnectServer()
-        // }
         activelist = false
-        // alert('a')
-        // if (s === undefined || (s !== 'starting' && s !== 'started')) {
-        // window.location.reload()
-        // console.error(`PN debug: SIP reconnect: getPhoneStatus()=${s}`)
-        // const s = sip.phone?.getPhoneStatus()
-        // if (s && s !== 'starting' && s !== 'started') {
-        // console.error(`PN debug: SIP reconnect: getPhoneStatus()=${s}`)
-        // }
-        // if (this.sipPn.sipAuth) {
-        //   return
-        // }
-        // await pbx.client?._pal('getProductInfo').catch((err: Error) => {
-        //   if (authStore.pbxState === 'connecting') {
-        //     return
-        //   }
-        //   console.error(`PN debug: PBX reconnect: getProductInfo() error=${err}`)
-        //   this.reconnectPbx()
-        // })
-        // }
-        // getAuthStore().reconnect()
-        // PushNotification.resetBadgeNumber()
-        // window.location.reload()
-        // const s = getAuthStore()
-        // setupCallKeep()
-        // profileStore.loadProfilesFromLocalStorage().then(() => {
-        //   SyncPnToken().syncForAllAccounts()
-        // })
-        // s.handleUrlParams()
       }
     })
   })
@@ -282,19 +191,7 @@ var internetConnection = false
 var recontime
 
 const reconnectServer = () => {
-  // if (Platform.OS === 'ios') {
-  //   let date = new Date()
-  //   Sentry.captureMessage(
-  //     'init reconnectServer' +
-  //       date.getSeconds() +
-  //       ' ms ' +
-  //       date.getMilliseconds(),
-  //     Sentry.Severity.Debug,
-  //   )
-  // }
   const s = sip.phone?.getPhoneStatus()
-  console.log('phoestatt', s)
-  console.log(getAuthStore().pbxState, 'getAuthStore().pbxState')
   if (s === undefined || (s !== 'starting' && s !== 'started')) {
     if (conn || !internetConnection) {
       return

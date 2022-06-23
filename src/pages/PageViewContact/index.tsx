@@ -1,11 +1,6 @@
 import { mdiBriefcase, mdiCellphone, mdiHome, mdiPhone } from '@mdi/js'
-import React, { FC, useState } from 'react'
-import {
-  ActivityIndicator,
-  ScrollView,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import React, { FC } from 'react'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
 import UserAvatar from 'react-native-user-avatar'
 
 import CustomHeader from '@/components/CustomHeader'
@@ -104,7 +99,6 @@ const onCallPress = (user: Phonebook2, number: string) => {
 }
 
 const PageViewContact = ({ contact }) => {
-  console.log(JSON.stringify(contact), '2')
   const isPhoneContact = contact.isPhoneContact
 
   const {

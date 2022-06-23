@@ -9,9 +9,7 @@ import {
   View,
 } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
-import { SvgXml } from 'react-native-svg'
 
-import svgImages from '@/assets/svgImages'
 import CustomGradient from '@/components/CustomGradient'
 import FormInputBox from '@/components/FormInputBox'
 import PoweredBy from '@/components/PoweredBy'
@@ -31,13 +29,6 @@ import {
 import useStore from '@/utils/useStore'
 
 const PageProfileSignIn = () => {
-  // if (Platform.OS === 'ios') {
-  //   let date = new Date()
-  //   Sentry.captureMessage(
-  //     'init PageProfileSignIn' + date,
-  //     Sentry.Severity.Debug,
-  //   )
-  // }
   const [fieldErrors, setFieldErrors] = useState({})
   const [passwordView, setPasswordView] = useState(false)
 
@@ -210,10 +201,6 @@ const PageProfileSignIn = () => {
                 styles.dropDownContainer,
                 {
                   zIndex: 9999,
-                  // position: 'absolute',
-                  // bottom: 0,
-                  // top: 0,
-                  // elevation: 100,
                 },
               ]}
               dropDownDirection='BOTTOM'

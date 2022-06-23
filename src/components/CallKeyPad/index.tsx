@@ -116,7 +116,6 @@ const KeyPad: FC<{
                         width: '100%',
                         textAlign: 'center',
                       },
-                      // key === '*' && styles.symbolText,
                     ]}
                   >
                     {key}

@@ -154,7 +154,6 @@ class ProfileStore {
       if (id0 !== id1) {
         const pn0 = p0.pushNotificationEnabled
         p0.pushNotificationEnabled = false
-        console.log('[ProfileStore]', 'upsertProfile', p0, p1)
         SyncPnToken().sync(p0, {
           onError: () => {
             // Revert on error?
@@ -170,7 +169,6 @@ class ProfileStore {
         p.pushNotificationEnabled !== pn1
       ) {
         p1.pushNotificationEnabledSynced = false
-        console.log('[ProfileStore] else', 'upsertProfile', p0, p1)
         SyncPnToken().sync(p1)
       }
     }
