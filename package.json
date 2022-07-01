@@ -1,7 +1,7 @@
 {
   "name": "qooqiephone",
   "productName": "Qooqie Phone",
-  "version": "6.0.1",
+  "version": "6.1.0",
   "private": true,
   "homepage": "./",
   "main": "electron/main.ts",

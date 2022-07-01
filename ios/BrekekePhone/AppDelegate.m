@@ -21,6 +21,8 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 
 #import <CallKit/CallKit.h>
+ #import <CallKit/CXCallObserver.h>
+ #import <CallKit/CXCall.h>
 #import <React/RCTLog.h>
 #import <UserNotifications/UserNotifications.h>
 
@@ -49,14 +51,14 @@ static void InitializeFlipper(UIApplication *application) {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
-  
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"qooqie server connected"];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self
                                             launchOptions:launchOptions];
 
   // https://github.com/react-native-webrtc/react-native-voip-push-notification/issues/59#issuecomment-691685841
   [RNVoipPushNotificationManager voipRegistration];
-
+ 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"QooqiePhone"
                                             initialProperties:nil];
@@ -83,14 +85,8 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge {
 
-#if DEBUG
-  return
-      [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"
-                                                     fallbackResource:nil];
-#else
   return [[NSBundle mainBundle] URLForResource:@"main"
                                  withExtension:@"jsbundle"];
-#endif
 }
 
 // Required for the register event.
@@ -166,19 +162,15 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
                 withCompletionHandler:(void (^)(void))completion {
   NSString *uuid = [[[NSUUID UUID] UUIDString] uppercaseString];
   // --- only required if we want to call `completion()` on the js side
-  // [RNVoipPushNotificationManager
-  //     addCompletionHandler:uuid
-  //        completionHandler:completion];
+  RNCallKeep *callKeep = [RNCallKeep allocWithZone:nil];
+  [callKeep sendEventWithName:@"RNCallKeepDidReceiveStartCallAction" body:@{ @"callUUID": [uuid lowercaseString], @"handle": @"Qooqie Phone" }];
   [RNVoipPushNotificationManager
       didReceiveIncomingPushWithPayload:payload
                                 forType:(NSString *)type];
+   [RNVoipPushNotificationManager
+       addCompletionHandler:uuid
+          completionHandler:completion];
    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-
-  //   int isReject = [payload.dictionaryPayload[@"isReject"] isEqual:@"YES"] ? YES : NO;
-  // if (isReject) {
-  //   completion();
-  //   return [RNCallKeep endCallWithUUID: uuid reason:YES];
-  // }
 
   if (state != UIApplicationStateActive)
   {
@@ -195,10 +187,15 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
                             payload:payload.dictionaryPayload
               withCompletionHandler:completion
               ];
+     completion();
+  
    }
   // --- don't need to call this if we do on the js side
   // --- already add completion in above reportNewIncomingCall
-  // completion();
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+  [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"qooqie server connected"];
 }
 
 - (void)application:(UIApplication *)application
