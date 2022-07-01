@@ -175,7 +175,7 @@ PushNotification.register(() => {
     }
     Nav().goToPageIndex()
     AppState.addEventListener('change', () => {
-      if (AppState.currentState === 'active') {
+      if (Platform.OS === 'ios' || AppState.currentState === 'active') {
         reconnectServer()
         activelist = false
       }

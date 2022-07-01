@@ -1,7 +1,7 @@
 {
   "name": "qooqiephone",
   "productName": "Qooqie Phone",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "private": true,
   "homepage": "./",
   "main": "electron/main.ts",
@@ -25,11 +25,8 @@
           "entitlements": "entitlements.plist",
           "entitlements-inherit": "entitlements.plist",
           "signature-flags": "library",
-          "gatekeeper-assess": false
-        },
-        "osxNotarize": {
-          "appleId": "richard@qooqie.com",
-          "appleIdPassword": "xxrj-vixl-qtvx-ahza"
+          "gatekeeper-assess": false,
+          "asar": false
         }
       },
       "makers": [
@@ -61,6 +58,7 @@
   "scripts": {
     "web": "react-scripts start",
     "start_": "craco start",
+    "star": "craco build",
     "start": "electron-forge start",
     "rn": "react-native start",
     "android": "react-native run-android",
@@ -106,8 +104,8 @@
     "@react-native-community/push-notification-ios": "1.8.0",
     "@react-native-firebase/app": "12.8.0",
     "@react-native-firebase/messaging": "12.8.0",
-    "@sentry/browser": "6.17.4",
-    "@sentry/react-native": "3.2.13",
+    "@sentry/browser": "7.3.0",
+    "@sentry/react-native": "4.0.2",
     "brekekejs": "git://github.com/Tam-One/brekekejs.git",
     "buffer": "6.0.3",
     "circular-json": "0.5.9",
@@ -160,7 +158,7 @@
     "react-native-proximity": "pakt-digital/react-native-proximity#584f46494111c639655303cf7e4bae925641dc4a",
     "react-native-share": "5.1.4",
     "react-native-splash-screen": "github:brekekesoftware/react-native-splash-screen#a78ee51c0f89652a2a223ff2bc4ec10928bf2c30",
-    "react-native-svg": "12.1.0",
+    "react-native-svg": "12.3.0",
     "react-native-svg-web": "1.0.9",
     "react-native-user-avatar": "1.0.7",
     "react-native-uuid": "1.4.9",
