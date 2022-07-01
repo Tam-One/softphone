@@ -131,6 +131,8 @@ export class CallStore {
       c.callkeepUuid = ''
       c.callkeepAlreadyRejected = true
       endCallKeep(uuid)
+    } else {
+      Nav().backToPageCallRecents()
     }
   }
 
