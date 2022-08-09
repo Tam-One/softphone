@@ -1,7 +1,7 @@
 {
   "name": "qooqiephone",
   "productName": "Qooqie Phone",
-  "version": "2.9.8",
+  "version": "6.1.0",
   "private": true,
   "homepage": "./",
   "main": "electron/main.ts",
@@ -16,15 +16,24 @@
   "config": {
     "forge": {
       "packagerConfig": {
+        "executableName": "Qooqie Phone",
         "icon": "./Icon/Icon",
         "name": "Qooqie Phone",
-        "executableName": "Qooqie Phone"
+        "osxSign": {
+          "identity": "Developer ID Application: Qooqie N.V. (DXR59ZN3G9)",
+          "hardened-runtime": true,
+          "entitlements": "entitlements.plist",
+          "entitlements-inherit": "entitlements.plist",
+          "signature-flags": "library",
+          "gatekeeper-assess": false,
+          "asar": false
+        }
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "electro-text-reader"
+            "name": "QooqiePhone"
           }
         },
         {
@@ -36,15 +45,21 @@
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-            "icon": "./Icon/Icon.png"
+            "icon": "./Icon/Icon"
           }
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
         }
       ]
     }
   },
   "scripts": {
     "web": "react-scripts start",
-    "start": "craco start",
+    "start_": "craco start",
+    "star": "craco build",
+    "start": "electron-forge start",
     "rn": "react-native start",
     "android": "react-native run-android",
     "shake": "adb shell input keyevent 82",
@@ -70,7 +85,7 @@
     "react-build": "react-scripts build",
     "electron-build": "electron-builder",
     "test": "yarn react-build && yarn electron-build",
-    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron.js --publish never",
+    "package": "electron-forge package",
     "start-forge": "electron-forge start",
     "forge-package": "electron-forge package",
     "make": "electron-forge make",
@@ -83,19 +98,21 @@
     "make-win1": "--output-path=electron/dist/dist && electron-forge make"
   },
   "dependencies": {
-    "@cantoo/rn-svg": "^1.0.6",
     "@mdi/js": "5.9.55",
     "@react-native-async-storage/async-storage": "1.14.1",
+    "@react-native-community/netinfo": "7.1.3",
     "@react-native-community/push-notification-ios": "1.8.0",
     "@react-native-firebase/app": "12.8.0",
     "@react-native-firebase/messaging": "12.8.0",
+    "@sentry/browser": "7.3.0",
+    "@sentry/react-native": "4.0.2",
     "brekekejs": "git://github.com/Tam-One/brekekejs.git",
     "buffer": "6.0.3",
     "circular-json": "0.5.9",
     "concurrently": "6.5.1",
     "electron-is": "3.0.0",
     "electron-is-dev": "2.0.0",
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-squirrel-startup": "1.0.0",
     "env-cmd": "10.1.0",
     "es6-shim": "0.35.6",
     "es7-shim": "6.0.0",
@@ -121,32 +138,34 @@
     "react-native": "0.64.0",
     "react-native-background-timer": "2.4.1",
     "react-native-callkeep": "github:brekekesoftware/react-native-callkeep#9eff8243ba88df5c38474675eabbe75e0623458e",
+    "react-native-contacts": "7.0.4",
     "react-native-document-picker": "4.3.0",
     "react-native-dotenv": "2.5.5",
-    "react-native-dropdown-picker": "^5.2.3",
+    "react-native-dropdown-picker": "5.2.3",
     "react-native-electron": "0.16.0",
     "react-native-emoji-selector": "0.2.0",
     "react-native-exception-handler": "2.10.9",
     "react-native-fast-image": "8.3.4",
     "react-native-fcm": "github:brekekesoftware/react-native-fcm#afbddd1782afe9a6cf81c34f903e026b712d5579",
     "react-native-fs": "2.16.6",
-    "react-native-haptic-feedback": "^1.11.0",
+    "react-native-haptic-feedback": "1.11.0",
     "react-native-hyperlink": "0.0.19",
     "react-native-image-picker": "2.3.4",
     "react-native-incall-manager": "3.3.0",
     "react-native-iphone-x-helper": "1.3.1",
     "react-native-keyboard-spacer": "0.4.1",
     "react-native-linear-gradient": "2.5.6",
+    "react-native-proximity": "pakt-digital/react-native-proximity#584f46494111c639655303cf7e4bae925641dc4a",
     "react-native-share": "5.1.4",
     "react-native-splash-screen": "github:brekekesoftware/react-native-splash-screen#a78ee51c0f89652a2a223ff2bc4ec10928bf2c30",
-    "react-native-svg": "12.1.0",
+    "react-native-svg": "12.3.0",
     "react-native-svg-web": "1.0.9",
     "react-native-user-avatar": "1.0.7",
     "react-native-uuid": "1.4.9",
-    "react-native-voip-push-notification": "3.1.0",
+    "react-native-voip-push-notification": "3.3.0",
     "react-native-web": "0.15.0",
     "react-native-web-linear-gradient": "1.1.1",
-    "react-native-webrtc": "1.75.3",
+    "react-native-webrtc": "1.98.0",
     "url-parse": "1.5.1",
     "uuid": "8.3.2",
     "validatorjs": "3.22.1",
@@ -157,11 +176,11 @@
     "@babel/plugin-proposal-decorators": "7.13.5",
     "@babel/plugin-proposal-optional-chaining": "7.13.8",
     "@craco/craco": "5.9.0",
-    "@electron-forge/cli": "^6.0.0-beta.61",
-    "@electron-forge/maker-deb": "6.0.0-beta.53",
-    "@electron-forge/maker-rpm": "6.0.0-beta.53",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.53",
-    "@electron-forge/maker-zip": "6.0.0-beta.53",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@prettier/plugin-xml": "0.13.1",
     "@types/circular-dependency-plugin": "5.0.5",
     "@types/circular-json": "0.4.0",

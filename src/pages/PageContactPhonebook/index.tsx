@@ -1,8 +1,16 @@
-import { mdiMagnify, mdiPlusCircle } from '@mdi/js'
+import { mdiMagnify } from '@mdi/js'
 import orderBy from 'lodash/orderBy'
 import { observer } from 'mobx-react'
 import React from 'react'
-import { FlatList, ScrollView, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import Contacts from 'react-native-contacts'
 
 import pbx from '../../api/pbx'
 import UserItem from '../../components/ContactUserItem'
@@ -19,6 +27,12 @@ import CustomColors from '../../utils/CustomColors'
 
 @observer
 class PageContactPhonebook extends React.Component {
+  state = {
+    showContacts: false,
+  }
+
+  onEndReachedCalledDuringMomentum = true
+
   componentDidMount() {
     const id = BackgroundTimer.setInterval(() => {
       if (!pbx.client) {
@@ -27,6 +41,21 @@ class PageContactPhonebook extends React.Component {
       contactStore.loadContactsFirstTime()
       BackgroundTimer.clearInterval(id)
     }, 1000)
+    setTimeout(() => {
+      this.setState({ showContacts: true })
+    }, 1)
+  }
+
+  getContacts = async () => {
+    try {
+      Contacts.getAll().then(res => {
+        let arr = res.map(item => {
+          return item
+        })
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   update = (id: string) => {
@@ -42,6 +71,12 @@ class PageContactPhonebook extends React.Component {
         })
       })
     }
+  }
+
+  viewContact = contact => {
+    Nav().goToPageViewContact({
+      contact: contact,
+    })
   }
 
   loadContactDetail = (id: string, cb: Function) => {
@@ -68,7 +103,67 @@ class PageContactPhonebook extends React.Component {
   isMatchUser = user => {
     const { name } = user
     const { contactSearchBook } = contactStore
-    return name.toLowerCase().includes(contactSearchBook.toLowerCase())
+    return name
+      ?.toString()
+      .toLowerCase()
+      .includes(contactSearchBook.toLowerCase())
+  }
+
+  contactsRenderItem = ({ item, index }) => {
+    const { key, phoneContacts } = item
+    return (
+      <React.Fragment key={index}>
+        <View style={styles.transferSeparator}>
+          <RnText style={styles.transferSeparatorText}>{key}</RnText>
+        </View>
+        {phoneContacts.map((item, bookIndex) => {
+          const { name, id, isPhoneContact } = item
+          const hideBorder = index === contactStore.phoneContacts.length - 1
+          return (
+            <TouchableOpacity
+              onPress={() => this.viewContact(item)}
+              key={bookIndex}
+            >
+              <UserItem
+                showNewAvatar={true}
+                icons={[]}
+                key={bookIndex}
+                name={name}
+                hideBorder={hideBorder}
+                isPhoneContact={isPhoneContact}
+              />
+            </TouchableOpacity>
+          )
+        })}
+      </React.Fragment>
+    )
+  }
+
+  renderFooter = () => {
+    const isLast =
+      contactStore.limitedPhoneContacts.length ===
+      contactStore.phoneContacts.length
+    if (contactStore.contactSearchBook) {
+      return null
+    }
+    return (
+      <TouchableOpacity
+        disabled={isLast}
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginVertical: 10,
+        }}
+        onPress={!isLast ? contactStore.phoneContactsLoadMore : () => {}}
+      >
+        {isLast ? (
+          <></>
+        ) : (
+          <Text style={{ color: CustomColors.DodgerBlue }}>Load More...</Text>
+        )}
+      </TouchableOpacity>
+    )
   }
 
   render() {
@@ -95,6 +190,42 @@ class PageContactPhonebook extends React.Component {
     groups.forEach(g => {
       g.phonebooks = orderBy(g.phonebooks, 'name')
     })
+
+    let phoneContacts = contactStore.contactSearchBook
+      ? contactStore.phoneContacts
+      : contactStore.limitedPhoneContacts
+    phoneContacts = phoneContacts.filter(this.isMatchUser)
+
+    const mapContacts = {} as { [k: string]: Phonebook2[] }
+    phoneContacts.forEach(u => {
+      let c0 = u.name.charAt(0).toUpperCase()
+      if (!/[A-Z]/.test(c0)) {
+        c0 = '#'
+      }
+      if (!mapContacts[c0]) {
+        mapContacts[c0] = []
+      }
+      mapContacts[c0].push(u)
+    })
+
+    let groupsContacts = Object.keys(mapContacts).map(k => ({
+      key: k,
+      phoneContacts: mapContacts[k],
+    }))
+    groupsContacts = orderBy(groupsContacts, 'key')
+    groupsContacts.forEach(g => {
+      g.phoneContacts = orderBy(g.phoneContacts, 'name')
+    })
+
+    const contactsKeyExtractor = (item, index) => index.toString()
+
+    const ITEM_HEIGHT = 60
+    const getItemLayout = (data, index) => ({
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
+      index,
+    })
+
     return (
       <CustomLayout menu='contact' subMenu='phonebook'>
         <ScrollView stickyHeaderIndices={[1]}>
@@ -137,11 +268,11 @@ class PageContactPhonebook extends React.Component {
             <FlatList
               data={groups}
               scrollEnabled={false}
-              style={{ marginBottom: 80 }}
+              style={{ marginBottom: 25 }}
               renderItem={({ item, index }) => {
                 const { key, phonebooks } = item
                 return (
-                  <React.Fragment key={key}>
+                  <React.Fragment key={index}>
                     <View style={styles.transferSeparator}>
                       <RnText style={styles.transferSeparatorText}>
                         {key}
@@ -151,7 +282,10 @@ class PageContactPhonebook extends React.Component {
                       const { name, id } = item
                       const hideBorder = bookIndex === phonebooks.length - 1
                       return (
-                        <TouchableOpacity onPress={() => this.update(id)}>
+                        <TouchableOpacity
+                          onPress={() => this.update(id)}
+                          key={bookIndex}
+                        >
                           <UserItem
                             showNewAvatar={true}
                             icons={[]}
@@ -167,6 +301,50 @@ class PageContactPhonebook extends React.Component {
               }}
             />
           </View>
+          {phoneContacts && phoneContacts.length > 0 && (
+            <>
+              <View
+                style={{
+                  paddingLeft: 16,
+                  marginBottom: 8,
+                }}
+              >
+                <RnText
+                  style={{
+                    fontSize: 17,
+                    color: CustomColors.DodgerBlue,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {`Phone Contacts (${contactStore.phoneContacts.length} )`}
+                </RnText>
+              </View>
+              {this.state.showContacts ? (
+                <FlatList
+                  data={groupsContacts}
+                  scrollEnabled={false}
+                  style={{ marginBottom: 8 }}
+                  renderItem={this.contactsRenderItem}
+                  keyExtractor={contactsKeyExtractor}
+                  ListFooterComponent={this.renderFooter}
+                  getItemLayout={getItemLayout}
+                />
+              ) : (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 40,
+                  }}
+                >
+                  <ActivityIndicator
+                    color={CustomColors.ActiveBlue}
+                    size={'small'}
+                  />
+                </View>
+              )}
+            </>
+          )}
           {contactStore.loading ? (
             <RnText
               style={styles.loading}

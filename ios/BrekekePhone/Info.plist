@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -17,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.7.16</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -31,14 +35,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mailto</string>
 	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -50,16 +54,18 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Capture a new photo to send</string>
+	<key>NSContactsUsageDescription</key>
+	<string>To list contacts in the app</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>React Native usage</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>React Native usage</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Capture a new video to send</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Save photo to photo library</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Select from photo library</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>React Native usage</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>React Native usage</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Black.ttf</string>
@@ -92,7 +98,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
-		<string>fetch</string>
+		<string>processing</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
@@ -110,7 +116,6 @@
 	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>

@@ -74,6 +74,7 @@ const UserItem: FC<
     innerContainerStyle?: object
     iconsColor?: string
     SvgIcons?: any[]
+    isPhoneContact?: boolean
   }>
 > = ({
   answered,
@@ -102,11 +103,12 @@ const UserItem: FC<
   innerContainerStyle,
   iconsColor,
   SvgIcons,
+  isPhoneContact,
 }) => {
   let callerName = partyName || name || ''
   let callNumber = partyNumber || id || number || ''
-  var userAvatarName = callerName
-  if (isNumber(callerName)) {
+  var userAvatarName = callerName.split(' ').slice(0, 3).join(' ')
+  if (!isPhoneContact && isNumber(callerName)) {
     userAvatarName = userAvatarName?.split('').join(' ')
     callerName = ''
   }

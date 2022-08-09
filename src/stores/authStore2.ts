@@ -1,6 +1,6 @@
 import debounce from 'lodash/debounce'
 import { action, computed, observable } from 'mobx'
-import { AppState } from 'react-native'
+import { AppState, Platform } from 'react-native'
 
 import pbx from '../api/pbx'
 import sip from '../api/sip'
@@ -22,6 +22,7 @@ export class AuthStore {
 
   @observable pbxState: ConnectionState = 'stopped'
   @observable pbxTotalFailure = 0
+  @observable callConnecting = false
   @observable sipState: ConnectionState = 'stopped'
   @observable sipTotalFailure = 0
   @observable ucState: ConnectionState = 'stopped'
@@ -54,6 +55,7 @@ export class AuthStore {
     )
   }
   @computed get sipConnectingOrFailure() {
+    console.log(this.sipState, 'this.sipState')
     return ['connecting', 'failure'].some(s => s === this.sipState)
   }
   @computed get ucShouldAuth() {
@@ -172,6 +174,12 @@ export class AuthStore {
     profileStore.profiles[0].loginPressed = ''
     profileStore.profiles[0].pushNotificationEnabled = false
     profileStore.saveProfilesToLocalStorage()
+  }
+
+  @action resetFailureState = () => {
+    this.pbxTotalFailure = 0
+    this.sipTotalFailure = 0
+    this.ucTotalFailure = 0
   }
 
   @action reconnect = () => {

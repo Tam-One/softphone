@@ -1,23 +1,15 @@
-import {
-  mdiArrowRight,
-  mdiPhoneForward,
-  mdiPhoneHangup,
-  mdiPhoneOff,
-} from '@mdi/js'
 import { observer } from 'mobx-react'
 import React from 'react'
 import { Text, View } from 'react-native'
-import UserAvatar from 'react-native-user-avatar'
 
 import CustomGradient from '@/components/CustomGradient'
 import CustomHeader from '@/components/CustomHeader'
 import PoweredBy from '@/components/PoweredBy'
-import { RnIcon, RnText, RnTouchableOpacity } from '@/components/Rn'
+import { RnText, RnTouchableOpacity } from '@/components/Rn'
 import styles from '@/pages/PageTransferAttend/Styles'
 import callStore from '@/stores/callStore'
 import intl from '@/stores/intl'
 import CustomColors from '@/utils/CustomColors'
-import CustomFonts from '@/utils/CustomFonts'
 import { CancelConference, TransferPageIcon } from '@/utils/SvgComponent'
 
 @observer
@@ -33,7 +25,6 @@ class PageTransferAttend extends React.Component {
       transferring,
       stopTransferring,
       hangup,
-      conferenceTransferring,
     }: any = currentCall
 
     if (!currentCall) {

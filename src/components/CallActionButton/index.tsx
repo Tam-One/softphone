@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { Image, ImageProps, ImageSourcePropType, View } from 'react-native'
-import { SvgXml } from 'react-native-svg'
 
 import styles from '@/components/CallActionButton/Styles'
 import { RnText, RnTouchableOpacity } from '@/components/Rn'
@@ -33,6 +32,7 @@ const CallActionButton: FC<{
         styles.buttonIconBtn,
         { backgroundColor: bgcolor },
         !hideShadow && styles.shadowEffect,
+        disabled && { backgroundColor: '#e5e5e5' },
       ]}
     >
       <Icon

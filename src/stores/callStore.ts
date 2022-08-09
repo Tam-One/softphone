@@ -6,6 +6,9 @@ import RNCallKeep, { CONSTANTS } from 'react-native-callkeep'
 import IncallManager from 'react-native-incall-manager'
 import { v4 as uuid } from 'react-native-uuid'
 
+import AuthPBX from '@/stores/AuthPBX'
+import AuthSIP from '@/stores/AuthSIP'
+
 import pbx from '../api/pbx'
 import sip from '../api/sip'
 import uc from '../api/uc'
@@ -15,8 +18,10 @@ import { arrToMap } from '../utils/toMap'
 import waitTimeout from '../utils/waitTimeout'
 import { getAuthStore } from './authStore'
 import Call from './Call'
+import { intlDebug } from './intl'
 import Nav from './Nav'
 import { reconnectAndWaitSip } from './reconnectAndWaitSip'
+import RnAlert from './RnAlert'
 
 export class CallStore {
   recentPn?: {
@@ -36,8 +41,8 @@ export class CallStore {
   private getIncomingCallkeep = (
     uuid: string,
     o?: { includingAnswered: boolean },
-  ) =>
-    this.calls.find(
+  ) => {
+    let call = this.calls.find(
       c =>
         c.incoming &&
         !c.callkeepAlreadyRejected &&
@@ -46,6 +51,10 @@ export class CallStore {
           ? true
           : !c.answered && !c.callkeepAlreadyAnswered),
     )
+
+    return call
+  }
+
   onCallKeepDidDisplayIncomingCall = (uuid: string) => {
     // Find the current incoming call which is not callkeep
     const c = this.getIncomingCallkeep(uuid)
@@ -122,6 +131,8 @@ export class CallStore {
       c.callkeepUuid = ''
       c.callkeepAlreadyRejected = true
       endCallKeep(uuid)
+    } else {
+      Nav().backToPageCallRecents()
     }
   }
 
@@ -236,6 +247,30 @@ export class CallStore {
     }
   }
   startCall = async (number: string, options = {}) => {
+    const s = sip.phone?.getPhoneStatus()
+
+    if (
+      s === undefined ||
+      (s !== 'starting' && s !== 'started') ||
+      getAuthStore().sipConnectingOrFailure
+    ) {
+      RnAlert.dismiss()
+      RnAlert.error({
+        message: intlDebug`Sip connection failed, Please login again`,
+      })
+      sip.disconnect()
+      const authSIP = new AuthSIP()
+      const authPBX = new AuthPBX()
+      setTimeout(() => {
+        getAuthStore().reconnectPbx()
+        getAuthStore().reconnectSip()
+        authPBX.auth()
+        authSIP.sipReconnect()
+      }, 300)
+
+      return
+    }
+
     let reconnectCalled = false
     const startCall = async (isReconnect?: boolean) => {
       if (isReconnect) {
@@ -251,7 +286,8 @@ export class CallStore {
       reconnectAndWaitSip(startCall)
       reconnectCalled = true
     }
-    Nav().goToPageCallManage()
+    Nav().goToPageCallManage({ propsNumber: number })
+    getAuthStore().callConnecting = true
     // Auto update currentCallId
     this.currentCallId = undefined
     const prevIds = arrToMap(this.calls, 'id') as { [k: string]: boolean }
@@ -266,11 +302,31 @@ export class CallStore {
         !currentCallId &&
         Date.now() - this.startCallIntervalAt > 3000
       ) {
+        getAuthStore().callConnecting = false
+        RnAlert.dismiss()
+        RnAlert.error({
+          message: intlDebug`Sip connection failed, Please login again`,
+        })
+        Nav().backToPageCallRecents()
+
         this.clearStartCallIntervalTimer()
-        reconnectAndWaitSip(startCall)
+        return
+      } else if (
+        !currentCallId &&
+        Date.now() - this.startCallIntervalAt > 3000
+      ) {
+        getAuthStore().callConnecting = false
+        RnAlert.dismiss()
+        RnAlert.error({
+          message: intlDebug`Sip connection failed, Please login again`,
+        })
+        Nav().backToPageCallRecents()
+        this.clearStartCallIntervalTimer()
         return
       }
       if (currentCallId) {
+        getAuthStore().callConnecting = false
+
         this.currentCallId = currentCallId
       }
       // Add a guard of 10s to clear the interval
@@ -331,6 +387,13 @@ export class CallStore {
     if (Platform.OS !== 'web') {
       this.isLoudSpeakerEnabled = !this.isLoudSpeakerEnabled
       IncallManager.setForceSpeakerphoneOn(this.isLoudSpeakerEnabled)
+    }
+  }
+
+  @action enableLoudSpeaker = () => {
+    if (Platform.OS !== 'web') {
+      this.isLoudSpeakerEnabled = true
+      IncallManager.setForceSpeakerphoneOn(true)
     }
   }
 
@@ -420,6 +483,7 @@ const endCallKeep = (uuid: string) => {
     (!callStore.recentPn || n - callStore.recentPn.at > 20000)
   ) {
     RNCallKeep.endAllCalls()
+    // RNCallKeep.rejectCall(uuid)
     callStore.recentPn = undefined
   } else {
     RNCallKeep.rejectCall(uuid)

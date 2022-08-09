@@ -19,7 +19,11 @@ import CustomColors from '../../utils/CustomColors'
 @observer
 class PageCallRecents extends React.Component {
   isMatchUser = (call: AuthStore['currentData']['recentCalls'][0]) => {
-    if (call.partyNumber.includes(contactStore.callSearchRecents)) {
+    let searchVal = contactStore?.callSearchRecents?.toLowerCase()
+    if (
+      call?.partyNumber?.includes(searchVal) ||
+      call?.partyName?.toLowerCase().search(searchVal) >= 0
+    ) {
       return call.id
     }
     return ''
@@ -45,12 +49,10 @@ class PageCallRecents extends React.Component {
 
       return (
         typeof created === 'string' &&
-        // HH:mm - MMM D
         (createdLength === 13 || createdLength === 14)
       )
     })
     const today = moment().format('MMM D')
-    // {"id":"589b497c-530b-44d8-aef7-38a2dd9b9342","incoming":false,"answered":false,"partyNumber":"100","duration":0,"created":"12:12 - Jun 21"}
     return filteredCalls.map(call => ({
       ...call,
       created: (call.created + '').replace(` - ${today}`, ''),
@@ -131,6 +133,7 @@ class PageCallRecents extends React.Component {
                     key={index}
                     {...this.getAvatar(partyNumber)}
                     {...item}
+                    hideBorder={index === calls.length - 1}
                   />
                 )
               }}

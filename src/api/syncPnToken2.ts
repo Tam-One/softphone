@@ -1,8 +1,6 @@
 import { Platform } from 'react-native'
 
-import { intlDebug } from '../stores/intl'
 import profileStore, { Profile } from '../stores/profileStore'
-import RnAlert from '../stores/RnAlert'
 // @ts-ignore
 import PushNotification from '../utils/PushNotification'
 import { PBX } from './pbx'

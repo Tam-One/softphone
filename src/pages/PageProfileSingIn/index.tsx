@@ -9,9 +9,7 @@ import {
   View,
 } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
-import { SvgXml } from 'react-native-svg'
 
-import svgImages from '@/assets/svgImages'
 import CustomGradient from '@/components/CustomGradient'
 import FormInputBox from '@/components/FormInputBox'
 import PoweredBy from '@/components/PoweredBy'
@@ -55,9 +53,22 @@ const PageProfileSignIn = () => {
   const [profileObj, setProfileObj] = useState(get(store, 'profile'))
 
   const [open, setOpen] = useState(false)
+  const [phoneOpen, setPhoneOpen] = useState(false)
+  const [selectedPhone, setSelectedPhone] = useState(
+    get(store, 'profile.pbxPhoneIndex') || '4',
+  )
+
+  const phoneConfig = [
+    { label: 'Phone 1', value: '1' },
+    { label: 'Phone 2', value: '2' },
+    { label: 'Phone 3', value: '3' },
+    { label: 'Phone 4', value: '4' },
+  ]
+
   const [selectedServer, setSelectedServer] = useState(
     get(store, 'profile.pbxHostname') || 'sip2.qooqie.com',
   )
+
   const serverConfig = [
     { label: 'Qooqie', value: 'sip2.qooqie.com' },
     { label: 'Tam One', value: 'sip2.voipcentrale.nl' },
@@ -85,7 +96,7 @@ const PageProfileSignIn = () => {
 
   const onSavePress = () => {
     const { profile } = store
-    const { pbxUsername, pbxPassword, pbxTenant } = profile
+    const { pbxUsername, pbxPassword, pbxTenant, pbxPhoneIndex } = profile
     if (!pbxUsername || !pbxPassword || !pbxTenant) {
       setFieldErrors({
         pbxUsername: !pbxUsername,
@@ -94,7 +105,7 @@ const PageProfileSignIn = () => {
       })
       return
     }
-    profile.pbxPhoneIndex = '4'
+    profile.pbxPhoneIndex = pbxPhoneIndex || '4'
     profile.pbxHostname = selectedServer
     profile.pbxPort = '8443'
     profile.pushNotificationEnabled = true
@@ -133,6 +144,7 @@ const PageProfileSignIn = () => {
             showError={fieldErrors['pbxUsername']}
             Icon={ProfileIcon}
             errorStyles={styles.errorStyles}
+            submitKey={onSavePress}
           />
           <FormInputBox
             label={'Tenant'}
@@ -152,7 +164,50 @@ const PageProfileSignIn = () => {
             required={true}
             showError={fieldErrors['pbxTenant']}
             errorStyles={styles.errorStyles}
+            submitKey={onSavePress}
           />
+          <View
+            style={[
+              styles.serverView,
+              Platform.OS !== 'android' && { zIndex: 999 },
+            ]}
+          >
+            <RnText
+              style={[
+                styles.inputBoxLabel,
+                phoneOpen && { backgroundColor: CustomColors.White },
+              ]}
+            >
+              {'Phone'}
+            </RnText>
+
+            <DropDownPicker
+              showTickIcon={false}
+              open={phoneOpen}
+              value={selectedPhone}
+              items={phoneConfig}
+              setOpen={val => {
+                setPhoneOpen(val)
+                setOpen(false)
+              }}
+              setValue={text => {
+                onTextChange('pbxPhoneIndex', text)
+                setSelectedPhone(text)
+              }}
+              style={[styles.serverStyle, phoneOpen && styles.activeView]}
+              textStyle={styles.serverText}
+              containerStyle={[styles.serverContainer]}
+              dropDownContainerStyle={[
+                styles.dropDownContainer,
+                {
+                  zIndex: 9999,
+                },
+              ]}
+              dropDownDirection='BOTTOM'
+              selectedItemContainerStyle={styles.selectedItemContainer}
+              listItemContainerStyle={[styles.listItemContainer]}
+            />
+          </View>
           <View
             style={[
               styles.serverView,
@@ -173,7 +228,10 @@ const PageProfileSignIn = () => {
               open={open}
               value={selectedServer}
               items={servers}
-              setOpen={setOpen}
+              setOpen={val => {
+                setPhoneOpen(false)
+                setOpen(val)
+              }}
               setValue={text => {
                 onTextChange('pbxHostname', text)
                 setSelectedServer(text)
@@ -200,6 +258,7 @@ const PageProfileSignIn = () => {
             RightIcon={passwordView ? EyeOffIcon : EyeIcon}
             rightIconOnClick={() => setPasswordView(!passwordView)}
             errorStyles={styles.errorStyles}
+            submitKey={onSavePress}
           />
         </View>
 

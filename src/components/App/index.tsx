@@ -1,6 +1,9 @@
+import NetInfo from '@react-native-community/netinfo'
+import PushNotificationIOS from '@react-native-community/push-notification-ios'
+import * as Sentry from '@sentry/react-native'
 import { observe } from 'mobx'
 import { observer } from 'mobx-react'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   AppState,
@@ -13,6 +16,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
+import BackgroundTimer from 'react-native-background-timer'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
 import SplashScreen from 'react-native-splash-screen'
 
@@ -51,16 +55,19 @@ import PushNotification from '@/utils/PushNotification'
 import registerOnUnhandledError from '@/utils/registerOnUnhandledError'
 
 import api from '../../api/index'
+import sip from '../../api/sip'
 
 // API was a component but had been rewritten to a listener
 void api
 
-AppState.addEventListener('change', () => {
-  if (AppState.currentState === 'active') {
-    getAuthStore().reconnect()
-    PushNotification.resetBadgeNumber()
-  }
+Sentry.init({
+  dsn:
+    'https://048b2053107a4d3bb5f8d1bb69bc246c@o1134185.ingest.sentry.io/6181403',
+  tracesSampleRate: 1,
+  environment: 'production',
+  enableNative: false,
 })
+
 registerOnUnhandledError(unexpectedErr => {
   // Must wrap in window.setTimeout to make sure
   //    there's no state change when rendering
@@ -86,16 +93,7 @@ const getAudioVideoPermission = () => {
   }
 }
 
-if (Platform.OS === 'web') {
-  RnAlert.prompt({
-    title: intl`Action Required`,
-    message: intl`Qooqie Phone needs your permission to access camera and microphone for calls. Press OK to accept`,
-    confirmText: 'OK',
-    dismissText: false,
-    onConfirm: getAudioVideoPermission,
-    onDismiss: getAudioVideoPermission,
-  })
-} else if (
+if (
   AppState.currentState === 'active' &&
   !callStore.calls.length &&
   !callStore.recentPn &&
@@ -125,7 +123,8 @@ BackHandler.addEventListener('hardwareBackPress', () => {
   return false
 })
 
-let alreadyInitApp = false
+var alreadyInitApp = false
+var activelist = true
 PushNotification.register(() => {
   if (alreadyInitApp) {
     return
@@ -175,16 +174,69 @@ PushNotification.register(() => {
       profileStore.saveProfilesToLocalStorage()
     }
     Nav().goToPageIndex()
+    AppState.addEventListener('change', () => {
+      if (Platform.OS === 'ios' || AppState.currentState === 'active') {
+        reconnectServer()
+        activelist = false
+      }
+    })
   })
+
+  activelist = false
 })
 
+var conn = false
+
+var internetConnection = false
+var recontime
+
+const reconnectServer = () => {
+  const s = sip.phone?.getPhoneStatus()
+  if (s === undefined || (s !== 'starting' && s !== 'started')) {
+    if (conn || !internetConnection) {
+      return
+    }
+    conn = true
+    const authSIP = new AuthSIP()
+    const authPBX = new AuthPBX()
+    sip.disconnect()
+    recontime && clearTimeout(recontime)
+    recontime = setTimeout(() => {
+      getAuthStore().reconnectPbx()
+      getAuthStore().reconnectSip()
+      authPBX.auth()
+      authSIP.sipReconnect()
+      setTimeout(() => {
+        conn = false
+      }, 3000)
+    }, 600)
+  }
+}
+
 const App = observer(() => {
+  const [internetConnected, setInternetConnected] = useState(true)
+  var unsubscribe
+
   useEffect(() => {
     if (Platform.OS !== 'web') {
       SplashScreen.hide()
     }
     LogBox.ignoreAllLogs()
+
+    if (!unsubscribe) {
+      unsubscribe = NetInfo.addEventListener(state => interChange(state))
+    }
+    return () => unsubscribe()
   }, [])
+
+  const interChange = state => {
+    const s = getAuthStore()
+    if (s.signedInId && s.loginPressed && s.pbxState !== 'connecting') {
+      reconnectServer()
+    }
+    internetConnection = !!state.isConnected
+    setInternetConnected(!!state.isConnected)
+  }
 
   if (!profileStore.profilesLoadedObservable) {
     return (
@@ -206,6 +258,7 @@ const App = observer(() => {
     ucTotalFailure,
     signedInId,
     loginPressed,
+    callConnecting,
   } = s
   let service = ''
   let isRetrying = false
@@ -219,7 +272,16 @@ const App = observer(() => {
     service = intl`UC`
     isRetrying = ucTotalFailure > 0
   }
-  let connMessage =
+  let connMessage = ''
+  if (
+    !internetConnected &&
+    !s.signedInId &&
+    !s.loginPressed &&
+    s.pbxState !== 'connecting'
+  ) {
+    connMessage = intl`Please check your internet connection`
+  }
+  connMessage =
     service &&
     (isConnFailure
       ? intl`${service} connection failed`
@@ -228,6 +290,11 @@ const App = observer(() => {
   if (isConnFailure && ucConnectingOrFailure && ucLoginFromAnotherPlace) {
     connMessage = intl`UC signed in from another location`
   }
+
+  const bottomBarColor =
+    !!signedInId && !!loginPressed
+      ? CustomColors.MediumBlack
+      : CustomColors.AppBackground
 
   return (
     <Fragment>
@@ -239,7 +306,7 @@ const App = observer(() => {
         }}
       >
         <RnStatusBar />
-        {shouldShowConnStatus && !!signedInId && (
+        {(!!connMessage || (shouldShowConnStatus && !!signedInId)) && (
           <AnimatedSize
             style={[
               styles.appConnectionStatus,
@@ -257,18 +324,18 @@ const App = observer(() => {
         {!!signedInId && !!loginPressed && (
           <>
             <CallNotify />
-            <CallBar />
             <CallVoices />
             <ChatGroupInvite />
             <UnreadChatNoti />
           </>
         )}
 
-        {signedInId &&
-        !loginPressed &&
-        !pbxTotalFailure &&
-        !sipTotalFailure &&
-        !ucTotalFailure ? (
+        {callConnecting ||
+        (signedInId &&
+          !loginPressed &&
+          !pbxTotalFailure &&
+          !sipTotalFailure &&
+          !ucTotalFailure) ? (
           <View style={styles.container}>
             <ActivityIndicator color={CustomColors.ActiveBlue} size={'large'} />
           </View>
@@ -284,10 +351,18 @@ const App = observer(() => {
         {Platform.OS === 'ios' && <KeyboardSpacer />}
       </View>
       <SafeAreaView
-        style={{ backgroundColor: CustomColors.AppBackground }}
+        style={{
+          backgroundColor: bottomBarColor,
+        }}
       ></SafeAreaView>
     </Fragment>
   )
 })
+var Comp
+if (CustomValues.iosAndroid) {
+  Comp = Sentry.wrap(App)
+} else {
+  Comp = App
+}
 
-export default App
+export default Comp

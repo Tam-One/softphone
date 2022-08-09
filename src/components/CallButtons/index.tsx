@@ -81,7 +81,7 @@ const CallButtons: FC<{
           <></>
         )}
       </TouchableOpacity>
-      <RnText style={styles.actionBtnText}>{lable}</RnText>
+      {lable ? <RnText style={styles.actionBtnText}>{lable}</RnText> : <></>}
     </View>
   )
 }

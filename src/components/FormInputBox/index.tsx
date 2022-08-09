@@ -23,6 +23,8 @@ const FormInputBox: FC<{
   RightIcon?: any
   rightIconOnClick?(): void
   errorStyles?: any
+  iconColor?: any
+  submitKey?: any
 }> = ({
   label,
   val,
@@ -38,6 +40,8 @@ const FormInputBox: FC<{
   RightIcon,
   rightIconOnClick,
   errorStyles,
+  iconColor,
+  submitKey,
 }) => {
   const [focus, setFocus] = useState(false)
   const [validationError, setValidationError] = useState(showError)
@@ -79,13 +83,19 @@ const FormInputBox: FC<{
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
               style={iconStyle}
+              tabIndex={-1}
             ></Icon>
           ) : (
             <></>
           )}
           {mdIcon ? (
             <View>
-              <RnIcon path={mdIcon} color={CustomColors.Black} size={24} />
+              <RnIcon
+                path={mdIcon}
+                color={iconColor || CustomColors.Black}
+                size={24}
+                tabIndex={-1}
+              />
             </View>
           ) : (
             <></>
@@ -107,6 +117,7 @@ const FormInputBox: FC<{
           editable={editable}
           selectTextOnFocus={editable}
           secureTextEntry={secureEntry}
+          onSubmitEditing={submitKey ? submitKey : () => {}}
         />
         {RightIcon ? (
           <TouchableOpacity
@@ -114,6 +125,7 @@ const FormInputBox: FC<{
             onPress={rightIconOnClick}
           >
             <RightIcon
+              tabIndex={-1}
               fill={CustomColors.SVGBlack}
               fillOpacity={1}
               style={iconStyle}
@@ -130,6 +142,7 @@ const FormInputBox: FC<{
               color={CustomColors.ErrorRed}
               path={mdiCardsDiamond}
               style={styles.fieldErrorIcon}
+              tabIndex={-1}
             />
             <RnText small style={styles.fieldErrorLabel}>
               {'This field is required'}

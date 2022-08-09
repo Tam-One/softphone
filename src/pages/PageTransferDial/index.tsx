@@ -1,4 +1,4 @@
-import { mdiAccount, mdiApps, mdiPhone, mdiPhoneOutgoing } from '@mdi/js'
+import { mdiAccount, mdiApps } from '@mdi/js'
 import orderBy from 'lodash/orderBy'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
@@ -22,6 +22,7 @@ import PoweredBy from '@/components/PoweredBy'
 import { RnIcon } from '@/components/Rn'
 import RnText from '@/components/RnText'
 import styles from '@/pages/PageTransferDial/Styles'
+import { getAuthStore } from '@/stores/authStore'
 import callStore from '@/stores/callStore'
 import contactStore from '@/stores/contactStore'
 import { intlDebug } from '@/stores/intl'
@@ -82,9 +83,14 @@ class PageTransferDial extends React.Component {
     if (isDelete && start === end && start) {
       min = min - 1
     }
-    // Update text to trigger render
-    this.text = this.text.substring(0, min) + val + this.text.substring(max)
-    //
+    if (val === '-1') {
+      min = 0
+      this.text = ''
+    } else {
+      // Update text to trigger render
+      this.text = this.text.substring(0, min) + val + this.text.substring(max)
+      //
+    }
     const textSelection = min + (isDelete ? 0 : 1)
     this.textSelection.start = textSelection
     this.textSelection.end = textSelection
@@ -165,9 +171,19 @@ class PageTransferDial extends React.Component {
 
   keysComponent = (transferAttended, transferBlind) => {
     const onTransferPress = () => {
+      this.text = this.text.trim()
       if (!this.text) {
         RnAlert.error({
           message: intlDebug`Enter a phone number before you can press transfer conference`,
+        })
+        return
+      }
+      const { pbxUsername } = getAuthStore().currentProfile || {}
+
+      if (this.text === pbxUsername) {
+        RnAlert.dismiss()
+        RnAlert.error({
+          message: intlDebug`Self transfer is not allowed`,
         })
         return
       }

@@ -1,3 +1,5 @@
+import { reconnectAndWaitSip } from '../stores/reconnectAndWaitSip'
+
 const uint8ArrayToUrlBase64 = (arr: ArrayBuffer) =>
   window
     .btoa(
@@ -5,8 +7,11 @@ const uint8ArrayToUrlBase64 = (arr: ArrayBuffer) =>
     )
     .replace(/[+/]/g, '-')
 
+var initAppFunction
+
 const PushNotification = {
   register: (initApp: Function) => {
+    initAppFunction = initApp
     initApp()
     if (!window.Notification || window.Notification.permission === 'granted') {
       return
@@ -27,6 +32,7 @@ const PushNotification = {
     }
   },
   resetBadgeNumber: () => {
+    reconnectAndWaitSip(() => {})
     // Polyfill
   },
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "393586840769",
+    "firebase_url": "https://brekekephone-99ee0.firebaseio.com",
+    "project_id": "brekekephone-99ee0",
+    "storage_bucket": "brekekephone-99ee0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393586840769:android:a32967df9f09e59bd6f040",
+        "android_client_info": {
+          "package_name": "com.brekeke.phonedev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393586840769-mj21orqp9gaqp89ueh0hhhdiqtakapvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb7MqLdBYWagtChDRxILR4shyg6OgJzqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393586840769-mj21orqp9gaqp89ueh0hhhdiqtakapvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

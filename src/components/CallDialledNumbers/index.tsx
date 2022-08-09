@@ -1,4 +1,4 @@
-import React, { FC, RefObject } from 'react'
+import React, { FC, RefObject, useState } from 'react'
 import {
   Keyboard,
   NativeSyntheticEvent,
@@ -28,7 +28,8 @@ const ShowNumber: FC<{
   hidePlaceholder,
   customStyle,
 }) => {
-  const placeHolder = !hidePlaceholder ? 'Enter phone number' : ''
+  const placehold = !hidePlaceholder ? 'Enter phone number' : ''
+  const [placeHolder, setPlaceHolder] = useState(placehold)
   return (
     <View style={styles.showNumbers}>
       <RnTextInput
@@ -48,6 +49,14 @@ const ShowNumber: FC<{
         ref={refInput}
         style={[styles.showNumbersDisplayText, customStyle]}
         value={value}
+        onFocus={() => {
+          setPlaceHolder('')
+        }}
+        onBlur={() => {
+          setTimeout(() => {
+            setPlaceHolder(placehold)
+          }, 200)
+        }}
       />
     </View>
   )

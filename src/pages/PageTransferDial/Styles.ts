@@ -20,13 +20,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   transferKeysPlaceholder: {
-    fontSize: CustomFonts.HeaderTitle,
-    fontFamily: 'Roboto-Regular',
     padding: 15,
-    textAlign: 'left',
     width: '100%',
     marginTop: '5%',
-    marginLeft: 65,
   },
   tabView: {
     flexDirection: 'row',

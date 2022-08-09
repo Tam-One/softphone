@@ -85,6 +85,7 @@ class MissedCalls extends React.Component {
                       {...this.getAvatar(partyNumber)}
                       {...item}
                       fromMissedCall={true}
+                      hideBorder={index === missedCalls.length - 1}
                     />
                   )
                 }}

@@ -6,6 +6,8 @@ import styles from '@/components/CustomLayout/Styles'
 import Footer from '@/components/Footer'
 import SubMenu from '@/components/SubMenu'
 
+import CallBar from '../CallBar'
+
 const CustomLayout: FC<
   Partial<{
     menu: string
@@ -19,6 +21,8 @@ const CustomLayout: FC<
     <>
       <View style={styles.scroller}>
         <CustomGradient>
+          <CallBar />
+
           {!hideSubMenu ? (
             <>
               <SubMenu {...props} />

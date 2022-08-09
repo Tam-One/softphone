@@ -1,15 +1,8 @@
 import { observer } from 'mobx-react'
 import React from 'react'
-import {
-  Dimensions,
-  Platform,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Dimensions, Platform, TouchableOpacity, View } from 'react-native'
+import Proximity from 'react-native-proximity'
 
-import svgImages from '@/assets/svgImages'
 import CallActionButton from '@/components/CallActionButton'
 import CallButtons from '@/components/CallButtons'
 import CallerInfo from '@/components/CallerInfo'
@@ -20,7 +13,6 @@ import PoweredBy from '@/components/PoweredBy'
 import RnText from '@/components/RnText'
 import VideoPlayer from '@/components/VideoPlayer'
 import styles from '@/pages/PageCallManage/Styles'
-import VideoPopup from '@/pages/PageCallManage/VideoPopup'
 import PageDtmfKeypad from '@/pages/PageDtmfKeypad'
 import PageTransferAttend from '@/pages/PageTransferAttend'
 import Call from '@/stores/Call'
@@ -28,7 +20,6 @@ import callStore from '@/stores/callStore'
 import intl from '@/stores/intl'
 import Nav from '@/stores/Nav'
 import CustomColors from '@/utils/CustomColors'
-import CustomImages from '@/utils/CustomImages'
 import CustomStrings from '@/utils/CustomStrings'
 import CustomValues from '@/utils/CustomValues'
 import formatDuration from '@/utils/formatDuration'
@@ -54,12 +45,13 @@ import VideoCallRequest from './VideoCallRequest'
 
 @observer
 class PageCallManage extends React.Component<{
-  isFromCallBar: boolean
+  propsNumber?: string
 }> {
   intervalID = 0
   waitingTimer = 3000
   requestTimer = 20000
   recordAnimation = RecordCircleRed
+  sipFailed = false
 
   videoRequestTimeout
   state = {
@@ -67,6 +59,8 @@ class PageCallManage extends React.Component<{
     showVideoPopup: '',
     responseMessage: '',
     hideVideoButtons: false,
+    speakedEnabled: false,
+    proximity: false,
   }
 
   getActionsButtonList = (currentCall: any) => {
@@ -131,6 +125,7 @@ class PageCallManage extends React.Component<{
       ),
       video: (
         <CallActionButton
+          disabled={holding}
           bgcolor={localVideoEnabled ? activeColor : nonActiveColor}
           name={intl`Video`}
           onPress={localVideoEnabled ? () => disableVideo(true) : onVideoPress}
@@ -196,6 +191,12 @@ class PageCallManage extends React.Component<{
     return buttonList
   }
 
+  componentDidMount() {
+    if (CustomValues.iosAndroid) {
+      Proximity.addListener(this._proximityListener)
+    }
+  }
+
   componentDidUpdate() {
     const { currentCall, backgroundCalls } = callStore
     if (!currentCall && !backgroundCalls.length) {
@@ -205,6 +206,9 @@ class PageCallManage extends React.Component<{
 
   componentWillUnmount() {
     clearInterval(this.intervalID)
+    if (CustomValues.iosAndroid) {
+      Proximity.removeListener(this._proximityListener)
+    }
   }
 
   renderCallTime = (isVideoEnabled?: boolean) => {
@@ -249,7 +253,7 @@ class PageCallManage extends React.Component<{
       answered,
       id,
       partyName,
-      hangup,
+      hangupWithUnhold,
       enableVideo,
       localVideoEnabled,
       remoteVideoEnabled,
@@ -266,6 +270,12 @@ class PageCallManage extends React.Component<{
       localVideoEnabled ||
       remoteVideoEnabled ||
       responseMessage
+
+    const { isLoudSpeakerEnabled, enableLoudSpeaker } = callStore
+
+    if (Platform.OS === 'ios' && isLoudSpeakerEnabled && answered) {
+      enableLoudSpeaker()
+    }
 
     if (this.videoRequestTimeout && !localVideoEnabled) {
       clearTimeout(this.videoRequestTimeout)
@@ -294,6 +304,10 @@ class PageCallManage extends React.Component<{
               setResponseMessage={msg =>
                 this.setState({ responseMessage: msg })
               }
+              clearTimer={() => {
+                clearTimeout(this.videoRequestTimeout)
+                this.videoRequestTimeout = null
+              }}
             ></VideoCallRequest>
           ) : (
             <></>
@@ -318,7 +332,7 @@ class PageCallManage extends React.Component<{
                 <CallerInfo
                   isUserCalling={!partyNumber?.includes('+')}
                   callerName={callerName}
-                  callerNumber={partyNumber}
+                  callerNumber={partyNumber || this.props?.propsNumber}
                   containerStyle={{
                     marginTop: callerName || showKeyPad ? '15%' : '25%',
                   }}
@@ -336,7 +350,7 @@ class PageCallManage extends React.Component<{
                   <PageDtmfKeypad
                     callId={id}
                     partyName={callerName}
-                    hangup={hangup}
+                    hangup={hangupWithUnhold}
                     onHidePress={() => this.setState({ showKeyPad: false })}
                   ></PageDtmfKeypad>
                 </View>
@@ -365,7 +379,6 @@ class PageCallManage extends React.Component<{
   renderVideo = (currentCall: Call) => {
     const { remoteVideoStreamObject, localVideoStreamObject } = currentCall
     const { hideVideoButtons } = this.state
-
     return (
       <TouchableOpacity
         style={styles.videoContainer}
@@ -454,10 +467,34 @@ class PageCallManage extends React.Component<{
     )
   }
 
+  renderCallingBtns = (currentCall: Call) => {
+    const actionButtonsList = this.getActionsButtonList(currentCall)
+
+    return (
+      <View
+        style={{
+          marginBottom: 83,
+        }}
+      >
+        <View style={styles.btnsInnerView}>
+          {actionButtonsList['mute']}
+          {/* {actionButtonsList['video']} */}
+          {Platform.OS !== 'web' && actionButtonsList['speaker']}
+        </View>
+      </View>
+    )
+  }
+
   renderHangupBtn = (currentCall: Call) => {
     const { showKeyPad } = this.state
+    const { answered } = currentCall
     return (
-      <View style={styles.footerContainer}>
+      <View
+        style={[
+          styles.footerContainer,
+          !answered && styles.callingScreenButtons,
+        ]}
+      >
         {!showKeyPad && (
           <>
             {this.callEndButton(currentCall)}
@@ -469,19 +506,65 @@ class PageCallManage extends React.Component<{
   }
 
   callEndButton = (currentCall: Call, customStyles?: object) => {
-    const { hangup } = currentCall
+    const { hangupWithUnhold, answered } = currentCall
     return (
       <View style={customStyles ? customStyles : styles.actionBtnContainer}>
-        <CallButtons onPress={hangup} lable={''} Icon={DeclineButton} />
+        {!answered && this.renderCallingBtns(currentCall)}
+
+        <CallButtons
+          onPress={() => {
+            if (Object.keys(currentCall).length > 0) {
+              hangupWithUnhold()
+            } else {
+              Nav().backToPageCallRecents()
+            }
+          }}
+          lable={''}
+          Icon={DeclineButton}
+        />
       </View>
     )
   }
 
+  _proximityListener = data => {
+    if (data.proximity != this.state.proximity) {
+      this.setState({
+        proximity: data.proximity,
+      })
+    }
+  }
+
   render() {
     const currentCall: any = callStore.currentCall || {}
-    const { remoteVideoEnabled, localVideoEnabled } = currentCall
+    const { remoteVideoEnabled, localVideoEnabled, transferring } = currentCall
     const isVideoEnabled = remoteVideoEnabled && localVideoEnabled
-    return <>{this.renderCall(currentCall, isVideoEnabled)}</>
+    if (isVideoEnabled) {
+      clearTimeout(this.videoRequestTimeout)
+      this.videoRequestTimeout = null
+    }
+    const { isLoudSpeakerEnabled } = callStore
+
+    return (
+      <>
+        {this.state.proximity && !isLoudSpeakerEnabled && (
+          <View
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 9999,
+              opacity: 0.5,
+              backgroundColor: 'black',
+            }}
+          ></View>
+        )}
+        {this.renderCall(currentCall, isVideoEnabled)}
+      </>
+    )
   }
 }
 

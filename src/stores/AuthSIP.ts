@@ -1,9 +1,11 @@
+import NetInfo from '@react-native-community/netinfo'
 import { debounce } from 'lodash'
 import { Lambda, observe } from 'mobx'
 
 import pbx from '../api/pbx'
 import sip from '../api/sip'
 import updatePhoneIndex from '../api/updatePhoneIndex'
+import Nav from '../stores/Nav'
 import { getAuthStore } from './authStore'
 import { intlDebug } from './intl'
 import profileStore from './profileStore'
@@ -12,12 +14,16 @@ import RnAlert from './RnAlert'
 class AuthSIP {
   private clearObserve?: Lambda
   auth() {
+    this.clearObserve?.()
     this.authWithCheck()
     this.clearObserve = observe(
       getAuthStore(),
       'sipShouldAuth',
       this.authWithCheckDebounced,
     )
+  }
+  getObservere() {
+    return this.clearObserve
   }
   dispose() {
     console.error('SIP PN debug: set sipState stopped dispose')
@@ -65,19 +71,16 @@ class AuthSIP {
       return
     }
     console.error('SIP PN debug: AuthSIP.authWithoutCatch')
-    //
     const pbxConfig = await pbx.getConfig()
     if (!pbxConfig) {
       console.error('Invalid PBX config')
       return
     }
-    //
     const sipWSSPort = pbxConfig['sip.wss.port']
     if (!sipWSSPort) {
       console.error('Invalid SIP WSS port')
       return
     }
-    //
     getAuthStore().userExtensionProperties =
       getAuthStore().userExtensionProperties ||
       (await pbx.getUserForSelf(
@@ -89,21 +92,17 @@ class AuthSIP {
       console.error('Invalid PBX user config')
       return
     }
-    //
     const language = pbxUserConfig.language
     void language
-    //
     const webPhone = (await updatePhoneIndex()) as { id: string }
     if (!webPhone) {
       return
     }
-    //
     const sipAccessToken = await pbx.createSIPAccessToken(webPhone.id)
     if (!sipAccessToken) {
       console.error('Invalid SIP access token')
       return
     }
-    //
     const dtmfSendMode = pbxConfig['webrtcclient.dtmfSendMode']
     const turnServer = pbxConfig['webphone.turn.server']
     const turnUser = pbxConfig['webphone.turn.username']
@@ -116,7 +115,7 @@ class AuthSIP {
         }
       : undefined
     //
-    await sip.connect({
+    var onj = {
       hostname: getAuthStore().currentProfile.pbxHostname,
       port: sipWSSPort,
       username: webPhone.id,
@@ -124,8 +123,14 @@ class AuthSIP {
       pbxTurnEnabled: getAuthStore().currentProfile.pbxTurnEnabled,
       dtmfSendMode: Number(dtmfSendMode),
       turnConfig,
-    })
+    }
+    await sip.connect(onj)
   }
+
+  sipReconnect() {
+    this.authWithCheck()
+  }
+
   private authWithCheck = () => {
     if (!getAuthStore().sipShouldAuth) {
       return
@@ -144,12 +149,20 @@ class AuthSIP {
         getAuthStore().sipTotalFailure += 1
         sip.disconnect()
         getAuthStore().signOut()
-        RnAlert.error({
-          message: intlDebug`Invalid Credentials`,
+        RnAlert.dismiss()
+        NetInfo.fetch().then(state => {
+          RnAlert.error({
+            message: state.isConnected
+              ? intlDebug`Invalid Credentials`
+              : intlDebug`No Internet Connection`,
+          })
         })
+        Nav().goToPageProfileSignIn()
       })
   }
-  private authWithCheckDebounced = debounce(this.authWithCheck, 300)
+  private authWithCheckDebounced = debounce(() => {
+    const s = getAuthStore()
+  }, 300)
 }
 
 export default AuthSIP

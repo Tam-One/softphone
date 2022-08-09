@@ -23,6 +23,7 @@ import PageProfileUpdate from '@/pages/PageProfileUpdate'
 import PageSettingsDebug from '@/pages/PageSettingDebug'
 import PageSettingsOther from '@/pages/PageSettingsOther'
 import PageSettingsProfile from '@/pages/PageSettingsProfile'
+import PageTransferAttend from '@/pages/PageTransferAttend'
 import PageTransferDial from '@/pages/PageTransferDial'
 import PageViewContact from '@/pages/PageViewContact'
 import { getAuthStore } from '@/stores/authStore'
@@ -42,6 +43,8 @@ export class Nav {
   goToPageChatRecents = go({ PageChatRecents }, true)
   backToPageChatRecents = back({ PageChatRecents }, true)
   goToPageContactPhonebook = go({ PageContactPhonebook }, true)
+  goToPageContactPhonebookAnimation = go({ PageContactPhonebook }, false)
+  goToPageViewContactAnimation = go({ PageViewContact }, false)
   backToPageContactPhonebook = back({ PageContactPhonebook }, true)
   goToPageContactUsers = go({ PageContactUsers }, true)
   backToPageContactUsers = back({ PageContactUsers }, true)
@@ -71,6 +74,7 @@ export class Nav {
   goToPageBackgroundCalls = go({ PageBackgroundCalls })
   backToPageBackgroundCalls = back({ PageBackgroundCalls })
   goToPageTransferDial = go({ PageTransferDial })
+  goToPageTransferAttend = go({ PageTransferAttend })
   backToPageTransferDial = back({ PageTransferDial })
   goToPageDtmfKeypad = go({ PageDtmfKeypad })
   backToPageDtmfKeypad = back({ PageDtmfKeypad })

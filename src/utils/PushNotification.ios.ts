@@ -8,6 +8,7 @@ import { AppState } from 'react-native'
 import FCM, { FCMEvent, Notification as FPN } from 'react-native-fcm'
 import Voip from 'react-native-voip-push-notification'
 
+import CustomValues from './CustomValues'
 import parse from './PushNotification-parse'
 
 let voipApnsToken = ''
@@ -30,7 +31,8 @@ const onNotification = async (
   isLocal = false,
 ) => {
   const n: any = parse((n0 as unknown) as { [k: string]: unknown }, isLocal)
-  if (!n) {
+
+  if (AppState.currentState === 'active' || !n || !n0 || !n0.x_title) {
     return
   }
   initApp()
@@ -41,12 +43,12 @@ const onNotification = async (
     }
     PushNotificationIOS.addNotificationRequest({
       id: 'call',
-      title: n.body,
+      title: n0.x_title,
       body: n.isCall ? 'Answer' : 'View',
       sound: n.isCall ? 'incallmanager_ringtone.mp3' : undefined,
-      badge: badge,
+      badge: 0,
     })
-    PushNotificationIOS.setApplicationIconBadgeNumber(badge)
+    PushNotificationIOS.setApplicationIconBadgeNumber(0)
   })
 }
 

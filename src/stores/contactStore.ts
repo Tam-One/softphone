@@ -1,5 +1,19 @@
+import orderBy from 'lodash/orderBy'
 import uniqBy from 'lodash/uniqBy'
 import { action, computed, observable } from 'mobx'
+import {
+  Alert,
+  FlatList,
+  Linking,
+  PermissionsAndroid,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import Contacts from 'react-native-contacts'
+
+import CustomValues from '@/utils/CustomValues'
 
 import { getContactByNumber } from '../api/CallApi'
 import pbx from '../api/pbx'
@@ -38,6 +52,7 @@ export type Phonebook2 = {
   shared: boolean
   loaded?: boolean
   hidden: boolean
+  isPhoneContact?: boolean
 }
 
 class ContactStore {
@@ -78,6 +93,94 @@ class ContactStore {
     this.loadContacts()?.then(() => {
       this.alreadyLoadContactsFirstTime = true
     })
+    if (CustomValues.iosAndroid) {
+      this.fetchPhoneContacts()
+    }
+  }
+
+  fetchPhoneContacts = () => {
+    if (Platform.OS === 'ios') {
+      this.getContacts()
+      return
+    }
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+      title: 'Contacts',
+      message: 'This app would like to view your contacts.',
+      buttonPositive: 'Please accept bare mortal',
+    }).then(() => {
+      this.getContacts()
+    })
+  }
+
+  getContacts = () => {
+    Contacts.getAll()
+      .then(contacts => {
+        let phoneContacts: Phonebook2[] = []
+        const numberKey = ['cellNumber', 'workNumber', 'homeNumber']
+        contacts.forEach(contact => {
+          let contactObj = {} as Phonebook2
+          if (
+            !(contact.displayName || contact.givenName || contact.familyName) ||
+            !contact.phoneNumbers ||
+            !contact.phoneNumbers.length
+          ) {
+            return
+          }
+          let uniquePhoneNumbers = contact.phoneNumbers.filter(
+            (v, i, a) =>
+              a.findIndex(
+                v2 =>
+                  v2.number?.replace(/[^A-Z0-9]+/gi, '') ===
+                  v.number?.replace(/[^A-Z0-9]+/gi, ''),
+              ) === i,
+          )
+
+          uniquePhoneNumbers.forEach((phoneNumber, index) => {
+            let number = phoneNumber.number?.replace(/[^A-Z0-9]+/gi, '_')
+
+            contactObj[numberKey[index]] = phoneNumber.number
+          })
+          if (contactObj.cellNumber) {
+            contactObj = {
+              ...contactObj,
+              id: contact.recordID,
+              name:
+                contact.displayName ||
+                contact.givenName ||
+                contact.familyName ||
+                '',
+              book: '',
+              firstName: contact.givenName,
+              lastName: contact.familyName,
+              job: contact.jobTitle,
+              company: contact.company || '',
+              address:
+                contact.postalAddresses && contact.postalAddresses.length > 0
+                  ? contact.postalAddresses[0].street
+                  : '',
+              email:
+                contact.emailAddresses && contact.emailAddresses.length > 0
+                  ? contact.emailAddresses[0].email
+                  : '',
+              shared: false,
+              loaded: true,
+              hidden: false,
+              isPhoneContact: true,
+            }
+          }
+          phoneContacts.push(contactObj)
+        })
+        phoneContacts = orderBy(
+          phoneContacts,
+          [phoneContact => phoneContact.name.toLowerCase()],
+          ['asc'],
+        )
+        // this.setPhonebook(phoneContacts)
+        this.setPhonecontacts(phoneContacts)
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
 
   @action loadMoreContacts = () => {
@@ -161,6 +264,10 @@ class ContactStore {
   }
 
   @observable phoneBooks: Phonebook2[] = []
+  @observable phoneContacts: Phonebook2[] = []
+  @observable limitedPhoneContacts: Phonebook2[] = []
+  @observable phoneContactsOffset = 0
+
   @computed get _phoneBooksMap() {
     return arrToMap(this.phoneBooks, 'id', (u: Phonebook2) => u) as {
       [k: string]: Phonebook2
@@ -185,6 +292,35 @@ class ContactStore {
       _p = [_p]
     }
     this.phoneBooks = uniqBy([...this.phoneBooks, ..._p], 'id')
+  }
+
+  phoneContactsLimit = 100
+
+  @action setPhonecontacts = (contacts: Phonebook2 | Phonebook2[]) => {
+    if (!contacts) {
+      return
+    }
+    if (!Array.isArray(contacts)) {
+      contacts = [contacts]
+    }
+    this.phoneContacts = uniqBy([...this.phoneContacts, ...contacts], 'id')
+    this.limitedPhoneContacts = [
+      ...this.phoneContacts.slice(
+        this.phoneContactsOffset,
+        this.phoneContactsLimit,
+      ),
+    ]
+  }
+
+  @action phoneContactsLoadMore = () => {
+    this.phoneContactsOffset += this.phoneContactsLimit
+    this.limitedPhoneContacts = [
+      ...this.limitedPhoneContacts,
+      ...this.phoneContacts.slice(
+        this.phoneContactsOffset,
+        this.phoneContactsOffset + this.phoneContactsLimit,
+      ),
+    ]
   }
 
   getPhonebook = (id: string) => {

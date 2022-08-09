@@ -70,14 +70,14 @@ class CallBar extends React.Component {
       toggleHold,
       muted,
       toggleMuted,
-      hangup,
+      hangupWithUnhold,
     }: any = currentCall || {}
     if (!bVisible || !currentCall || (incoming && !answered)) {
       return null
     }
 
     const goToCallPage = () => {
-      Nav().goToPageCallManage({ isFromCallBar: true })
+      Nav().goToPageCallManage()
     }
 
     return (
@@ -114,26 +114,36 @@ class CallBar extends React.Component {
               <View style={styles.callBarButtonCall}>
                 <ButtonIcon
                   style={styles.actionButtons}
-                  color={CustomColors.Black}
+                  color={holding ? CustomColors.White : CustomColors.Black}
                   onPress={() => toggleHold()}
                   path={holding ? mdiPlay : mdiPause}
                   size={30}
                   containerStyle={styles.actionButtonsContainer}
+                  bgcolor={
+                    holding ? CustomColors.IconActiveBlue : CustomColors.White
+                  }
                 />
                 {answered && (
                   <>
                     <ButtonIcon
                       style={styles.actionButtons}
-                      color={CustomColors.Black}
+                      color={muted ? CustomColors.White : CustomColors.Black}
                       onPress={() => toggleMuted()}
                       path={muted ? mdiMicrophoneOff : mdiMicrophone}
                       size={30}
                       containerStyle={styles.actionButtonsContainer}
+                      bgcolor={
+                        muted ? CustomColors.IconActiveBlue : CustomColors.White
+                      }
                     />
                     {Platform.OS !== 'web' && (
                       <ButtonIcon
                         style={styles.actionButtons}
-                        color={CustomColors.Black}
+                        color={
+                          callStore.isLoudSpeakerEnabled
+                            ? CustomColors.White
+                            : CustomColors.Black
+                        }
                         onPress={callStore.toggleLoudSpeaker}
                         path={
                           callStore.isLoudSpeakerEnabled
@@ -142,11 +152,16 @@ class CallBar extends React.Component {
                         }
                         size={27}
                         containerStyle={styles.actionButtonsContainer}
+                        bgcolor={
+                          callStore.isLoudSpeakerEnabled
+                            ? CustomColors.IconActiveBlue
+                            : CustomColors.White
+                        }
                       />
                     )}
                   </>
                 )}
-                <TouchableOpacity onPress={hangup}>
+                <TouchableOpacity onPress={hangupWithUnhold}>
                   <DeclineButton width={50} height={50}></DeclineButton>
                 </TouchableOpacity>
               </View>

@@ -105,11 +105,7 @@ const styles = StyleSheet.create({
   listView: {
     marginTop: 18,
   },
-  userItem: {
-    borderBottomWidth: 1,
-  },
   searchBoxView: {
-    backgroundColor: CustomColors.GradientStart,
     width: '100%',
     paddingBottom: 10,
   },

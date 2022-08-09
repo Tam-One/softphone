@@ -81,7 +81,7 @@ export const setupCallKeep = async () => {
 
   const onDidLoadWithEvents = (e: { name: string; data: unknown }[]) => {
     e.forEach(e => {
-      handlers[e.name.replace('RNCallKeep', 'on')]?.(e.data)
+      handlers[e.name.replace('RNCallKeepPerform', 'on')]?.(e.data)
     })
   }
   const onAnswerCallAction = (e: { callUUID: string }) => {
@@ -93,7 +93,7 @@ export const setupCallKeep = async () => {
     callStore.onCallKeepAnswerCall(uuid)
   }
   const onEndCallAction = (e: { callUUID: string }) => {
-    BackgroundTimer.setTimeout(_setupCallKeep, 0)
+    // BackgroundTimer.setTimeout(_setupCallKeep, 0)
     // Use the custom native incoming call module for android
     if (Platform.OS === 'android') {
       return
@@ -107,7 +107,7 @@ export const setupCallKeep = async () => {
     localizedCallerName: string
     hasVideo: string // '0' | '1'
     fromPushKit: string // '0' | '1'
-    payload: unknown // VOIP
+    payload: any // VOIP
     error: string // ios only
   }) => {
     const uuid = e.callUUID.toUpperCase()
@@ -115,14 +115,19 @@ export const setupCallKeep = async () => {
     if (Platform.OS === 'android') {
       return
     }
+    const { x_from, x_displayname } = e.payload
+
     // Try set the caller name from last known PN
-    const n = getLastCallPn()
-    if (
-      n?.from &&
-      (e.localizedCallerName === 'Loading...' || e.handle === 'Loading...')
-    ) {
-      RNCallKeep.updateDisplay(uuid, n.from, 'Qooqie Phone')
-    }
+    // const n = getLastCallPn()
+    // if (
+    //   n?.from &&
+    //   (e.localizedCallerName === 'Loading...' || e.handle === 'Loading...')
+    // ) {
+    RNCallKeep.updateDisplay(uuid, x_displayname, 'Qooqie Phone')
+
+    // if (callStore.calls.length === 0) {
+    //   callStore.upsertCall({ "id": "1", "incoming": true, "partyNumber": x_from, "partyName": x_displayname, "remoteVideoEnabled": false, "localVideoEnabled": false })
+    // }
     // Call event handler in callStore
     callStore.onCallKeepDidDisplayIncomingCall(uuid)
   }

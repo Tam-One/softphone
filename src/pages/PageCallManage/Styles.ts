@@ -6,7 +6,6 @@ import CustomValues from '@/utils/CustomValues'
 
 const styles = StyleSheet.create({
   customHeaderContainer: {
-    backgroundColor: CustomColors.AliceBlue,
     height: 40,
     width: '100%',
     top: 0,
@@ -103,15 +102,13 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     flex: 1,
-    paddingBottom: Dimensions.get('window').height * 0.03,
+    paddingBottom: Dimensions.get('window').height * 0.01,
     justifyContent: 'center',
     width: '100%',
   },
   actionBtnContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   actionBtnImage: {
     width: 28,
@@ -193,6 +190,18 @@ const styles = StyleSheet.create({
     bottom: 0,
     top: 0,
     zIndex: 999,
+  },
+  callingScreenButtons: {
+    position: 'absolute',
+    flex: 1,
+    bottom: Platform.OS === 'ios' ? 60 : 0,
+    top: 0,
+    alignSelf: 'center',
+    justifyContent: 'flex-end',
+    padding: 0,
+    margin: 0,
+    backgroundColor: CustomColors.Transparent,
+    zIndex: 99999,
   },
 })
 

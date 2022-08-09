@@ -1,14 +1,11 @@
-import { mdiAccount, mdiGreaterThan, mdiLock } from '@mdi/js'
+import { mdiAccount, mdiLock } from '@mdi/js'
 import React, { useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
-import { SvgXml } from 'react-native-svg'
 
-import svgImages from '@/assets/svgImages'
 import CustomHeader from '@/components/CustomHeader'
 import CustomLayout from '@/components/CustomLayout'
 import { RnIcon } from '@/components/Rn'
 import RnText from '@/components/RnText'
-import RnTextInput from '@/components/RnTextInput'
 import styles from '@/pages/PageSettingsProfile/Styles'
 import CustomColors from '@/utils/CustomColors'
 
@@ -30,7 +27,8 @@ const InputBox = ({ val, icon = '', style = {} }) => {
 }
 
 const SettingsView = ({ onPress }) => {
-  const { pbxUsername, pbxPassword, pbxTenant } = getAuthStore().currentProfile
+  const { pbxUsername, pbxPassword, pbxTenant } =
+    getAuthStore().currentProfile || {}
 
   return (
     <>

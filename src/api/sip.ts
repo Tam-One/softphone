@@ -51,7 +51,7 @@ export class SIP extends EventEmitter {
       ctiAutoAnswer: 1,
       eventTalk: 1,
       configuration: {
-        socketKeepAlive: 60,
+        socketKeepAlive: 10,
       },
     })
     this.phone = phone
@@ -77,24 +77,6 @@ export class SIP extends EventEmitter {
 
     phone.addEventListener('phoneStatusChanged', connectionEvent)
 
-    // sessionId: "1"
-    // sessionStatus: "dialing"
-    // answering: false
-    // audio: true
-    // video: false
-    // remoteStreamObject: MediaStream{...}
-    // localStreamObject: MediaStream{...}
-    // remoteWithVideo: false
-    // withVideo: true
-    // shareStream: false
-    // exInfo: ""
-    // muted: {main: false, videoClient: false}
-    // localVideoStreamObject: null
-    // videoClientSessionTable: {}
-    // rtcSession: RTCSession{...}
-    // incomingMessage: null
-    // remoteUserOptionsTable: {}
-    // analyser: null
     phone.addEventListener('sessionCreated', event => {
       if (!event) {
         return
@@ -288,14 +270,16 @@ export class SIP extends EventEmitter {
 
     this.phone.setDefaultCallOptions(callOptionsObj)
     //
-    this.phone.startWebRTC({
+
+    var oj = {
       url: `wss://${hostname}:${port}/phone`,
       tls: true,
       user: username,
       auth: accessToken,
       useVideoClient: true,
-      userAgent: lUseragent,
-    })
+      userAgent: lUseragent + 'tag',
+    }
+    this.phone.startWebRTC(oj)
 
     console.error('SIP PN debug: added listener on _ua')
 

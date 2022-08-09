@@ -12,6 +12,7 @@ import contactStore, { Phonebook2 } from '@/stores/contactStore'
 import Nav from '@/stores/Nav'
 import RnPicker from '@/stores/RnPicker'
 import CustomColors from '@/utils/CustomColors'
+import CustomValues from '@/utils/CustomValues'
 
 const InputBox: FC<{
   label: string
@@ -98,7 +99,7 @@ const onCallPress = (user: Phonebook2, number: string) => {
 }
 
 const PageViewContact = ({ contact }) => {
-  console.log(JSON.stringify(contact))
+  const isPhoneContact = contact.isPhoneContact
 
   const {
     id,
@@ -116,7 +117,7 @@ const PageViewContact = ({ contact }) => {
     loaded,
     address,
     email,
-  } = contactStore.getPhonebook(contact.id)
+  } = isPhoneContact ? contact : contactStore.getPhonebook(contact.id)
 
   const phoneNumber = cellNumber || workNumber || homeNumber
 
@@ -136,6 +137,7 @@ const PageViewContact = ({ contact }) => {
             : undefined
         }
         rightButtonText={'Edit'}
+        disableRightButton={isPhoneContact}
         backContainerStyle={styles.backButtonContainer}
       ></CustomHeader>
       <ScrollView style={styles.scrollViewContainer}>

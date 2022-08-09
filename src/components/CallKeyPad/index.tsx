@@ -108,7 +108,14 @@ const KeyPad: FC<{
                   <Text
                     style={[
                       styles.KeyPadNumberText,
-                      key === '*' && styles.symbolText,
+                      key === '*' && {
+                        height: 25,
+                        fontFamily: 'Roboto-Regular',
+                        fontSize: 40,
+                        lineHeight: 40,
+                        width: '100%',
+                        textAlign: 'center',
+                      },
                     ]}
                   >
                     {key}

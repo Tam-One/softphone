@@ -1,9 +1,11 @@
+import NetInfo from '@react-native-community/netinfo'
 import { debounce } from 'lodash'
-import { Lambda, observe } from 'mobx'
+import { Lambda } from 'mobx'
 
 import AuthSIP from '@/stores/AuthSIP'
 
 import pbx from '../api/pbx'
+import Nav from '../stores/Nav'
 import { getAuthStore } from './authStore'
 import { intlDebug } from './intl'
 import RnAlert from './RnAlert'
@@ -36,9 +38,17 @@ class AuthPBX {
         getAuthStore().pbxState = 'failure'
         getAuthStore().pbxTotalFailure += 1
         getAuthStore().signedInId = ''
-        RnAlert.error({
-          message: intlDebug`Invalid Credentials`,
+        RnAlert.dismiss()
+        NetInfo.fetch().then(state => {
+          RnAlert.error({
+            message: state.isConnected
+              ? intlDebug`Invalid Credentials`
+              : intlDebug`No Internet Connection`,
+          })
         })
+
+        getAuthStore().signOut()
+        Nav().goToPageProfileSignIn()
       })
   }
   private authWithCheckDebounced = debounce(this.authWithCheck, 300)

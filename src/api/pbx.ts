@@ -58,7 +58,9 @@ export class PBX extends EventEmitter {
         }, 10000)
       }),
       new Promise((resolve, reject) => {
-        client.login(() => resolve(undefined), reject)
+        client.login(() => {
+          resolve(undefined)
+        }, reject)
       }),
     ])
 
@@ -82,8 +84,6 @@ export class PBX extends EventEmitter {
       return
     }
 
-    // {"room_id":"282000000230","talker_id":"1416","time":1587451427817,"park":"777","status":"on"}
-    // {"time":1587451575120,"park":"777","status":"off"}
     client.notify_park = e => {
       // TODO
       if (e?.status === 'on') {
